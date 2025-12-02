@@ -207,6 +207,8 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
 
 /* Links in dropdown */
 .dropdown-menu a {
+
+  
   padding: 10px 16px;
   white-space: nowrap;
   color: #0b1220;
