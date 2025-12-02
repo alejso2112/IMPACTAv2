@@ -165,3 +165,78 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
     padding: 16px;
   }
 }
+
+.price-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.price-card .btn {
+  margin-top: auto;   /* pushes button to bottom */
+  margin-left: auto;  /* centers horizontally */
+  margin-right: auto; /* centers horizontally */
+}
+
+/* Dropdown container */
+.dropdown {
+  position: relative;
+}
+
+/* Use your existing button styling */
+.dropdown-btn {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Dropdown menu styles */
+.dropdown-menu {
+  position: absolute;
+  top: 110%;
+  left: 0;
+  background: var(--white);
+  border: 1px solid #e6eef8;
+  border-radius: var(--radius);
+  display: none;
+  flex-direction: column;
+  min-width: 220px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.12);
+  z-index: 9999;
+}
+
+/* Links in dropdown */
+.dropdown-menu a {
+  padding: 10px 16px;
+  white-space: nowrap;
+  color: #0b1220;
+  font-size: 15px;
+}
+
+.dropdown-menu a:hover {
+  background: #f2f7fb;
+  color: var(--brand);
+}
+
+/* Hover for desktop */
+.dropdown:hover .dropdown-menu {
+  display: flex;
+}
+
+/* Mobile tap support */
+.dropdown-btn:active + .dropdown-menu,
+.dropdown-btn:focus + .dropdown-menu {
+  display: flex;
+}
+
+/* Fix dropdown button sizing so it matches .btn-outline */
+.dropdown-btn {
+  padding: 8px 12px;        /* same as .btn-outline */
+  border: 2px solid var(--brand);
+  border-radius: 10px;
+  background: transparent;
+  color: var(--brand);
+  font-weight: 600;
+  height: auto;             /* prevents shrinking */
+  line-height: normal;      /* ensures consistent height */
+}
