@@ -242,3 +242,16 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
   height: auto;             /* prevents shrinking */
   line-height: normal;      /* ensures consistent height */
 }
+
+
+/* Make "How We Help" text turn white on hover */
+.dropdown-btn:hover a {
+  color: white !important;
+}
+
+/* Ensure default link color inside the button stays brand color */
+.dropdown-btn a {
+  color: var(--brand);
+  text-decoration: none;
+  display: block;
+}
