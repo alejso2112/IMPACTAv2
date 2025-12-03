@@ -95,7 +95,9 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
   .logo-mobile { display: block; height: 60px; width: auto;}
   .nav-actions {flex-direction: column; width: 100%;}
   .nav-actions .btn, .nav-actions .btn-outline {width: 100%; text-align: center;}
-  
+    .pill-bill {
+  width: 300px;
+}
   .stats-bar { grid-template-columns: 1fr; gap: 20px;}
   .stats-bar > div { border-right: 0; border-bottom: 1px solid #e6eef8; padding-bottom: 16px;}
   .stats-bar > div:last-child { border-bottom: 0; padding-bottom: 0;}
@@ -254,4 +256,163 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
   color: var(--brand);
   text-decoration: none;
   display: block;
+}
+
+/* --- FIX HERO GRID ON SMALL SCREENS --- */
+@media (max-width: 500px) {
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 20px;
+  }
+
+  .hero-copy {
+    padding: 18px;
+  }
+
+  .hero-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0;
+  }
+}
+
+/* --- PREVENT HORIZONTAL OVERFLOW --- */
+@media (max-width: 500px) {
+  body, html {
+    overflow-x: hidden !important;
+  }
+
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .nav {
+    width: 100%;
+  }
+
+  .nav-actions {
+    width: 100%;
+    gap: 12px;
+  }
+
+  .dropdown {
+    width: 100%;
+  }
+
+  .dropdown-btn {
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+  }
+
+  .dropdown-menu {
+    position: static;
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+    border: 0;
+    padding: 0;
+  }
+
+  .dropdown-menu a {
+    padding: 12px;
+    border-bottom: 1px solid #e6eef8;
+  }
+}
+
+/* --- FIX BUTTON WRAPPING --- */
+@media (max-width: 500px) {
+  .hero-cta {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .hero-cta .btn,
+  .hero-cta .btn-outline {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+/* --- FIX PRICE CARDS STACKING --- */
+@media (max-width: 500px) {
+  .pricing-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .price-card {
+    width: 100%;
+  }
+}
+
+/* --- FIX TESTIMONIAL GRID --- */
+@media (max-width: 500px) {
+  .testimonial-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* --- FIX INDUSTRY PAGE GRIDS ON SMALL SCREENS --- */
+@media (max-width: 500px) {
+
+  /* Hero box */
+  section[style*="padding:60px"] {
+    padding: 32px !important;
+  }
+
+  /* 3-column segmentation grid */
+  section .service + .service + .service,
+  section div[style*="grid-template-columns:repeat(3"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* 4-column membership flow */
+  section div[style*="grid-template-columns:repeat(4"] {
+    display: grid !important;
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
+
+  /* PPA fitness pricing cards */
+  .pricing-grid-ppa {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Stat bar cleanup */
+  .stats-bar {
+    grid-template-columns: 1fr !important;
+    padding: 20px !important;
+  }
+
+  /* Big service panels shrink padding */
+  .service[style*="padding:42px"],
+  .service[style*="padding:32px"],
+  .service[style*="padding:48px"] {
+    padding: 20px !important;
+  }
+
+}
+
+/* Add space below bottom CTA button */
+.section-spacing .service a.btn {
+  margin-bottom: 20px;
+}
+
+
+
+@media (max-width: 500px) {
+  .section-spacing .service a.btn {
+    margin-bottom: 24px;
+  }
+}
+
+/* Fix the 5 Solar Objections grid on mobile */
+@media (max-width: 500px) {
+  section div[style*="grid-template-columns:repeat(5"] {
+    grid-template-columns: 1fr !important;
+    gap: 16px !important;
+  }
 }
