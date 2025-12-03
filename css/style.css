@@ -416,3 +416,93 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
     gap: 16px !important;
   }
 }
+
+/* MOBILE FONT FIX */
+@media (max-width: 550px) {
+  h1, .hero-title, .industry-card h1 {
+    font-size: 28px !important;
+    line-height: 1.2 !important;
+  }
+
+  .industry-card h2,
+  .industry-card .section-title {
+    font-size: 22px !important;
+    line-height: 1.3 !important;
+  }
+
+  .industry-card {
+    padding: 24px !important;
+  }
+}
+
+/* FIX Home Services two-column blocks on mobile */
+@media (max-width: 600px) {
+
+  /* Any inline grid with 1fr 1fr becomes stacked */
+  div[style*="grid-template-columns:1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Any inline grid with repeat(3…) becomes stacked */
+  div[style*="grid-template-columns:1fr 1fr 1fr"],
+  div[style*="grid-template-columns:repeat(3"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Any inline grid with repeat(4…) becomes stacked */
+  div[style*="grid-template-columns:repeat(4"],
+  div[style*="grid-template-columns: 1fr 1fr 1fr 1fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Add breathing room under cards when stacked */
+  div[style*="grid-template-columns"] > * {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  /* Painting page hero layout fix */
+  div[style*="grid-template-columns:1.1fr"],
+  div[style*="1.1fr 0.9fr"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* Make the right card full width instead of 80% height */
+  div[style*="grid-template-columns:1.1fr"] > div:nth-child(2) {
+    height: auto !important;
+    margin-top: 20px !important;
+  }
+}
+
+/* TIGHTER CTA CARDS */
+.cta-tight {
+  padding: 28px !important;
+  border-radius: 14px !important;
+  box-shadow: 0 14px 32px rgba(0,0,0,0.12) !important;
+}
+
+.cta-tight h2 {
+  font-size: 24px !important;
+  margin-bottom: 10px !important;
+  line-height: 1.25 !important;
+}
+
+.cta-tight p {
+  font-size: 15px !important;
+  margin-bottom: 16px !important;
+  line-height: 1.4 !important;
+}
+
+.cta-tight .btn {
+  padding: 12px 22px !important;
+  font-size: 15px !important;
+}
+
+/* MOBILE ONLY — add space under CTA buttons */
+@media (max-width: 550px) {
+  #cta-box {
+    padding-bottom: 50px !important; /* 48px original + 40px extra */
+  }
+}
+
