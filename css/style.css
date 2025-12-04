@@ -506,3 +506,51 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
   }
 }
 
+/* Reduce padding so the right card shrinks */
+.impacta-form-card {
+  padding: 22px !important;
+  border-radius: 16px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+}
+
+/* Shrink spacing between form elements */
+.form-row {
+  margin-bottom: 12px !important;
+}
+
+/* Shrink textarea to match left column height better */
+textarea {
+  height: 90px !important;
+}
+
+/* Reduce top margin so card sits higher */
+.impacta-form-section {
+  margin-top: -10px;
+}
+
+/* Keep button tight but readable */
+.impacta-btn {
+  margin-top: 6px;
+  padding: 14px 20px !important;
+}
+
+/* Ensure the right card never exceeds content height */
+.impacta-form-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* Optional but recommended: tighter column gap */
+.diagnostic-grid {
+  gap: 26px !important;
+}
+
+.impacta-form-card {
+  text-align: center;
+}
+
+.impacta-form-card stripe-buy-button {
+  display: block;
+  margin: 0 auto;
+}
