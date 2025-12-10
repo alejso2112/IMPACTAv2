@@ -167,40 +167,10 @@
 
 <!-- Supabase Script -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-  const supabase = createClient(
-    "https://YOUR-PROJECT-URL.supabase.co",
-    "YOUR-ANON-KEY"
-  );
-
-  document.getElementById("diagnosticForm").addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    const form = e.target;
-    const statusEl = document.getElementById("form-status");
-
-    const formData = new FormData(form);
-    const payload = Object.fromEntries(formData.entries());
-
-    statusEl.innerHTML = "Submitting…";
-
-    const { data, error } = await supabase
-      .from("diagnostics_form")
-      .insert([payload]);
-
-    if (error) {
-      statusEl.innerHTML = "❌ Something went wrong. Please try again.";
-      statusEl.style.color = "red";
-    } else {
-      statusEl.innerHTML = "✅ Thank you! Your request has been submitted.";
-      statusEl.style.color = "#0C62AB";
-      form.reset();
-    }
-  });
-</script>
 
 </body>
 </html>
+
 
 
 
