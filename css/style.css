@@ -554,3 +554,49 @@ textarea {
   display: block;
   margin: 0 auto;
 }
+
+
+/* Match the form card to the pricing/product card design */
+.diagnostic-form-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 16px;
+  border: 1px solid #e6f0fb;
+  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
+  max-width: 420px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Make form fields visually match the centered card layout */
+.diagnostic-form-card label {
+  text-align: left;
+  width: 100%;
+}
+
+.diagnostic-form-card input,
+.diagnostic-form-card select,
+.diagnostic-form-card textarea {
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #dce6f3;
+  font-size: 15px;
+}
+
+/* Match the blue button style from the logo card */
+.diagnostic-form-card .btn {
+  background: var(--brand);
+  color: white;
+  width: 100%;
+  padding: 14px;
+  font-size: 17px;
+  border-radius: 10px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(12,98,171,0.22);
+}
+
+.diagnostic-form-card .btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 26px rgba(12,98,171,0.28);
+}
