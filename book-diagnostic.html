@@ -13,72 +13,41 @@
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="css/style.css">
-  <script src='//fw-cdn.com/14986886/6475515.js' chat='true'> </script>
   </head>
 <body>
 
-  <header>
-    <div class="container nav" style="justify-content: center;">
-      <div class="brand">
-        <a href="index.html">
-          <img src="img/logo-main-2025.png" alt="IMPACTA Business Solutions Logo - Growth Partner" class="logo-desktop"/>
-          <img src="img/logo-mobile-2025.png" alt="IMPACTA Mobile Logo" class="logo-mobile"/>
-        </a>
-      </div>
-    </div>
-  </header>
-
+  <!-- HEADER -->
+  <div id="global-header"></div>
+  
   <main class="container" id="main" style="padding-top: 48px;">
-    
-    <div class="diagnostic-grid">
-      
-      <aside>
-        <h2 style="margin-top: 0;">Book Your $350 Revenue Leak Diagnostic</h2>
-        <p class="muted" style="line-height: 1.6;">This is a <b>paid, high-value strategy session</b>, not a sales call. We pre-qualify all clients to ensure we can provide a massive ROI. If you are a fit, this $350 investment will be the most profitable one you make this year. This diagnostic is the required first step to unlock your custom Pay-Per-Appointment pricing.</p>
-        <h4 style="color: var(--brand); margin-top: 24px;">Your Diagnostic Deliverables:</h4>
-        <ul class="features-list" style="font-size: 15px; line-height: 1.6;">
-          <li>✅ A <b>1-on-1 Audit</b> of your current tech stack and sales process.</li>
-          <li>✅ A <b>Custom "Revenue Leak" Report</b> identifying your #1 bottleneck.</li>
-          <li>✅ An <b>Actionable Integration Plan</b> for our PPA model.</li>
-          <li>✅ A <b>Clear SQA Profile</b> to target high-value clients.</li>
-        </ul>
-
-        <div class="testimonial" style="margin-top: 24px;">
-          <p>"The $350 diagnostic was the best money I ever spent. They found a leak that was costing me $10k/month. The PPA system they built paid for itself in a week."</p>
-          <span class="small muted">— J. Martinez, South Florida Premiere Roofing</span>
-        </div>
-      </aside>
-
-      <section id="contact" class="contact-card">
-        <h3 style="text-align: center; margin-top: 0;">Apply for Your Diagnostic</h3>
-        <p class="small muted" style="text-align: center; margin-top: -8px; margin-bottom: 16px;">Step 1: Apply below. <br>Step 2: If approved, we will email an invoice for the $350 fee to secure your session.</p>
-
-        <form action="https://formspree.io/f/mblzeglb" method="POST" aria-label="Contact form">
-          <label for="name">Full name</label>
-          <input id="name" name="name" type="text" placeholder="Jane Doe" required />
-
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" placeholder="name@business.com" required />
-          
-          <label for="phone">Phone</label>
-          <input id="phone" name="phone" type="tel" placeholder="+1 (352) 555-0123" />
-
-          <label for="service">Service interested in</label>
-            <select id="service" name="service" required>
-              <option value="">-- Please select --</option>
-              <option value="diagnostic_ppa">Diagnostic PPA</option>
-              <option value="pro_partnership">Pro - Full Partnership</option>
-              <option value="general_inquiry">General Inquiry</option>
-            </select>
-
-          <label for="message">What is your biggest revenue challenge?</label>
-          <textarea id="message" name="message" rows="4" placeholder="e.g., 'We get leads but can't convert them', 'Our appointments are low-quality'..." required></textarea>
-          
-          <input type="hidden" name="utm_source" id="utm_source" value="" />
-          <input type="hidden" name="utm_medium" id="utm_medium" value="" />
-          <input type="hidden" name="utm_campaign" id="utm_campaign" value="" />
-          
-          <div style="margin-top:12px;">
+  
+ <section class="section-spacing">
+          <div class="container" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h1 style="color: var(--brand);">Apply for Your Revenue Leak Diagnostic</h1>
+            <p style="font-size: 18px; margin-bottom: 32px;">
+              This is a 45-minute working session to audit your entire funnel, define your SQA criteria, and build your
+              90-day PPA roadmap.
+            </p>
+  
+            <div class="service" style="padding: 40px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+              <h3 style="margin-bottom: 20px;">The $350 Diagnostic Includes:</h3>
+              <ul class="features-list" style="margin-bottom: 30px;">
+                <li>✅ <b>Full Pipeline Snapshot:</b> See exactly where your money is leaving.</li>
+                <li>✅ <b>Custom SQA Definition:</b> Define the "Motivated Leads" your team needs.</li>
+                <li>✅ <b>Automation Blueprint:</b> Your tech stack roadmap for 60-second response times.</li>
+                <li>✅ <b>PPA ROI Projection:</b> The math behind your performance-based growth.</li>
+              </ul>
+  
+              <div id="booking-form-placeholder" style="
+      background: #f8fbff; 
+      padding: 40px; 
+      border-radius: 12px; 
+      text-align: center; 
+      border: 2px solid var(--brand); 
+      margin-top: 30px;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+  ">
+                <div style="margin-bottom: 20px;">
 <!-- Google Calendar Appointment Scheduling begin -->
 <link href="https://calendar.google.com/calendar/scheduling-button-script.css" rel="stylesheet">
 <script src="https://calendar.google.com/calendar/scheduling-button-script.js" async></script>
@@ -89,46 +58,51 @@
     calendar.schedulingButton.load({
       url: 'https://calendar.google.com/calendar/appointments/schedules/AcZssZ1PtowFItt8BZqWRqKY4Whg0FrNmYXIDpgBizTpfNejt3d8JIFJR9NhEAUad1RutciKR3Ox4WOy?gv=true',
       color: '#0c62ab',
-      label: "Book My Diagnostic",
+      label: "Book Diagnostic",
       target,
     });
   });
 })();
 </script>
 <!-- end Google Calendar Appointment Scheduling -->
-
-
-            
+                </div>
+  
+                <p style="margin: 0; font-weight: 600; color: var(--brand);">
+                  Secure $350 payment is required to lock in your diagnostic slot.
+                </p>
+                <p class="small muted" style="margin-top: 8px;">
+                  This fee is 100% credited toward your Phase 2 PPA setup.
+                </p>
+              </div>
+            </div>
           </div>
-          <div class="small muted" style="margin-top:8px">By applying, you agree to our <a href="terms.html">Terms of Service</a>.</div>
-        </form>
-      </section>
-
-    </div>
+        </section>
   </main>
   
-  <footer class="container" role="contentinfo">
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div>
-          <strong>IMPACTA Business Solutions Inc.</strong><br />
-          <span class="small muted"> Owned and Operated in Ocala, FL, USA</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <a class="small muted" href="mailto:support@impactabusiness.solutions">getsupport@impactabusiness.solutions</a>
-          <a class="small muted" href="tel:+13523891832">(352) 389-1832</a>
-        </div>
-      </div>
- 
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div class="small muted">© 2025 IMPACTA Business Solutions Inc. All rights reserved.</div>
-          <div style="display:flex;gap:12px">
-              <a class="small muted" href="privacy.html">Privacy Policy</a>
-              <a class="small muted" href="terms.html">Terms of Service</a>
-          </div>
-      </div>
-    </div>
-  </footer>
+    <!-- FOOTER -->
+  <div id="global-footer"></div>
+          <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+          <script>
+            // Function to load external HTML into a div
+            function includeHTML(file, elementId) {
+              fetch(file)
+                .then(response => {
+                  if (response.ok) return response.text();
+                  throw new Error('Failed to load ' + file);
+                })
+                .then(data => {
+                  document.getElementById(elementId).innerHTML = data;
+                })
+                .catch(error => console.error(error));
+            }
+
+            // Execute the loads
+            document.addEventListener('DOMContentLoaded', function () {
+              includeHTML('header.html', 'global-header');
+              includeHTML('footer.html', 'global-footer');
+            });
+          </script>
+
 </body>
 
 </html>

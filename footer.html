@@ -1,0 +1,45 @@
+<footer class="container" role="contentinfo" style="margin-top:40px; padding: 40px 0; border-top: 1px solid #eee;">
+    <div style="display:flex;flex-direction:column;gap:16px">
+      <div style="display:flex;justify-content:space-between;align-items:start;gap:24px;flex-wrap:wrap">
+        <div>
+          <strong style="color:var(--brand); font-size: 1.2rem;">IMPACTA Business Solutions Inc.</strong><br>
+          <span class="small muted">American Owned & Operated — Based in Ocala, FL</span><br>
+          <span class="small" style="display:block; margin-top:8px;">Performance-Based RevOps & Growth Coaching</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <a class="small muted" href="mailto:getsupport@impactabusiness.solutions" style="text-decoration:none;">getsupport@impactabusiness.solutions</a>
+          <a class="small muted" href="tel:+13525657234" style="text-decoration:none;">352.565.7234</a>
+        </div>
+      </div>
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap; margin-top: 20px; padding-top: 20px; border-top: 1px solid #fafafa;">
+          <div class="small muted">© 2025 IMPACTA Business Solutions Inc. All rights reserved.</div>
+          <div style="display:flex;gap:20px">
+              <a class="small muted" href="privacy.html">Privacy Policy</a>
+              <a class="small muted" href="terms.html">Terms of Service</a>
+          </div>
+      </div>
+    </div>
+        <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+    <script>
+  // Function to load external HTML into a div
+  function includeHTML(file, elementId) {
+    fetch(file)
+      .then(response => {
+        if (response.ok) return response.text();
+        throw new Error('Failed to load ' + file);
+      })
+      .then(data => {
+        document.getElementById(elementId).innerHTML = data;
+      })
+      .catch(error => console.error(error));
+  }
+
+  // Execute the loads
+  document.addEventListener('DOMContentLoaded', function() {
+    includeHTML('header.html', 'global-header');
+    includeHTML('footer.html', 'global-footer');
+  });
+</script>
+
+</footer>

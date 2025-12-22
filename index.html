@@ -65,50 +65,8 @@
   </script>
 <body>
 
-     <header>
-    <div class="container nav">
-      <div class="brand">
-        <a href="index.html">
-          <img src="img/logo-main-2025.png" class="logo-desktop" alt="IMPACTA Business Solutions">
-          <img src="img/logo-mobile-2025.png" class="logo-mobile" alt="IMPACTA Business Solutions">
-        </a>
-        <div class="small muted">Growth partner for small businesses</div>
-      </div>
-        <div class="nav-actions">
-          <div class="dropdown">
-            <button class="btn-outline dropdown-btn"><a href="about-us.html">How We Help</a></button>
-            <div class="dropdown-menu">
-            </div>
-          </div>
-
-
-          <div class="dropdown">
-            <button class="btn-outline dropdown-btn">Industries We Serve</button>
-            <div class="dropdown-menu">
-              <a href="automotive.html">Auto - Repair</a>
-              <a href="auto-sales.html">Auto - Sales</a>
-              <a href="fitness.html">Fitness</a>
-              <a href="home-services.html">Home Services</a>
-              <a href="hvac.html">HVAC</a>
-              <a href="insurance.html">Insurance</a>
-              <a href="medical.html">Medical</a>
-              <a href="painting.html">Painting</a>
-              <a href="Pest-control.html">Pest Control</a>
-              <a href="plumbing.html">Plumbing</a>
-              <a href="professional-services.html">Professional Services</a>
-              <a href="real-estate.html">Real Estate</a>
-              <a href="restaurants.html">Restaurants</a>
-              <a href="roofing.html">Roofing</a>
-              <a href="salons.html">Salons</a>
-              <a href="solar.html">Solar</a>
-            </div>
-          </div>
-
-          <a class="btn" href="book-diagnostic.html">Book Diagnostic</a>
-        </div>
-
-    </div>
-  </header>
+    <!-- HEADER -->
+  <div id="global-header"></div>
   
   <section class="hero" aria-labelledby="hero-heading">
     <video autoplay="" loop="" muted="" playsinline="" class="hero-video-bg">
@@ -170,7 +128,7 @@
  
         <article class="service" aria-labelledby="svc-leak-3">
           <h3 id="svc-leak-3">3. Zero-Nurture Pipeline</h3>
-          <p>90% of leads aren't ready to buy today. We build the automated 6-month nurture sequences that convert them when they *are* ready, maximizing your <b>LTV</b>.</p>
+          <p>90% of leads aren't ready to buy today. We build the automated 6-month nurture sequences that convert them when they <b>are</b> ready, maximizing your <b>LTV</b>.</p>
         </article>
       </div>
       <div style="text-align: center; margin-top: 24px;">
@@ -179,78 +137,54 @@
     </section>
 
 
-<section id="pricing" class="section-spacing" aria-labelledby="pricing-heading">
-  <h2 id="pricing-heading" style="text-align: center; margin:0 0 12px">Pricing - Performance Focused</h2>
-  <p class="small muted" style="margin:0 0 24px; text-align: center;">Performance-based pricing unlocked via our Diagnostic. No retainers.</p>
+<section id="pricing" class="section-spacing">
+  <h2 style="text-align: center; margin-bottom: 8px;">Pricing - Performance Focused</h2>
+  <p style="text-align: center; color: #666; margin-bottom: 40px;">Performance-based pricing unlocked via our Diagnostic. No retainers.</p>
 
-  <div class="pricing pricing-grid" role="list">
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; align-items: stretch;">
     
-    <div class="price-card" role="listitem" aria-labelledby="price-setup">
-      <h4 id="price-setup">Phase 1: Diagnostic &amp; Setup</h4>
-      <div class="price">$350 <span class="small muted" style="font-weight:500">one-time fee</span></div>
-      <ul class="features-list">
-        <li>✅ <b>"I Do":</b> Infrastructure &amp; Leak Plugging</li>
+    <div style="background: #fff; padding: 32px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+      <h3 style="color: #0c62ab; margin-bottom: 8px;">Phase 1: Diagnostic & Setup</h3>
+      <div style="font-size: 28px; font-weight: 800; margin-bottom: 20px;">$350 <span style="font-size: 14px; color: #888; font-weight: 400;">one-time fee</span></div>
+      <p style="font-size: 14px; color: #666; margin-bottom: 20px;"> <b>"I Do":</b> Infrastructure & Leak Plugging</p>
+      <ul style="list-style: none; padding: 0; margin-bottom: auto; line-height: 2;">
+  
         <li>✅ Mandatory Client Acquisition Audit</li>
         <li>✅ Custom Lead Generation Scripting</li>
-        <li>✅ CRM Integration &amp; Automation Setup</li>
+        <li>✅ CRM Integration & Automation Setup</li>
         <li>✅ <b>The 90-Day Independence Roadmap</b></li>
       </ul>
-      <div style="margin-top:24px">
-        <a class="btn" href="book-diagnostic.html">Start Audit &amp; Setup</a>
-      </div>
+      <a href="book-diagnostic.html" class="btn" style="margin-top: 24px; text-align: center;">Start Audit & Setup</a>
     </div>
 
-    <div class="price-card" role="listitem" aria-labelledby="price-ppa" style="box-shadow:0 12px 30px rgba(12,98,171,0.08); border: 2px solid #0c62ab; transform: translateY(-8px);">
-      <h4 id="price-ppa">Phase 2: Performance (PPA)</h4>
-      <p class="small muted" style="margin-top: -4px; margin-bottom: 12px;"><b>"We Do":</b> Shared execution &amp; Apprenticeship.</p>
-      <ul class="features-list">
+    <div style="background: #fff; padding: 32px; border-radius: 16px; border: 2px solid #0c62ab; box-shadow: 0 10px 30px rgba(12,98,171,0.1); transform: scale(1.02); display: flex; flex-direction: column;">
+      <h3 style="color: #0c62ab; margin-bottom: 8px;">Phase 2: Performance (PPA)</h3>
+      <p style="font-size: 14px; color: #666; margin-bottom: 20px;"><b>"We Do":</b> Shared execution & Apprenticeship.</p>
+      <ul style="list-style: none; padding: 0; margin-bottom: auto; line-height: 2;">
         <li>✅ <b>Pay-Per-Result:</b> You only pay for output</li>
-        <li>✅ <b>"We Do":</b> Weekly Sales/Ops Coaching Calls</li>
         <li>✅ High-Intent Appointment Setting</li>
-        <li>✅ Targeted Cold Outreach &amp; Lead Nurture</li>
-        <li>✅ Pipeline Oversight &amp; Audit</li>
+        <li>✅ Targeted Cold Outreach & Nurture</li>
+        <li>✅ Pipeline Oversight & Audit</li>
       </ul>
-      <div style="margin-top:24px">
-        <a class="btn" href="ppa-model.html">Enter the Kitchen</a>
-      </div>
+      <a href="ppa-model.html" class="btn" style="margin-top: 24px; text-align: center; background: #0c62ab; color: #fff;">Enter the Kitchen</a>
     </div>
 
-    <div class="price-card" role="listitem" aria-labelledby="price-pro">
-      <h4 id="price-pro">Phase 3: Growth Leadership</h4>
-      <div class="price">$2,500 — $5,000+<span class="small muted" style="font-weight:500">/month</span></div>
-      <p class="small muted" style="margin-top: -4px; margin-bottom: 12px;"><b>"You Do":</b> System mastery &amp; scale.</p>
-      <ul class="features-list">
-        <li>✅ <b>"You Do":</b> Final Mastery Audit</li>
+    <div style="background: #fff; padding: 32px; border-radius: 16px; border: 1px solid #eee; box-shadow: 0 4px 20px rgba(0,0,0,0.05); display: flex; flex-direction: column;">
+      <h3 style="color: #0c62ab; margin-bottom: 8px;">Phase 3: Growth Leadership</h3>
+      <div style="font-size: 28px; font-weight: 800; margin-bottom: 20px;">$2,500 – $5,000+<span style="font-size: 14px; color: #888; font-weight: 400;">/month</span></div>
+      <p style="font-size: 14px; color: #666; margin-bottom: 20px;"><b>"You Do":</b> System mastery & scale.</p>
+      <ul style="list-style: none; padding: 0; margin-bottom: auto; line-height: 2;">
         <li>✅ Strategic Coaching for your Ops Lead</li>
         <li>✅ End-to-end Growth Strategy</li>
-        <li>✅ Paid Acquisition (Google/Facebook Ads)</li>
-        <li>✅ Full Analytics &amp; LTV Optimization</li>
+        <li>✅ Paid Acquisition (Google/Meta)</li>
+        <li>✅ Full Analytics & LTV Optimization</li>
       </ul>
-      <div style="margin-top:24px">
-        <a class="btn" href="book-diagnostic.html">Scale Your Leadership</a>
-      </div>
-    </div> 
+      <a href="book-diagnostic.html" class="btn" style="margin-top: 24px; text-align: center;">Scale Your Leadership</a>
+    </div>
+
   </div>
-  <div style="margin-top:12px; text-align: center;" class="muted small">Not sure which phase you're in? <a href="book-diagnostic.html">Book a diagnostic call</a>.</div>
 </section>
-      
-  
- 
-    <section class="section-spacing" aria-labelledby="testimonials-heading">
-      <h2 id="testimonials-heading" style="text-align: center; margin:0 0 24px">Proof. Not Promises.</h2>
-      <div class="testimonial-grid">
-        <div class="testimonial">
-          <strong>South Florida Premiere Roofing</strong>
-          <p>"IMPACTA got our phone ringing with qualified leads — within 2 weeks we had appointments booked and closed." <span class="small muted">— J. Martinez</span></p>
-          <a class="btn-outline" href="case-study-roofing.html" style="margin-top: 12px; display:inline-block;">Read the Full PPA Case Study</a>
-        </div>
-        <div class="testimonial">
-          <strong>Miller's Heating and Air</strong>
-          <p>"Quick logo, fast website, and clear reporting. Their system actually made my sales calls easier." <span class="small muted">— S. Miller</span></p>
-          <a class="btn-outline" href="case-studies.html" style="margin-top: 12px; display:inline-block;">See More Client Results</a>
-        </div>
-      </div>
-    </section>
+
  
     <section class="section-spacing" aria-labelledby="final-cta-heading">
        <h2 id="final-cta-heading" style="text-align: center; margin:0 0 24px">Stop Leaking Revenue.</h2>
@@ -262,30 +196,28 @@
  
   </main>
  
-  <footer class="container" role="contentinfo">
-    <div style="display:flex;flex-direction:column;gap:8px">
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-        <div>
-          <strong>IMPACTA Business Solutions Inc.</strong><br>
-          <span class="small muted">American Owned and Operated - Based in Ocala, FL</span>
-        </div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <a class="small muted" href="mailto:support@impactabusiness.solutions">getsupport@impactabusiness.solutions</a>
-          <a class="small muted" href="tel:+13525657234">352.565.7234</a>
-        </div>
-      </div>
+    <!-- FOOTER -->
+  <div id="global-footer"></div>
+          <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+          <script>
+            // Function to load external HTML into a div
+            function includeHTML(file, elementId) {
+              fetch(file)
+                .then(response => {
+                  if (response.ok) return response.text();
+                  throw new Error('Failed to load ' + file);
+                })
+                .then(data => {
+                  document.getElementById(elementId).innerHTML = data;
+                })
+                .catch(error => console.error(error));
+            }
 
-        
-      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
-          <div class="small muted">© 2025 IMPACTA Business Solutions Inc. All rights reserved.</div>
-          <div style="display:flex;gap:12px">
-              <a class="small muted" href="privacy.html">Privacy Policy</a>
-              <a class="small muted" href="terms.html">Terms of Service</a>
-          </div>
-      </div>
-    </div>
-  </footer>
-    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
-
+            // Execute the loads
+            document.addEventListener('DOMContentLoaded', function () {
+              includeHTML('header.html', 'global-header');
+              includeHTML('footer.html', 'global-footer');
+            });
+          </script>
 
 </body></html>
