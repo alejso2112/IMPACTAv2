@@ -261,26 +261,26 @@
     <!-- FOOTER -->
   <div id="global-footer"></div>
           <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
-          <script>
-            // Function to load external HTML into a div
-            function includeHTML(file, elementId) {
-              fetch(file)
-                .then(response => {
-                  if (response.ok) return response.text();
-                  throw new Error('Failed to load ' + file);
-                })
-                .then(data => {
-                  document.getElementById(elementId).innerHTML = data;
-                })
-                .catch(error => console.error(error));
-            }
+  <script>
+    // Function to load external HTML into a div
+    function includeHTML(file, elementId) {
+      fetch(file)
+        .then(response => {
+          if (response.ok) return response.text();
+          throw new Error('Failed to load ' + file);
+        })
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error(error));
+    }
 
-            // Execute the loads
-            document.addEventListener('DOMContentLoaded', function () {
-              includeHTML('header.html', 'global-header');
-              includeHTML('footer.html', 'global-footer');
-            });
-          </script>
+    // Execute the loads
+    document.addEventListener('DOMContentLoaded', function () {
+      includeHTML('header.html', 'global-header');
+      includeHTML('footer.html', 'global-footer');
+    });
+  </script>
 
 </body>
 </html>
