@@ -1,18 +1,100 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    
-    <title>Frequently Asked Questions | IMPACTA Business Solutions</title>
-    <meta name="description" content="Find answers to common questions about RevOps, performance-based growth coaching, and our $350 Strategic Diagnostic." />
-    
-    <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
 
-    <style>
-        .faq-container { max-width: 900px; margin: 60px auto; padding: 0 20px; }
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-GCDHL46X6N');
+  </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Frequently Asked Questions | PPA & RevOps Insights | IMPACTA</title>
+  <meta name="description"
+    content="Common questions about the Pay-Per-Appointment (PPA) model, our $350 Revenue Diagnostic, and how RevOps fixes lead leakage for small businesses." />
+  <meta name="keywords"
+    content="RevOps FAQ, PPA model explained, sales qualified appointment definition, CRM automation questions, IMPACTA business solutions FAQ" />
+
+  <link rel="canonical" href="https://impactabusinesssolutions.com/faqs.html" />
+  <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta property="og:site_name" content="IMPACTA Business Solutions" />
+  <meta property="og:title" content="Transparency in the System: IMPACTA FAQs" />
+  <meta property="og:description"
+    content="Learn how we replace agency chaos with performance-based RevOps engines. Answers on pricing, PPA, and tech stacks." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://impactabusinesssolutions.com/faqs.html" />
+  <meta property="og:image" content="https://impactabusinesssolutions.com/og-image-faq.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="RevOps & PPA: Your Questions Answered" />
+  <meta name="twitter:description"
+    content="Everything you need to know about building a revenue engine that turns clicks into cash." />
+  <meta name="twitter:image" content="https://impactabusinesssolutions.com/og-image-faq.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What exactly is 'RevOps'?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Revenue Operations (RevOps) is the strategic alignment of sales, marketing, and customer success departments into a single engine to maximize growth and eliminate lead leakage."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "Why do you charge $350 for a Diagnostic?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Our $350 Diagnostic is a high-level strategic consult where we audit your CRM and ad accounts to find leaks. This fee is 100% applied as a credit toward your Phase 2 PPA setup."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What does 'Performance-Based' (PPA) actually mean?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "It means we get paid based on outcomes—typically per Sales Qualified Appointment (SQA). We don't charge retainers; we get paid when we perform."
+          }
+        }
+      ]
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('utm_source')) {
+        const utmSource = document.getElementById('utm_source');
+        if (utmSource) utmSource.value = params.get('utm_source');
+        const utmMedium = document.getElementById('utm_medium');
+        if (utmMedium) utmMedium.value = params.get('utm_medium');
+        const utmCampaign = document.getElementById('utm_campaign');
+        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
+      }
+    });
+  </script>
+
+  <style>
+        .faq-container {
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 0 20px;
+        }
+
         .faq-item {
             background: #fff;
             border: 1px solid #e6eef8;
@@ -21,6 +103,7 @@
             overflow: hidden;
             transition: all 0.3s ease;
         }
+
         .faq-question {
             padding: 24px;
             cursor: pointer;
@@ -31,42 +114,59 @@
             color: var(--brand);
             font-size: 18px;
         }
+
         .faq-answer {
             padding: 0 24px 24px;
             color: var(--muted);
             line-height: 1.6;
-            display: none; /* Can be toggled with JS */
+            display: none;
+            /* Can be toggled with JS */
         }
+
         /* Simple toggle logic for the "active" class */
-        .faq-item.active .faq-answer { display: block; }
-        .faq-item.active { border-color: var(--brand); box-shadow: 0 8px 24px rgba(12,98,171,0.08); }
-        
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active {
+            border-color: var(--brand);
+            box-shadow: 0 8px 24px rgba(12, 98, 171, 0.08);
+        }
+
         .faq-icon {
             width: 20px;
             transition: transform 0.3s ease;
         }
-        .faq-item.active .faq-icon { transform: rotate(45deg); }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
     </style>
 </head>
+
+
 <body>
 
     <div id="global-header"></div>
 
-    <section class="hero-copy" style="text-align: center; box-shadow: none; background: transparent; padding-top: 80px;">
+    <section class="hero-copy"
+        style="text-align: center; box-shadow: none; background: transparent; padding-top: 80px;">
         <span class="pill">Common Questions</span>
         <h1>Transparency is part of the system.</h1>
         <p>Everything you need to know about how we build your revenue engine.</p>
     </section>
 
     <main class="faq-container">
-        
+
         <div class="faq-item">
             <div class="faq-question">
                 What exactly is "RevOps"?
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                Revenue Operations (RevOps) is the strategic alignment of your sales, marketing, and customer success departments. Instead of these teams working in silos, RevOps creates a single "engine" where data, tools, and processes are shared to maximize growth and eliminate lead leakage.
+                Revenue Operations (RevOps) is the strategic alignment of your sales, marketing, and customer success
+                departments. Instead of these teams working in silos, RevOps creates a single "engine" where data,
+                tools, and processes are shared to maximize growth and eliminate lead leakage.
             </div>
         </div>
 
@@ -76,7 +176,10 @@
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                Most agencies give away "free audits" that are just masked sales pitches. Our $350 Diagnostic is a high-level strategic consult. We spend time inside your CRM and ad accounts to find actual leaks. You walk away with a 90-day roadmap. If we decide to work together on a PPA basis, we apply that $350 as a credit to your setup.
+                Most agencies give away "free audits" that are just masked sales pitches. Our $350 Diagnostic is a
+                high-level strategic consult. We spend time inside your CRM and ad accounts to find actual leaks. You
+                walk away with a 90-day roadmap. If we decide to work together on a PPA basis, we apply that $350 as a
+                credit to your setup.
             </div>
         </div>
 
@@ -86,7 +189,9 @@
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                It means we put our skin in the game. After the initial setup, we don't charge "retainers" for the sake of it. We get paid based on the outcomes we generate—typically per Sales Qualified Appointment (SQA) or per acquisition. If we don't perform, you don't pay.
+                It means we put our skin in the game. After the initial setup, we don't charge "retainers" for the sake
+                of it. We get paid based on the outcomes we generate—typically per Sales Qualified Appointment (SQA) or
+                per acquisition. If we don't perform, you don't pay.
             </div>
         </div>
 
@@ -96,7 +201,9 @@
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                We are tool-agnostic, but we have preferred "Impact Stacks" that we know convert. During the Diagnostic, we’ll look at your current tech. If it's working, we'll optimize it. If it’s the reason you’re leaking revenue, we’ll recommend a migration to a platform built for automation.
+                We are tool-agnostic, but we have preferred "Impact Stacks" that we know convert. During the Diagnostic,
+                we’ll look at your current tech. If it's working, we'll optimize it. If it’s the reason you’re leaking
+                revenue, we’ll recommend a migration to a platform built for automation.
             </div>
         </div>
 
@@ -106,7 +213,9 @@
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                While we are proudly based in Ocala, we serve clients nationwide. Because we specialize in digital RevOps and automation, we can build and audit your systems remotely regardless of where your team is located.
+                While we are proudly based in Ocala, we serve clients nationwide. Because we specialize in digital
+                RevOps and automation, we can build and audit your systems remotely regardless of where your team is
+                located.
             </div>
         </div>
 
@@ -116,11 +225,14 @@
                 <span class="faq-icon">+</span>
             </div>
             <div class="faq-answer">
-                Agencies focus on "Top of Funnel" (getting clicks). We focus on the "Engine" (turning clicks into cash). We don't just send you leads and wish you luck; we coach your team and build the automation that ensures those leads actually show up to their appointments.
+                Agencies focus on "Top of Funnel" (getting clicks). We focus on the "Engine" (turning clicks into cash).
+                We don't just send you leads and wish you luck; we coach your team and build the automation that ensures
+                those leads actually show up to their appointments.
             </div>
         </div>
 
-        <section class="service cta-tight" style="background: #f2f7fb; border: 2px solid var(--brand); margin-top: 60px; text-align: center;">
+        <section class="service cta-tight"
+            style="background: #f2f7fb; border: 2px solid var(--brand); margin-top: 60px; text-align: center;">
             <h2 style="margin-top: 0;">Still have questions?</h2>
             <p>The best way to get answers is to see how these systems apply to your specific numbers.</p>
             <a href="book-diagnostic.html" class="btn">Request Your Revenue Diagnostic</a>
@@ -143,14 +255,14 @@
         // Your existing header/footer script
         function includeHTML(file, elementId) {
             fetch(file)
-            .then(response => {
-                if (response.ok) return response.text();
-                throw new Error('Failed to load ' + file);
-            })
-            .then(data => {
-                document.getElementById(elementId).innerHTML = data;
-            })
-            .catch(error => console.error(error));
+                .then(response => {
+                    if (response.ok) return response.text();
+                    throw new Error('Failed to load ' + file);
+                })
+                .then(data => {
+                    document.getElementById(elementId).innerHTML = data;
+                })
+                .catch(error => console.error(error));
         }
 
         document.addEventListener('DOMContentLoaded', function () {
@@ -159,4 +271,5 @@
         });
     </script>
 </body>
+
 </html>

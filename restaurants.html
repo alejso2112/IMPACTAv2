@@ -1,23 +1,74 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Restaurant & Café Growth Systems | IMPACTA Business Solutions</title>
 
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="icon" href="img/favicon-2025.png" />
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-</head>
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZW2CB9D6Z9"></script>
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
 
-    gtag('config', 'G-ZW2CB9D6Z9');
+    gtag('config', 'G-GCDHL46X6N');
   </script>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <title>Restaurant & Café Growth Systems | Predictable Reservations | IMPACTA</title>
+  <meta name="description"
+    content="Increase restaurant traffic and reservations. IMPACTA builds high-value guest engagement and automated follow-up systems for restaurants, cafés, and caterers." />
+  <meta name="keywords"
+    content="restaurant marketing Ocala, café customer discovery, food truck booking system, catering lead qualification, restaurant PPA model, hospitality growth" />
+
+  <link rel="canonical" href="https://impactabusinesssolutions.com/restaurants.html" />
+  <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
+  <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+
+  <link rel="stylesheet" href="css/style.css">
+
+  <meta property="og:site_name" content="IMPACTA Business Solutions" />
+  <meta property="og:title" content="More Guests & Reservations for Restaurants & Cafés" />
+  <meta property="og:description"
+    content="Dining decisions are emotional and sensory. We build the automated systems that turn local buzz into confirmed reservations and repeat visits." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://impactabusinesssolutions.com/restaurants.html" />
+  <meta property="og:image" content="https://impactabusinesssolutions.com/og-image-restaurants.png" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hospitality Industry: Predictable Traffic & Booking Systems" />
+  <meta name="twitter:description"
+    content="Stop losing guests to slow responses. Get a predictable traffic flow and large-party bookings with our PPA model." />
+  <meta name="twitter:image" content="https://impactabusinesssolutions.com/og-image-restaurants.png" />
+
+  <script type="application/ld+json">
+    {
+      "@context":"https://schema.org",
+      "@type":"Service",
+      "serviceType": "Hospitality RevOps & Reservation Systems",
+      "provider": {
+        "@type": "ProfessionalService",
+        "name": "IMPACTA Business Solutions Inc."
+      },
+      "description": "High-value guest engagement, local traffic campaigns, and automated reservation follow-up for restaurants, cafés, and event caterers."
+    }
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('utm_source')) {
+        const utmSource = document.getElementById('utm_source');
+        if (utmSource) utmSource.value = params.get('utm_source');
+        const utmMedium = document.getElementById('utm_medium');
+        if (utmMedium) utmMedium.value = params.get('utm_medium');
+        const utmCampaign = document.getElementById('utm_campaign');
+        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
+      }
+    });
+  </script>
+</head>
+
 <body>
 
   <!-- HEADER -->
@@ -159,7 +210,7 @@
         border-left:6px solid var(--brand);
         box-shadow:0 26px 70px rgba(0,0,0,0.14);
       ">
-        
+
         <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
           Why Guests Choose Certain Restaurants Over Others
         </h2>
@@ -281,30 +332,30 @@
   </main>
 
 
-    <!-- FOOTER -->
+  <!-- FOOTER -->
   <div id="global-footer"></div>
-          <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
-          <script>
-            // Function to load external HTML into a div
-            function includeHTML(file, elementId) {
-              fetch(file)
-                .then(response => {
-                  if (response.ok) return response.text();
-                  throw new Error('Failed to load ' + file);
-                })
-                .then(data => {
-                  document.getElementById(elementId).innerHTML = data;
-                })
-                .catch(error => console.error(error));
-            }
+  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+  <script>
+    // Function to load external HTML into a div
+    function includeHTML(file, elementId) {
+      fetch(file)
+        .then(response => {
+          if (response.ok) return response.text();
+          throw new Error('Failed to load ' + file);
+        })
+        .then(data => {
+          document.getElementById(elementId).innerHTML = data;
+        })
+        .catch(error => console.error(error));
+    }
 
-            // Execute the loads
-            document.addEventListener('DOMContentLoaded', function () {
-              includeHTML('header.html', 'global-header');
-              includeHTML('footer.html', 'global-footer');
-            });
-          </script>
+    // Execute the loads
+    document.addEventListener('DOMContentLoaded', function () {
+      includeHTML('header.html', 'global-header');
+      includeHTML('footer.html', 'global-footer');
+    });
+  </script>
 
 </body>
-</html>
 
+</html>
