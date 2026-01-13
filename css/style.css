@@ -506,97 +506,67 @@ footer{padding:18px 0;color:var(--muted);font-size:14px;border-top:1px solid #f1
   }
 }
 
-/* Reduce padding so the right card shrinks */
-.impacta-form-card {
-  padding: 22px !important;
-  border-radius: 16px;
-  box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+/* MOBILE HEADER HEIGHT FIX */
+@media (max-width: 600px) {
+  .nav {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    gap: 10px !important;
+  }
+}
+/* ============================= */
+/* MOBILE HEADER GAP FIX (FINAL) */
+/* ============================= */
+
+@media (max-width: 600px) {
+
+  /* Tighten header vertical space */
+  .nav {
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    gap: 10px !important;
+  }
+
+  /* Shrink mobile logo */
+  .logo-mobile {
+    height: 48px !important;
+  }
+
+  /* Hide tagline on mobile */
+  .brand .small.muted {
+    display: none !important;
+  }
+
+  /* Tighten nav buttons */
+  .nav-actions {
+    gap: 8px !important;
+  }
+
+  .nav-actions .btn,
+  .nav-actions .btn-outline,
+  .dropdown-btn {
+    padding: 8px 12px !important;
+  }
 }
 
-/* Shrink spacing between form elements */
-.form-row {
-  margin-bottom: 12px !important;
+/* Prevent phantom spacing between header + hero */
+header + .hero {
+  margin-top: 0 !important;
 }
 
-/* Shrink textarea to match left column height better */
-textarea {
-  height: 90px !important;
-}
+/* ========================================= */
+/* FIX MOBILE GAP (Updated for Global Header)*/
+/* ========================================= */
 
-/* Reduce top margin so card sits higher */
-.impacta-form-section {
-  margin-top: -10px;
-}
+@media (max-width: 600px) {
+  /* This targets the wrapper DIV instead of the header tag directly */
+  #global-header + .hero {
+    margin-top: 0 !important;
+    padding-top: 0 !important; /* Removes internal padding if needed */
+  }
 
-/* Keep button tight but readable */
-.impacta-btn {
-  margin-top: 6px;
-  padding: 14px 20px !important;
-}
-
-/* Ensure the right card never exceeds content height */
-.impacta-form-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-}
-
-/* Optional but recommended: tighter column gap */
-.diagnostic-grid {
-  gap: 26px !important;
-}
-
-.impacta-form-card {
-  text-align: center;
-}
-
-.impacta-form-card stripe-buy-button {
-  display: block;
-  margin: 0 auto;
-}
-
-
-/* Match the form card to the pricing/product card design */
-.diagnostic-form-card {
-  background: #ffffff;
-  padding: 32px;
-  border-radius: 16px;
-  border: 1px solid #e6f0fb;
-  box-shadow: 0 12px 28px rgba(0,0,0,0.12);
-  max-width: 420px;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-}
-
-/* Make form fields visually match the centered card layout */
-.diagnostic-form-card label {
-  text-align: left;
-  width: 100%;
-}
-
-.diagnostic-form-card input,
-.diagnostic-form-card select,
-.diagnostic-form-card textarea {
-  border-radius: 10px;
-  padding: 12px;
-  border: 1px solid #dce6f3;
-  font-size: 15px;
-}
-
-/* Match the blue button style from the logo card */
-.diagnostic-form-card .btn {
-  background: var(--brand);
-  color: white;
-  width: 100%;
-  padding: 14px;
-  font-size: 17px;
-  border-radius: 10px;
-  font-weight: 700;
-  box-shadow: 0 8px 18px rgba(12,98,171,0.22);
-}
-
-.diagnostic-form-card .btn:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 26px rgba(12,98,171,0.28);
+  /* Optional: Force the hero video to touch the header bottom */
+  #global-header {
+    margin-bottom: -1px; /* Tucks the seam if there's a pixel bleed */
+  }
 }
