@@ -21,6 +21,41 @@
   <link rel="stylesheet" href="css/style.css">
 </head>
 
+ <!-- ✅ LAYOUT FIXES (DESKTOP + MOBILE SAFE) -->
+  <style>
+    .founder-profile-wrap {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 50px;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    .founder-profile-left {
+      flex: 1;
+      min-width: 280px;
+      max-width: 380px;
+      text-align: center;
+      padding-top: 56px; /* desktop alignment */
+    }
+
+    .founder-profile-right {
+      flex: 1.5;
+      min-width: 320px;
+    }
+
+    /* ✅ MOBILE RESET */
+    @media (max-width: 768px) {
+      .founder-profile-left {
+        padding-top: 0; /* remove offset on mobile */
+      }
+
+      .founder-profile-wrap {
+        gap: 32px;
+      }
+    }
+  </style>
+
 <body>
 
 <!-- HEADER -->
@@ -96,9 +131,9 @@
     </p>
   </section>
 
-  <!-- METHOD / PHILOSOPHY -->
+ <!-- METHOD / PHILOSOPHY -->
   <section class="section-spacing light">
-    <h2 style="text-align:center; margin-bottom:32px;">
+    <h 2 style="text-align:center; margin-bottom:32px;">
       Why We Don’t Sell Retainers or Long Contracts
     </h2>
 
@@ -118,14 +153,15 @@
     </p>
   </section>
 
-  <!-- FOUNDER PROFILE -->
+ <!-- FOUNDER PROFILE -->
   <section class="section-spacing">
     <div class="service"
       style="padding:48px; box-shadow:0 20px 50px rgba(0,0,0,0.16); background:#ffffff; border-radius:14px;">
 
-      <div style="display:flex; flex-wrap:wrap; gap:50px; align-items:flex-start; justify-content:center;">
+      <div class="founder-profile-wrap">
 
-        <div style="flex:1; min-width:280px; max-width:380px; text-align:center;">
+        <!-- LEFT COLUMN -->
+        <div class="founder-profile-left">
           <img src="img/founders-img.png"
                alt="Alex Soto, Founder of IMPACTA Business Solutions"
                style="width:100%; border-radius:14px; box-shadow:0 10px 30px rgba(0,0,0,0.12);">
@@ -139,8 +175,11 @@
           </div>
         </div>
 
-        <div style="flex:1.5; min-width:320px;">
-          <span class="pill">The Operator</span>
+        <!-- RIGHT COLUMN -->
+        <div class="founder-profile-right">
+          <span class="pill" style="display:inline-block; margin-bottom:8px;">
+            The Operator
+          </span>
 
           <h3 style="margin-top:12px; color:#0c62ab; font-size:30px;">
             Forged Where Decisions Actually Happen
@@ -161,6 +200,17 @@
             “When you book a diagnostic, you’re not talking to a salesperson.
             You’re talking to someone who’s been called in when the numbers mattered.”
           </p>
+
+          <div style="background:#f8fbff; padding:24px; border-left:4px solid #0c62ab; border-radius:0 8px 8px 0; margin-top:24px;">
+            <p style="margin-bottom:12px; font-weight:700; color:#0c62ab; text-transform:uppercase; font-size:14px;">
+              The Proof Is in the Performance
+            </p>
+            <ul style="list-style:none; padding:0; line-height:1.6;">
+              <li>🚀 Took a stagnant provider from $500k to $1.2M/month in 60 days</li>
+              <li>📈 Built franchise systems that stabilized underperforming territories</li>
+              <li>🛠️ Shipped automation tools that enabled instant sign-on-the-spot</li>
+            </ul>
+          </div>
         </div>
 
       </div>
@@ -177,10 +227,10 @@
       <p class="small muted" style="margin-bottom:24px;">
         We’ll show you where revenue is leaking — and tell you honestly if it’s worth fixing.
       </p>
-
+      <br>
       <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">
         Get My Free 3-Point Diagnostic
-      </a>
+      </a><br><br>
     </div>
   </section>
 
