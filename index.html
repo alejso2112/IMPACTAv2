@@ -101,8 +101,23 @@
             { name: "Wellness & Spa", link: "wellness.html" }
         ];
 
-        // Display List for Industry Section (Visual only - Cards)
-        const industriesDisplay = ["Auto Services", "Auto Sales", "Commercial & Residential Cleaning", "Healthcare & Medical", "Hospitality", "HVAC", "Landscaping", "Pest Control", "Plumbing","Professional Services", "Real Estate", "Restaurants","Roofing","Retail", "Salons","Wellness & Spa"];
+        // Display List for Industry Section (UPDATED to include links)
+        const industriesDisplay = [
+            { name: "Auto Services", link: "automotive.html" },
+            { name: "Auto Sales", link: "auto-sales.html" },
+            { name: "Commercial & Residential Cleaning", link: "cleaning.html" },
+            { name: "Healthcare & Medical", link: "medical.html" },
+            { name: "HVAC", link: "hvac.html" },
+            { name: "Landscaping", link: "landscaping.html" },
+            { name: "Pest Control", link: "Pest-control.html" },
+            { name: "Plumbing", link: "plumbing.html" },
+            { name: "Professional Services", link: "professional-services.html" },
+            { name: "Real Estate", link: "real-estate.html" },
+            { name: "Restaurants", link: "restaurants.html" },
+            { name: "Roofing", link: "roofing.html" },
+            { name: "Salons", link: "salons.html" },
+            { name: "Solar", link: "solar.html" },
+        ];
 
         const faqs = [
             { question: "What exactly is 'RevOps'?", answer: "Revenue Operations (RevOps) is the strategic alignment of sales, marketing, and customer success into a single engine. Instead of silos, we build one system where data and processes flow to maximize growth and stop leaks." },
@@ -156,7 +171,7 @@
                 <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-transparent py-5'}`}>
                     <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                         <a href="https://impactabusinesssolutions.COM" className="flex items-center">
-                            <img src={scrolled ? "img/logo-main-2026.png" : "img/logo-mobile-2025.png"} alt="IMPACTA Business Solutions" className="h-16 w-auto object-contain rounded-md" />
+                            <img src={scrolled ? "img/logo-main-2025.png" : "img/logo-mobile-2025.png"} alt="IMPACTA Business Solutions" className="h-16 w-auto object-contain rounded-md" />
                         </a>
                         
                         {/* DESKTOP MENU */}
@@ -364,7 +379,13 @@
                     <SectionHeading subtitle="Who We Help" title="Industries We Scale" />
                     <div className="flex flex-wrap justify-center gap-4">
                         {industriesDisplay.map((ind, i) => (
-                            <span key={i} className="px-6 py-3 bg-white shadow-sm rounded-full text-gray-700 font-medium border border-gray-200">{ind}</span>
+                            <a 
+                                key={i} 
+                                href={ind.link} 
+                                className="px-6 py-3 bg-white shadow-sm rounded-full text-gray-700 font-medium border border-gray-200 hover:text-[#0c62ab] hover:border-[#0c62ab] transition-colors cursor-pointer"
+                            >
+                                {ind.name}
+                            </a>
                         ))}
                     </div>
                 </div>
