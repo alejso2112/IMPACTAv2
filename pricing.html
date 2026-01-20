@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing | IMPACTA Business Solutions</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        body { font-family: 'Noto Sans', sans-serif; scroll-behavior: smooth; }
+        .bg-impacta { background-color: #0c62ab; }
+        .text-impacta { color: #0c62ab; }
+        .border-impacta { border-color: #0c62ab; }
+        .hover-bg-impacta:hover { background-color: #084a85; }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        // --- ICONS ---
+        const IconCheckCircle = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>;
+        const IconXCircle = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>;
+        const IconMenu = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>;
+        const IconX = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>;
+        const IconChevronDown = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m6 9 6 6 6-6"/></svg>;
+        const IconPlus = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="M12 5v14"/></svg>;
+        const IconMinus = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/></svg>;
+        const IconShield = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>;
+
+        // --- DATA ---
+        
+        // Specific Industry Links for Dropdown
+        const industryLinks = [
+            { name: "Auto - Repair", link: "automotive.html" },
+            { name: "Auto - Sales", link: "auto-sales.html" },
+            { name: "Fitness", link: "fitness.html" },
+            { name: "Home Services", link: "home-services.html" },
+            { name: "HVAC", link: "hvac.html" },
+            { name: "Insurance", link: "insurance.html" },
+            { name: "Medical", link: "medical.html" },
+            { name: "Painting", link: "painting.html" },
+            { name: "Pest Control", link: "Pest-control.html" },
+            { name: "Plumbing", link: "plumbing.html" },
+            { name: "Professional Services", link: "professional-services.html" },
+            { name: "Real Estate", link: "real-estate.html" },
+            { name: "Restaurants", link: "restaurants.html" },
+            { name: "Roofing", link: "roofing.html" },
+            { name: "Salons", link: "salons.html" },
+            { name: "Solar", link: "solar.html" },
+            { name: "Wellness & Spa", link: "wellness.html" }
+        ];
+
+        const faqs = [
+            { question: "Are there really no monthly retainers?", answer: "Correct. We despise the agency model of 'pay us $2k/month to post on Facebook.' We charge one-time fees for building systems (Diagnostics & Fixes). If you want ongoing growth, we switch to a PPA (Pay-Per-Appointment) model where we only get paid when we deliver a qualified lead." },
+            { question: "What happens after the $350 Diagnostic?", answer: "You get a Roadmap. You can take that roadmap and implement it yourself, give it to your current marketing guy, or hire us to execute it. If you hire us for a 'Fix' or 'PPA' partnership, we credit the $350 back to you." },
+            { question: "How does the 'Money-Back Guarantee' work?", answer: "For the Revenue Leak Diagnostic: If we cannot find at least $3,500 in potential recovered revenue (leaks) in your current pipeline, we will refund your $350 immediately. We don't want your money if we can't help." },
+            { question: "What counts as a 'Sales Qualified Appointment' (SQA)?", answer: "We define this together during the Diagnostic. Typically, it's a prospect who fits your geography, has the budget/need, and shows up to a booked meeting. If they don't show, you don't pay." }
+        ];
+
+        // --- COMPONENTS ---
+
+        const Button = ({ children, variant = 'primary', className = '', onClick }) => {
+            const baseStyle = "px-6 py-3 rounded-md font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
+            const variants = {
+                primary: "bg-impacta text-white hover:bg-blue-800 shadow-lg hover:shadow-xl",
+                secondary: "bg-white text-impacta border-2 border-impacta hover:bg-blue-50",
+                outline: "border-2 border-white text-white hover:bg-white hover:text-[#0c62ab]"
+            };
+            return <button onClick={onClick} className={`${baseStyle} ${variants[variant]} ${className}`}>{children}</button>;
+        };
+
+        const SectionHeading = ({ subtitle, title, align = 'center', light = false }) => (
+            <div className={`mb-12 ${align === 'center' ? 'text-center' : 'text-left'}`}>
+                <span className={`${light ? 'text-blue-200' : 'text-impacta'} font-bold tracking-wider uppercase text-sm mb-2 block`}>{subtitle}</span>
+                <h2 className={`text-3xl md:text-4xl font-bold ${light ? 'text-white' : 'text-gray-900'}`}>{title}</h2>
+            </div>
+        );
+
+        const Card = ({ children, className = '' }) => (
+            <div className={`bg-white p-8 rounded-xl shadow-md hover:shadow-lg transition-shadow border border-gray-100 ${className}`}>{children}</div>
+        );
+
+        const Navbar = () => {
+            const [isOpen, setIsOpen] = useState(false);
+            const [isMobileIndustriesOpen, setIsMobileIndustriesOpen] = useState(false);
+            const [scrolled, setScrolled] = useState(false);
+
+            useEffect(() => {
+                const handleScroll = () => setScrolled(window.scrollY > 20);
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const midPoint = Math.ceil(industryLinks.length / 2);
+            const leftCol = industryLinks.slice(0, midPoint);
+            const rightCol = industryLinks.slice(midPoint);
+
+            return (
+                <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'bg-white shadow-md py-3' : 'bg-white shadow-sm py-4'}`}>
+                    <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+                        <a href="index.html" className="flex items-center">
+                            <img src="img/logo-main-2025.png" alt="IMPACTA Business Solutions" className="h-12 md:h-16 w-auto object-contain rounded-md" />
+                        </a>
+                        
+                        <div className="hidden md:flex items-center gap-8">
+                            <a href="solutions.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">Solutions</a>
+                            <a href="about-us.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">About Us</a>
+                            
+                            <div className="relative group">
+                                <button className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-impacta transition-colors">
+                                    Industries <IconChevronDown className="w-4 h-4" />
+                                </button>
+                                <div className="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                                    <div className="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                                        <div className="flex-1 space-y-2">
+                                            {leftCol.map((ind, i) => (
+                                                <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-impacta rounded-lg transition-colors">
+                                                    {ind.name}
+                                                </a>
+                                            ))}
+                                        </div>
+                                        <div className="flex-1 space-y-2">
+                                            {rightCol.map((ind, i) => (
+                                                <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-impacta rounded-lg transition-colors">
+                                                    {ind.name}
+                                                </a>
+                                            ))}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Active Link: Pricing */}
+                            <a href="pricing.html" className="text-sm font-bold text-impacta transition-colors">Pricing</a>
+                            
+                            <a href="faqs.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">FAQs</a>
+
+                            <Button 
+                                variant="primary" 
+                                className="py-2 px-4 text-sm"
+                                onClick={() => window.location.href = '48-hour-fix.html'}
+                            >
+                                Book My 48-hour Fix
+                            </Button>
+                        </div>
+
+                        <button className="md:hidden text-gray-600" onClick={() => setIsOpen(!isOpen)}>
+                            {isOpen ? <IconX className="w-6 h-6" /> : <IconMenu className="w-6 h-6 text-gray-800" />}
+                        </button>
+                    </div>
+
+                    {isOpen && (
+                        <div className="absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 flex flex-col gap-4 md:hidden border-t max-h-[85vh] overflow-y-auto">
+                            <a href="solutions.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Solutions</a>
+                            <a href="about-us.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>About Us</a>
+                            
+                            <div>
+                                <button 
+                                    onClick={() => setIsMobileIndustriesOpen(!isMobileIndustriesOpen)} 
+                                    className="flex items-center justify-between w-full text-gray-700 font-medium text-lg"
+                                >
+                                    Industries 
+                                    <IconChevronDown className={`w-5 h-5 transition-transform ${isMobileIndustriesOpen ? 'rotate-180' : ''}`} />
+                                </button>
+                                {isMobileIndustriesOpen && (
+                                    <div className="pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                                        {industryLinks.map((ind, i) => (
+                                            <a key={i} href={ind.link} className="block text-gray-600 text-base" onClick={() => setIsOpen(false)}>
+                                                {ind.name}
+                                            </a>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <a href="pricing.html" className="text-impacta font-bold text-lg" onClick={() => setIsOpen(false)}>Pricing</a>
+                            <a href="faqs.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>FAQs</a>
+                            <Button variant="primary" className="w-full mt-4" onClick={() => window.location.href = '48-hour-fix.html'}>Get My 48-Hour Fix</Button>
+                        </div>
+                    )}
+                </nav>
+            );
+        };
+
+        const PricingHero = () => (
+            // UPDATED: Spacing optimized (pb-32 md:pb-64) to fix vertical rhythm with negative margin cards
+            <section className="bg-slate-900 pt-40 pb-32 md:pb-64 text-white relative overflow-hidden">
+                <div className="absolute inset-0 opacity-10" style={{backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')"}}></div>
+                <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+                    <span className="bg-blue-900 text-blue-200 font-bold px-4 py-1 rounded-full text-sm inline-block mb-6 border border-blue-700">Simple. Transparent. ROI-Focused.</span>
+                    <h1 className="text-4xl md:text-6xl font-bold mb-6">Invest in Outcomes, <br /><span className="text-blue-400">Not Hours.</span></h1>
+                    <p className="text-xl text-gray-300 max-w-2xl mx-auto mb-10">We don't charge retainers that get you nowhere. We charge one-time fees to build systems, and performance fees when those systems work.</p>
+                </div>
+            </section>
+        );
+
+        const DetailedPricing = () => (
+            <section className="py-20 -mt-20 md:-mt-32 relative z-20">
+                <div className="max-w-7xl mx-auto px-6">
+                    <div className="grid md:grid-cols-3 gap-8">
+                        
+                        {/* CARD 1: DIAGNOSTIC */}
+                        <div className="bg-white rounded-xl shadow-xl overflow-hidden border border-gray-200 flex flex-col">
+                            <div className="p-8 border-b border-gray-100">
+                                <div className="text-gray-500 font-bold uppercase tracking-wider text-xs mb-2">Step 1: The Audit</div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-4">Revenue Diagnostic</h3>
+                                <div className="text-4xl font-bold text-impacta">$350 <span className="text-lg text-gray-400 font-normal">/ one-time</span></div>
+                                <p className="text-gray-600 mt-4 text-sm">We deep-dive into your CRM, lead flow, and sales process to find exactly where you are losing money.</p>
+                            </div>
+                            <div className="p-8 bg-gray-50 flex-grow">
+                                <ul className="space-y-4 text-sm text-gray-700">
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Full Pipeline Snapshot</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Identify Top 3 Leaks</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>ROI Projection Model</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>90-Day Execution Roadmap</strong></li>
+                                    <li className="flex gap-3 text-green-600"><IconShield className="w-5 h-5 shrink-0" /> <strong>Money-Back Guarantee*</strong></li>
+                                </ul>
+                                {/* UPDATED: Changed variant to 'primary' for better readability */}
+                                <Button variant="primary" className="w-full mt-8" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Diagnostic</Button>
+                                <p className="text-center text-xs text-gray-400 mt-3">*Refunded if we don't find leaks worth $3.5k+</p>
+                            </div>
+                        </div>
+
+                        {/* CARD 2: QUICK FIX */}
+                        <div className="bg-white rounded-xl shadow-2xl overflow-hidden border-2 border-impacta transform md:-translate-y-4 relative flex flex-col">
+                            <div className="absolute top-0 inset-x-0 bg-impacta text-white text-center text-xs font-bold py-1 uppercase tracking-wide">Most Popular</div>
+                            <div className="p-8 pt-10 border-b border-gray-100">
+                                <div className="text-impacta font-bold uppercase tracking-wider text-xs mb-2">Step 2: The Action</div>
+                                <h3 className="text-2xl font-bold text-gray-900 mb-4">48-Hour Fix</h3>
+                                <div className="text-4xl font-bold text-impacta">$350 <span className="text-lg text-gray-400 font-normal">/ one-time</span></div>
+                                <p className="text-gray-600 mt-4 text-sm">We isolate ONE specific bottleneck (like missed calls or no-shows) and build the automation to fix it permanently.</p>
+                            </div>
+                            <div className="p-8 bg-blue-50/50 flex-grow">
+                                <ul className="space-y-4 text-sm text-gray-700">
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Select 1 "Menu" Item</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Implementation in 2 Days</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Tech Stack Integration</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Team Training Video</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-impacta w-5 h-5 shrink-0" /> <strong>Zero Monthly Fees</strong></li>
+                                </ul>
+                                <Button variant="primary" className="w-full mt-8" onClick={() => window.location.href = '48-hour-fix.html'}>Choose My Fix</Button>
+                            </div>
+                        </div>
+
+                        {/* CARD 3: PPA MODEL */}
+                        <div className="bg-slate-900 rounded-xl shadow-xl overflow-hidden border border-slate-700 text-white flex flex-col">
+                            <div className="p-8 border-b border-slate-700">
+                                <div className="text-blue-400 font-bold uppercase tracking-wider text-xs mb-2">Step 3: The Scale</div>
+                                <h3 className="text-2xl font-bold text-white mb-4">PPA Partner</h3>
+                                <div className="text-4xl font-bold text-white">Custom <span className="text-lg text-slate-400 font-normal">/ performance</span></div>
+                                <p className="text-slate-400 mt-4 text-sm">For businesses ready to scale. We manage your lead gen and follow-up. You only pay for the qualified appointments we book.</p>
+                            </div>
+                            <div className="p-8 bg-slate-800 flex-grow">
+                                <ul className="space-y-4 text-sm text-slate-300">
+                                    <li className="flex gap-3"><IconCheckCircle className="text-blue-400 w-5 h-5 shrink-0" /> <strong>Pay-Per-Appointment (SQA)</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-blue-400 w-5 h-5 shrink-0" /> <strong>We Manage the Ad Spend</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-blue-400 w-5 h-5 shrink-0" /> <strong>We Handle Follow-Up</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-blue-400 w-5 h-5 shrink-0" /> <strong>Weekly Growth Coaching</strong></li>
+                                    <li className="flex gap-3"><IconCheckCircle className="text-blue-400 w-5 h-5 shrink-0" /> <strong>Requires Diagnostic First</strong></li>
+                                </ul>
+                                <Button variant="outline" className="w-full mt-8 border-slate-600 text-white hover:bg-white hover:text-slate-900" onClick={() => window.location.href = 'ppa-model.html'}>Learn About PPA</Button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+        );
+
+        const ComparisonTable = () => (
+            <section className="py-20 bg-white">
+                <div className="max-w-5xl mx-auto px-6">
+                    <SectionHeading subtitle="Why Us" title="Stop Paying for Effort. Pay for Results." />
+                    
+                    <div className="overflow-x-auto">
+                        <table className="w-full border-collapse">
+                            <thead>
+                                <tr className="bg-gray-50">
+                                    <th className="p-4 text-left text-gray-500 font-semibold uppercase text-xs tracking-wider border-b-2 border-gray-100 w-1/3">Feature</th>
+                                    <th className="p-4 text-center text-impacta font-bold text-lg border-b-2 border-impacta w-1/3 bg-blue-50">IMPACTA</th>
+                                    <th className="p-4 text-center text-gray-500 font-semibold border-b-2 border-gray-100 w-1/3">Typical Agency</th>
+                                </tr>
+                            </thead>
+                            <tbody className="text-sm">
+                                <tr>
+                                    <td className="p-4 border-b border-gray-100 font-medium text-gray-900">Pricing Model</td>
+                                    <td className="p-4 border-b border-gray-100 text-center font-bold text-gray-900 bg-blue-50/30">One-Time or Performance</td>
+                                    <td className="p-4 border-b border-gray-100 text-center text-gray-500">Monthly Retainer ($2k+)</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-4 border-b border-gray-100 font-medium text-gray-900">Focus</td>
+                                    <td className="p-4 border-b border-gray-100 text-center font-bold text-gray-900 bg-blue-50/30">Revenue & Appointments</td>
+                                    <td className="p-4 border-b border-gray-100 text-center text-gray-500">Clicks & Impressions</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-4 border-b border-gray-100 font-medium text-gray-900">Asset Ownership</td>
+                                    <td className="p-4 border-b border-gray-100 text-center font-bold text-gray-900 bg-blue-50/30">You Own Everything</td>
+                                    <td className="p-4 border-b border-gray-100 text-center text-gray-500">They Own the Ad Account</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-4 border-b border-gray-100 font-medium text-gray-900">Speed to Impact</td>
+                                    <td className="p-4 border-b border-gray-100 text-center font-bold text-gray-900 bg-blue-50/30">48 Hours</td>
+                                    <td className="p-4 border-b border-gray-100 text-center text-gray-500">3-6 Months "Ramp Up"</td>
+                                </tr>
+                                <tr>
+                                    <td className="p-4 border-b border-gray-100 font-medium text-gray-900">Guarantee</td>
+                                    <td className="p-4 border-b border-gray-100 text-center font-bold text-gray-900 bg-blue-50/30">Money-Back on Diagnostic</td>
+                                    <td className="p-4 border-b border-gray-100 text-center text-gray-500">None ("It takes time")</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const FAQSection = () => {
+            const [activeIndex, setActiveIndex] = useState(null);
+            const toggle = (i) => setActiveIndex(activeIndex === i ? null : i);
+
+            return (
+                <section id="faq" className="py-20 bg-gray-50">
+                    <div className="max-w-3xl mx-auto px-6">
+                        <SectionHeading subtitle="Common Questions" title="Pricing FAQs" />
+                        <div className="space-y-4">
+                            {faqs.map((faq, i) => (
+                                <div key={i} className={`border rounded-xl transition-all duration-300 bg-white ${activeIndex === i ? 'border-impacta shadow-md' : 'border-gray-200'}`}>
+                                    <button onClick={() => toggle(i)} className="w-full flex justify-between items-center p-5 text-left font-bold text-gray-900 hover:text-impacta transition-colors">
+                                        <span>{faq.question}</span>
+                                        <div className={`transform transition-transform duration-300 ${activeIndex === i ? 'rotate-180' : ''}`}>
+                                            {activeIndex === i ? <IconMinus className="w-5 h-5 text-impacta" /> : <IconPlus className="w-5 h-5 text-gray-400" />}
+                                        </div>
+                                    </button>
+                                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <div className="p-5 pt-0 text-gray-600 leading-relaxed">{faq.answer}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const Footer = () => (
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+        );
+
+        const App = () => {
+            return (
+                <div className="min-h-screen bg-white text-gray-900 flex flex-col">
+                    <Navbar />
+                    <PricingHero />
+                    <DetailedPricing />
+                    <ComparisonTable />
+                    <FAQSection />
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
+</body>
+</html>

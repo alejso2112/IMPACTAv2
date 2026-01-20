@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,14 +11,11 @@
     gtag('config', 'G-GCDHL46X6N');
   </script>
 
-  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -32,9 +28,11 @@
   <link rel="canonical" href="https://impactabusinesssolutions.com/hvac.html" />
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
@@ -63,247 +61,335 @@
       "description": "Customized emergency lead capture, automated estimate follow-up, and financing-qualified appointment setting for residential HVAC providers."
     }
   </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('utm_source')) {
-        const utmSource = document.getElementById('utm_source');
-        if (utmSource) utmSource.value = params.get('utm_source');
-        const utmMedium = document.getElementById('utm_medium');
-        if (utmMedium) utmMedium.value = params.get('utm_medium');
-        const utmCampaign = document.getElementById('utm_campaign');
-        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
-      }
-    });
-  </script>
+  
+  <style>
+      body { font-family: 'Noto Sans', sans-serif; }
+      /* Ensure container width matches legacy styles while allowing Tailwind padding */
+      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  </style>
 </head>
-<body>
 
-  <!-- HEADER -->
-  <div id="global-header"></div>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-  <main class="container">
+  <nav class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="index.html" class="flex items-center">
+            <img src="img/logo-main-2025.png" alt="IMPACTA" class="h-12 w-auto object-contain rounded-md">
+        </a>
 
-    <!-- FULL-WIDTH BANDED HERO -->
-    <section class="section-spacing" style="padding-top:60px; padding-bottom:40px;">
-      <div class="service" style="
-        padding:48px;
-        border-radius:16px;
-        background:linear-gradient(180deg,#ffffff 0%, #eef7ff 100%);
-        box-shadow:0 20px 55px rgba(0,0,0,0.16);
-      ">
-        <span class="pill">HVAC Industry</span>
+        <div class="hidden md:flex items-center gap-8">
+            <a href="solutions.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Solutions</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            
+            <div class="relative group">
+                <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                    Industries 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                    <div class="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                        <div class="flex-1 space-y-2">
+                            <a href="automotive.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Repair</a>
+                            <a href="auto-sales.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Sales</a>
+                            <a href="fitness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Fitness</a>
+                            <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
+                            <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
+                            <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-        <h1 style="font-size:40px; line-height:1.1; color:var(--brand); margin-bottom:16px;">
-          HVAC Companies Win With Speed, Trust & Predictability — We Build All Three.
-        </h1>
+            <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
 
-        <p style="font-size:17px; color:#0b1220; max-width:850px;">
-          In HVAC, every minute matters. Whether it’s a broken AC at 3PM or a heater failing at 2AM,
-          the company who responds first — wins.
-          IMPACTA helps HVAC businesses capture emergency calls, lock in high-ticket installs,
-          and eliminate revenue leaks through performance-based appointment systems.
-        </p>
-      </div>
-    </section>
+                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                    Book My 48-hour Fix
+                </a>
+            </div>
 
-    <!-- OVERSIZED HVAC STAT BAR (DIFFERENT LAYOUT) -->
-    <section class="stats-bar" style="
-      margin-top:10px;
-      grid-template-columns:repeat(4,1fr);
-      background:#f6fbff;
-      border-radius:14px;
-      box-shadow:0 12px 35px rgba(0,0,0,0.08);
-      padding:32px;
-    ">
-      <div>
-        <div class="stat-number">85%</div>
-        <div class="small muted">Hire the FIRST HVAC company to answer</div>
-      </div>
-
-      <div>
-        <div class="stat-number">40–65%</div>
-        <div class="small muted">Of HVAC leads are “emergency” intent</div>
-      </div>
-
-      <div>
-        <div class="stat-number">12–15</div>
-        <div class="small muted">Average touchpoints to close a replacement</div>
-      </div>
-
-      <div>
-        <div class="stat-number">$6k–$14k</div>
-        <div class="small muted">Average install revenue at stake</div>
-      </div>
-    </section>
-
-
-    <!-- REVENUE LEAKS — UNIQUE DUAL-COLUMN FAILURE CHAIN -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Where HVAC Companies Lose Revenue</h2>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
-
-        <!-- LEFT SIDE -->
-        <div class="service" style="padding:32px; box-shadow:0 18px 45px rgba(0,0,0,0.10);">
-          <h3 style="font-size:22px; margin-bottom:12px; color:var(--brand);">Emergency Revenue Leaks</h3>
-          <ul class="features-list">
-            <li>Missed “no cool / no heat” calls</li>
-            <li>Slow first response (5 minutes = lost customer)</li>
-            <li>Not answering after hours</li>
-            <li>Poor call overflow management</li>
-            <li>No instant booking options</li>
-          </ul>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
         </div>
 
-        <!-- RIGHT SIDE -->
-        <div class="service" style="padding:32px; box-shadow:0 18px 45px rgba(0,0,0,0.10);">
-          <h3 style="font-size:22px; margin-bottom:12px; color:var(--brand);">Install Revenue Leaks</h3>
-          <ul class="features-list">
-            <li>Not nurturing “shopping” customers</li>
-            <li>No follow-up sequence for estimates</li>
-            <li>No financing conversation automation</li>
-            <li>Low show rates for sales appointments</li>
-            <li>Not positioning premium system options</li>
-          </ul>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <a href="solutions.html" class="text-gray-700 font-medium text-lg block">Solutions</a>
+            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
+            
+            <div>
+                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                    Industries 
+                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                </div>
+            </div>
+
+            <a href="index.html#pricing" class="text-gray-700 font-medium text-lg block">Pricing</a>
+            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
         </div>
+  </nav>
 
-      </div>
-    </section>
+  <main class="flex-grow pt-24 pb-12">
+    <div class="container">
 
-
-    <!-- HVAC SEGMENT CARDS (UNIQUE CONCEPT) -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">HVAC Has Two Buyers. We Convert Both.</h2>
-
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
-
-        <div class="service" style="padding:32px; background:#ffffff; box-shadow:0 20px 50px rgba(0,0,0,0.15);">
-          <h3 style="font-size:22px; color:var(--brand);">1. Emergency Caller</h3>
-          <p>They want the FIRST available tech. No comparison shopping. No patience.</p>
-          <ul class="features-list">
-            <li>Instant response wins them</li>
-            <li>SMS confirmation = trust</li>
-            <li>Appointment reminders prevent cancellations</li>
-          </ul>
-        </div>
-
-        <div class="service" style="padding:32px; background:#ffffff; box-shadow:0 20px 50px rgba(0,0,0,0.15);">
-          <h3 style="font-size:22px; color:var(--brand);">2. Replacement Shopper</h3>
-          <p>They compare 3–5 quotes — strong follow-up wins premium installs.</p>
-          <ul class="features-list">
-            <li>Automated estimate follow-up</li>
-            <li>Financing pre-positioning</li>
-            <li>Upsell-ready appointment qualification</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- HOW IMPACTA FIXES THE HVAC PIPELINE -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">How IMPACTA Fixes HVAC Revenue Leaks</h2>
-
-      <div class="grid-3">
-
-        <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
-          <h3>Under-60-Second Engagement</h3>
-          <p>We instantly engage emergency HVAC leads so you beat every competitor.</p>
-        </div>
-
-        <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
-          <h3>Estimate Follow-Up Automation</h3>
-          <p>11-touch nurture sequence boosts install conversions significantly.</p>
-        </div>
-
-        <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
-          <h3>Financing-Ready Appointment Setting</h3>
-          <p>We pre-qualify for budget, urgency, and financing interest.</p>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- PPA FOR HVAC (UNIQUE SPLIT-BAND) -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Our 2-Phase HVAC Growth System</h2>
-
-      <div class="pricing-grid-ppa">
-
-        <div class="price-card" style="padding:32px;">
-          <h4>Phase 1: HVAC Revenue Leak Diagnostic — $350</h4>
-          <p class="small muted">We find every leak costing you installs & service calls.</p>
-          <ul class="features-list">
-            <li>Emergency call audit</li>
-            <li>Estimate follow-up analysis</li>
-            <li>After-hours responsiveness test</li>
-            <li>Complete HVAC growth plan</li>
-          </ul>
-        </div>
-
-        <div class="price-card" style="
-          padding:32px;
-          transform:translateY(-8px);
-          box-shadow:0 20px 50px rgba(12,98,171,0.20);
+      <section class="section-spacing" style="padding-top:20px; padding-bottom:40px;">
+        <div class="service" style="
+          padding:48px;
+          border-radius:16px;
+          background:linear-gradient(180deg,#ffffff 0%, #eef7ff 100%);
+          box-shadow:0 20px 55px rgba(0,0,0,0.16);
         ">
-          <h4>Phase 2: Pay-Per-Appointment (HVAC)</h4>
-          <p class="small muted">You only pay for booked HVAC appointments.</p>
-          <ul class="features-list">
-            <li>Emergency call outreach</li>
-            <li>Install estimate booking</li>
-            <li>Financing qualification</li>
-            <li>Performance reporting</li>
-          </ul>
+          <span class="pill">HVAC Industry</span>
+
+          <h1 style="font-size:40px; line-height:1.1; color:var(--brand); margin-bottom:16px;">
+            HVAC Companies Win With Speed, Trust & Predictability — We Build All Three.
+          </h1>
+
+          <p style="font-size:17px; color:#0b1220; max-width:850px;">
+            In HVAC, every minute matters. Whether it’s a broken AC at 3PM or a heater failing at 2AM,
+            the company who responds first — wins.
+            IMPACTA helps HVAC businesses capture emergency calls, lock in high-ticket installs,
+            and eliminate revenue leaks through performance-based appointment systems.
+          </p>
+        </div>
+      </section>
+
+      <section class="stats-bar" style="
+        margin-top:10px;
+        grid-template-columns:repeat(4,1fr);
+        background:#f6fbff;
+        border-radius:14px;
+        box-shadow:0 12px 35px rgba(0,0,0,0.08);
+        padding:32px;
+      ">
+        <div>
+          <div class="stat-number">85%</div>
+          <div class="small muted">Hire the FIRST HVAC company to answer</div>
         </div>
 
-      </div>
-    </section>
+        <div>
+          <div class="stat-number">40–65%</div>
+          <div class="small muted">Of HVAC leads are “emergency” intent</div>
+        </div>
+
+        <div>
+          <div class="stat-number">12–15</div>
+          <div class="small muted">Average touchpoints to close a replacement</div>
+        </div>
+
+        <div>
+          <div class="stat-number">$6k–$14k</div>
+          <div class="small muted">Average install revenue at stake</div>
+        </div>
+      </section>
 
 
-    <!-- CTA -->
-    <section class="section-spacing ">
-      <div id="cta-box" class="service" style="
-        padding:48px;
-        text-align:center;
-        box-shadow:0 20px 50px rgba(0,0,0,0.16);
-      ">
-        <h2 style="margin-bottom:16px;">Ready to Book More HVAC Jobs?</h2>
-        <p class="small muted" style="margin-bottom:24px;">
-          Start with your HVAC Diagnostic to uncover leaks and unlock your custom PPA rate.
-        </p>
-        <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-      </div>
-    </section>
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Where HVAC Companies Lose Revenue</h2>
 
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:28px;">
+
+          <div class="service" style="padding:32px; box-shadow:0 18px 45px rgba(0,0,0,0.10);">
+            <h3 style="font-size:22px; margin-bottom:12px; color:var(--brand);">Emergency Revenue Leaks</h3>
+            <ul class="features-list">
+              <li>Missed “no cool / no heat” calls</li>
+              <li>Slow first response (5 minutes = lost customer)</li>
+              <li>Not answering after hours</li>
+              <li>Poor call overflow management</li>
+              <li>No instant booking options</li>
+            </ul>
+          </div>
+
+          <div class="service" style="padding:32px; box-shadow:0 18px 45px rgba(0,0,0,0.10);">
+            <h3 style="font-size:22px; margin-bottom:12px; color:var(--brand);">Install Revenue Leaks</h3>
+            <ul class="features-list">
+              <li>Not nurturing “shopping” customers</li>
+              <li>No follow-up sequence for estimates</li>
+              <li>No financing conversation automation</li>
+              <li>Low show rates for sales appointments</li>
+              <li>Not positioning premium system options</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">HVAC Has Two Buyers. We Convert Both.</h2>
+
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+
+          <div class="service" style="padding:32px; background:#ffffff; box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+            <h3 style="font-size:22px; color:var(--brand);">1. Emergency Caller</h3>
+            <p>They want the FIRST available tech. No comparison shopping. No patience.</p>
+            <ul class="features-list">
+              <li>Instant response wins them</li>
+              <li>SMS confirmation = trust</li>
+              <li>Appointment reminders prevent cancellations</li>
+            </ul>
+          </div>
+
+          <div class="service" style="padding:32px; background:#ffffff; box-shadow:0 20px 50px rgba(0,0,0,0.15);">
+            <h3 style="font-size:22px; color:var(--brand);">2. Replacement Shopper</h3>
+            <p>They compare 3–5 quotes — strong follow-up wins premium installs.</p>
+            <ul class="features-list">
+              <li>Automated estimate follow-up</li>
+              <li>Financing pre-positioning</li>
+              <li>Upsell-ready appointment qualification</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">How IMPACTA Fixes HVAC Revenue Leaks</h2>
+
+        <div class="grid-3">
+
+          <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
+            <h3>Under-60-Second Engagement</h3>
+            <p>We instantly engage emergency HVAC leads so you beat every competitor.</p>
+          </div>
+
+          <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
+            <h3>Estimate Follow-Up Automation</h3>
+            <p>11-touch nurture sequence boosts install conversions significantly.</p>
+          </div>
+
+          <div class="service" style="padding:28px; box-shadow:0 12px 40px rgba(0,0,0,0.10);">
+            <h3>Financing-Ready Appointment Setting</h3>
+            <p>We pre-qualify for budget, urgency, and financing interest.</p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Our 2-Phase HVAC Growth System</h2>
+
+        <div class="pricing-grid-ppa">
+
+          <div class="price-card" style="padding:32px;">
+            <h4>Phase 1: HVAC Revenue Leak Diagnostic — $350</h4>
+            <p class="small muted">We find every leak costing you installs & service calls.</p>
+            <ul class="features-list">
+              <li>Emergency call audit</li>
+              <li>Estimate follow-up analysis</li>
+              <li>After-hours responsiveness test</li>
+              <li>Complete HVAC growth plan</li>
+            </ul>
+          </div>
+
+          <div class="price-card" style="
+            padding:32px;
+            transform:translateY(-8px);
+            box-shadow:0 20px 50px rgba(12,98,171,0.20);
+          ">
+            <h4>Phase 2: Pay-Per-Appointment (HVAC)</h4>
+            <p class="small muted">You only pay for booked HVAC appointments.</p>
+            <ul class="features-list">
+              <li>Emergency call outreach</li>
+              <li>Install estimate booking</li>
+              <li>Financing qualification</li>
+              <li>Performance reporting</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing ">
+        <div id="cta-box" class="service" style="
+          padding:48px;
+          text-align:center;
+          box-shadow:0 20px 50px rgba(0,0,0,0.16);
+        ">
+          <h2 style="margin-bottom:16px;">Ready to Book More HVAC Jobs?</h2>
+          <p class="small muted" style="margin-bottom:24px;">
+            Start with your HVAC Diagnostic to uncover leaks and unlock your custom PPA rate.
+          </p>
+          <a href="revenue-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
+        </div>
+      </section>
+
+    </div>
   </main>
 
-  <!-- FOOTER -->
-  <div id="global-footer"></div>
-  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+
+  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
   <script>
-    // Function to load external HTML into a div
-    function includeHTML(file, elementId) {
-      fetch(file)
-        .then(response => {
-          if (response.ok) return response.text();
-          throw new Error('Failed to load ' + file);
-        })
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => console.error(error));
+    // Header Logic for Mobile Menu
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const indBtn = document.getElementById('mobile-industry-btn');
+    const indList = document.getElementById('mobile-industry-list');
+    const indIcon = document.getElementById('mobile-industry-icon');
+
+    if(btn){
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
     }
 
-    // Execute the loads
-    document.addEventListener('DOMContentLoaded', function () {
-      includeHTML('header.html', 'global-header');
-      includeHTML('footer.html', 'global-footer');
-    });
+    if(indBtn){
+        indBtn.addEventListener('click', () => {
+            indList.classList.toggle('hidden');
+            indIcon.classList.toggle('rotate-180');
+        });
+    }
   </script>
 
 </body>
-
 </html>

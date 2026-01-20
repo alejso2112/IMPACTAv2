@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,14 +11,11 @@
     gtag('config', 'G-GCDHL46X6N');
   </script>
 
-  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -32,9 +28,11 @@
   <link rel="canonical" href="https://impactabusinesssolutions.com/solar.html" />
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
@@ -63,303 +61,394 @@
       "description": "Customized homeowner verification, utility usage qualification, and financial fit screening for residential solar installation providers."
     }
   </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('utm_source')) {
-        const utmSource = document.getElementById('utm_source');
-        if (utmSource) utmSource.value = params.get('utm_source');
-        const utmMedium = document.getElementById('utm_medium');
-        if (utmMedium) utmMedium.value = params.get('utm_medium');
-        const utmCampaign = document.getElementById('utm_campaign');
-        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
-      }
-    });
-  </script>
+  
+  <style>
+      body { font-family: 'Noto Sans', sans-serif; }
+      /* Ensure container width matches legacy styles while allowing Tailwind padding */
+      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  </style>
 </head>
 
-<body>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-  <!-- HEADER -->
-  <div id="global-header"></div>
+  <nav class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="index.html" class="flex items-center">
+            <img src="img/logo-main-2025.png" alt="IMPACTA" class="h-12 w-auto object-contain rounded-md">
+        </a>
 
-  <main class="container">
+        <div class="hidden md:flex items-center gap-8">
+            <a href="solutions.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Solutions</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            
+            <div class="relative group">
+                <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                    Industries 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                    <div class="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                        <div class="flex-1 space-y-2">
+                            <a href="automotive.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Repair</a>
+                            <a href="auto-sales.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Sales</a>
+                            <a href="fitness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Fitness</a>
+                            <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
+                            <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
+                            <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- HERO: FUTURISTIC ENERGY-THEMED -->
-    <section class="section-spacing" style="padding-top:60px;">
-      <div style="
-        padding:48px;
-        border-radius:16px;
-        background:linear-gradient(135deg, #ffffff 0%, #e4f4ff 40%, #c7e7ff 100%);
-        border-left:6px solid var(--brand);
-        box-shadow:0 25px 60px rgba(0,0,0,0.18);
-      ">
+       <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
 
-        <span class="pill">Solar Industry</span>
+                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                    Book My 48-hour Fix
+                </a>
+            </div>
 
-        <h1 style="font-size:40px; margin-bottom:16px; color:var(--brand);">
-          High-Intent Solar Appointments. Verified Homeowners. Performance-Based.
-        </h1>
-
-        <p style="font-size:17px; color:#0b1220;">
-          Solar buyers are some of the most competitive, high-value leads in the market.
-          IMPACTA helps solar companies cut through the noise with verified homeowners,
-          pre-qualified appointments, and follow-up systems that convert high-ticket installs.
-        </p>
-
-      </div>
-    </section>
-
-
-    <!-- SOLAR STAT BAR -->
-    <section class="stats-bar" style="
-      margin-top:20px;
-      background:#ffffff;
-      border-radius:14px;
-      padding:28px;
-      box-shadow:0 12px 35px rgba(0,0,0,0.10);
-      border:1px solid #e8eff7;
-    ">
-      <div>
-        <div class="stat-number">72%</div>
-        <div class="small muted">Of solar shoppers research 3+ companies</div>
-      </div>
-
-      <div>
-        <div class="stat-number">22–45%</div>
-        <div class="small muted">Appointment-to-sale ratio (with proper follow-up)</div>
-      </div>
-
-      <div>
-        <div class="stat-number">$20k–$55k</div>
-        <div class="small muted">Avg. residential install value</div>
-      </div>
-
-      <div>
-        <div class="stat-number">5–12</div>
-        <div class="small muted">Days to decision for most homeowners</div>
-      </div>
-    </section>
-
-
-    <!-- HOMEOWNER DECISION FUNNEL (UNIQUE 4-STEP WIDE GRID) -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">The Solar Homeowner Decision Funnel</h2>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:20px;
-      ">
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:18px; color:var(--brand);">Awareness</h3>
-          <p>They see the ads — but trust is low at this stage.</p>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
         </div>
 
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <a href="solutions.html" class="text-gray-700 font-medium text-lg block">Solutions</a>
+            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
+            
+            <div>
+                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                    Industries 
+                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                </div>
+            </div>
+
+            <a href="index.html#pricing" class="text-gray-700 font-medium text-lg block">Pricing</a>
+            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
+        </div>
+  </nav>
+
+  
+
+  <main class="flex-grow pt-24 pb-12">
+    <div class="container">
+
+      <section class="section-spacing" style="padding-top:20px;">
+        <div style="
+          padding:48px;
+          border-radius:16px;
+          background:linear-gradient(135deg, #ffffff 0%, #e4f4ff 40%, #c7e7ff 100%);
+          border-left:6px solid var(--brand);
+          box-shadow:0 25px 60px rgba(0,0,0,0.18);
+        ">
+
+          <span class="pill">Solar Industry</span>
+
+          <h1 style="font-size:40px; margin-bottom:16px; color:var(--brand);">
+            High-Intent Solar Appointments. Verified Homeowners. Performance-Based.
+          </h1>
+
+          <p style="font-size:17px; color:#0b1220;">
+            Solar buyers are some of the most competitive, high-value leads in the market.
+            IMPACTA helps solar companies cut through the noise with verified homeowners,
+            pre-qualified appointments, and follow-up systems that convert high-ticket installs.
+          </p>
+
+        </div>
+      </section>
+
+
+      <section class="stats-bar" style="
+        margin-top:20px;
+        background:#ffffff;
+        border-radius:14px;
+        padding:28px;
+        box-shadow:0 12px 35px rgba(0,0,0,0.10);
+        border:1px solid #e8eff7;
+      ">
+        <div>
+          <div class="stat-number">72%</div>
+          <div class="small muted">Of solar shoppers research 3+ companies</div>
+        </div>
+
+        <div>
+          <div class="stat-number">22–45%</div>
+          <div class="small muted">Appointment-to-sale ratio (with proper follow-up)</div>
+        </div>
+
+        <div>
+          <div class="stat-number">$20k–$55k</div>
+          <div class="small muted">Avg. residential install value</div>
+        </div>
+
+        <div>
+          <div class="stat-number">5–12</div>
+          <div class="small muted">Days to decision for most homeowners</div>
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">The Solar Homeowner Decision Funnel</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(4,1fr);
+          gap:20px;
+        ">
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:18px; color:var(--brand);">Awareness</h3>
+            <p>They see the ads — but trust is low at this stage.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            background:#ffffff;
+            border-left:6px solid var(--brand);
+            box-shadow:0 18px 40px rgba(0,0,0,0.12);
+          ">
+            <h3 style="font-size:18px; color:var(--brand);">Interest</h3>
+            <p>They compare companies. Fast response wins the conversation.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:18px; color:var(--brand);">Evaluation</h3>
+            <p>We nurture through objections, incentives, and timing.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:18px; color:var(--brand);">Decision</h3>
+            <p>Appointment quality determines the sale — not the ad.</p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
         <div class="service" style="
-          padding:24px;
+          padding:40px;
           background:#ffffff;
           border-left:6px solid var(--brand);
-          box-shadow:0 18px 40px rgba(0,0,0,0.12);
-        ">
-          <h3 style="font-size:18px; color:var(--brand);">Interest</h3>
-          <p>They compare companies. Fast response wins the conversation.</p>
-        </div>
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:18px; color:var(--brand);">Evaluation</h3>
-          <p>We nurture through objections, incentives, and timing.</p>
-        </div>
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:18px; color:var(--brand);">Decision</h3>
-          <p>Appointment quality determines the sale — not the ad.</p>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- SOLAR PSYCHOLOGY PANEL -->
-    <section class="section-spacing">
-      <div class="service" style="
-        padding:40px;
-        background:#ffffff;
-        border-left:6px solid var(--brand);
-        box-shadow:0 18px 50px rgba(0,0,0,0.14);
-      ">
-        <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
-          Why Homeowners Choose One Solar Company Over Another
-        </h2>
-
-        <p>
-          Solar decisions are financially heavy and emotionally loaded. Homeowners want clarity,
-          savings, stability, and a company they can trust long-term.
-        </p>
-
-        <p style="margin-top:12px;">
-          IMPACTA positions solar companies as transparent, credible, and reliable — long before
-          your rep arrives for the in-home or virtual consultation.
-        </p>
-      </div>
-    </section>
-
-
-    <!-- OBJECTION SHIELDING SYSTEM (UNIQUE 5-STEP LAYOUT) -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">The 5 Biggest Solar Objections — And How We Overcome Them</h2>
-
-      <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px;">
-
-        <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
-          <h3>Cost</h3>
-          <p class="small muted">We frame long-term savings, tax credits & payoff timeline.</p>
-        </div>
-
-        <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
-          <h3>Roof Condition</h3>
-          <p class="small muted">We pre-qualify roof age and suitability.</p>
-        </div>
-
-        <div class="service" style="
-          padding:20px;
-          border-left:6px solid var(--brand);
-          box-shadow:0 12px 32px rgba(0,0,0,0.12);
-        ">
-          <h3>Timing</h3>
-          <p class="small muted">We nurture until they're ready — without losing the sale.</p>
-        </div>
-
-        <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
-          <h3>Confusion</h3>
-          <p class="small muted">We simplify financing, warranties & installation steps.</p>
-        </div>
-
-        <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
-          <h3>Trust</h3>
-          <p class="small muted">We position you as the credible, low-pressure choice.</p>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- QUALIFICATION MATRIX (3-UP NEW STYLE) -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Solar Appointment Qualification Matrix</h2>
-
-      <div class="grid-3">
-
-        <div class="service" style="padding:24px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-          <h3>Homeowner Verification</h3>
-          <p>We confirm ownership, roof type, shading, address, and utility usage.</p>
-        </div>
-
-        <div class="service" style="
-          padding:24px;
-          border-left:6px solid var(--brand);
           box-shadow:0 18px 50px rgba(0,0,0,0.14);
-          background:linear-gradient(180deg,#ffffff,#f4fbff);
         ">
-          <h3>Financial Fit</h3>
-          <p>Credit score, financing eligibility, monthly bill targets.</p>
+          <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
+            Why Homeowners Choose One Solar Company Over Another
+          </h2>
+
+          <p>
+            Solar decisions are financially heavy and emotionally loaded. Homeowners want clarity,
+            savings, stability, and a company they can trust long-term.
+          </p>
+
+          <p style="margin-top:12px;">
+            IMPACTA positions solar companies as transparent, credible, and reliable — long before
+            your rep arrives for the in-home or virtual consultation.
+          </p>
         </div>
+      </section>
 
-        <div class="service" style="padding:24px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-          <h3>Timing Readiness</h3>
-          <p>We identify timeline and follow-up until they’re ready to install.</p>
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">The 5 Biggest Solar Objections — And How We Overcome Them</h2>
+
+        <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:14px;">
+
+          <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+            <h3>Cost</h3>
+            <p class="small muted">We frame long-term savings, tax credits & payoff timeline.</p>
+          </div>
+
+          <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+            <h3>Roof Condition</h3>
+            <p class="small muted">We pre-qualify roof age and suitability.</p>
+          </div>
+
+          <div class="service" style="
+            padding:20px;
+            border-left:6px solid var(--brand);
+            box-shadow:0 12px 32px rgba(0,0,0,0.12);
+          ">
+            <h3>Timing</h3>
+            <p class="small muted">We nurture until they're ready — without losing the sale.</p>
+          </div>
+
+          <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+            <h3>Confusion</h3>
+            <p class="small muted">We simplify financing, warranties & installation steps.</p>
+          </div>
+
+          <div class="service" style="padding:20px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+            <h3>Trust</h3>
+            <p class="small muted">We position you as the credible, low-pressure choice.</p>
+          </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
 
 
-    <!-- SOLAR PPA -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Solar</h2>
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Solar Appointment Qualification Matrix</h2>
 
-      <div class="pricing-grid-ppa">
+        <div class="grid-3">
 
-        <div class="price-card" style="padding:32px;">
-          <h4>Phase 1: Solar Diagnostic — $350</h4>
-          <p class="small muted">We analyze your solar pipeline from awareness to install.</p>
-          <ul class="features-list">
-            <li>Lead response audit</li>
-            <li>Qualification test</li>
-            <li>Objection analysis</li>
-            <li>Full solar growth plan</li>
-          </ul>
+          <div class="service" style="padding:24px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
+            <h3>Homeowner Verification</h3>
+            <p>We confirm ownership, roof type, shading, address, and utility usage.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            border-left:6px solid var(--brand);
+            box-shadow:0 18px 50px rgba(0,0,0,0.14);
+            background:linear-gradient(180deg,#ffffff,#f4fbff);
+          ">
+            <h3>Financial Fit</h3>
+            <p>Credit score, financing eligibility, monthly bill targets.</p>
+          </div>
+
+          <div class="service" style="padding:24px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
+            <h3>Timing Readiness</h3>
+            <p>We identify timeline and follow-up until they’re ready to install.</p>
+          </div>
+
         </div>
+      </section>
 
-        <div class="price-card" style="
-          padding:32px;
-          box-shadow:0 22px 60px rgba(12,98,171,0.20);
-          transform:translateY(-10px);
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Solar</h2>
+
+        <div class="pricing-grid-ppa">
+
+          <div class="price-card" style="padding:32px;">
+            <h4>Phase 1: Solar Diagnostic — $350</h4>
+            <p class="small muted">We analyze your solar pipeline from awareness to install.</p>
+            <ul class="features-list">
+              <li>Lead response audit</li>
+              <li>Qualification test</li>
+              <li>Objection analysis</li>
+              <li>Full solar growth plan</li>
+            </ul>
+          </div>
+
+          <div class="price-card" style="
+            padding:32px;
+            box-shadow:0 22px 60px rgba(12,98,171,0.20);
+            transform:translateY(-10px);
+          ">
+            <h4>Phase 2: Pay-Per-Appointment (Solar)</h4>
+            <p class="small muted">Only pay for verified homeowner solar bookings.</p>
+            <ul class="features-list">
+              <li>Homeowner verification</li>
+              <li>Roof & utility qualification</li>
+              <li>Financing readiness screening</li>
+              <li>Performance reporting</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing ">
+        <div id="cta-box" class="service" style="
+          padding:48px;
+          text-align:center;
+          box-shadow:0 20px 50px rgba(0,0,0,0.16);
         ">
-          <h4>Phase 2: Pay-Per-Appointment (Solar)</h4>
-          <p class="small muted">Only pay for verified homeowner solar bookings.</p>
-          <ul class="features-list">
-            <li>Homeowner verification</li>
-            <li>Roof & utility qualification</li>
-            <li>Financing readiness screening</li>
-            <li>Performance reporting</li>
-          </ul>
+          <h2 style="margin-bottom:16px;">Ready to Book More Qualified Solar Appointments?</h2>
+          <p class="small muted" style="margin-bottom:24px;">
+            Start with your Solar Diagnostic & get your custom PPA rate.
+          </p>
+          <a href="revenue-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
         </div>
+      </section>
 
-      </div>
-    </section>
-
-
-    <!-- CTA -->
-    <section class="section-spacing ">
-      <div id="cta-box" class="service" style="
-        padding:48px;
-        text-align:center;
-        box-shadow:0 20px 50px rgba(0,0,0,0.16);
-      ">
-        <h2 style="margin-bottom:16px;">Ready to Book More Qualified Solar Appointments?</h2>
-        <p class="small muted" style="margin-bottom:24px;">
-          Start with your Solar Diagnostic & get your custom PPA rate.
-        </p>
-        <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-      </div>
-    </section>
-
+    </div>
   </main>
 
 
-  <!-- FOOTER -->
-  <div id="global-footer"></div>
-  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+
+  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
   <script>
-    // Function to load external HTML into a div
-    function includeHTML(file, elementId) {
-      fetch(file)
-        .then(response => {
-          if (response.ok) return response.text();
-          throw new Error('Failed to load ' + file);
-        })
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => console.error(error));
+    // Header Logic for Mobile Menu
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const indBtn = document.getElementById('mobile-industry-btn');
+    const indList = document.getElementById('mobile-industry-list');
+    const indIcon = document.getElementById('mobile-industry-icon');
+
+    if(btn){
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
     }
 
-    // Execute the loads
-    document.addEventListener('DOMContentLoaded', function () {
-      includeHTML('header.html', 'global-header');
-      includeHTML('footer.html', 'global-footer');
-    });
+    if(indBtn){
+        indBtn.addEventListener('click', () => {
+            indList.classList.toggle('hidden');
+            indIcon.classList.toggle('rotate-180');
+        });
+    }
   </script>
 
 </body>

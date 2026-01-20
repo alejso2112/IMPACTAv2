@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,14 +11,11 @@
     gtag('config', 'G-GCDHL46X6N');
   </script>
 
-  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -32,9 +28,11 @@
   <link rel="canonical" href="https://impactabusinesssolutions.com/professional-services.html" />
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
@@ -63,315 +61,405 @@
       "description": "Customized lead engagement, intent-based qualification, and long-cycle nurture systems for legal, financial, and business consulting firms."
     }
   </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('utm_source')) {
-        const utmSource = document.getElementById('utm_source');
-        if (utmSource) utmSource.value = params.get('utm_source');
-        const utmMedium = document.getElementById('utm_medium');
-        if (utmMedium) utmMedium.value = params.get('utm_medium');
-        const utmCampaign = document.getElementById('utm_campaign');
-        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
-      }
-    });
-  </script>
+  
+  <style>
+      body { font-family: 'Noto Sans', sans-serif; }
+      /* Ensure container width matches legacy styles while allowing Tailwind padding */
+      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  </style>
 </head>
 
-<body>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-  <!-- HEADER -->
-  <div id="global-header"></div>
+  <nav class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="index.html" class="flex items-center">
+            <img src="img/logo-main-2025.png" alt="IMPACTA" class="h-12 w-auto object-contain rounded-md">
+        </a>
 
+        <div class="hidden md:flex items-center gap-8">
+            <a href="solutions.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Solutions</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            
+            <div class="relative group">
+                <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                    Industries 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                    <div class="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                        <div class="flex-1 space-y-2">
+                            <a href="automotive.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Repair</a>
+                            <a href="auto-sales.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Sales</a>
+                            <a href="fitness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Fitness</a>
+                            <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
+                            <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
+                            <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-  <main class="container">
+       <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
 
-    <!-- HERO: EXECUTIVE WHITE -->
-    <section class="section-spacing" style="padding-top:60px;">
-      <div style="
-        background:#ffffff;
-        padding:60px;
-        border-radius:20px;
-        border-left:6px solid var(--brand);
-        box-shadow:0 24px 60px rgba(0,0,0,0.14);
-      ">
+                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                    Book My 48-hour Fix
+                </a>
+            </div>
 
-        <span class="pill">Professional Services</span>
-
-        <h1 style="
-          font-size:42px;
-          margin-bottom:16px;
-          color:var(--brand);
-          line-height:1.1;
-        ">
-          High-Quality Consultations for Legal, Financial & Advisory Firms.
-        </h1>
-
-        <p style="font-size:18px; max-width:820px;">
-          Professional service firms thrive on credibility, clarity, trust,
-          and consistent high-quality consultations. IMPACTA builds qualification,
-          engagement, and appointment systems tailored to service providers with
-          long sales cycles and high-value clients.
-        </p>
-
-      </div>
-    </section>
-
-
-    <!-- TRUST METRICS BAR -->
-    <section class="stats-bar" style="
-      margin-top:24px;
-      padding:32px;
-      border-radius:14px;
-      background:#ffffff;
-      border:1px solid #e8edf3;
-      box-shadow:0 12px 35px rgba(0,0,0,0.08);
-    ">
-
-      <div>
-        <div class="stat-number">79%</div>
-        <div class="small muted">Pick providers based on professionalism</div>
-      </div>
-
-      <div>
-        <div class="stat-number">6–11</div>
-        <div class="small muted">Touchpoints before booking a consultation</div>
-      </div>
-
-      <div>
-        <div class="stat-number">92%</div>
-        <div class="small muted">Value responsiveness over any other factor</div>
-      </div>
-
-      <div>
-        <div class="stat-number">$1,500–$15,000+</div>
-        <div class="small muted">Typical engagement value</div>
-      </div>
-
-    </section>
-
-
-    <!-- 3-PILLAR SEGMENTATION -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">We Support Every Type of Professional Firm</h2>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:24px;
-      ">
-
-        <div class="service" style="
-          padding:32px;
-          box-shadow:0 16px 45px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:22px; color:var(--brand);">Legal Services</h3>
-          <ul class="features-list">
-            <li>Law firms</li>
-            <li>Family & criminal law</li>
-            <li>Injury attorneys</li>
-            <li>Immigration firms</li>
-          </ul>
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
         </div>
 
-        <div class="service" style="
-          padding:32px;
-          border-left:6px solid var(--brand);
-          background:linear-gradient(180deg,#ffffff,#f4fbff);
-          box-shadow:0 22px 55px rgba(0,0,0,0.12);
-        ">
-          <h3 style="font-size:22px; color:var(--brand);">Financial Services</h3>
-          <ul class="features-list">
-            <li>CPAs & accountants</li>
-            <li>Bookkeepers</li>
-            <li>Financial advisors</li>
-            <li>Tax planning firms</li>
-          </ul>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <a href="solutions.html" class="text-gray-700 font-medium text-lg block">Solutions</a>
+            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
+            
+            <div>
+                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                    Industries 
+                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                </div>
+            </div>
+
+            <a href="index.html#pricing" class="text-gray-700 font-medium text-lg block">Pricing</a>
+            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
         </div>
-
-        <div class="service" style="
-          padding:32px;
-          box-shadow:0 16px 45px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:22px; color:var(--brand);">Consulting & Advisory</h3>
-          <ul class="features-list">
-            <li>Business consultants</li>
-            <li>IT service providers</li>
-            <li>Marketing advisors</li>
-            <li>Operational consultants</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
+  </nav>
 
 
-    <!-- PAIN → SOLUTION MATRIX -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Your Challenges — and How IMPACTA Solves Them</h2>
+  <main class="flex-grow pt-24 pb-12">
+    <div class="container">
 
-      <div style="
-        display:grid;
-        grid-template-columns:1fr 1fr;
-        gap:32px;
-      ">
-
-        <div class="service" style="
-          padding:32px;
-          box-shadow:0 14px 45px rgba(0,0,0,0.10);
-        ">
-          <h3 style="color:var(--brand);">Common Challenges</h3>
-          <ul class="features-list">
-            <li>Leads not responding</li>
-            <li>Unqualified prospects</li>
-            <li>Long sales cycles</li>
-            <li>Underdeveloped follow-up</li>
-            <li>Minimal pipeline visibility</li>
-          </ul>
-        </div>
-
-        <div class="service" style="
-          padding:32px;
-          border-left:6px solid var(--brand);
+      <section class="section-spacing" style="padding-top:20px;">
+        <div style="
           background:#ffffff;
-          box-shadow:0 18px 55px rgba(0,0,0,0.14);
-        ">
-          <h3 style="color:var(--brand);">IMPACTA Solutions</h3>
-          <ul class="features-list">
-            <li>Instant engagement sequences</li>
-            <li>Qualification & screening</li>
-            <li>Long-cycle nurture system</li>
-            <li>Structured pipeline follow-up</li>
-            <li>Performance reporting</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- CONSULTATION PIPELINE FLOW -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">The IMPACTA Consultation Pipeline</h2>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:20px;
-      ">
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>1. Inquiry</h3>
-          <p>Instant client engagement.</p>
-        </div>
-
-        <div class="service" style="
-          padding:24px;
+          padding:60px;
+          border-radius:20px;
           border-left:6px solid var(--brand);
-          background:linear-gradient(180deg,#ffffff,#eef7ff);
-          box-shadow:0 18px 50px rgba(0,0,0,0.12);
+          box-shadow:0 24px 60px rgba(0,0,0,0.14);
         ">
-          <h3>2. Qualification</h3>
-          <p>Needs, urgency, and fit analyzed.</p>
+
+          <span class="pill">Professional Services</span>
+
+          <h1 style="
+            font-size:42px;
+            margin-bottom:16px;
+            color:var(--brand);
+            line-height:1.1;
+          ">
+            High-Quality Consultations for Legal, Financial & Advisory Firms.
+          </h1>
+
+          <p style="font-size:18px; max-width:820px;">
+            Professional service firms thrive on credibility, clarity, trust,
+            and consistent high-quality consultations. IMPACTA builds qualification,
+            engagement, and appointment systems tailored to service providers with
+            long sales cycles and high-value clients.
+          </p>
+
         </div>
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>3. Consultation</h3>
-          <p>Scheduled meeting with clear expectations.</p>
-        </div>
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>4. Nurture</h3>
-          <p>Long-term trust building & follow-up.</p>
-        </div>
-
-      </div>
-    </section>
+      </section>
 
 
-    <!-- PPA -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Professional Firms</h2>
-
-      <div class="pricing-grid-ppa">
-
-        <div class="price-card" style="padding:32px;">
-          <h4>Professional Services Diagnostic — $350</h4>
-          <ul class="features-list">
-            <li>Responsiveness audit</li>
-            <li>Qualification system review</li>
-            <li>Consultation pipeline analysis</li>
-            <li>Full service growth plan</li>
-          </ul>
-        </div>
-
-        <div class="price-card" style="
-          padding:32px;
-          box-shadow:0 22px 60px rgba(12,98,171,0.20);
-          transform:translateY(-10px);
-        ">
-          <h4>Pay-Per-Appointment (Professional)</h4>
-          <ul class="features-list">
-            <li>Qualified consultations only</li>
-            <li>Intent & urgency screening</li>
-            <li>Pipeline follow-through</li>
-            <li>Performance reporting</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
-
-
-    <!-- CTA -->
-    <section class="section-spacing ">
-      <div id="cta-box" class="service" style="
-        padding:48px;
-        text-align:center;
-        box-shadow:0 20px 50px rgba(0,0,0,0.16);
+      <section class="stats-bar" style="
+        margin-top:24px;
+        padding:32px;
+        border-radius:14px;
+        background:#ffffff;
+        border:1px solid #e8edf3;
+        box-shadow:0 12px 35px rgba(0,0,0,0.08);
       ">
-        <h2 style="margin-bottom:16px;">Ready to Scale Your Firm?</h2>
-        <p class="small muted" style="margin-bottom:24px;">
-          Start with your Professional Services Diagnostic to uncover leaks and unlock your custom PPA rate.
-        </p>
-        <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-      </div>
-    </section>
 
+        <div>
+          <div class="stat-number">79%</div>
+          <div class="small muted">Pick providers based on professionalism</div>
+        </div>
+
+        <div>
+          <div class="stat-number">6–11</div>
+          <div class="small muted">Touchpoints before booking a consultation</div>
+        </div>
+
+        <div>
+          <div class="stat-number">92%</div>
+          <div class="small muted">Value responsiveness over any other factor</div>
+        </div>
+
+        <div>
+          <div class="stat-number">$1,500–$15,000+</div>
+          <div class="small muted">Typical engagement value</div>
+        </div>
+
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">We Support Every Type of Professional Firm</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:24px;
+        ">
+
+          <div class="service" style="
+            padding:32px;
+            box-shadow:0 16px 45px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Legal Services</h3>
+            <ul class="features-list">
+              <li>Law firms</li>
+              <li>Family & criminal law</li>
+              <li>Injury attorneys</li>
+              <li>Immigration firms</li>
+            </ul>
+          </div>
+
+          <div class="service" style="
+            padding:32px;
+            border-left:6px solid var(--brand);
+            background:linear-gradient(180deg,#ffffff,#f4fbff);
+            box-shadow:0 22px 55px rgba(0,0,0,0.12);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Financial Services</h3>
+            <ul class="features-list">
+              <li>CPAs & accountants</li>
+              <li>Bookkeepers</li>
+              <li>Financial advisors</li>
+              <li>Tax planning firms</li>
+            </ul>
+          </div>
+
+          <div class="service" style="
+            padding:32px;
+            box-shadow:0 16px 45px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Consulting & Advisory</h3>
+            <ul class="features-list">
+              <li>Business consultants</li>
+              <li>IT service providers</li>
+              <li>Marketing advisors</li>
+              <li>Operational consultants</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Your Challenges — and How IMPACTA Solves Them</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:1fr 1fr;
+          gap:32px;
+        ">
+
+          <div class="service" style="
+            padding:32px;
+            box-shadow:0 14px 45px rgba(0,0,0,0.10);
+          ">
+            <h3 style="color:var(--brand);">Common Challenges</h3>
+            <ul class="features-list">
+              <li>Leads not responding</li>
+              <li>Unqualified prospects</li>
+              <li>Long sales cycles</li>
+              <li>Underdeveloped follow-up</li>
+              <li>Minimal pipeline visibility</li>
+            </ul>
+          </div>
+
+          <div class="service" style="
+            padding:32px;
+            border-left:6px solid var(--brand);
+            background:#ffffff;
+            box-shadow:0 18px 55px rgba(0,0,0,0.14);
+          ">
+            <h3 style="color:var(--brand);">IMPACTA Solutions</h3>
+            <ul class="features-list">
+              <li>Instant engagement sequences</li>
+              <li>Qualification & screening</li>
+              <li>Long-cycle nurture system</li>
+              <li>Structured pipeline follow-up</li>
+              <li>Performance reporting</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">The IMPACTA Consultation Pipeline</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(4,1fr);
+          gap:20px;
+        ">
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>1. Inquiry</h3>
+            <p>Instant client engagement.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            border-left:6px solid var(--brand);
+            background:linear-gradient(180deg,#ffffff,#eef7ff);
+            box-shadow:0 18px 50px rgba(0,0,0,0.12);
+          ">
+            <h3>2. Qualification</h3>
+            <p>Needs, urgency, and fit analyzed.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>3. Consultation</h3>
+            <p>Scheduled meeting with clear expectations.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>4. Nurture</h3>
+            <p>Long-term trust building & follow-up.</p>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Professional Firms</h2>
+
+        <div class="pricing-grid-ppa">
+
+          <div class="price-card" style="padding:32px;">
+            <h4>Professional Services Diagnostic — $350</h4>
+            <ul class="features-list">
+              <li>Responsiveness audit</li>
+              <li>Qualification system review</li>
+              <li>Consultation pipeline analysis</li>
+              <li>Full service growth plan</li>
+            </ul>
+          </div>
+
+          <div class="price-card" style="
+            padding:32px;
+            box-shadow:0 22px 60px rgba(12,98,171,0.20);
+            transform:translateY(-10px);
+          ">
+            <h4>Pay-Per-Appointment (Professional)</h4>
+            <ul class="features-list">
+              <li>Qualified consultations only</li>
+              <li>Intent & urgency screening</li>
+              <li>Pipeline follow-through</li>
+              <li>Performance reporting</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing ">
+        <div id="cta-box" class="service" style="
+          padding:48px;
+          text-align:center;
+          box-shadow:0 20px 50px rgba(0,0,0,0.16);
+        ">
+          <h2 style="margin-bottom:16px;">Ready to Scale Your Firm?</h2>
+          <p class="small muted" style="margin-bottom:24px;">
+            Start with your Professional Services Diagnostic to uncover leaks and unlock your custom PPA rate.
+          </p>
+          <a href="revenue-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
+        </div>
+      </section>
+
+    </div>
   </main>
 
 
-  <!-- FOOTER -->
-  <div id="global-footer"></div>
-  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+
+  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
   <script>
-    // Function to load external HTML into a div
-    function includeHTML(file, elementId) {
-      fetch(file)
-        .then(response => {
-          if (response.ok) return response.text();
-          throw new Error('Failed to load ' + file);
-        })
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => console.error(error));
+    // Header Logic for Mobile Menu
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const indBtn = document.getElementById('mobile-industry-btn');
+    const indList = document.getElementById('mobile-industry-list');
+    const indIcon = document.getElementById('mobile-industry-icon');
+
+    if(btn){
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
     }
 
-    // Execute the loads
-    document.addEventListener('DOMContentLoaded', function () {
-      includeHTML('header.html', 'global-header');
-      includeHTML('footer.html', 'global-footer');
-    });
+    if(indBtn){
+        indBtn.addEventListener('click', () => {
+            indList.classList.toggle('hidden');
+            indIcon.classList.toggle('rotate-180');
+        });
+    }
   </script>
 
 </body>

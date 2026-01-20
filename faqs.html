@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,14 +11,11 @@
     gtag('config', 'G-GCDHL46X6N');
   </script>
 
-  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -32,9 +28,9 @@
   <link rel="canonical" href="https://impactabusinesssolutions.com/faqs.html" />
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
-
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
@@ -51,7 +47,65 @@
     content="Everything you need to know about building a revenue engine that turns clicks into cash." />
   <meta name="twitter:image" content="https://impactabusinesssolutions.com/og-image-faq.png" />
 
-  <script type="application/ld+json">
+  <style>
+        body { font-family: 'Noto Sans', sans-serif; scroll-behavior: smooth; }
+        .bg-impacta { background-color: #0c62ab; }
+        .text-impacta { color: #0c62ab; }
+        
+        /* FAQ Specific Styles */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .faq-item {
+            background: #fff;
+            border: 1px solid #e6eef8;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question {
+            padding: 24px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            color: #0c62ab;
+            font-size: 18px;
+        }
+
+        .faq-answer {
+            padding: 0 24px 24px;
+            color: #6b7280;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-item.active {
+            border-color: #0c62ab;
+            box-shadow: 0 8px 24px rgba(12, 98, 171, 0.08);
+        }
+
+        .faq-icon {
+            width: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+    </style>
+    
+    <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "FAQPage",
@@ -83,202 +137,233 @@
       ]
     }
   </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('utm_source')) {
-        const utmSource = document.getElementById('utm_source');
-        if (utmSource) utmSource.value = params.get('utm_source');
-        const utmMedium = document.getElementById('utm_medium');
-        if (utmMedium) utmMedium.value = params.get('utm_medium');
-        const utmCampaign = document.getElementById('utm_campaign');
-        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
-      }
-    });
-  </script>
-
-  <style>
-        .faq-container {
-            max-width: 900px;
-            margin: 60px auto;
-            padding: 0 20px;
-        }
-
-        .faq-item {
-            background: #fff;
-            border: 1px solid #e6eef8;
-            border-radius: 12px;
-            margin-bottom: 16px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-question {
-            padding: 24px;
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            color: var(--brand);
-            font-size: 18px;
-        }
-
-        .faq-answer {
-            padding: 0 24px 24px;
-            color: var(--muted);
-            line-height: 1.6;
-            display: none;
-            /* Can be toggled with JS */
-        }
-
-        /* Simple toggle logic for the "active" class */
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-
-        .faq-item.active {
-            border-color: var(--brand);
-            box-shadow: 0 8px 24px rgba(12, 98, 171, 0.08);
-        }
-
-        .faq-icon {
-            width: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-    </style>
 </head>
 
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-<body>
+    <nav class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="index.html" class="flex items-center">
+                <img src="img/logo-main-2025.png" alt="IMPACTA" class="h-12 w-auto object-contain rounded-md">
+            </a>
 
-    <div id="global-header"></div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="solutions.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Solutions</a>
+                <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a>
+                
+                <div class="relative group">
+                    <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                        Industries 
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                    </button>
+                    <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                        <div class="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                            <div class="flex-1 space-y-2">
+                                <a href="automotive.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Repair</a>
+                                <a href="auto-sales.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Sales</a>
+                                <a href="fitness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Fitness</a>
+                                <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
+                                <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
+                                <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
+                                <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                                <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                            </div>
+                            <div class="flex-1 space-y-2">
+                                <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                                <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                                <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                                <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                                <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                                <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                                <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                                <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-    <section class="hero-copy"
-        style="text-align: center; box-shadow: none; background: transparent; padding-top: 80px;">
-        <span class="pill">Common Questions</span>
-        <h1>Transparency is part of the system.</h1>
-        <p>Everything you need to know about how we build your revenue engine.</p>
-    </section>
+                <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+                
+                <a href="faqs.html" class="text-sm font-bold text-[#0c62ab] transition-colors">FAQs</a>
 
-    <main class="faq-container">
-
-        <div class="faq-item">
-            <div class="faq-question">
-                What exactly is "RevOps"?
-                <span class="faq-icon">+</span>
+                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                    Book My 48-hour Fix
+                </a>
             </div>
-            <div class="faq-answer">
-                Revenue Operations (RevOps) is the strategic alignment of your sales, marketing, and customer success
-                departments. Instead of these teams working in silos, RevOps creates a single "engine" where data,
-                tools, and processes are shared to maximize growth and eliminate lead leakage.
-            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
         </div>
 
-        <div class="faq-item">
-            <div class="faq-question">
-                Why do you charge $350 for a Diagnostic?
-                <span class="faq-icon">+</span>
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <a href="solutions.html" class="text-gray-700 font-medium text-lg block">Solutions</a>
+            <a href="about-us.html" class="text-gray-700 font-medium text-lg block">About Us</a>
+            
+            <div>
+                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                    Industries 
+                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                </div>
             </div>
-            <div class="faq-answer">
-                Most agencies give away "free audits" that are just masked sales pitches. Our $350 Diagnostic is a
-                high-level strategic consult. We spend time inside your CRM and ad accounts to find actual leaks. You
-                walk away with a 90-day roadmap. If we decide to work together on a PPA basis, we apply that $350 as a
-                credit to your setup.
-            </div>
+
+            <a href="pricing.html" class="text-gray-700 font-medium text-lg block">Pricing</a>
+            <a href="faqs.html" class="text-[#0c62ab] font-bold text-lg block">FAQs</a>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
         </div>
 
-        <div class="faq-item">
-            <div class="faq-question">
-                What does "Performance-Based" (PPA) actually mean?
-                <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-                It means we put our skin in the game. After the initial setup, we don't charge "retainers" for the sake
-                of it. We get paid based on the outcomes we generate—typically per Sales Qualified Appointment (SQA) or
-                per acquisition. If we don't perform, you don't pay.
-            </div>
-        </div>
+        <script>
+            const btn = document.getElementById('mobile-menu-btn');
+            const menu = document.getElementById('mobile-menu');
+            const indBtn = document.getElementById('mobile-industry-btn');
+            const indList = document.getElementById('mobile-industry-list');
+            const indIcon = document.getElementById('mobile-industry-icon');
 
-        <div class="faq-item">
-            <div class="faq-question">
-                Do I need to buy a specific CRM for this to work?
-                <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-                We are tool-agnostic, but we have preferred "Impact Stacks" that we know convert. During the Diagnostic,
-                we’ll look at your current tech. If it's working, we'll optimize it. If it’s the reason you’re leaking
-                revenue, we’ll recommend a migration to a platform built for automation.
-            </div>
-        </div>
+            btn.addEventListener('click', () => {
+                menu.classList.toggle('hidden');
+                menu.classList.toggle('flex');
+            });
 
-        <div class="faq-item">
-            <div class="faq-question">
-                Is this just for businesses in Ocala, FL?
-                <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-                While we are proudly based in Ocala, we serve clients nationwide. Because we specialize in digital
-                RevOps and automation, we can build and audit your systems remotely regardless of where your team is
-                located.
-            </div>
-        </div>
-
-        <div class="faq-item">
-            <div class="faq-question">
-                How is this different from a standard marketing agency?
-                <span class="faq-icon">+</span>
-            </div>
-            <div class="faq-answer">
-                Agencies focus on "Top of Funnel" (getting clicks). We focus on the "Engine" (turning clicks into cash).
-                We don't just send you leads and wish you luck; we coach your team and build the automation that ensures
-                those leads actually show up to their appointments.
-            </div>
-        </div>
-
-        <section class="service cta-tight"
-            style="background: #f2f7fb; border: 2px solid var(--brand); margin-top: 60px; text-align: center;">
-            <h2 style="margin-top: 0;">Still have questions?</h2>
-            <p>The best way to get answers is to see how these systems apply to your specific numbers.</p>
-            <a href="book-diagnostic.html" class="btn">Request Your Revenue Diagnostic</a>
+            indBtn.addEventListener('click', () => {
+                indList.classList.toggle('hidden');
+                indIcon.classList.toggle('rotate-180');
+            });
+        </script>
+    </nav>
+    <main class="flex-grow pt-24 pb-12">
+        <section class="hero-copy text-center py-12 px-6">
+            <span class="bg-blue-50 text-[#0c62ab] text-sm font-bold px-4 py-1 rounded-full uppercase tracking-wide inline-block mb-4">Common Questions</span>
+            <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Transparency is part of the system.</h1>
+            <p class="text-lg text-gray-600">Everything you need to know about how we build your revenue engine.</p>
         </section>
 
+        <section class="faq-container">
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What exactly is "RevOps"?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    Revenue Operations (RevOps) is the strategic alignment of your sales, marketing, and customer success
+                    departments. Instead of these teams working in silos, RevOps creates a single "engine" where data,
+                    tools, and processes are shared to maximize growth and eliminate lead leakage.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Why do you charge $350 for a Diagnostic?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    Most agencies give away "free audits" that are just masked sales pitches. Our $350 Diagnostic is a
+                    high-level strategic consult. We spend time inside your CRM and ad accounts to find actual leaks. You
+                    walk away with a 90-day roadmap. If we decide to work together on a PPA basis, we apply that $350 as a
+                    credit to your setup.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    What does "Performance-Based" (PPA) actually mean?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    It means we put our skin in the game. After the initial setup, we don't charge "retainers" for the sake
+                    of it. We get paid based on the outcomes we generate—typically per Sales Qualified Appointment (SQA) or
+                    per acquisition. If we don't perform, you don't pay.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Do I need to buy a specific CRM for this to work?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    We are tool-agnostic, but we have preferred "Impact Stacks" that we know convert. During the Diagnostic,
+                    we’ll look at your current tech. If it's working, we'll optimize it. If it’s the reason you’re leaking
+                    revenue, we’ll recommend a migration to a platform built for automation.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    Is this just for businesses in Ocala, FL?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    While we are proudly based in Ocala, we serve clients nationwide. Because we specialize in digital
+                    RevOps and automation, we can build and audit your systems remotely regardless of where your team is
+                    located.
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <div class="faq-question">
+                    How is this different from a standard marketing agency?
+                    <span class="faq-icon text-2xl font-normal text-[#0c62ab]">+</span>
+                </div>
+                <div class="faq-answer">
+                    Agencies focus on "Top of Funnel" (getting clicks). We focus on the "Engine" (turning clicks into cash).
+                    We don't just send you leads and wish you luck; we coach your team and build the automation that ensures
+                    those leads actually show up to their appointments.
+                </div>
+            </div>
+
+            <div class="bg-blue-50 border-2 border-[#0c62ab] rounded-xl p-8 mt-16 text-center shadow-sm">
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">Still have questions?</h2>
+                <p class="text-gray-600 mb-6">The best way to get answers is to see how these systems apply to your specific numbers.</p>
+                <a href="book-diagnostic.html" class="bg-[#0c62ab] text-white px-8 py-3 rounded-md font-bold text-lg hover:bg-[#084a85] transition-colors inline-block">Request Your Revenue Diagnostic</a>
+            </div>
+
+        </section>
     </main>
 
-    <div id="global-footer"></div>
+    <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+            <div class="text-sm opacity-90">
+                <strong class="text-white block mb-1">IMPACTA Business Solutions Inc.</strong>
+                <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+                <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                    (352) 565-7234
+                </a>
+            </div>
+            <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+                <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
 
-    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
     <script>
-        // Simple FAQ Toggle Script
+        // FAQ Toggle Script
         document.querySelectorAll('.faq-question').forEach(question => {
             question.addEventListener('click', () => {
                 const item = question.parentElement;
                 item.classList.toggle('active');
             });
         });
-
-        // Your existing header/footer script
-        function includeHTML(file, elementId) {
-            fetch(file)
-                .then(response => {
-                    if (response.ok) return response.text();
-                    throw new Error('Failed to load ' + file);
-                })
-                .then(data => {
-                    document.getElementById(elementId).innerHTML = data;
-                })
-                .catch(error => console.error(error));
-        }
-
-        document.addEventListener('DOMContentLoaded', function () {
-            includeHTML('header.html', 'global-header');
-            includeHTML('footer.html', 'global-footer');
-        });
     </script>
 </body>
-
 </html>

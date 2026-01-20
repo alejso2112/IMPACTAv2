@@ -2,7 +2,6 @@
 <html lang="en">
 
 <head>
-  <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCDHL46X6N"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -12,14 +11,11 @@
     gtag('config', 'G-GCDHL46X6N');
   </script>
 
-  <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
   j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
   'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
   })(window,document,'script','dataLayer','GTM-KZCTVWRN');</script>
-  <!-- End Google Tag Manager -->
-
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
@@ -32,9 +28,11 @@
   <link rel="canonical" href="https://impactabusinesssolutions.com/restaurants.html" />
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
+  
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@700&display=swap" as="style">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
@@ -63,306 +61,395 @@
       "description": "High-value guest engagement, local traffic campaigns, and automated reservation follow-up for restaurants, cafés, and event caterers."
     }
   </script>
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      const params = new URLSearchParams(window.location.search);
-      if (params.has('utm_source')) {
-        const utmSource = document.getElementById('utm_source');
-        if (utmSource) utmSource.value = params.get('utm_source');
-        const utmMedium = document.getElementById('utm_medium');
-        if (utmMedium) utmMedium.value = params.get('utm_medium');
-        const utmCampaign = document.getElementById('utm_campaign');
-        if (utmCampaign) utmCampaign.value = params.get('utm_campaign');
-      }
-    });
-  </script>
+  
+  <style>
+      body { font-family: 'Noto Sans', sans-serif; }
+      /* Ensure container width matches legacy styles while allowing Tailwind padding */
+      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+  </style>
 </head>
 
-<body>
+<body class="bg-white text-gray-900 flex flex-col min-h-screen">
 
-  <!-- HEADER -->
-  <div id="global-header"></div>
+  <nav class="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+        <a href="index.html" class="flex items-center">
+            <img src="img/logo-main-2025.png" alt="IMPACTA" class="h-12 w-auto object-contain rounded-md">
+        </a>
+
+        <div class="hidden md:flex items-center gap-8">
+            <a href="solutions.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Solutions</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            
+            <div class="relative group">
+                <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                    Industries 
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
+                    <div class="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
+                        <div class="flex-1 space-y-2">
+                            <a href="automotive.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Repair</a>
+                            <a href="auto-sales.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Auto - Sales</a>
+                            <a href="fitness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Fitness</a>
+                            <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
+                            <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
+                            <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+       <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
+
+                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                    Book My 48-hour Fix
+                </a>
+            </div>
+
+            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+            </button>
+        </div>
+
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+            <a href="solutions.html" class="text-gray-700 font-medium text-lg block">Solutions</a>
+            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
+            
+            <div>
+                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                    Industries 
+                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                </div>
+            </div>
+
+            <a href="index.html#pricing" class="text-gray-700 font-medium text-lg block">Pricing</a>
+            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
+        </div>
+  </nav>
 
 
-  <main class="container">
+  <main class="flex-grow pt-24 pb-12">
+    <div class="container">
 
-    <!-- HERO: AMBIENT HOSPITALITY HERO -->
-    <section class="section-spacing" style="padding-top:60px;">
-      <div style="
-        background:linear-gradient(180deg,#ffffff,#ffffff);
-        padding:60px;
-        border-radius:20px;
-        border-left:6px solid var(--brand);
-        box-shadow:0 30px 70px rgba(0,0,0,0.18);
-        position:relative;
-      ">
-
-        <!-- warm light overlay -->
+      <section class="section-spacing" style="padding-top:20px;">
         <div style="
-          position:absolute;
-          top:0;
-          left:0;
-          right:0;
-          height:140px;
-          background:radial-gradient(circle, #ffffff00, rgba(255, 72, 72, 0));
+          background:linear-gradient(180deg,#ffffff,#ffffff);
+          padding:60px;
           border-radius:20px;
-        "></div>
-
-        <span class="pill" style="background:#0c62ab; color:var(--white); font-weight:600;">
-          Restaurants & Cafés
-        </span>
-
-        <h1 style="font-size:42px; margin-bottom:16px; color:var(--brand); line-height:1.1; position:relative;">
-          More Guests. More Reservations. More Repeat Customers.
-        </h1>
-
-        <p style="font-size:18px; max-width:780px; position:relative;">
-          Restaurants win with consistency: consistent traffic, consistent reviews, and consistent local buzz.
-          IMPACTA builds predictable appointment and reservation systems that help restaurants grow —
-          even in competitive markets.
-        </p>
-
-      </div>
-    </section>
-
-
-    <!-- HOSPITALITY STAT BAR -->
-    <section class="stats-bar" style="
-      margin-top:24px;
-      padding:32px;
-      border-radius:14px;
-      background:#ffffff;
-      border:1px solid #f1e8df;
-      box-shadow:0 12px 35px rgba(0,0,0,0.10);
-    ">
-
-      <div>
-        <div class="stat-number">65%</div>
-        <div class="small muted">Pick a restaurant based on response speed</div>
-      </div>
-
-      <div>
-        <div class="stat-number">4.7★</div>
-        <div class="small muted">Avg rating needed to stand out locally</div>
-      </div>
-
-      <div>
-        <div class="stat-number">3x</div>
-        <div class="small muted">Higher return rate with consistent follow-up</div>
-      </div>
-
-      <div>
-        <div class="stat-number">$22–$85</div>
-        <div class="small muted">Avg dining ticket range</div>
-      </div>
-
-    </section>
-
-
-    <!-- MENU OF SERVICES TILES -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">We Support All Types of Food & Hospitality Businesses</h2>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(3,1fr);
-        gap:24px;
-      ">
-
-        <div class="service" style="
-          padding:32px;
-          box-shadow:0 16px 45px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:22px; color:var(--brand);">Restaurants</h3>
-          <ul class="features-list">
-            <li>Reservation appointments</li>
-            <li>High-value guest engagement</li>
-            <li>Local traffic campaigns</li>
-          </ul>
-        </div>
-
-        <div class="service" style="
-          padding:32px;
           border-left:6px solid var(--brand);
-          background:linear-gradient(180deg,#ffffff,#0c61ab2f);
-          box-shadow:0 22px 55px rgba(0,0,0,0.12);
+          box-shadow:0 30px 70px rgba(0,0,0,0.18);
+          position:relative;
         ">
-          <h3 style="font-size:22px; color:var(--brand);">Cafés & Coffee Shops</h3>
-          <ul class="features-list">
-            <li>New customer discovery</li>
-            <li>Local event promo</li>
-            <li>Repeat-visit follow-up</li>
-          </ul>
+
+          <div style="
+            position:absolute;
+            top:0;
+            left:0;
+            right:0;
+            height:140px;
+            background:radial-gradient(circle, #ffffff00, rgba(255, 72, 72, 0));
+            border-radius:20px;
+          "></div>
+
+          <span class="pill" style="background:#0c62ab; color:var(--white); font-weight:600;">
+            Restaurants & Cafés
+          </span>
+
+          <h1 style="font-size:42px; margin-bottom:16px; color:var(--brand); line-height:1.1; position:relative;">
+            More Guests. More Reservations. More Repeat Customers.
+          </h1>
+
+          <p style="font-size:18px; max-width:780px; position:relative;">
+            Restaurants win with consistency: consistent traffic, consistent reviews, and consistent local buzz.
+            IMPACTA builds predictable appointment and reservation systems that help restaurants grow —
+            even in competitive markets.
+          </p>
+
         </div>
-
-        <div class="service" style="
-          padding:32px;
-          box-shadow:0 16px 45px rgba(0,0,0,0.10);
-        ">
-          <h3 style="font-size:22px; color:var(--brand);">Food Trucks & Caterers</h3>
-          <ul class="features-list">
-            <li>Booking & inquiry scheduling</li>
-            <li>Route & event promotions</li>
-            <li>Large-order qualification</li>
-          </ul>
-        </div>
-
-      </div>
-    </section>
+      </section>
 
 
-    <!-- GUEST PSYCHOLOGY PANEL -->
-    <section class="section-spacing">
-      <div class="service" style="
-        padding:42px;
+      <section class="stats-bar" style="
+        margin-top:24px;
+        padding:32px;
+        border-radius:14px;
         background:#ffffff;
-        border-left:6px solid var(--brand);
-        box-shadow:0 26px 70px rgba(0,0,0,0.14);
+        border:1px solid #f1e8df;
+        box-shadow:0 12px 35px rgba(0,0,0,0.10);
       ">
 
-        <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
-          Why Guests Choose Certain Restaurants Over Others
-        </h2>
-
-        <p>
-          Dining decisions are emotional, sensory, and convenience-driven.
-        </p>
-
-        <ul class="features-list" style="margin-top:12px;">
-          <li>Response to reservation requests</li>
-          <li>Atmosphere & visual appeal</li>
-          <li>Consistency in experience</li>
-          <li>Specials, events & novelty</li>
-          <li>Friendly follow-up and reminders</li>
-        </ul>
-
-      </div>
-    </section>
-
-
-    <!-- TRAFFIC / RESERVATION FLOW -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">The IMPACTA Restaurant Traffic Flow</h2>
-
-      <div style="
-        display:grid;
-        grid-template-columns:repeat(4,1fr);
-        gap:20px;
-      ">
-
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>1. Inquiry</h3>
-          <p>Reservation or seating request.</p>
+        <div>
+          <div class="stat-number">65%</div>
+          <div class="small muted">Pick a restaurant based on response speed</div>
         </div>
 
+        <div>
+          <div class="stat-number">4.7★</div>
+          <div class="small muted">Avg rating needed to stand out locally</div>
+        </div>
+
+        <div>
+          <div class="stat-number">3x</div>
+          <div class="small muted">Higher return rate with consistent follow-up</div>
+        </div>
+
+        <div>
+          <div class="stat-number">$22–$85</div>
+          <div class="small muted">Avg dining ticket range</div>
+        </div>
+
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">We Support All Types of Food & Hospitality Businesses</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(3,1fr);
+          gap:24px;
+        ">
+
+          <div class="service" style="
+            padding:32px;
+            box-shadow:0 16px 45px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Restaurants</h3>
+            <ul class="features-list">
+              <li>Reservation appointments</li>
+              <li>High-value guest engagement</li>
+              <li>Local traffic campaigns</li>
+            </ul>
+          </div>
+
+          <div class="service" style="
+            padding:32px;
+            border-left:6px solid var(--brand);
+            background:linear-gradient(180deg,#ffffff,#0c61ab2f);
+            box-shadow:0 22px 55px rgba(0,0,0,0.12);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Cafés & Coffee Shops</h3>
+            <ul class="features-list">
+              <li>New customer discovery</li>
+              <li>Local event promo</li>
+              <li>Repeat-visit follow-up</li>
+            </ul>
+          </div>
+
+          <div class="service" style="
+            padding:32px;
+            box-shadow:0 16px 45px rgba(0,0,0,0.10);
+          ">
+            <h3 style="font-size:22px; color:var(--brand);">Food Trucks & Caterers</h3>
+            <ul class="features-list">
+              <li>Booking & inquiry scheduling</li>
+              <li>Route & event promotions</li>
+              <li>Large-order qualification</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
         <div class="service" style="
-          padding:24px;
+          padding:42px;
+          background:#ffffff;
           border-left:6px solid var(--brand);
-          background:linear-gradient(180deg,#ffffff,#0c61ab2f);
-          box-shadow:0 18px 50px rgba(0,0,0,0.12);
+          box-shadow:0 26px 70px rgba(0,0,0,0.14);
         ">
-          <h3>2. Confirmation</h3>
-          <p>Guest details verified.</p>
-        </div>
 
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>3. Pre-Visit</h3>
-          <p>Reminders & expectations set.</p>
-        </div>
+          <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
+            Why Guests Choose Certain Restaurants Over Others
+          </h2>
 
-        <div class="service" style="
-          padding:24px;
-          box-shadow:0 14px 35px rgba(0,0,0,0.10);
-        ">
-          <h3>4. Repeat Visits</h3>
-          <p>Follow-up for loyalty & events.</p>
-        </div>
+          <p>
+            Dining decisions are emotional, sensory, and convenience-driven.
+          </p>
 
-      </div>
-    </section>
-
-
-    <!-- PPA FOR RESTAURANTS -->
-    <section class="section-spacing">
-      <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Restaurants</h2>
-
-      <div class="pricing-grid-ppa">
-
-        <div class="price-card" style="padding:32px;">
-          <h4>Restaurant Diagnostic — $350</h4>
-          <ul class="features-list">
-            <li>Traffic audit</li>
-            <li>Menu discovery insights</li>
-            <li>Guest psychology mapping</li>
-            <li>Full hospitality growth plan</li>
+          <ul class="features-list" style="margin-top:12px;">
+            <li>Response to reservation requests</li>
+            <li>Atmosphere & visual appeal</li>
+            <li>Consistency in experience</li>
+            <li>Specials, events & novelty</li>
+            <li>Friendly follow-up and reminders</li>
           </ul>
-        </div>
 
-        <div class="price-card" style="
-          padding:32px;
-          box-shadow:0 22px 60px rgba(12,98,171,0.20);
-          transform:translateY(-10px);
+        </div>
+      </section>
+
+
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">The IMPACTA Restaurant Traffic Flow</h2>
+
+        <div style="
+          display:grid;
+          grid-template-columns:repeat(4,1fr);
+          gap:20px;
         ">
-          <h4>Pay-Per-Appointment (Hospitality)</h4>
-          <ul class="features-list">
-            <li>Reservations & large party bookings</li>
-            <li>Event & catering inquiries</li>
-            <li>Local promo engagement</li>
-            <li>Performance reporting</li>
-          </ul>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>1. Inquiry</h3>
+            <p>Reservation or seating request.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            border-left:6px solid var(--brand);
+            background:linear-gradient(180deg,#ffffff,#0c61ab2f);
+            box-shadow:0 18px 50px rgba(0,0,0,0.12);
+          ">
+            <h3>2. Confirmation</h3>
+            <p>Guest details verified.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>3. Pre-Visit</h3>
+            <p>Reminders & expectations set.</p>
+          </div>
+
+          <div class="service" style="
+            padding:24px;
+            box-shadow:0 14px 35px rgba(0,0,0,0.10);
+          ">
+            <h3>4. Repeat Visits</h3>
+            <p>Follow-up for loyalty & events.</p>
+          </div>
+
         </div>
-
-      </div>
-    </section>
+      </section>
 
 
-    <!-- CTA -->
-    <section class="section-spacing ">
-      <div id="cta-box" class="service" style="
-        padding:48px;
-        text-align:center;
-        box-shadow:0 20px 50px rgba(0,0,0,0.16);
-      ">
-        <h2 style="margin-bottom:16px;">Ready to Bring More Guests Through Your Door?</h2>
-        <p class="small muted" style="margin-bottom:24px;">
-          Start with your Restaurant Diagnostic to uncover leaks and unlock your custom PPA rate.
-        </p>
-        <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-      </div>
-    </section>
+      <section class="section-spacing">
+        <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Restaurants</h2>
+
+        <div class="pricing-grid-ppa">
+
+          <div class="price-card" style="padding:32px;">
+            <h4>Restaurant Diagnostic — $350</h4>
+            <ul class="features-list">
+              <li>Traffic audit</li>
+              <li>Menu discovery insights</li>
+              <li>Guest psychology mapping</li>
+              <li>Full hospitality growth plan</li>
+            </ul>
+          </div>
+
+          <div class="price-card" style="
+            padding:32px;
+            box-shadow:0 22px 60px rgba(12,98,171,0.20);
+            transform:translateY(-10px);
+          ">
+            <h4>Pay-Per-Appointment (Hospitality)</h4>
+            <ul class="features-list">
+              <li>Reservations & large party bookings</li>
+              <li>Event & catering inquiries</li>
+              <li>Local promo engagement</li>
+              <li>Performance reporting</li>
+            </ul>
+          </div>
+
+        </div>
+      </section>
 
 
+      <section class="section-spacing ">
+        <div id="cta-box" class="service" style="
+          padding:48px;
+          text-align:center;
+          box-shadow:0 20px 50px rgba(0,0,0,0.16);
+        ">
+          <h2 style="margin-bottom:16px;">Ready to Bring More Guests Through Your Door?</h2>
+          <p class="small muted" style="margin-bottom:24px;">
+            Start with your Restaurant Diagnostic to uncover leaks and unlock your custom PPA rate.
+          </p>
+          <a href="revenue-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
+        </div>
+      </section>
+
+
+    </div>
   </main>
 
 
-  <!-- FOOTER -->
-  <div id="global-footer"></div>
-  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async=""></script>
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+
+  <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
   <script>
-    // Function to load external HTML into a div
-    function includeHTML(file, elementId) {
-      fetch(file)
-        .then(response => {
-          if (response.ok) return response.text();
-          throw new Error('Failed to load ' + file);
-        })
-        .then(data => {
-          document.getElementById(elementId).innerHTML = data;
-        })
-        .catch(error => console.error(error));
+    // Header Logic for Mobile Menu
+    const btn = document.getElementById('mobile-menu-btn');
+    const menu = document.getElementById('mobile-menu');
+    const indBtn = document.getElementById('mobile-industry-btn');
+    const indList = document.getElementById('mobile-industry-list');
+    const indIcon = document.getElementById('mobile-industry-icon');
+
+    if(btn){
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+            menu.classList.toggle('flex');
+        });
     }
 
-    // Execute the loads
-    document.addEventListener('DOMContentLoaded', function () {
-      includeHTML('header.html', 'global-header');
-      includeHTML('footer.html', 'global-footer');
-    });
+    if(indBtn){
+        indBtn.addEventListener('click', () => {
+            indList.classList.toggle('hidden');
+            indIcon.classList.toggle('rotate-180');
+        });
+    }
   </script>
 
 </body>
