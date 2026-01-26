@@ -1,0 +1,826 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>IMPACTA Quick CRM</title>
+  <style>
+    :root{
+      --brand:#0c62ab;
+      --brand-dark:#094a80;
+      --ink:#0f172a;
+      --muted:#475569;
+      --line:#e2e8f0;
+      --bg:#f1f5f9;
+      --radius:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--ink);
+      background: var(--bg);
+      line-height:1.4;
+    }
+    a{color:var(--brand); text-decoration:none}
+    .wrap{max-width:1600px; margin:0 auto; padding:0 20px}
+    
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      border-bottom:1px solid var(--line);
+      background:rgba(255,255,255,.95);
+      backdrop-filter:blur(8px);
+    }
+    .topbar .inner{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px; padding:12px 0;
+    }
+    .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
+    .logo{
+      width:36px; height:36px; border-radius:10px;
+      background: radial-gradient(120% 120% at 20% 20%, #2b8ddf 0%, var(--brand) 60%, var(--brand-dark) 100%);
+      flex:0 0 auto;
+    }
+    .brand h1{margin:0; font-size:14px; font-weight:700; color:var(--brand-dark)}
+    .brand p{margin:0; font-size:12px; color:var(--muted)}
+    
+    /* Buttons */
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:8px; padding:8px 14px;
+      border-radius:8px; border:1px solid rgba(12,98,171,.1);
+      background:var(--brand); color:#fff;
+      font-weight:600; font-size:13px;
+      cursor:pointer; transition:all .15s ease;
+      white-space:nowrap;
+    }
+    .btn:hover{background:var(--brand-dark)}
+    .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
+    .btn.secondary:hover{background:#f8fafc; border-color:#cbd5e1}
+    .btn.danger{background:#fff; color:#b91c1c; border:1px solid rgba(185,28,28,.2);}
+    .btn.danger:hover{background:#fef2f2; border-color:#b91c1c}
+    .btn[disabled]{opacity:.5; cursor:not-allowed}
+    .toolbar{display:flex; flex-wrap:wrap; gap:8px; align-items:center; justify-content:flex-end;}
+
+    /* Layout */
+    main{padding:20px 0 40px}
+    .grid{
+      display:grid; grid-template-columns: 350px 1fr; gap:20px; align-items:start;
+    }
+    @media (max-width: 1100px){ .grid{grid-template-columns:1fr} }
+    
+    /* Blue Card Style */
+    .card{
+      background:var(--brand);
+      color: #fff;
+      border:1px solid var(--brand-dark);
+      border-radius:var(--radius); 
+      box-shadow: 0 10px 25px -5px rgba(12, 98, 171, 0.25);
+      overflow:hidden;
+    }
+    .card .hd{
+      padding:14px 18px; display:flex; align-items:center; justify-content:space-between; gap:12px;
+      border-bottom:1px solid rgba(255,255,255,0.15); 
+      background: rgba(0,0,0,0.15);
+    }
+    .card .hd h2{margin:0; font-size:14px; font-weight:700; color:#fff;}
+    .card .bd{padding:18px}
+    
+    .hint{color:rgba(255,255,255,0.8); font-size:13px; margin:0}
+    .divider{height:1px; background:rgba(255,255,255,0.2); margin:16px 0}
+    label{display:block; font-size:12px; font-weight:600; color:#fff; margin:0 0 6px}
+
+    /* Inputs */
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    .row.one{grid-template-columns:1fr}
+    input, select, textarea{
+      width:100%; padding:8px 10px;
+      border-radius:6px; border:1px solid rgba(255,255,255,0.3);
+      background:#fff; color:var(--ink); outline:none;
+      font-family:var(--sans); font-size:13px;
+      transition: border-color .15s;
+    }
+    input:focus, select:focus, textarea:focus{border-color: #fff; box-shadow:0 0 0 3px rgba(255,255,255,0.2);}
+    textarea{min-height:80px; resize:vertical}
+    .actions{display:flex; flex-wrap:wrap; gap:10px; margin-top:16px}
+
+    /* Chips */
+    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
+    .chip{
+      display:inline-flex; align-items:center; gap:6px;
+      border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1);
+      border-radius:6px; padding:4px 8px;
+      font-size:12px; font-weight:500; color:#fff;
+    }
+    .chip strong{color:#fff; font-weight:800}
+    .chip.good{background:#ecfdf5; color:#065f46; border-color:transparent;} .chip.good strong{color:#065f46}
+    .chip.warn{background:#fffbeb; color:#92400e; border-color:transparent;} .chip.warn strong{color:#92400e}
+    .chip.bad{background:#fef2f2; color:#b91c1c; border-color:transparent;} .chip.bad strong{color:#b91c1c}
+
+    /* KPIs */
+    .kpi{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;}
+    @media (max-width: 1200px){ .kpi{grid-template-columns: repeat(2, 1fr)} }
+    .kpi .box{
+      border:1px solid var(--line); border-radius:10px; padding:10px; 
+      background:#fff; color: var(--ink);
+    }
+    .kpi .box .label{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px;}
+    .kpi .box .value{font-size:18px; font-weight:800; color:var(--ink); margin-top:2px}
+
+    /* Filters */
+    .filters{
+      display:flex; flex-wrap:wrap; gap:10px; align-items:center;
+      margin-top:20px; padding:12px; 
+      background:#fff; border-radius:10px; border:1px solid var(--line);
+    }
+    .filters label{ color:var(--muted); margin-bottom: 4px;} 
+    .filters .field{min-width:140px; flex:1}
+    .filters .field.small{min-width:100px; flex:0}
+    .filters input, .filters select { border-color: var(--line); }
+
+    /* TABLE STYLES */
+    .tablewrap{
+      border:1px solid var(--line);
+      border-radius:10px; background:#fff; margin-top:16px;
+      color: var(--ink);
+      width: 100%;
+      overflow-x: auto; 
+    }
+    table{
+      width:100%; 
+      border-collapse:collapse; 
+      table-layout: auto; 
+    }
+    th, td{
+      padding:10px 8px;
+      border-bottom:1px solid var(--line);
+      font-size:12px; 
+      vertical-align:top; 
+      white-space:normal; 
+      word-wrap: break-word;
+    }
+    th{
+      position:sticky; top:0; background:#f1f5f9;
+      text-align:left; font-size:10px; font-weight:800;
+      text-transform:uppercase; color:var(--muted);
+      z-index:10; white-space: nowrap; 
+    }
+    tbody tr:nth-child(even) td { background-color: #f8fafc; }
+    tbody tr:hover td { background-color: #f1f5f9; }
+    
+    /* Column Sizing */
+    td.lead-col {
+      min-width:140px; max-width:220px;
+      font-weight:700; color:var(--brand-dark);
+    }
+    .lead-meta {font-weight:400; color:var(--muted); font-size:11px; display:block; margin-top:2px;}
+    
+    td.min-col { width: 1%; white-space: nowrap; } 
+    td.med-col { max-width: 120px; } 
+    
+    /* Sticky Actions */
+    th:last-child, td:last-child {
+      position:sticky; right:0;
+      background:inherit; 
+      border-left:1px solid var(--line);
+      box-shadow:-4px 0 8px rgba(0,0,0,0.02);
+      z-index:5;
+      width: 1%; white-space: nowrap;
+    }
+
+    .pill{
+      display:inline-block; padding:3px 8px;
+      border-radius:4px; font-size:10px; font-weight:700;
+      text-transform:uppercase; letter-spacing:0.3px;
+      text-align: center;
+      line-height: 1.2;
+    }
+    .pill.stage{background:#e0f2fe; color:#0369a1;}
+    .pill.disq{background:#fee2e2; color:#b91c1c;}
+    .pill.nurture{background:#fef3c7; color:#b45309;}
+
+    .rowactions{display:flex; gap:4px; align-items:center; justify-content:flex-end}
+    .mini{
+      padding:5px 8px; border-radius:5px;
+      font-size:11px; font-weight:600;
+      border:1px solid var(--line); background:#fff;
+      cursor:pointer; color:var(--ink);
+    }
+    .mini:hover{border-color:var(--brand); color:var(--brand);}
+    .mini.danger:hover{border-color:#b91c1c; color:#b91c1c;}
+    .mono{font-family:var(--mono)}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; background:rgba(15,23,42,.6); backdrop-filter:blur(2px);
+      display:none; align-items:center; justify-content:center;
+      padding:20px; z-index:100;
+    }
+    .modal.open{display:flex}
+    .modal .panel{
+      width:min(800px, 100%); max-height:90vh; overflow:auto;
+      background:#fff; border-radius:16px;
+      box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);
+      color: var(--ink);
+    }
+    .modal .panel .hd{
+      padding:16px 20px; display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid var(--line); background:#f8fafc;
+    }
+    .modal .panel .hd h3{margin:0; font-size:14px; font-weight:700; color:var(--ink)}
+    .modal .panel .bd{padding:20px}
+    .modal label { color: var(--muted); }
+    .modal input, .modal textarea { border-color: var(--line); }
+    .note{font-size:13px; color:rgba(255,255,255,0.7); margin:12px 0 0; line-height:1.5;}
+    .modal .note { color: var(--muted); }
+
+    /* Toast */
+    .toast{
+      position:fixed; right:24px; bottom:24px;
+      background:#1e293b; color:#fff; border-radius:8px;
+      padding:12px 16px; display:none; max-width:300px; z-index:200;
+      box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);
+    }
+    .toast.show{display:block; animation:slideIn 0.3s ease-out;}
+    @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+    .toast .t{font-weight:700; font-size:13px; margin-bottom:2px;}
+    .toast .m{font-size:12px; opacity:0.9;}
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>
+            <h1>IMPACTA Business Solutions</h1>
+            <p>Quick CRM — LocalStorage + CSV Export</p>
+          </div>
+        </div>
+        <div class="toolbar">
+          <button class="btn secondary" id="btnSeed">Seed Sample</button>
+          <button class="btn secondary" id="btnImport">Import</button>
+          <button class="btn secondary" id="btnExportJson">Backup</button>
+          <button class="btn" id="btnExportCsv">Export CSV</button>
+          <button class="btn danger" id="btnWipe">Wipe</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <main class="wrap">
+    <div class="grid">
+      <section class="card">
+        <div class="hd">
+          <h2 id="formTitle">Add Lead</h2>
+          <span class="hint mono" id="dbStatus">DB: 0 leads</span>
+        </div>
+        <div class="bd">
+          <p class="hint">Minimum standard: log <strong>leak</strong>, <strong>DM</strong>, and <strong>next action</strong>.</p>
+          <div class="divider"></div>
+          <form id="leadForm" autocomplete="off">
+            <input type="hidden" id="leadId" />
+            <div class="row">
+              <div><label>First Name</label><input id="firstName" placeholder="Alex" /></div>
+              <div><label>Last Name</label><input id="lastName" placeholder="Rivera" /></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Title</label><input id="title" placeholder="Owner" /></div>
+              <div><label>Company</label><input id="company" placeholder="Rivera Plumbing" /></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Industry</label><input id="industry" placeholder="Home Services" /></div>
+              <div><label>City</label><input id="city" placeholder="Orlando" /></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Phone</label><input id="phone" /></div>
+              <div><label>Email</label><input id="email" /></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Stage</label><select id="stage"></select></div>
+              <div><label>DM Access</label><select id="dmAccess">
+                <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
+                <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
+              </select></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Scale</label><input id="scale" placeholder="$80k/mo; 8 staff" /></div>
+              <div><label>Leak Type</label><select id="leakType">
+                <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
+                <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
+                <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
+                <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
+              </select></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Urgency (0-10)</label><select id="urgency">
+                <option value="0">0</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option>
+              </select></div>
+              <div><label>Capacity</label><select id="capacity">
+                <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
+              </select></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Next Action</label><select id="nextAction">
+                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
+                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
+                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
+              </select></div>
+              <div><label>Next Due</label><input id="nextDue" type="datetime-local" /></div>
+            </div>
+            <div class="row one" style="margin-top:10px">
+              <div><label>Notes</label><textarea id="notes" placeholder="Leak details, objection notes..."></textarea></div>
+            </div>
+            <div class="row" style="margin-top:10px">
+              <div><label>Disqualify Reason</label><input id="disqualifyReason" /></div>
+              <div><label>Route</label><select id="route">
+                <option value="Unrouted">Unrouted</option><option value="48-Hour Fix">48-Hour Fix</option>
+                <option value="Paid Revenue Leak Diagnostic">Paid Revenue Leak Diagnostic</option>
+                <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
+              </select></div>
+            </div>
+            <div class="actions">
+              <button type="submit" class="btn secondary" id="btnSave" style="color:var(--brand)">Save Lead</button>
+              <button type="button" class="btn secondary" id="btnClear" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.4)">Clear</button>
+              <button type="button" class="btn danger" id="btnDelete" disabled>Delete</button>
+            </div>
+            <div class="chips" id="qualityChips"></div>
+            <p class="note" id="qualNote"></p>
+          </form>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="hd">
+          <h2>Pipeline & Leads</h2>
+          <span class="hint mono" id="viewStatus">View: 0</span>
+        </div>
+        <div class="bd">
+          <div class="kpi" id="kpiGrid"></div>
+          <div class="filters">
+            <div class="field"><label>Search</label><input id="search" placeholder="Filter..." /></div>
+            <div class="field small"><label>Stage</label><select id="filterStage"></select></div>
+            <div class="field small"><label>Route</label><select id="filterRoute">
+              <option value="All">All</option><option value="Unrouted">Unrouted</option>
+              <option value="48-Hour Fix">48-Hour Fix</option><option value="Paid Revenue Leak Diagnostic">Diagnostic</option>
+              <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
+            </select></div>
+            <div class="field small"><label>Sort</label><select id="sortBy">
+              <option value="updatedDesc">Updated</option><option value="nextDueAsc">Next Due</option>
+              <option value="companyAsc">Company (A-Z)</option><option value="stageAsc">Stage</option>
+            </select></div>
+          </div>
+          <div class="tablewrap">
+            <table>
+              <thead>
+                <tr>
+                  <th style="min-width:140px">Lead / Company</th>
+                  <th>Phone</th>
+                  <th style="width:100px">Stage</th>
+                  <th>Leak</th>
+                  <th class="min-col">DM</th>
+                  <th>Scale</th>
+                  <th class="min-col">Urg</th>
+                  <th>Next Action</th>
+                  <th style="width:100px">Next Due</th>
+                  <th style="text-align:right">Act</th>
+                </tr>
+              </thead>
+              <tbody id="tbody"></tbody>
+            </table>
+          </div>
+          <p class="note">Tip: Use Next Due to drive your daily follow-up power hour.</p>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="panel">
+      <div class="hd">
+        <h3 id="modalTitle">Activity Log</h3>
+        <button class="btn secondary" id="btnCloseModal">Close</button>
+      </div>
+      <div class="bd">
+        <div class="row">
+          <div><label>Lead</label><div class="mono" id="modalLead" style="font-weight:700"></div></div>
+          <div><label>Quick Actions</label><div class="rowactions" style="justify-content:flex-start">
+            <button class="mini" id="qaAttempt">+ Attempt</button>
+            <button class="mini" id="qaConnected">+ Connected</button>
+            <button class="mini" id="qaBooked">+ Booked</button>
+            <button class="mini" id="qaNoShow">+ No-show</button>
+          </div></div>
+        </div>
+        <div class="divider"></div>
+        <div class="row one">
+          <div><label>Add Log Entry</label><textarea id="logNote" placeholder="Notes..."></textarea></div>
+        </div>
+        <div class="actions">
+          <button class="btn" id="btnAddLog">Add Log</button>
+          <button class="btn secondary" id="btnCopyLead">Copy Summary</button>
+        </div>
+        <div class="divider"></div>
+        <div class="tablewrap" style="max-height:300px; overflow-y:auto">
+          <table>
+            <thead><tr><th>Time</th><th>Entry</th><th style="text-align:right">Act</th></tr></thead>
+            <tbody id="logTbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <div class="t" id="toastTitle">Saved</div>
+    <div class="m" id="toastMsg">Lead updated.</div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      /***********************
+       * IMPACTA Quick CRM
+       * Compact Auto-Fit Version + Phone Column + Modal Phone
+       ***********************/
+      const STORAGE_KEY = "impacta_crm_v1";
+      const STAGES = [
+        "New Lead", "Attempting", "Connected", 
+        "Booked – 15 Min Diagnostic", "Held – 15 Min Diagnostic", 
+        "No-Show", "Reschedule", "Qualified – Next Step Scheduled", 
+        "Disqualified", "Nurture"
+      ];
+
+      const $ = (id) => document.getElementById(id);
+      const uid = () => window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : "id_" + Math.random().toString(36).substring(2)+Date.now();
+      const safe = (v) => (v ?? "").toString().trim();
+      const nowIso = () => new Date().toISOString();
+      const fmtDT = (iso) => {
+        if (!iso) return "";
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return "";
+        return d.toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'numeric', hour12:true }).replace(":00","");
+      };
+      
+      const toLocalInput = (iso) => {
+        if (!iso) return "";
+        const d = new Date(iso);
+        if (Number.isNaN(d.getTime())) return "";
+        const pad = (n) => String(n).padStart(2, "0");
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      };
+
+      let db = { leads: [] };
+      let activeLeadId = null;
+
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (raw) db = JSON.parse(raw) || { leads: [] };
+      } catch(e) { console.error(e); }
+
+      function saveDB(){
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+        if($("dbStatus")) $("dbStatus").textContent = `DB: ${db.leads.length} leads`;
+      }
+
+      function showToast(title, msg){
+        const t = $("toast");
+        $("toastTitle").textContent = title;
+        $("toastMsg").textContent = msg;
+        t.classList.add("show");
+        setTimeout(()=>t.classList.remove("show"), 2500);
+      }
+
+      const stageSel = $("stage");
+      const filterSel = $("filterStage");
+      if(stageSel && filterSel) {
+        let opts = STAGES.map(s => `<option value="${s}">${s}</option>`).join("");
+        stageSel.innerHTML = opts;
+        filterSel.innerHTML = `<option value="All">All</option>` + opts;
+        stageSel.value = "New Lead";
+      }
+
+      function getFilteredLeads(){
+        const q = safe($("search").value).toLowerCase();
+        const stage = $("filterStage").value;
+        const route = $("filterRoute").value;
+        let leads = [...db.leads];
+
+        if (stage && stage !== "All") leads = leads.filter(l => l.stage === stage);
+        if (route && route !== "All") leads = leads.filter(l => (l.route || "Unrouted") === route);
+        if (q) leads = leads.filter(l => JSON.stringify(l).toLowerCase().includes(q));
+
+        const sortBy = $("sortBy").value;
+        leads.sort((a,b) => {
+          if (sortBy === "updatedDesc") return (new Date(b.updatedAt||0)) - (new Date(a.updatedAt||0));
+          if (sortBy === "nextDueAsc") return (new Date(a.nextDue||'9999-01-01')) - (new Date(b.nextDue||'9999-01-01'));
+          if (sortBy === "companyAsc") return safe(a.company).localeCompare(safe(b.company));
+          return 0;
+        });
+        return leads;
+      }
+
+      function render(){
+        saveDB();
+        const leads = getFilteredLeads();
+        $("viewStatus").textContent = `View: ${leads.length}`;
+        
+        const rows = leads.map(l => {
+          const name = safe(l.company) || safe(l.lastName) || "(Unknown)";
+          const sub = [l.firstName, l.lastName].join(" ");
+          let stg = l.stage.split(' ')[0]; 
+          if(l.stage.includes("Booked")) stg = "Booked";
+          if(l.stage.includes("Qualified")) stg = "Qualified";
+          
+          return `
+            <tr>
+              <td class="lead-col">${name}<br><span class="lead-meta">${sub}</span></td>
+              <td style="white-space:nowrap"><a href="tel:${safe(l.phone)}" style="color:var(--ink); text-decoration:none; font-weight:600;">${safe(l.phone)}</a></td>
+              <td class="med-col"><span class="pill ${l.stage==='Disqualified'?'disq':l.stage==='Nurture'?'nurture':'stage'}">${stg}</span></td>
+              <td class="med-col">${safe(l.leakType)}</td>
+              <td class="min-col">${safe(l.dmAccess)}</td>
+              <td class="small" title="${safe(l.scale)}">${safe(l.scale)}</td>
+              <td class="min-col">${safe(l.urgency)}</td>
+              <td class="med-col">${safe(l.nextAction)}</td>
+              <td class="small">${fmtDT(l.nextDue)}</td>
+              <td style="text-align:right">
+                <div class="rowactions">
+                  <button class="mini" data-act="edit" data-id="${l.id}">Edit</button>
+                  <button class="mini" data-act="log" data-id="${l.id}">Log</button>
+                  <button class="mini danger" data-act="del" data-id="${l.id}">✕</button>
+                </div>
+              </td>
+            </tr>
+          `;
+        }).join("");
+        $("tbody").innerHTML = rows || `<tr><td colspan="10" style="text-align:center;color:#64748b;padding:20px">No leads found.</td></tr>`;
+
+        // KPIs
+        const total = leads.length;
+        const booked = leads.filter(l => l.stage.includes("Booked")).length;
+        const held = leads.filter(l => l.stage.includes("Held")).length;
+        const showRate = booked > 0 ? Math.round((held/booked)*100) : 0;
+        
+        const kpis = [
+          {l: "Total", v: total},
+          {l: "Booked", v: booked},
+          {l: "Shows", v: held},
+          {l: "Show Rate", v: showRate+"%"}
+        ];
+        $("kpiGrid").innerHTML = kpis.map(k => `
+          <div class="box"><div class="label">${k.l}</div><div class="value">${k.v}</div></div>
+        `).join("");
+        
+        renderQualChips();
+      }
+
+      function renderQualChips(){
+        const f = {
+          dmAccess: $("dmAccess").value,
+          urgency: $("urgency").value,
+          leakType: $("leakType").value
+        };
+        const dm = f.dmAccess === "Yes" ? 2 : (f.dmAccess === "Proxy" ? 1 : 0);
+        const urg = Number(f.urgency) >= 8 ? 2 : (Number(f.urgency) >= 5 ? 1 : 0);
+        const leak = (f.leakType && f.leakType !== "Unknown") ? 1 : 0;
+
+        $("qualityChips").innerHTML = `
+          <span class="chip ${dm===2?'good':'warn'}">DM <strong>${dm}/2</strong></span>
+          <span class="chip ${urg===2?'good':'warn'}">Urg <strong>${urg}/2</strong></span>
+          <span class="chip ${leak===1?'good':'bad'}">Leak <strong>${leak}/1</strong></span>
+        `;
+      }
+
+      function loadForm(id){
+        const l = db.leads.find(x => x.id === id);
+        if(!l) return;
+        $("leadId").value = l.id;
+        $("firstName").value = l.firstName||"";
+        $("lastName").value = l.lastName||"";
+        $("title").value = l.title||"";
+        $("company").value = l.company||"";
+        $("industry").value = l.industry||"";
+        $("city").value = l.city||"";
+        $("phone").value = l.phone||"";
+        $("email").value = l.email||"";
+        $("stage").value = l.stage;
+        $("dmAccess").value = l.dmAccess;
+        $("scale").value = l.scale||"";
+        $("leakType").value = l.leakType;
+        $("urgency").value = l.urgency;
+        $("capacity").value = l.capacity;
+        $("nextAction").value = l.nextAction;
+        $("nextDue").value = toLocalInput(l.nextDue);
+        $("notes").value = l.notes||"";
+        $("disqualifyReason").value = l.disqualifyReason||"";
+        $("route").value = l.route;
+        
+        $("formTitle").textContent = "Edit Lead";
+        $("btnDelete").disabled = false;
+        renderQualChips();
+        window.scrollTo({top:0, behavior:"smooth"});
+      }
+
+      function clearForm(){
+        $("leadForm").reset();
+        $("leadId").value = "";
+        $("formTitle").textContent = "Add Lead";
+        $("btnDelete").disabled = true;
+        $("stage").value = "New Lead";
+        renderQualChips();
+      }
+
+      $("leadForm").addEventListener("submit", e => {
+        e.preventDefault();
+        const id = $("leadId").value || uid();
+        const idx = db.leads.findIndex(x => x.id === id);
+        const now = nowIso();
+        
+        const formData = {
+          id,
+          firstName: $("firstName").value,
+          lastName: $("lastName").value,
+          title: $("title").value,
+          company: $("company").value,
+          industry: $("industry").value,
+          city: $("city").value,
+          phone: $("phone").value,
+          email: $("email").value,
+          stage: $("stage").value,
+          dmAccess: $("dmAccess").value,
+          scale: $("scale").value,
+          leakType: $("leakType").value,
+          urgency: $("urgency").value,
+          capacity: $("capacity").value,
+          nextAction: $("nextAction").value,
+          nextDue: $("nextDue").value ? new Date($("nextDue").value).toISOString() : "",
+          notes: $("notes").value,
+          disqualifyReason: $("disqualifyReason").value,
+          route: $("route").value,
+          updatedAt: now
+        };
+
+        if(idx >= 0) {
+          db.leads[idx] = { ...db.leads[idx], ...formData }; 
+        } else {
+          formData.createdAt = now;
+          formData.activity = [];
+          db.leads.unshift(formData);
+        }
+        
+        saveDB();
+        render();
+        clearForm();
+        showToast("Success", "Lead saved.");
+      });
+
+      $("btnClear").onclick = clearForm;
+      
+      $("btnDelete").onclick = () => {
+        if(confirm("Delete this lead?")){
+          db.leads = db.leads.filter(l => l.id !== $("leadId").value);
+          render();
+          clearForm();
+        }
+      };
+      
+      $("leadForm").addEventListener("change", renderQualChips);
+
+      $("tbody").onclick = (e) => {
+        const btn = e.target.closest("button");
+        if(!btn) return;
+        const act = btn.getAttribute("data-act");
+        const id = btn.getAttribute("data-id");
+        if(act === "edit") loadForm(id);
+        if(act === "del") {
+          if(confirm("Delete?")) {
+            db.leads = db.leads.filter(l => l.id !== id);
+            render();
+          }
+        }
+        if(act === "log") {
+          activeLeadId = id;
+          renderLog();
+          $("modal").classList.add("open");
+        }
+      };
+
+      function renderLog(){
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(!l) return;
+        
+        // Added Phone Link to Modal Header
+        const phoneHtml = l.phone ? `<a href="tel:${safe(l.phone)}" style="margin-left:12px; font-weight:400; color:var(--brand); text-decoration:none; font-size:14px; background:#f1f5f9; padding:2px 8px; border-radius:4px;">${safe(l.phone)}</a>` : "";
+        $("modalLead").innerHTML = `${safe(l.company)} ${phoneHtml}`;
+        
+        const logs = l.activity || [];
+        $("logTbody").innerHTML = logs.map((log, i) => `
+          <tr><td class="small">${fmtDT(log.ts)}</td><td>${log.text}</td>
+          <td style="text-align:right"><button class="mini danger" data-idx="${i}">✕</button></td></tr>
+        `).join("");
+      }
+
+      $("btnAddLog").onclick = () => {
+        const txt = $("logNote").value;
+        if(!txt) return;
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(l){
+           if(!l.activity) l.activity = [];
+           l.activity.unshift({ ts: nowIso(), text: txt });
+           l.updatedAt = nowIso();
+           $("logNote").value = "";
+           renderLog();
+           render();
+           saveDB();
+        }
+      };
+      
+      $("btnCloseModal").onclick = () => { $("modal").classList.remove("open"); activeLeadId = null; };
+      $("logTbody").onclick = (e) => {
+        if(e.target.tagName === "BUTTON"){
+           const idx = e.target.getAttribute("data-idx");
+           const l = db.leads.find(x => x.id === activeLeadId);
+           l.activity.splice(idx, 1);
+           renderLog();
+           saveDB();
+        }
+      };
+      
+      $("btnSeed").onclick = () => {
+        const seed = { 
+          id: uid(), company: "Sample HVAC", stage: "Connected", 
+          firstName: "John", urgency: "8", scale: "$100k/mo",
+          leakType: "Response Time", dmAccess: "Yes", updatedAt: nowIso(), phone: "555-0199"
+        };
+        db.leads.push(seed);
+        render();
+        showToast("Seeded", "Sample lead added.");
+      };
+
+      $("btnWipe").onclick = () => {
+        if(confirm("Delete ALL data?")) {
+          db.leads = [];
+          saveDB();
+          render();
+        }
+      };
+
+      $("btnExportCsv").onclick = () => {
+        const leads = getFilteredLeads();
+        if(!leads.length) return alert("No leads to export.");
+        const headers = Object.keys(leads[0] || {}).join(",");
+        const rows = leads.map(l => Object.values(l).map(v => `"${safe(v).replace(/"/g, '""')}"`).join(","));
+        const blob = new Blob([[headers, ...rows].join("\n")], {type: "text/csv"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "leads.csv"; a.click();
+      };
+      
+      $("btnExportJson").onclick = () => {
+        const payload = JSON.stringify(db, null, 2);
+        const blob = new Blob([payload], {type: "application/json"});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url; a.download = "impacta_backup.json"; a.click();
+      };
+      
+      $("btnImport").onclick = async () => {
+         try {
+           const txt = await navigator.clipboard.readText();
+           const parsed = JSON.parse(txt);
+           if(parsed && parsed.leads) {
+             db = parsed;
+             saveDB();
+             render();
+             showToast("Success", "Database imported.");
+           } else { alert("Invalid JSON"); }
+         } catch(e) { alert("Import failed. Copy JSON to clipboard first."); }
+      };
+
+      ["search", "filterStage", "filterRoute", "sortBy"].forEach(id => {
+        $(id).oninput = render;
+      });
+
+      const qa = (txt) => {
+        if(!activeLeadId) return;
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(!l.activity) l.activity = [];
+        l.activity.unshift({ ts: nowIso(), text: txt });
+        l.updatedAt = nowIso();
+        renderLog();
+        render();
+        saveDB();
+      };
+      $("qaAttempt").onclick = () => qa("Call Attempted");
+      $("qaConnected").onclick = () => qa("Connected");
+      $("qaBooked").onclick = () => qa("Booked 15-min Diagnostic");
+      $("qaNoShow").onclick = () => qa("No-Show");
+
+      render();
+    });
+  </script>
+</body>
+</html>
