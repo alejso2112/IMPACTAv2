@@ -81,6 +81,7 @@
       border-radius:var(--radius); 
       box-shadow: 0 12px 30px -5px rgba(12, 98, 171, 0.25);
       overflow:hidden;
+      display:flex; flex-direction:column;
     }
     .card .hd{
       padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px;
@@ -88,7 +89,7 @@
       background: rgba(0,0,0,0.15);
     }
     .card .hd h2{margin:0; font-size:15px; font-weight:700; color:#fff;}
-    .card .bd{padding:20px}
+    .card .bd{padding:20px; flex:1;}
     
     .hint{color:rgba(255,255,255,0.85); font-size:13px; margin:0}
     .divider{height:1px; background:rgba(255,255,255,0.2); margin:20px 0}
@@ -97,6 +98,7 @@
     /* Inputs */
     .row{display:grid; grid-template-columns:1fr 1fr; gap:16px}
     .row.one{grid-template-columns:1fr}
+    
     input, select, textarea{
       width:100%; padding:10px 12px;
       border-radius:8px; border:1px solid rgba(255,255,255,0.4);
@@ -105,9 +107,22 @@
       transition: border-color .15s, box-shadow .15s;
     }
     input::placeholder, textarea::placeholder { color: #94a3b8; }
-    input:focus, select:focus, textarea:focus{border-color: #fff; box-shadow:0 0 0 3px rgba(255,255,255,0.25);}
+    input:focus, select:focus, textarea:focus{
+      border-color: #fff; 
+      box-shadow:0 0 0 3px rgba(255,255,255,0.25);
+    }
     textarea{min-height:90px; resize:vertical}
     .actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px}
+
+    /* Empty State */
+    .empty-state {
+      text-align: center; padding: 40px 20px;
+      color: rgba(255,255,255,0.9);
+      display:none; /* Toggled by JS */
+    }
+    .empty-state.visible { display: block; }
+    .form-container { display: none; } /* Toggled by JS */
+    .form-container.visible { display: block; }
 
     /* Chips */
     .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
@@ -139,7 +154,7 @@
       background:#fff; border-radius:10px; border:1px solid var(--line);
     }
     .filters label{ color:var(--muted); margin-bottom: 4px; font-size:12px;} 
-    .filters .field{min-width:200px; flex:1}
+    .filters .field{min-width:160px; flex:1}
     .filters .field.small{min-width:120px; flex:0}
     .filters input, .filters select { border-color: var(--line); }
 
@@ -169,8 +184,8 @@
       text-align:left; font-size:11px; font-weight:700;
       text-transform:uppercase; color:var(--muted); letter-spacing: 0.5px;
       z-index:10; white-space: nowrap; 
-      cursor: pointer; /* Clickable */
-      user-select: none; /* No text selection on double click */
+      cursor: pointer; 
+      user-select: none;
       transition: background 0.15s;
     }
     th:hover { background: #e2e8f0; color: var(--brand-dark); }
@@ -180,7 +195,6 @@
     tbody tr:nth-child(even) td { background-color: #f8fafc; }
     tbody tr:hover td { background-color: #f1f5f9; }
     
-    /* Column Sizing */
     td.lead-col {
       min-width:160px; max-width:240px;
       font-weight:600; color:var(--brand-dark);
@@ -191,7 +205,6 @@
     td.min-col { width: 1%; white-space: nowrap; } 
     td.med-col { max-width: 130px; } 
     
-    /* Actions Column (Not Sortable) */
     th:last-child { cursor: default; }
     th:last-child:hover { background: #f8fafc; }
     th:last-child, td:last-child {
@@ -275,10 +288,12 @@
           </div>
         </div>
         <div class="toolbar">
-          <button class="btn secondary" id="btnSeed">Seed Sample</button>
+          <button class="btn" id="btnCreateNew">Create New Lead</button>
+          <div style="width:1px; height:24px; background:var(--line); margin:0 8px;"></div>
+          <button class="btn secondary" id="btnSeed">Seed</button>
           <button class="btn secondary" id="btnImport">Import</button>
           <button class="btn secondary" id="btnExportJson">Backup</button>
-          <button class="btn" id="btnExportCsv">Export CSV</button>
+          <button class="btn secondary" id="btnExportCsv">Export CSV</button>
           <button class="btn danger" id="btnWipe">Wipe</button>
         </div>
       </div>
@@ -289,81 +304,93 @@
     <div class="grid">
       <section class="card">
         <div class="hd">
-          <h2 id="formTitle">Add Lead</h2>
+          <h2 id="formTitle">Lead Manager</h2>
           <span class="hint mono" id="dbStatus">DB: 0 leads</span>
         </div>
         <div class="bd">
-          <p class="hint">Minimum standard: log <strong>leak</strong>, <strong>DM</strong>, and <strong>next action</strong>.</p>
-          <div class="divider"></div>
-          <form id="leadForm" autocomplete="off">
-            <input type="hidden" id="leadId" />
-            <div class="row">
-              <div><label>First Name</label><input id="firstName" placeholder="Alex" /></div>
-              <div><label>Last Name</label><input id="lastName" placeholder="Rivera" /></div>
-            </div>
-            <div class="row">
-              <div><label>Title</label><input id="title" placeholder="Owner" /></div>
-              <div><label>Company</label><input id="company" placeholder="Rivera Plumbing" /></div>
-            </div>
-            <div class="row">
-              <div><label>Industry</label><input id="industry" placeholder="Home Services" /></div>
-              <div><label>City</label><input id="city" placeholder="Orlando" /></div>
-            </div>
-            <div class="row">
-              <div><label>Phone</label><input id="phone" /></div>
-              <div><label>Email</label><input id="email" /></div>
-            </div>
-            <div class="row">
-              <div><label>Stage</label><select id="stage"></select></div>
-              <div><label>DM Access</label><select id="dmAccess">
-                <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
-                <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
-              </select></div>
-            </div>
-            <div class="row">
-              <div><label>Scale</label><input id="scale" placeholder="$80k/mo; 8 staff" /></div>
-              <div><label>Leak Type</label><select id="leakType">
-                <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
-                <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
-                <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
-                <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
-              </select></div>
-            </div>
-            <div class="row">
-              <div><label>Urgency (0-10)</label><select id="urgency">
-                <option value="0">0</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option>
-              </select></div>
-              <div><label>Capacity</label><select id="capacity">
-                <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
-              </select></div>
-            </div>
-            <div class="row">
-              <div><label>Next Action</label><select id="nextAction">
-                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
-                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
-                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
-              </select></div>
-              <div><label>Next Due</label><input id="nextDue" type="datetime-local" /></div>
-            </div>
-            <div class="row one">
-              <div><label>Notes</label><textarea id="notes" placeholder="Leak details, objection notes..."></textarea></div>
-            </div>
-            <div class="row">
-              <div><label>Disqualify Reason</label><input id="disqualifyReason" /></div>
-              <div><label>Route</label><select id="route">
-                <option value="Unrouted">Unrouted</option><option value="48-Hour Fix">48-Hour Fix</option>
-                <option value="Paid Revenue Leak Diagnostic">Paid Revenue Leak Diagnostic</option>
-                <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
-              </select></div>
-            </div>
-            <div class="actions">
-              <button type="submit" class="btn secondary" id="btnSave" style="color:var(--brand)">Save Lead</button>
-              <button type="button" class="btn secondary" id="btnClear" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.4)">Clear</button>
-              <button type="button" class="btn danger" id="btnDelete" disabled>Delete</button>
-            </div>
-            <div class="chips" id="qualityChips"></div>
-            <p class="note" id="qualNote"></p>
-          </form>
+          
+          <div id="emptyState" class="empty-state visible">
+            <div style="font-size:40px; margin-bottom:16px;">👋</div>
+            <h3 style="margin:0 0 8px; font-size:18px; font-weight:700; color:#fff;">Ready to Work</h3>
+            <p style="margin:0; font-size:14px; color:rgba(255,255,255,0.7);">
+              Click <strong>"Create New Lead"</strong> above or <br>select a lead from the table to edit.
+            </p>
+          </div>
+
+          <div id="formContainer" class="form-container">
+            <p class="hint">Minimum standard: log <strong>leak</strong>, <strong>DM</strong>, and <strong>next action</strong>.</p>
+            <div class="divider"></div>
+            <form id="leadForm" autocomplete="off">
+              <input type="hidden" id="leadId" />
+              <div class="row">
+                <div><label>First Name</label><input id="firstName" placeholder="Alex" /></div>
+                <div><label>Last Name</label><input id="lastName" placeholder="Rivera" /></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Title</label><input id="title" placeholder="Owner" /></div>
+                <div><label>Company</label><input id="company" placeholder="Rivera Plumbing" /></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Industry</label><input id="industry" placeholder="Home Services" /></div>
+                <div><label>City</label><input id="city" placeholder="Orlando" /></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Phone</label><input id="phone" /></div>
+                <div><label>Email</label><input id="email" /></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Stage</label><select id="stage"></select></div>
+                <div><label>DM Access</label><select id="dmAccess">
+                  <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
+                  <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
+                </select></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Scale</label><input id="scale" placeholder="$80k/mo; 8 staff" /></div>
+                <div><label>Leak Type</label><select id="leakType">
+                  <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
+                  <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
+                  <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
+                  <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
+                </select></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Urgency (0-10)</label><select id="urgency">
+                  <option value="0">0</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option>
+                </select></div>
+                <div><label>Capacity</label><select id="capacity">
+                  <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
+                </select></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Next Action</label><select id="nextAction">
+                  <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
+                  <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
+                  <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
+                </select></div>
+                <div><label>Next Due</label><input id="nextDue" type="datetime-local" /></div>
+              </div>
+              <div class="row one" style="margin-top:16px">
+                <div><label>Notes</label><textarea id="notes" placeholder="Leak details, objection notes..."></textarea></div>
+              </div>
+              <div class="row" style="margin-top:16px">
+                <div><label>Disqualify Reason</label><input id="disqualifyReason" /></div>
+                <div><label>Route</label><select id="route">
+                  <option value="Unrouted">Unrouted</option><option value="48-Hour Fix">48-Hour Fix</option>
+                  <option value="Paid Revenue Leak Diagnostic">Paid Revenue Leak Diagnostic</option>
+                  <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
+                </select></div>
+              </div>
+              <div class="actions">
+                <button type="submit" class="btn secondary" id="btnSave" style="color:var(--brand)">Save & Close</button>
+                <button type="button" class="btn secondary" id="btnCancel" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.4)">Cancel</button>
+                <button type="button" class="btn danger" id="btnDelete" disabled>Delete</button>
+              </div>
+              <div class="chips" id="qualityChips"></div>
+              <p class="note" id="qualNote"></p>
+            </form>
+          </div>
+
         </div>
       </section>
 
@@ -452,7 +479,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       /***********************
        * IMPACTA Quick CRM
-       * Header Sorting Enabled
+       * Explicit Creation Flow
        ***********************/
       const STORAGE_KEY = "impacta_crm_v1";
       const STAGES = [
@@ -483,8 +510,6 @@
 
       let db = { leads: [] };
       let activeLeadId = null;
-      
-      // Sort State
       let sortState = { key: 'updatedAt', dir: 'desc' };
 
       try {
@@ -512,6 +537,17 @@
         stageSel.innerHTML = opts;
         filterSel.innerHTML = `<option value="All">All</option>` + opts;
         stageSel.value = "New Lead";
+      }
+
+      /* --- UI State Management --- */
+      function toggleForm(show){
+        if(show){
+          $("emptyState").classList.remove("visible");
+          $("formContainer").classList.add("visible");
+        } else {
+          $("emptyState").classList.add("visible");
+          $("formContainer").classList.remove("visible");
+        }
       }
 
       // Handle Header Clicks
@@ -547,7 +583,6 @@
         if (route && route !== "All") leads = leads.filter(l => (l.route || "Unrouted") === route);
         if (q) leads = leads.filter(l => JSON.stringify(l).toLowerCase().includes(q));
 
-        // Sort Logic
         leads.sort((a,b) => {
           let valA = a[sortState.key] || '';
           let valB = b[sortState.key] || '';
@@ -668,17 +703,29 @@
         $("formTitle").textContent = "Edit Lead";
         $("btnDelete").disabled = false;
         renderQualChips();
+        toggleForm(true); // Show form
         window.scrollTo({top:0, behavior:"smooth"});
       }
 
       function clearForm(){
         $("leadForm").reset();
         $("leadId").value = "";
-        $("formTitle").textContent = "Add Lead";
+        $("formTitle").textContent = "New Lead";
         $("btnDelete").disabled = true;
         $("stage").value = "New Lead";
         renderQualChips();
       }
+
+      // Explicit Create Button
+      $("btnCreateNew").addEventListener("click", () => {
+        clearForm();
+        toggleForm(true);
+      });
+
+      // Cancel Button
+      $("btnCancel").addEventListener("click", () => {
+        toggleForm(false);
+      });
 
       $("leadForm").addEventListener("submit", e => {
         e.preventDefault();
@@ -721,16 +768,16 @@
         saveDB();
         render();
         clearForm();
+        toggleForm(false); // Return to ready state after save
         showToast("Success", "Lead saved.");
       });
 
-      $("btnClear").onclick = clearForm;
-      
       $("btnDelete").onclick = () => {
         if(confirm("Delete this lead?")){
           db.leads = db.leads.filter(l => l.id !== $("leadId").value);
           render();
           clearForm();
+          toggleForm(false);
         }
       };
       
