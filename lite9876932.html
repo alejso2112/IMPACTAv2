@@ -238,29 +238,77 @@
     .mini.danger:hover{border-color:#b91c1c; color:#b91c1c;}
     .mono{font-family:var(--mono)}
 
-    /* Modal */
+    /* Modal Styling - Blue Split */
     .modal{
-      position:fixed; inset:0; background:rgba(15,23,42,.6); backdrop-filter:blur(4px);
+      position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px);
       display:none; align-items:center; justify-content:center;
       padding:20px; z-index:100;
     }
     .modal.open{display:flex}
     .modal .panel{
-      width:min(800px, 100%); max-height:90vh; overflow:auto;
-      background:#fff; border-radius:16px;
-      box-shadow:0 25px 50px -12px rgba(0,0,0,0.25);
-      color: var(--ink);
+      width:min(1200px, 95%); 
+      height: 90vh; 
+      background:var(--brand); /* Brand Blue BG */
+      border-radius:16px;
+      border: 1px solid var(--brand-dark);
+      box-shadow:0 30px 60px -12px rgba(0,0,0,0.4);
+      color: #fff; /* White text */
+      display: flex; flex-direction: column;
+      overflow: hidden;
     }
     .modal .panel .hd{
-      padding:20px 24px; display:flex; align-items:center; justify-content:space-between;
-      border-bottom:1px solid var(--line); background:#f8fafc;
+      padding:16px 24px; display:flex; align-items:center; justify-content:space-between;
+      border-bottom:1px solid rgba(255,255,255,0.15); 
+      background: rgba(0,0,0,0.15);
+      flex: 0 0 auto;
     }
-    .modal .panel .hd h3{margin:0; font-size:16px; font-weight:700; color:var(--ink)}
-    .modal .panel .bd{padding:24px}
-    .modal label { color: var(--muted); }
-    .modal input, .modal textarea { border-color: var(--line); }
+    .modal .panel .hd h3{margin:0; font-size:16px; font-weight:700; color:#fff;}
+    
+    /* Split Layout Body */
+    .modal .panel .bd-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr; /* Equal split */
+      gap: 0; /* Border separation instead of gap */
+      flex: 1 1 auto;
+      overflow: hidden;
+    }
+    .modal-col {
+      padding: 24px;
+      overflow-y: auto;
+    }
+    .modal-col.left {
+      border-right: 1px solid rgba(255,255,255,0.15);
+    }
+    
+    /* Responsive stack for mobile */
+    @media (max-width: 900px) {
+      .modal .panel .bd-grid { grid-template-columns: 1fr; overflow-y: auto; }
+      .modal-col { overflow-y: visible; }
+      .modal-col.left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+    }
+
+    /* Modal Form Styles */
+    .modal-grid label { color: #fff; }
+    .modal-grid input, .modal-grid select, .modal-grid textarea {
+      border: 1px solid rgba(255,255,255,0.4);
+      background: #fff;
+      color: var(--ink);
+    }
+    .modal-grid input:focus, .modal-grid select:focus, .modal-grid textarea:focus {
+      border-color: #fff;
+      box-shadow: 0 0 0 3px rgba(255,255,255,0.25);
+    }
+    
     .note{font-size:13px; color:rgba(255,255,255,0.7); margin:12px 0 0; line-height:1.5;}
-    .modal .note { color: var(--muted); }
+    
+    /* White Island for Table inside Blue Modal */
+    .modal .tablewrap {
+      background: #fff;
+      color: var(--ink);
+      border: none;
+    }
+    .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
+    .modal .tablewrap td { background: #fff; }
 
     /* Toast */
     .toast{
@@ -293,7 +341,7 @@
           <button class="btn secondary" id="btnSeed">Seed</button>
           <button class="btn secondary" id="btnImport">Import</button>
           <button class="btn secondary" id="btnExportJson">Backup</button>
-          <button class="btn secondary" id="btnExportCsv">Export CSV</button>
+          <button class="btn" id="btnExportCsv">Export CSV</button>
           <button class="btn danger" id="btnWipe">Wipe</button>
         </div>
       </div>
@@ -366,6 +414,8 @@
                 <div><label>Next Action</label><select id="nextAction">
                   <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
                   <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
+                  <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
+                  <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
                   <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
                 </select></div>
                 <div><label>Next Due</label><input id="nextDue" type="datetime-local" /></div>
@@ -438,34 +488,99 @@
   <div class="modal" id="modal">
     <div class="panel">
       <div class="hd">
-        <h3 id="modalTitle">Activity Log</h3>
-        <button class="btn secondary" id="btnCloseModal">Close</button>
+        <h3 id="modalTitle">Activity & Details</h3>
+        <button class="btn secondary" id="btnCloseModal" style="color:var(--brand)">Close</button>
       </div>
-      <div class="bd">
-        <div class="row">
-          <div><label>Lead</label><div class="mono" id="modalLead" style="font-weight:700; font-size:16px;"></div></div>
-          <div><label>Quick Actions</label><div class="rowactions" style="justify-content:flex-start">
-            <button class="mini" id="qaAttempt">+ Attempt</button>
-            <button class="mini" id="qaConnected">+ Connected</button>
-            <button class="mini" id="qaBooked">+ Booked</button>
-            <button class="mini" id="qaNoShow">+ No-show</button>
-          </div></div>
+      <div class="bd-grid">
+        
+        <div class="modal-col left">
+          <h4 style="margin:0 0 16px; color:rgba(255,255,255,0.8); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Contact Info</h4>
+          
+          <div class="row modal-grid">
+            <div><label>First Name</label><input id="m_firstName" /></div>
+            <div><label>Last Name</label><input id="m_lastName" /></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
+            <div><label>Company</label><input id="m_company" /></div>
+            <div><label>Title</label><input id="m_title" /></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
+            <div><label>Phone</label><input id="m_phone" /></div>
+            <div><label>Email</label><input id="m_email" /></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
+            <div><label>Stage</label><select id="m_stage"></select></div>
+            <div><label>DM Access</label><select id="m_dmAccess">
+                <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
+                <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
+            </select></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
+            <div><label>Scale</label><input id="m_scale" /></div>
+            <div><label>Leak Type</label><select id="m_leakType">
+                <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
+                <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
+                <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
+                <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
+            </select></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
+            <div><label>Urgency</label><select id="m_urgency">
+                <option value="0">0</option><option value="5">5</option><option value="8">8</option><option value="10">10</option>
+            </select></div>
+            <div><label>Capacity</label><select id="m_capacity">
+                <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
+            </select></div>
+          </div>
+          
+          <div class="row one modal-grid" style="margin-top:12px">
+            <div><label>Notes</label><textarea id="m_notes" style="min-height:60px"></textarea></div>
+          </div>
         </div>
-        <div class="divider"></div>
-        <div class="row one">
-          <div><label>Add Log Entry</label><textarea id="logNote" placeholder="What happened? What is the next step?"></textarea></div>
+
+        <div class="modal-col right">
+          <h4 style="margin:0 0 16px; color:rgba(255,255,255,0.8); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Call Results</h4>
+          
+          <div class="row">
+            <div><label style="color:#fff">Quick Actions (Auto-Saves Details & Log)</label>
+              <div class="rowactions" style="justify-content:flex-start">
+              <button class="mini" id="qaAttempt">+ Attempt</button>
+              <button class="mini" id="qaConnected">+ Connected</button>
+              <button class="mini" id="qaBooked">+ Booked</button>
+              <button class="mini" id="qaNoShow">+ No-show</button>
+            </div></div>
+          </div>
+
+          <div class="row modal-grid" style="margin-top:16px; padding-top:16px; border-top:1px solid rgba(255,255,255,0.15);">
+            <div><label style="color:#fff">Next Action</label><select id="m_nextAction">
+                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
+                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
+                <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
+                <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
+                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
+            </select></div>
+            <div><label style="color:#fff">Next Due</label><input id="m_nextDue" type="datetime-local" /></div>
+          </div>
+          
+          <div class="row one" style="margin-top:12px">
+            <div class="modal-grid"><label style="color:#fff">Add Log Entry</label><textarea id="logNote" placeholder="Log call outcome... (Updates to fields on the left are auto-saved when you click a Quick Action or Post)"></textarea></div>
+          </div>
+          
+          <div class="actions">
+            <button class="btn secondary" id="btnAddLog" style="color:var(--brand)">Post Note Only</button>
+            <button class="btn secondary" id="btnCopyLead" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.4)">Copy Summary</button>
+          </div>
+          
+          <div class="divider"></div>
+          
+          <div class="tablewrap" style="max-height:300px; overflow-y:auto; margin-top:0;">
+            <table>
+              <thead><tr><th>Time</th><th>Entry</th><th style="text-align:right">Act</th></tr></thead>
+              <tbody id="logTbody"></tbody>
+            </table>
+          </div>
         </div>
-        <div class="actions">
-          <button class="btn" id="btnAddLog">Add Log</button>
-          <button class="btn secondary" id="btnCopyLead">Copy Summary</button>
-        </div>
-        <div class="divider"></div>
-        <div class="tablewrap" style="max-height:300px; overflow-y:auto">
-          <table>
-            <thead><tr><th>Time</th><th>Entry</th><th style="text-align:right">Act</th></tr></thead>
-            <tbody id="logTbody"></tbody>
-          </table>
-        </div>
+
       </div>
     </div>
   </div>
@@ -479,7 +594,7 @@
     document.addEventListener("DOMContentLoaded", () => {
       /***********************
        * IMPACTA Quick CRM
-       * Explicit Creation Flow
+       * Smart Log Version: Combined Notes + Action in History
        ***********************/
       const STORAGE_KEY = "impacta_crm_v1";
       const STAGES = [
@@ -532,9 +647,12 @@
 
       const stageSel = $("stage");
       const filterSel = $("filterStage");
+      const modalStage = $("m_stage");
+      
       if(stageSel && filterSel) {
         let opts = STAGES.map(s => `<option value="${s}">${s}</option>`).join("");
         stageSel.innerHTML = opts;
+        modalStage.innerHTML = opts;
         filterSel.innerHTML = `<option value="All">All</option>` + opts;
         stageSel.value = "New Lead";
       }
@@ -703,7 +821,7 @@
         $("formTitle").textContent = "Edit Lead";
         $("btnDelete").disabled = false;
         renderQualChips();
-        toggleForm(true); // Show form
+        toggleForm(true); 
         window.scrollTo({top:0, behavior:"smooth"});
       }
 
@@ -716,13 +834,11 @@
         renderQualChips();
       }
 
-      // Explicit Create Button
       $("btnCreateNew").addEventListener("click", () => {
         clearForm();
         toggleForm(true);
       });
 
-      // Cancel Button
       $("btnCancel").addEventListener("click", () => {
         toggleForm(false);
       });
@@ -768,7 +884,7 @@
         saveDB();
         render();
         clearForm();
-        toggleForm(false); // Return to ready state after save
+        toggleForm(false); 
         showToast("Success", "Lead saved.");
       });
 
@@ -806,39 +922,123 @@
         const l = db.leads.find(x => x.id === activeLeadId);
         if(!l) return;
         
+        $("m_firstName").value = l.firstName || "";
+        $("m_lastName").value = l.lastName || "";
+        $("m_company").value = l.company || "";
+        $("m_title").value = l.title || "";
+        $("m_phone").value = l.phone || "";
+        $("m_email").value = l.email || "";
+        $("m_stage").value = l.stage;
+        $("m_dmAccess").value = l.dmAccess;
+        $("m_scale").value = l.scale || "";
+        $("m_leakType").value = l.leakType;
+        $("m_urgency").value = l.urgency;
+        $("m_capacity").value = l.capacity;
+        $("m_nextAction").value = l.nextAction;
+        $("m_nextDue").value = toLocalInput(l.nextDue);
+        $("m_notes").value = l.notes || "";
+
         const phoneHtml = l.phone ? `<a href="tel:${safe(l.phone)}" style="margin-left:12px; font-weight:400; color:var(--brand); text-decoration:none; font-size:14px; background:#f1f5f9; padding:4px 8px; border-radius:4px;">${safe(l.phone)}</a>` : "";
-        $("modalLead").innerHTML = `${safe(l.company)} ${phoneHtml}`;
+        $("modalTitle").innerHTML = `${safe(l.company)} ${phoneHtml}`;
         
         const logs = l.activity || [];
         $("logTbody").innerHTML = logs.map((log, i) => `
-          <tr><td class="small">${fmtDT(log.ts)}</td><td>${log.text}</td>
-          <td style="text-align:right"><button class="mini danger" data-idx="${i}">✕</button></td></tr>
+          <tr>
+            <td class="small" style="vertical-align:top; width:130px;">${fmtDT(log.ts)}</td>
+            <td style="vertical-align:top">
+                <div style="font-weight:800; color:var(--ink); margin-bottom:4px;">${safe(log.action || "Log")}</div>
+                <div style="margin-bottom:4px;">${safe(log.text)}</div>
+                <div style="font-size:12px; color:var(--muted); background:#f8fafc; padding:4px 6px; border-radius:4px; display:inline-block;">${safe(log.details || "")}</div>
+            </td>
+            <td style="text-align:right; vertical-align:top"><button class="mini danger" data-idx="${i}">✕</button></td>
+          </tr>
         `).join("");
       }
 
+      function updateLeadFromModal() {
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(!l) return;
+
+        l.firstName = $("m_firstName").value;
+        l.lastName = $("m_lastName").value;
+        l.company = $("m_company").value;
+        l.title = $("m_title").value;
+        l.phone = $("m_phone").value;
+        l.email = $("m_email").value;
+        l.stage = $("m_stage").value;
+        l.dmAccess = $("m_dmAccess").value;
+        l.scale = $("m_scale").value;
+        l.leakType = $("m_leakType").value;
+        l.urgency = $("m_urgency").value;
+        l.capacity = $("m_capacity").value;
+        l.nextAction = $("m_nextAction").value;
+        l.nextDue = $("m_nextDue").value ? new Date($("m_nextDue").value).toISOString() : "";
+        l.notes = $("m_notes").value;
+        l.updatedAt = nowIso();
+      }
+
+      function logAndSave(actionType) {
+        if(!activeLeadId) return;
+        updateLeadFromModal();
+        
+        // Context Capture
+        const nAct = $("m_nextAction").value;
+        const nDue = $("m_nextDue").value;
+        const nDueStr = nDue ? new Date(nDue).toLocaleDateString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : "";
+        const context = `→ Next: ${nAct} ${nDueStr ? '@ ' + nDueStr : ''}`;
+        
+        // Combined Note Text
+        const userNote = $("logNote").value;
+
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(!l.activity) l.activity = [];
+        
+        l.activity.unshift({ 
+            ts: nowIso(), 
+            action: actionType || "Note", // Action Label (e.g. Call Attempted)
+            text: userNote,               // User typed text
+            details: context              // The plan
+        });
+        
+        $("logNote").value = "";
+        saveDB();
+        renderLog(); 
+        render(); 
+        showToast("Logged", "Activity logged & record updated.");
+      }
+
+      // Manual Note Button
       $("btnAddLog").onclick = () => {
         const txt = $("logNote").value;
-        if(!txt) return;
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(l){
-           if(!l.activity) l.activity = [];
-           l.activity.unshift({ ts: nowIso(), text: txt });
-           l.updatedAt = nowIso();
-           $("logNote").value = "";
-           renderLog();
-           render();
-           saveDB();
-        }
+        if(!txt) return alert("Please enter a note to post.");
+        logAndSave("Manual Log");
       };
       
+      // Quick Actions (Pass Label)
+      $("qaAttempt").onclick = () => logAndSave("Call Attempted");
+      $("qaConnected").onclick = () => logAndSave("Connected");
+      $("qaBooked").onclick = () => {
+        $("m_stage").value = "Booked – 15 Min Diagnostic"; 
+        logAndSave("Booked 15-min Diagnostic");
+      };
+      $("qaNoShow").onclick = () => {
+        $("m_stage").value = "No-Show";
+        logAndSave("No-Show");
+      };
+
       $("btnCloseModal").onclick = () => { $("modal").classList.remove("open"); activeLeadId = null; };
+      
+      // CONFIRM DELETE
       $("logTbody").onclick = (e) => {
         if(e.target.tagName === "BUTTON"){
-           const idx = e.target.getAttribute("data-idx");
-           const l = db.leads.find(x => x.id === activeLeadId);
-           l.activity.splice(idx, 1);
-           renderLog();
-           saveDB();
+           if(confirm("Are you sure you want to delete this log entry?")){
+               const idx = e.target.getAttribute("data-idx");
+               const l = db.leads.find(x => x.id === activeLeadId);
+               l.activity.splice(idx, 1);
+               renderLog();
+               saveDB();
+               showToast("Deleted", "Log entry removed.");
+           }
         }
       };
       
@@ -896,21 +1096,6 @@
       ["search", "filterStage", "filterRoute"].forEach(id => {
         $(id).oninput = render;
       });
-
-      const qa = (txt) => {
-        if(!activeLeadId) return;
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(!l.activity) l.activity = [];
-        l.activity.unshift({ ts: nowIso(), text: txt });
-        l.updatedAt = nowIso();
-        renderLog();
-        render();
-        saveDB();
-      };
-      $("qaAttempt").onclick = () => qa("Call Attempted");
-      $("qaConnected").onclick = () => qa("Connected");
-      $("qaBooked").onclick = () => qa("Booked 15-min Diagnostic");
-      $("qaNoShow").onclick = () => qa("No-Show");
 
       render();
     });
