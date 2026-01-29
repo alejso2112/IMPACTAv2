@@ -226,6 +226,7 @@
     .pill.stage{background:#e0f2fe; color:#0369a1;}
     .pill.disq{background:#fee2e2; color:#b91c1c;}
     .pill.nurture{background:#fef3c7; color:#b45309;}
+    .pill.sold{background:#dcfce7; color:#15803d;}
 
     .rowactions{display:flex; gap:6px; align-items:center; justify-content:flex-end}
     .mini{
@@ -575,12 +576,15 @@
           
           <div class="row">
             <div><label style="color:var(--ink)">Quick Actions (Auto-Saves Details & Log)</label>
-              <div class="rowactions" style="justify-content:flex-start">
-              <button class="mini" id="qaAttempt">+ Attempt</button>
-              <button class="mini" id="qaConnected">+ Connected</button>
-              <button class="mini" id="qaBooked">+ Booked</button>
-              <button class="mini" id="qaNoShow">+ No-show</button>
-            </div></div>
+              <div class="rowactions" style="justify-content:flex-start; flex-wrap:wrap; gap:8px;">
+                <button class="mini" id="qaAttempt">+ Attempt</button>
+                <button class="mini" id="qaConnected">+ Connected</button>
+                <button class="mini" id="qaBooked">+ Booked 15m</button>
+                <button class="mini" id="qaSold48">+ Sold 48hr</button>
+                <button class="mini" id="qaSoldRLD">+ Sold RLD</button>
+                <button class="mini" id="qaNoShow">+ No-show</button>
+              </div>
+            </div>
           </div>
 
           <div class="row modal-grid" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--line);">
@@ -629,6 +633,7 @@
         "New Lead", "Attempting", "Connected", 
         "Booked – 15 Min Diagnostic", "Held – 15 Min Diagnostic", 
         "No-Show", "Reschedule", "Qualified – Next Step Scheduled", 
+        "Sold - 48 Hour Fix", "Sold - RLD",
         "Disqualified", "Nurture"
       ];
 
@@ -762,12 +767,13 @@
           let stg = l.stage.split(' ')[0]; 
           if(l.stage.includes("Booked")) stg = "Booked";
           if(l.stage.includes("Qualified")) stg = "Qualified";
+          if(l.stage.includes("Sold")) stg = "Sold";
           
           return `
             <tr>
               <td class="lead-col">${name}<br><span class="lead-meta">${sub}</span></td>
               <td style="white-space:nowrap"><a href="tel:${safe(l.phone)}" style="color:var(--ink); text-decoration:none; font-weight:600; background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:12px;">${safe(l.phone)}</a></td>
-              <td class="med-col"><span class="pill ${l.stage==='Disqualified'?'disq':l.stage==='Nurture'?'nurture':'stage'}">${stg}</span></td>
+              <td class="med-col"><span class="pill ${l.stage==='Disqualified'?'disq':l.stage==='Nurture'?'nurture':l.stage.includes('Sold')?'sold':'stage'}">${stg}</span></td>
               <td class="med-col">${safe(l.leakType)}</td>
               <td class="min-col">${safe(l.dmAccess)}</td>
               <td class="small" title="${safe(l.scale)}">${safe(l.scale)}</td>
@@ -1065,12 +1071,26 @@
       };
       
       // Quick Actions (Pass Label)
-      $("qaAttempt").onclick = () => logAndSave("Call Attempted");
-      $("qaConnected").onclick = () => logAndSave("Connected");
+      $("qaAttempt").onclick = () => {
+          $("m_stage").value = "Attempting";
+          logAndSave("Call Attempted");
+      };
+      $("qaConnected").onclick = () => {
+          $("m_stage").value = "Connected";
+          logAndSave("Connected");
+      };
       $("qaBooked").onclick = () => {
-        $("m_stage").value = "Booked – 15 Min Diagnostic"; 
+        // $("m_stage").value = "Booked – 15 Min Diagnostic"; 
         logAndSave("Booked 15-min Diagnostic");
       };
+      $("qaSold48").onclick = () => {
+          $("m_stage").value = "Sold - 48 Hour Fix";
+          logAndSave("Sold 48-Hour Fix");
+      }
+      $("qaSoldRLD").onclick = () => {
+          $("m_stage").value = "Sold - RLD";
+          logAndSave("Sold Revenue Leak Diagnostic");
+      }
       $("qaNoShow").onclick = () => {
         $("m_stage").value = "No-Show";
         logAndSave("No-Show");
@@ -1133,11 +1153,11 @@
       
       $("btnImport").onclick = async () => {
          try {
-           const txt = await navigator.clipboard.readText();
-           if (!txt || txt.trim() === "") return alert("Clipboard is empty.");
+           const txt = (await navigator.clipboard.readText()).trim().replace(/^\uFEFF/, '');
+           if (!txt) return alert("Clipboard is empty.");
            
            // Check if JSON
-           if (txt.trim().startsWith("{") || txt.trim().startsWith("[")) {
+           if (txt.startsWith("{") || txt.startsWith("[")) {
                try {
                    const parsed = JSON.parse(txt);
                    if(parsed && parsed.leads) {
@@ -1152,15 +1172,10 @@
 
            // Assume CSV
            try {
-               const lines = txt.trim().split(/\r?\n/);
+               const lines = txt.split(/\r?\n/);
                if (lines.length < 2) return alert("Invalid data.");
                
-               // Parse Header
-               const headers = lines[0].split(",").map(h => h.trim().replace(/^"|"$/g, ''));
-               const newLeads = [];
-               
                // Simple CSV Parser (ignores complex commas inside quotes for simplicity unless specific regex used)
-               // Using a smarter regex for split to handle quotes if possible, else simple split
                const parseCSVLine = (str) => {
                    const arr = [];
                    let quote = false;
@@ -1174,12 +1189,14 @@
                    return arr;
                };
 
+               // Parse Header
+               const headers = parseCSVLine(lines[0]).map(h => h.trim());
+               const newLeads = [];
+
                for (let i = 1; i < lines.length; i++) {
+                   if (!lines[i].trim()) continue;
                    const cols = parseCSVLine(lines[i]);
                    let lead = { id: uid(), activity: [], updatedAt: nowIso(), createdAt: nowIso() };
-                   
-                   // MAP COLUMNS based on User Request
-                   // Company,Phone,City/State,Industry,GBP 1 (Relevance),GBP 2 (Conversion),GBP 3 (Systems),Recommendation,Contact Person,Website,Status,Next Follow Up Date,Spoke to Decision Maker,Pitched Decision Maker,1st Attempt Notes...
                    
                    const getVal = (headerName) => {
                        const idx = headers.indexOf(headerName);
@@ -1204,9 +1221,14 @@
                        lead.lastName = parts.slice(1).join(" ");
                    }
                    
-                   // Date mapping
+                   // Date mapping - Safe Check
                    const nextDate = getVal("Next Follow Up Date");
-                   if (nextDate) lead.nextDue = new Date(nextDate).toISOString();
+                   if (nextDate) {
+                       const d = new Date(nextDate);
+                       if (!isNaN(d.getTime())) {
+                           lead.nextDue = d.toISOString();
+                       }
+                   }
 
                    // DM Logic
                    const spoke = getVal("Spoke to Decision Maker");
