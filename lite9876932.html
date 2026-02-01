@@ -26,7 +26,7 @@
       font-size: 14px;
     }
     a{color:var(--brand); text-decoration:none}
-    .wrap{max-width:1600px; margin:0 auto; padding:0 24px}
+    .wrap{max-width:1800px; margin:0 auto; padding:0 24px} /* Widen layout for new columns */
     
     /* Topbar */
     .topbar{
@@ -40,11 +40,14 @@
       gap:16px; padding:14px 0;
     }
     .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
+    
+    /* LOGO UPDATE: Image style */
     .logo{
-      width:40px; height:40px; border-radius:10px;
-      background: radial-gradient(120% 120% at 20% 20%, #2b8ddf 0%, var(--brand) 60%, var(--brand-dark) 100%);
+      height:40px; width:auto; /* Constrain height, allow width to scale */
       flex:0 0 auto;
+      display: block;
     }
+
     .brand h1{margin:0; font-size:16px; font-weight:700; color:var(--brand-dark); letter-spacing:-0.01em;}
     .brand p{margin:0; font-size:13px; color:var(--muted)}
     
@@ -63,17 +66,16 @@
     .btn.secondary:hover{background:#f8fafc; border-color:#cbd5e1}
     .btn.danger{background:#fff; color:#b91c1c; border:1px solid rgba(185,28,28,.2);}
     .btn.danger:hover{background:#fef2f2; border-color:#b91c1c}
+    .btn.success{background:#10b981; color:#fff; border-color:#059669;}
+    .btn.success:hover{background:#059669;}
     .btn[disabled]{opacity:.5; cursor:not-allowed}
     .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-end;}
 
     /* Layout */
     main{padding:24px 0 48px}
-    .grid{
-      display:grid; grid-template-columns: 380px 1fr; gap:24px; align-items:start;
-    }
-    @media (max-width: 1100px){ .grid{grid-template-columns:1fr} }
+    .grid{ display: block; }
     
-    /* Blue Card Style */
+    /* Card Style */
     .card{
       background:var(--brand);
       color: #fff;
@@ -118,12 +120,10 @@
     .empty-state {
       text-align: center; padding: 40px 20px;
       color: rgba(255,255,255,0.9);
-      display:none; /* Toggled by JS */
+      display:none;
     }
     .empty-state.visible { display: block; }
-    .form-container { display: none; } /* Toggled by JS */
-    .form-container.visible { display: block; }
-
+    
     /* Chips */
     .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
     .chip{
@@ -204,6 +204,7 @@
     
     td.min-col { width: 1%; white-space: nowrap; } 
     td.med-col { max-width: 130px; } 
+    td.gbp-col { min-width: 140px; max-width: 200px; font-size: 12px; color: #334155; }
     
     th:last-child { cursor: default; }
     th:last-child:hover { background: #f8fafc; }
@@ -237,6 +238,9 @@
     }
     .mini:hover{border-color:var(--brand); color:var(--brand);}
     .mini.danger:hover{border-color:#b91c1c; color:#b91c1c;}
+    .mini.primary { background:var(--brand); color:#fff; border-color:var(--brand); }
+    .mini.primary:hover { background:var(--brand-dark); }
+    
     .mono{font-family:var(--mono)}
 
     /* Modal Styling - OFF-WHITE VERSION */
@@ -263,8 +267,57 @@
       background: #ffffff; /* White Header */
       flex: 0 0 auto;
     }
-    .modal .panel .hd h3{margin:0; font-size:16px; font-weight:700; color:var(--brand);}
+    .modal .panel .hd h3{margin:0; font-size:16px; font-weight:700; color:var(--brand); display:flex; align-items:center; gap:10px;}
+
+    /* EDIT MODAL SPECIFIC (Blue Header) */
+    #editModal .panel .hd { background: var(--brand); border-bottom: 1px solid var(--brand-dark); }
+    #editModal .panel .hd h3 { color: #fff; }
+    #editModal .bd { padding: 24px; }
+    #editModal label { color: var(--ink); } /* Reset label color for edit form */
+
+    /* COMMAND BAR (HUD) */
+    .status-bar {
+      padding: 12px 24px;
+      background: #eef2ff; /* Light brand tint */
+      border-bottom: 1px solid var(--line);
+      display: flex; gap: 32px; align-items: center;
+      flex: 0 0 auto;
+    }
+    @media (max-width: 800px) {
+        .status-bar { flex-direction: column; align-items: stretch; gap: 12px; }
+    }
     
+    .status-group {
+        display: flex; flex-direction: column; gap: 4px; flex: 1;
+    }
+    .status-label {
+        font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
+    }
+    
+    /* READ ONLY STATUS INPUT */
+    #m_stage {
+        background: transparent;
+        border: none;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--brand);
+        padding: 0;
+        margin: 0;
+        box-shadow: none;
+        width: 100%;
+        cursor: default;
+        text-transform: uppercase;
+    }
+    
+    /* NEXT ACTION SELECT (IN HUD) */
+    #m_nextAction {
+        background: #fff;
+        border: 2px solid #10b981; /* Green border for "Action" */
+        color: #064e3b;
+        font-weight: 600;
+        text-transform: uppercase;
+    }
+
     /* Split Layout Body */
     .modal .panel .bd-grid {
       display: grid;
@@ -311,6 +364,21 @@
     .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
     .modal .tablewrap td { background: #ffffff; }
 
+    /* Call Controls */
+    .call-controls {
+      background: #fff; border:1px solid var(--line); border-radius:12px;
+      padding:16px; margin-bottom:20px;
+      display:flex; justify-content:space-between; align-items:center;
+      box-shadow:0 4px 12px rgba(0,0,0,0.03);
+    }
+    .timer { font-family:var(--mono); font-size:24px; font-weight:700; color:var(--brand); }
+    .timer.active { color:#b91c1c; animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%{opacity:1} 50%{opacity:0.6} 100%{opacity:1} }
+    
+    .quick-actions button.selected {
+      background: var(--brand); color:#fff; border-color:var(--brand);
+    }
+
     /* Toast */
     .toast{
       position:fixed; right:24px; bottom:24px;
@@ -330,7 +398,7 @@
     <div class="wrap">
       <div class="inner">
         <div class="brand">
-          <div class="logo"></div>
+          <img src="img/logo-main-2026.png" class="logo" alt="IMPACTA" />
           <div>
             <h1>IMPACTA Business Solutions</h1>
             <p>Quick CRM — LocalStorage + CSV Export</p>
@@ -353,116 +421,6 @@
     <div class="grid">
       <section class="card">
         <div class="hd">
-          <h2 id="formTitle">Lead Manager</h2>
-          <span class="hint mono" id="dbStatus">DB: 0 leads</span>
-        </div>
-        <div class="bd">
-          
-          <div id="emptyState" class="empty-state visible">
-            <div style="font-size:40px; margin-bottom:16px;">👋</div>
-            <h3 style="margin:0 0 8px; font-size:18px; font-weight:700; color:#fff;">Ready to Work</h3>
-            <p style="margin:0; font-size:14px; color:rgba(255,255,255,0.7);">
-              Click <strong>"Create New Lead"</strong> above or <br>select a lead from the table to edit.
-            </p>
-          </div>
-
-          <div id="formContainer" class="form-container">
-            <p class="hint">Minimum standard: log <strong>leak</strong>, <strong>DM</strong>, and <strong>next action</strong>.</p>
-            <div class="divider"></div>
-            <form id="leadForm" autocomplete="off">
-              <input type="hidden" id="leadId" />
-              <div class="row">
-                <div><label>First Name</label><input id="firstName" placeholder="Alex" /></div>
-                <div><label>Last Name</label><input id="lastName" placeholder="Rivera" /></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Title</label><input id="title" placeholder="Owner" /></div>
-                <div><label>Company</label><input id="company" placeholder="Rivera Plumbing" /></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Industry</label><input id="industry" placeholder="Home Services" /></div>
-                <div><label>City</label><input id="city" placeholder="Orlando" /></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Phone</label><input id="phone" /></div>
-                <div><label>Email</label><input id="email" /></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Website</label><input id="website" placeholder="https://..." /></div>
-                <div><label>Recommendation</label><input id="recommendation" placeholder="48hr Fix" /></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Stage</label><select id="stage"></select></div>
-                <div><label>DM Access</label><select id="dmAccess">
-                  <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
-                  <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
-                </select></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Scale</label><input id="scale" placeholder="$80k/mo; 8 staff" /></div>
-                <div><label>Leak Type</label><select id="leakType">
-                  <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
-                  <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
-                  <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
-                  <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
-                </select></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Urgency (0-10)</label><select id="urgency">
-                  <option value="0">0</option><option value="5" selected>5</option><option value="8">8</option><option value="10">10</option>
-                </select></div>
-                <div><label>Capacity</label><select id="capacity">
-                  <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
-                </select></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Next Action</label><select id="nextAction">
-                  <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
-                  <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
-                  <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
-                  <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
-                  <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
-                </select></div>
-                <div><label>Next Due</label><input id="nextDue" type="datetime-local" /></div>
-              </div>
-              
-              <div style="margin-top:16px; border-top:1px solid rgba(255,255,255,0.2); padding-top:16px;">
-                <label>Diagnostic Data (GBP)</label>
-                <div class="row">
-                    <input id="gbp1" placeholder="GBP 1 (Relevance)" />
-                    <input id="gbp2" placeholder="GBP 2 (Conversion)" />
-                </div>
-                <div class="row" style="margin-top:10px">
-                    <input id="gbp3" placeholder="GBP 3 (Systems)" />
-                </div>
-              </div>
-
-              <div class="row one" style="margin-top:16px">
-                <div><label>Notes</label><textarea id="notes" placeholder="Leak details, objection notes..."></textarea></div>
-              </div>
-              <div class="row" style="margin-top:16px">
-                <div><label>Disqualify Reason</label><input id="disqualifyReason" /></div>
-                <div><label>Route</label><select id="route">
-                  <option value="Unrouted">Unrouted</option><option value="48-Hour Fix">48-Hour Fix</option>
-                  <option value="Paid Revenue Leak Diagnostic">Paid Revenue Leak Diagnostic</option>
-                  <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
-                </select></div>
-              </div>
-              <div class="actions">
-                <button type="submit" class="btn secondary" id="btnSave" style="color:var(--brand)">Save & Close</button>
-                <button type="button" class="btn secondary" id="btnCancel" style="background:transparent; color:#fff; border-color:rgba(255,255,255,0.4)">Cancel</button>
-                <button type="button" class="btn danger" id="btnDelete" disabled>Delete</button>
-              </div>
-              <div class="chips" id="qualityChips"></div>
-              <p class="note" id="qualNote"></p>
-            </form>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="hd">
           <h2>Pipeline & Leads</h2>
           <span class="hint mono" id="viewStatus">View: 0</span>
         </div>
@@ -483,14 +441,15 @@
                 <tr>
                   <th data-sort="company" style="min-width:160px">Lead / Company</th>
                   <th data-sort="phone">Phone</th>
+                  <th data-sort="city">City/State</th>
                   <th data-sort="stage" style="width:100px">Stage</th>
-                  <th data-sort="leakType">Leak</th>
-                  <th data-sort="dmAccess" class="min-col">DM</th>
-                  <th data-sort="scale">Scale</th>
-                  <th data-sort="urgency" class="min-col">Urg</th>
+                  <th data-sort="gbp1">GBP 1</th>
+                  <th data-sort="gbp2">GBP 2</th>
+                  <th data-sort="gbp3">GBP 3</th>
+                  <th data-sort="recommendation">Rec</th>
                   <th data-sort="nextAction" class="med-col">Next Action</th>
                   <th data-sort="nextDue" style="width:100px">Next Due</th>
-                  <th style="text-align:right">Act</th>
+                  <th style="text-align:right; width:140px;">Actions</th>
                 </tr>
               </thead>
               <tbody id="tbody"></tbody>
@@ -504,10 +463,28 @@
 
   <div class="modal" id="modal">
     <div class="panel">
+      
       <div class="hd">
         <h3 id="modalTitle">Activity & Details</h3>
         <button class="btn secondary" id="btnCloseModal" style="color:var(--brand)">Close</button>
       </div>
+
+      <div class="status-bar">
+        <div class="status-group">
+            <span class="status-label">Status</span>
+            <input id="m_stage" readonly /> </div>
+        <div class="status-group">
+            <span class="status-label">Next Action</span>
+            <select id="m_nextAction">
+                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
+                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
+                <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
+                <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
+                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
+            </select>
+        </div>
+      </div>
+
       <div class="bd-grid">
         
         <div class="modal-col left">
@@ -540,27 +517,26 @@
             <div><label>Website</label><input id="m_website" /></div>
           </div>
 
-          <h4 style="margin:20px 0 12px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Status</h4>
+          <h4 style="margin:20px 0 12px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Qualification</h4>
           <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Stage</label><select id="m_stage"></select></div>
             <div><label>DM Access</label><select id="m_dmAccess">
                 <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
                 <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
             </select></div>
+            <div><label>Scale</label><input id="m_scale" /></div>
           </div>
           <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Scale</label><input id="m_scale" /></div>
             <div><label>Leak Type</label><select id="m_leakType">
                 <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
                 <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
                 <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
                 <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
             </select></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
             <div><label>Urgency</label><select id="m_urgency">
                 <option value="0">0</option><option value="5">5</option><option value="8">8</option><option value="10">10</option>
             </select></div>
+          </div>
+          <div class="row modal-grid" style="margin-top:12px">
             <div><label>Capacity</label><select id="m_capacity">
                 <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
             </select></div>
@@ -572,44 +548,53 @@
         </div>
 
         <div class="modal-col right">
-          <h4 style="margin:0 0 16px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Call Results</h4>
           
-          <div class="row">
-            <div><label style="color:var(--ink)">Quick Actions (Auto-Saves Details & Log)</label>
-              <div class="rowactions" style="justify-content:flex-start; flex-wrap:wrap; gap:8px;">
-                <button class="mini" id="qaAttempt">+ Attempt</button>
-                <button class="mini" id="qaConnected">+ Connected</button>
-                <button class="mini" id="qaBooked">+ Booked 15m</button>
-                <button class="mini" id="qaSold48">+ Sold 48hr</button>
-                <button class="mini" id="qaSoldRLD">+ Sold RLD</button>
-                <button class="mini" id="qaNoShow">+ No-show</button>
-              </div>
+          <div class="call-controls">
+            <div id="callTimer" class="timer">00:00</div>
+            <div style="display:flex; gap:10px;">
+              <button class="btn success" id="btnCallStart">📞 Call</button>
+              <button class="btn danger" id="btnCallEnd" style="display:none;">End & Log</button>
             </div>
           </div>
 
-          <div class="row modal-grid" style="margin-top:16px; padding-top:16px; border-top:1px solid var(--line);">
-            <div><label style="color:var(--ink)">Next Action</label><select id="m_nextAction">
-                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
-                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
-                <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
-                <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
-                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
-            </select></div>
-            <div><label style="color:var(--ink)">Next Due</label><input id="m_nextDue" type="datetime-local" /></div>
+          <h4 style="margin:0 0 16px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Call Results</h4>
+          
+          <div class="row one">
+            <div class="modal-grid">
+                <label style="color:var(--ink)">1. Add Log Entry</label>
+                <textarea id="logNote" placeholder="Notes from the call..."></textarea>
+            </div>
+          </div>
+
+          <div class="row modal-grid" style="margin-top:12px;">
+             <div><label style="color:var(--ink)">Next Due Date</label><input id="m_nextDue" type="datetime-local" /></div>
+          </div>
+
+          <div class="row" style="margin-top:20px;">
+            <div>
+              <label style="color:var(--ink)">2. Quick Actions (Updates Status/Next)</label>
+              <div class="rowactions quick-actions" style="justify-content:flex-start; flex-wrap:wrap; gap:8px;">
+                <button class="mini" id="qaAttempt" data-stage="Attempting" data-next="Call Attempt">Attempt</button>
+                <button class="mini" id="qaConnected" data-stage="Connected" data-next="Book 15-min">Connected</button>
+                <button class="mini" id="qaBooked" data-stage="Booked – 15 Min Diagnostic" data-next="Confirm 15-min">Booked 15m</button>
+                <button class="mini" id="qaSold48" data-stage="Sold - 48 Hour Fix" data-next="Sold 48-Hour Fix">Sold 48hr</button>
+                <button class="mini" id="qaSoldRLD" data-stage="Sold - RLD" data-next="Sold Rev Diagnostic">Sold RLD</button>
+                <button class="mini" id="qaNoShow" data-stage="No-Show" data-next="Reschedule">No-show</button>
+              </div>
+            </div>
           </div>
           
-          <div class="row one" style="margin-top:12px">
-            <div class="modal-grid"><label style="color:var(--ink)">Add Log Entry</label><textarea id="logNote" placeholder="Log call outcome... (Updates to fields on the left are auto-saved when you click a Quick Action or Post)"></textarea></div>
+          <div class="actions" style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line);">
+            <button class="btn" id="btnSaveLog" style="width:100%;">Save Log & Next</button>
           </div>
           
-          <div class="actions">
-            <button class="btn secondary" id="btnAddLog" style="color:var(--brand)">Post Note Only</button>
-            <button class="btn secondary" id="btnCopyLead" style="background:transparent; color:var(--muted); border-color:var(--line)">Copy Summary</button>
+          <div class="actions" style="margin-top:8px;">
+            <button class="btn secondary" id="btnAddLog" style="background:transparent; color:var(--muted); border-color:var(--line); width:100%">Post Note Only (No Status Change)</button>
           </div>
-          
+
           <div class="divider" style="background:var(--line)"></div>
           
-          <div class="tablewrap" style="max-height:300px; overflow-y:auto; margin-top:0;">
+          <div class="tablewrap" style="max-height:250px; overflow-y:auto; margin-top:0;">
             <table>
               <thead><tr><th>Time</th><th>Entry</th><th style="text-align:right">Act</th></tr></thead>
               <tbody id="logTbody"></tbody>
@@ -618,6 +603,52 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <div class="modal" id="editModal">
+    <div class="panel" style="width:min(900px, 95%); height:auto; max-height:90vh; display:block;">
+        <div class="hd">
+            <h3>Edit Lead Details</h3>
+            <button class="btn secondary" id="btnCloseEdit" style="background:rgba(255,255,255,0.2); color:#fff; border:none;">Close</button>
+        </div>
+        <div class="bd" style="overflow-y:auto;">
+            <form id="editForm" autocomplete="off">
+                <div class="row">
+                  <div><label>First Name</label><input id="e_firstName" /></div>
+                  <div><label>Last Name</label><input id="e_lastName" /></div>
+                </div>
+                <div class="row" style="margin-top:16px">
+                  <div><label>Title</label><input id="e_title" /></div>
+                  <div><label>Company</label><input id="e_company" /></div>
+                </div>
+                <div class="row" style="margin-top:16px">
+                  <div><label>Phone</label><input id="e_phone" /></div>
+                  <div><label>Email</label><input id="e_email" /></div>
+                </div>
+                <div class="row" style="margin-top:16px">
+                  <div><label>City/State</label><input id="e_city" /></div>
+                  <div><label>Industry</label><input id="e_industry" /></div>
+                </div>
+                <div class="row" style="margin-top:16px">
+                  <div><label>Website</label><input id="e_website" /></div>
+                  <div><label>Recommendation</label><input id="e_recommendation" /></div>
+                </div>
+                <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
+                    <label>Diagnostic Data (GBP)</label>
+                    <div class="row">
+                        <div><label>GBP 1</label><input id="e_gbp1" /></div>
+                        <div><label>GBP 2</label><input id="e_gbp2" /></div>
+                    </div>
+                    <div class="row" style="margin-top:12px">
+                        <div><label>GBP 3</label><input id="e_gbp3" /></div>
+                    </div>
+                </div>
+                <div class="actions" style="margin-top:24px">
+                    <button type="submit" class="btn">Save Changes</button>
+                </div>
+            </form>
+        </div>
     </div>
   </div>
 
@@ -658,7 +689,9 @@
 
       let db = { leads: [] };
       let activeLeadId = null;
-      let sortState = { key: 'updatedAt', dir: 'desc' };
+      let sortState = { key: 'nextDue', dir: 'asc' }; // Priority Sort
+      let timerInterval = null;
+      let seconds = 0;
 
       try {
         const raw = localStorage.getItem(STORAGE_KEY);
@@ -678,53 +711,13 @@
         setTimeout(()=>t.classList.remove("show"), 2500);
       }
 
-      const stageSel = $("stage");
       const filterSel = $("filterStage");
-      const modalStage = $("m_stage");
-      
-      if(stageSel && filterSel) {
+      if(filterSel) {
         let opts = STAGES.map(s => `<option value="${s}">${s}</option>`).join("");
-        stageSel.innerHTML = opts;
-        modalStage.innerHTML = opts;
         filterSel.innerHTML = `<option value="All">All</option>` + opts;
-        stageSel.value = "New Lead";
       }
 
-      /* --- UI State Management --- */
-      function toggleForm(show){
-        if(show){
-          $("emptyState").classList.remove("visible");
-          $("formContainer").classList.add("visible");
-        } else {
-          $("emptyState").classList.add("visible");
-          $("formContainer").classList.remove("visible");
-        }
-      }
-
-      // Handle Header Clicks
-      document.querySelectorAll('th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const key = th.getAttribute('data-sort');
-          if(sortState.key === key) {
-            sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc';
-          } else {
-            sortState.key = key;
-            sortState.dir = 'asc';
-          }
-          render();
-        });
-      });
-
-      function updateHeaderIcons(){
-        document.querySelectorAll('th').forEach(th => {
-          th.classList.remove('sort-asc', 'sort-desc');
-          if(th.getAttribute('data-sort') === sortState.key){
-            th.classList.add(sortState.dir === 'asc' ? 'sort-asc' : 'sort-desc');
-          }
-        });
-      }
-
-      function getFilteredLeads(){
+      function getSortedFilteredLeads(){
         const q = safe($("search").value).toLowerCase();
         const stage = $("filterStage").value;
         const route = $("filterRoute").value;
@@ -734,31 +727,40 @@
         if (route && route !== "All") leads = leads.filter(l => (l.route || "Unrouted") === route);
         if (q) leads = leads.filter(l => JSON.stringify(l).toLowerCase().includes(q));
 
-        leads.sort((a,b) => {
-          let valA = a[sortState.key] || '';
-          let valB = b[sortState.key] || '';
-
-          if(sortState.key === 'company') {
-             valA = (a.company || a.lastName || '').toLowerCase();
-             valB = (b.company || b.lastName || '').toLowerCase();
-          }
-          if(sortState.key === 'urgency') {
-             valA = Number(valA) || 0;
-             valB = Number(valB) || 0;
-          }
-          
-          if(valA < valB) return sortState.dir === 'asc' ? -1 : 1;
-          if(valA > valB) return sortState.dir === 'asc' ? 1 : -1;
-          return 0;
-        });
-
+        if (sortState.key === 'nextDue') {
+          const now = new Date();
+          const todayStr = now.toDateString();
+          leads.sort((a,b) => {
+            const dA = a.nextDue ? new Date(a.nextDue) : null;
+            const dB = b.nextDue ? new Date(b.nextDue) : null;
+            const getCat = (d) => {
+              if(!d) return 3;
+              if(d.toDateString() === todayStr) return 0;
+              if(d < now) return 1;
+              return 2;
+            };
+            const catA = getCat(dA);
+            const catB = getCat(dB);
+            if(catA !== catB) return catA - catB;
+            if(dA && dB) return dA - dB;
+            return 0;
+          });
+          if(sortState.dir === 'desc') leads.reverse();
+        } else {
+          leads.sort((a,b) => {
+              let valA = a[sortState.key] || '';
+              let valB = b[sortState.key] || '';
+              if(valA < valB) return sortState.dir === 'asc' ? -1 : 1;
+              if(valA > valB) return sortState.dir === 'asc' ? 1 : -1;
+              return 0;
+          });
+        }
         return leads;
       }
 
       function render(){
         saveDB();
-        updateHeaderIcons();
-        const leads = getFilteredLeads();
+        const leads = getSortedFilteredLeads();
         $("viewStatus").textContent = `View: ${leads.length}`;
         
         const rows = leads.map(l => {
@@ -766,31 +768,29 @@
           const sub = [l.firstName, l.lastName].join(" ");
           let stg = l.stage.split(' ')[0]; 
           if(l.stage.includes("Booked")) stg = "Booked";
-          if(l.stage.includes("Qualified")) stg = "Qualified";
-          if(l.stage.includes("Sold")) stg = "Sold";
           
           return `
             <tr>
               <td class="lead-col">${name}<br><span class="lead-meta">${sub}</span></td>
               <td style="white-space:nowrap"><a href="tel:${safe(l.phone)}" style="color:var(--ink); text-decoration:none; font-weight:600; background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:12px;">${safe(l.phone)}</a></td>
+              <td class="med-col">${safe(l.city)}</td>
               <td class="med-col"><span class="pill ${l.stage==='Disqualified'?'disq':l.stage==='Nurture'?'nurture':l.stage.includes('Sold')?'sold':'stage'}">${stg}</span></td>
-              <td class="med-col">${safe(l.leakType)}</td>
-              <td class="min-col">${safe(l.dmAccess)}</td>
-              <td class="small" title="${safe(l.scale)}">${safe(l.scale)}</td>
-              <td class="min-col">${safe(l.urgency)}</td>
+              <td class="gbp-col" title="${safe(l.gbp1)}">${safe(l.gbp1)}</td>
+              <td class="gbp-col" title="${safe(l.gbp2)}">${safe(l.gbp2)}</td>
+              <td class="gbp-col" title="${safe(l.gbp3)}">${safe(l.gbp3)}</td>
+              <td class="med-col">${safe(l.recommendation)}</td>
               <td class="med-col">${safe(l.nextAction)}</td>
               <td class="small">${fmtDT(l.nextDue)}</td>
               <td style="text-align:right">
                 <div class="rowactions">
+                  <button class="mini primary" data-act="call" data-id="${l.id}">Call</button>
                   <button class="mini" data-act="edit" data-id="${l.id}">Edit</button>
-                  <button class="mini" data-act="log" data-id="${l.id}">Log</button>
-                  <button class="mini danger" data-act="del" data-id="${l.id}">✕</button>
                 </div>
               </td>
             </tr>
           `;
         }).join("");
-        $("tbody").innerHTML = rows || `<tr><td colspan="10" style="text-align:center;color:#64748b;padding:20px">No leads found.</td></tr>`;
+        $("tbody").innerHTML = rows || `<tr><td colspan="11" style="text-align:center;color:#64748b;padding:20px">No leads found.</td></tr>`;
 
         // KPIs
         const total = leads.length;
@@ -807,314 +807,208 @@
         $("kpiGrid").innerHTML = kpis.map(k => `
           <div class="box"><div class="label">${k.l}</div><div class="value">${k.v}</div></div>
         `).join("");
-        
-        renderQualChips();
       }
 
-      function renderQualChips(){
-        const f = {
-          dmAccess: $("dmAccess").value,
-          urgency: $("urgency").value,
-          leakType: $("leakType").value
-        };
-        const dm = f.dmAccess === "Yes" ? 2 : (f.dmAccess === "Proxy" ? 1 : 0);
-        const urg = Number(f.urgency) >= 8 ? 2 : (Number(f.urgency) >= 5 ? 1 : 0);
-        const leak = (f.leakType && f.leakType !== "Unknown") ? 1 : 0;
-
-        $("qualityChips").innerHTML = `
-          <span class="chip ${dm===2?'good':'warn'}">DM <strong>${dm}/2</strong></span>
-          <span class="chip ${urg===2?'good':'warn'}">Urg <strong>${urg}/2</strong></span>
-          <span class="chip ${leak===1?'good':'bad'}">Leak <strong>${leak}/1</strong></span>
-        `;
+      /* Call Timer Logic */
+      function startTimer(){
+        clearInterval(timerInterval);
+        seconds = 0;
+        $("callTimer").classList.add("active");
+        timerInterval = setInterval(() => {
+          seconds++;
+          const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+          const s = (seconds % 60).toString().padStart(2, '0');
+          $("callTimer").textContent = `${m}:${s}`;
+        }, 1000);
+        $("btnCallStart").style.display = "none";
+        $("btnCallEnd").style.display = "inline-flex";
       }
 
-      function loadForm(id){
-        const l = db.leads.find(x => x.id === id);
-        if(!l) return;
-        $("leadId").value = l.id;
-        $("firstName").value = l.firstName||"";
-        $("lastName").value = l.lastName||"";
-        $("title").value = l.title||"";
-        $("company").value = l.company||"";
-        $("industry").value = l.industry||"";
-        $("city").value = l.city||"";
-        $("phone").value = l.phone||"";
-        $("email").value = l.email||"";
-        $("website").value = l.website||"";
-        $("recommendation").value = l.recommendation||"";
-        $("stage").value = l.stage;
-        $("dmAccess").value = l.dmAccess;
-        $("scale").value = l.scale||"";
-        $("leakType").value = l.leakType;
-        $("urgency").value = l.urgency;
-        $("capacity").value = l.capacity;
-        $("nextAction").value = l.nextAction;
-        $("nextDue").value = toLocalInput(l.nextDue);
-        $("notes").value = l.notes||"";
-        $("gbp1").value = l.gbp1||"";
-        $("gbp2").value = l.gbp2||"";
-        $("gbp3").value = l.gbp3||"";
-        $("disqualifyReason").value = l.disqualifyReason||"";
-        $("route").value = l.route;
-        
-        $("formTitle").textContent = "Edit Lead";
-        $("btnDelete").disabled = false;
-        renderQualChips();
-        toggleForm(true); 
-        window.scrollTo({top:0, behavior:"smooth"});
+      function stopTimer(){
+        clearInterval(timerInterval);
+        $("callTimer").classList.remove("active");
+        $("btnCallStart").style.display = "inline-flex";
+        $("btnCallEnd").style.display = "none";
       }
 
-      function clearForm(){
-        $("leadForm").reset();
-        $("leadId").value = "";
-        $("formTitle").textContent = "New Lead";
-        $("btnDelete").disabled = true;
-        $("stage").value = "New Lead";
-        renderQualChips();
-      }
-
-      $("btnCreateNew").addEventListener("click", () => {
-        clearForm();
-        toggleForm(true);
-      });
-
-      $("btnCancel").addEventListener("click", () => {
-        toggleForm(false);
-      });
-
-      $("leadForm").addEventListener("submit", e => {
-        e.preventDefault();
-        const id = $("leadId").value || uid();
-        const idx = db.leads.findIndex(x => x.id === id);
-        const now = nowIso();
-        
-        const formData = {
-          id,
-          firstName: $("firstName").value,
-          lastName: $("lastName").value,
-          title: $("title").value,
-          company: $("company").value,
-          industry: $("industry").value,
-          city: $("city").value,
-          phone: $("phone").value,
-          email: $("email").value,
-          website: $("website").value,
-          recommendation: $("recommendation").value,
-          stage: $("stage").value,
-          dmAccess: $("dmAccess").value,
-          scale: $("scale").value,
-          leakType: $("leakType").value,
-          urgency: $("urgency").value,
-          capacity: $("capacity").value,
-          nextAction: $("nextAction").value,
-          nextDue: $("nextDue").value ? new Date($("nextDue").value).toISOString() : "",
-          notes: $("notes").value,
-          gbp1: $("gbp1").value,
-          gbp2: $("gbp2").value,
-          gbp3: $("gbp3").value,
-          disqualifyReason: $("disqualifyReason").value,
-          route: $("route").value,
-          updatedAt: now
-        };
-
-        if(idx >= 0) {
-          db.leads[idx] = { ...db.leads[idx], ...formData }; 
-        } else {
-          formData.createdAt = now;
-          formData.activity = [];
-          db.leads.unshift(formData);
-        }
-        
-        saveDB();
-        render();
-        clearForm();
-        toggleForm(false); 
-        showToast("Success", "Lead saved.");
-      });
-
-      $("btnDelete").onclick = () => {
-        if(confirm("Delete this lead?")){
-          db.leads = db.leads.filter(l => l.id !== $("leadId").value);
-          render();
-          clearForm();
-          toggleForm(false);
-        }
-      };
-      
-      $("leadForm").addEventListener("change", renderQualChips);
-
-      $("tbody").onclick = (e) => {
-        const btn = e.target.closest("button");
-        if(!btn) return;
-        const act = btn.getAttribute("data-act");
-        const id = btn.getAttribute("data-id");
-        if(act === "edit") loadForm(id);
-        if(act === "del") {
-          if(confirm("Delete?")) {
-            db.leads = db.leads.filter(l => l.id !== id);
-            render();
-          }
-        }
-        if(act === "log") {
-          activeLeadId = id;
-          renderLog();
-          $("modal").classList.add("open");
-        }
+      $("btnCallStart").onclick = () => {
+         const phone = $("m_phone").value;
+         if(phone) window.location.href = `tel:${phone}`;
+         startTimer();
       };
 
-      function renderLog(){
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(!l) return;
-        
-        $("m_firstName").value = l.firstName || "";
-        $("m_lastName").value = l.lastName || "";
-        $("m_company").value = l.company || "";
-        $("m_title").value = l.title || "";
-        $("m_phone").value = l.phone || "";
-        $("m_email").value = l.email || "";
-        $("m_stage").value = l.stage;
-        $("m_dmAccess").value = l.dmAccess;
-        $("m_scale").value = l.scale || "";
-        $("m_leakType").value = l.leakType;
-        $("m_urgency").value = l.urgency;
-        $("m_capacity").value = l.capacity;
-        $("m_nextAction").value = l.nextAction;
-        $("m_nextDue").value = toLocalInput(l.nextDue);
-        $("m_notes").value = l.notes || "";
-        $("m_industry").value = l.industry || "";
-        $("m_recommendation").value = l.recommendation || "";
-        $("m_website").value = l.website || "";
-        $("m_gbp1").value = l.gbp1 || "";
-        $("m_gbp2").value = l.gbp2 || "";
-        $("m_gbp3").value = l.gbp3 || "";
+      $("btnCallEnd").onclick = () => {
+         stopTimer();
+         const currentNote = $("logNote").value;
+         const duration = $("callTimer").textContent;
+         $("logNote").value = `[Call Duration: ${duration}] ` + currentNote;
+      };
 
-        const phoneHtml = l.phone ? `<a href="tel:${safe(l.phone)}" style="margin-left:12px; font-weight:400; color:var(--brand); text-decoration:none; font-size:14px; background:#f1f5f9; padding:4px 8px; border-radius:4px;">${safe(l.phone)}</a>` : "";
-        $("modalTitle").innerHTML = `${safe(l.company)} ${phoneHtml}`;
-        
-        const logs = l.activity || [];
-        $("logTbody").innerHTML = logs.map((log, i) => `
-          <tr>
-            <td class="small" style="vertical-align:top; width:130px;">${fmtDT(log.ts)}</td>
-            <td style="vertical-align:top">
-                <div style="font-weight:800; color:var(--ink); margin-bottom:4px;">${safe(log.action || "Log")}</div>
-                <div style="margin-bottom:4px;">${safe(log.text)}</div>
-                <div style="font-size:12px; color:var(--muted); background:#f8fafc; padding:4px 6px; border-radius:4px; display:inline-block;">${safe(log.details || "")}</div>
-            </td>
-            <td style="text-align:right; vertical-align:top"><button class="mini danger" data-idx="${i}">✕</button></td>
-          </tr>
-        `).join("");
+      // Quick Actions
+      document.querySelectorAll(".quick-actions button").forEach(btn => {
+        btn.onclick = (e) => {
+          e.preventDefault();
+          document.querySelectorAll(".quick-actions button").forEach(b => b.classList.remove("selected"));
+          btn.classList.add("selected");
+          $("m_stage").value = btn.dataset.stage;
+          $("m_nextAction").value = btn.dataset.next;
+        };
+      });
+
+      // Save Log
+      function getModalValues(idOverride) {
+        return {
+          id: idOverride || uid(),
+          firstName: $("m_firstName").value,
+          lastName: $("m_lastName").value,
+          title: $("m_title").value,
+          company: $("m_company").value,
+          industry: $("m_industry").value,
+          phone: $("m_phone").value,
+          email: $("m_email").value,
+          website: $("m_website").value,
+          recommendation: $("m_recommendation").value,
+          stage: $("m_stage").value || "New Lead",
+          dmAccess: $("m_dmAccess").value,
+          scale: $("m_scale").value,
+          leakType: $("m_leakType").value,
+          urgency: $("m_urgency").value,
+          capacity: $("m_capacity").value,
+          nextAction: $("m_nextAction").value,
+          nextDue: $("m_nextDue").value ? new Date($("m_nextDue").value).toISOString() : "",
+          notes: $("m_notes").value,
+          gbp1: $("m_gbp1").value,
+          gbp2: $("m_gbp2").value,
+          gbp3: $("m_gbp3").value,
+          updatedAt: nowIso()
+        };
       }
 
-      function updateLeadFromModal() {
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(!l) return;
+      $("btnSaveLog").onclick = () => {
+         let l = null;
+         let isNew = false;
 
-        l.firstName = $("m_firstName").value;
-        l.lastName = $("m_lastName").value;
-        l.company = $("m_company").value;
-        l.title = $("m_title").value;
-        l.phone = $("m_phone").value;
-        l.email = $("m_email").value;
-        l.stage = $("m_stage").value;
-        l.dmAccess = $("m_dmAccess").value;
-        l.scale = $("m_scale").value;
-        l.leakType = $("m_leakType").value;
-        l.urgency = $("m_urgency").value;
-        l.capacity = $("m_capacity").value;
-        l.nextAction = $("m_nextAction").value;
-        l.nextDue = $("m_nextDue").value ? new Date($("m_nextDue").value).toISOString() : "";
-        l.notes = $("m_notes").value;
-        l.industry = $("m_industry").value;
-        l.recommendation = $("m_recommendation").value;
-        l.website = $("m_website").value;
-        l.gbp1 = $("m_gbp1").value;
-        l.gbp2 = $("m_gbp2").value;
-        l.gbp3 = $("m_gbp3").value;
-        l.updatedAt = nowIso();
-      }
+         if (activeLeadId) {
+           const idx = db.leads.findIndex(x => x.id === activeLeadId);
+           if(idx > -1) {
+               const updatedFields = getModalValues(activeLeadId);
+               db.leads[idx] = { ...db.leads[idx], ...updatedFields };
+               l = db.leads[idx];
+           }
+         } else {
+           isNew = true;
+           const newLead = getModalValues();
+           newLead.createdAt = nowIso();
+           newLead.activity = [];
+           db.leads.unshift(newLead);
+           l = newLead;
+           activeLeadId = newLead.id; 
+         }
 
-      function logAndSave(actionType) {
-        if(!activeLeadId) return;
-        updateLeadFromModal();
-        
-        // Context Capture
-        const nAct = $("m_nextAction").value;
-        const nDue = $("m_nextDue").value;
-        const nDueStr = nDue ? new Date(nDue).toLocaleDateString('en-US', {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'}) : "";
-        const context = `→ Next: ${nAct} ${nDueStr ? '@ ' + nDueStr : ''}`;
-        
-        // Combined Note Text
-        const userNote = $("logNote").value;
+         if(!l) return;
+         
+         const nAct = $("m_nextAction").value;
+         const userNote = $("logNote").value;
+         const context = `→ ${nAct}`;
+         
+         if(userNote || nAct || isNew){
+           l.activity.unshift({ 
+               ts: nowIso(), 
+               action: isNew ? "Created" : "Log", 
+               text: userNote, 
+               details: context 
+           });
+         }
+         
+         saveDB();
+         
+         // Next Logic
+         const leads = getSortedFilteredLeads();
+         const currIdx = leads.findIndex(x => x.id === activeLeadId);
+         const nextLead = leads[currIdx + 1];
+         
+         if(nextLead){
+           activeLeadId = nextLead.id;
+           renderLog();
+           $("logNote").value = "";
+           $("callTimer").textContent = "00:00";
+           stopTimer();
+           document.querySelectorAll(".quick-actions button").forEach(b => b.classList.remove("selected"));
+           showToast("Saved", "Opening next lead...");
+         } else {
+           $("modal").classList.remove("open");
+           activeLeadId = null;
+           render();
+           showToast("Saved", "End of list.");
+         }
+      };
 
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(!l.activity) l.activity = [];
-        
-        l.activity.unshift({ 
-            ts: nowIso(), 
-            action: actionType || "Note", 
-            text: userNote, 
-            details: context 
-        });
-        
-        $("logNote").value = "";
-        saveDB();
-        renderLog(); 
-        render(); 
-        showToast("Logged", "Activity logged & record updated.");
-      }
-
-      // Manual Note Button
       $("btnAddLog").onclick = () => {
         const txt = $("logNote").value;
         if(!txt) return alert("Please enter a note to post.");
-        logAndSave("Manual Log");
-      };
-      
-      // Quick Actions (Pass Label)
-      $("qaAttempt").onclick = () => {
-          $("m_stage").value = "Attempting";
-          logAndSave("Call Attempted");
-      };
-      $("qaConnected").onclick = () => {
-          $("m_stage").value = "Connected";
-          logAndSave("Connected");
-      };
-      $("qaBooked").onclick = () => {
-        // $("m_stage").value = "Booked – 15 Min Diagnostic"; 
-        logAndSave("Booked 15-min Diagnostic");
-      };
-      $("qaSold48").onclick = () => {
-          $("m_stage").value = "Sold - 48 Hour Fix";
-          logAndSave("Sold 48-Hour Fix");
-      }
-      $("qaSoldRLD").onclick = () => {
-          $("m_stage").value = "Sold - RLD";
-          logAndSave("Sold Revenue Leak Diagnostic");
-      }
-      $("qaNoShow").onclick = () => {
-        $("m_stage").value = "No-Show";
-        logAndSave("No-Show");
+        if(!activeLeadId) { $("btnSaveLog").click(); return; }
+        
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(l) {
+            const context = `→ ${$("m_nextAction").value}`;
+            l.activity.unshift({ ts: nowIso(), action: "Note", text: txt, details: context });
+            $("logNote").value = "";
+            saveDB();
+            renderLog();
+            showToast("Posted", "Note added.");
+        }
       };
 
-      $("btnCloseModal").onclick = () => { $("modal").classList.remove("open"); activeLeadId = null; };
-      
-      // CONFIRM DELETE
+      $("btnCloseModal").onclick = () => { $("modal").classList.remove("open"); activeLeadId = null; stopTimer(); render(); };
+      $("btnCloseEdit").onclick = () => { $("editModal").classList.remove("open"); render(); };
+
+      // EDIT FORM SAVE
+      $("editForm").onsubmit = (e) => {
+          e.preventDefault();
+          if(!activeLeadId) return;
+          const l = db.leads.find(x => x.id === activeLeadId);
+          if(!l) return;
+
+          l.firstName = $("e_firstName").value;
+          l.lastName = $("e_lastName").value;
+          l.title = $("e_title").value;
+          l.company = $("e_company").value;
+          l.phone = $("e_phone").value;
+          l.email = $("e_email").value;
+          l.city = $("e_city").value;
+          l.industry = $("e_industry").value;
+          l.website = $("e_website").value;
+          l.recommendation = $("e_recommendation").value;
+          l.gbp1 = $("e_gbp1").value;
+          l.gbp2 = $("e_gbp2").value;
+          l.gbp3 = $("e_gbp3").value;
+          l.updatedAt = nowIso();
+
+          // Auto-Log
+          if(!l.activity) l.activity = [];
+          l.activity.unshift({ ts: nowIso(), action: "System", text: "Contact details updated.", details: "Edit Form" });
+
+          saveDB();
+          render();
+          $("editModal").classList.remove("open");
+          showToast("Saved", "Record updated.");
+      };
+
       $("logTbody").onclick = (e) => {
         if(e.target.tagName === "BUTTON"){
-           if(confirm("Are you sure you want to delete this log entry?")){
+           if(confirm("Delete this log?")){
                const idx = e.target.getAttribute("data-idx");
                const l = db.leads.find(x => x.id === activeLeadId);
                l.activity.splice(idx, 1);
                renderLog();
                saveDB();
-               showToast("Deleted", "Log entry removed.");
            }
         }
       };
       
       $("btnSeed").onclick = () => {
         const seed = { 
-          id: uid(), company: "Sample HVAC", stage: "Connected", 
+          id: uid(), company: "Sample HVAC", stage: "Connected", city:"Ocala, FL",
           firstName: "John", urgency: "8", scale: "$100k/mo",
           leakType: "Response Time", dmAccess: "Yes", updatedAt: nowIso(), phone: "555-0199",
           industry: "HVAC", gbp1: "6/10", gbp2: "4/10", gbp3: "2/10", recommendation: "48-Hour Fix"
@@ -1125,15 +1019,11 @@
       };
 
       $("btnWipe").onclick = () => {
-        if(confirm("Delete ALL data?")) {
-          db.leads = [];
-          saveDB();
-          render();
-        }
+        if(confirm("Delete ALL data?")) { db.leads = []; saveDB(); render(); }
       };
 
       $("btnExportCsv").onclick = () => {
-        const leads = getFilteredLeads();
+        const leads = getSortedFilteredLeads();
         if(!leads.length) return alert("No leads to export.");
         const headers = Object.keys(leads[0] || {}).join(",");
         const rows = leads.map(l => Object.values(l).map(v => `"${safe(v).replace(/"/g, '""')}"`).join(","));
@@ -1156,115 +1046,148 @@
            const txt = (await navigator.clipboard.readText()).trim().replace(/^\uFEFF/, '');
            if (!txt) return alert("Clipboard is empty.");
            
-           // Check if JSON
            if (txt.startsWith("{") || txt.startsWith("[")) {
                try {
                    const parsed = JSON.parse(txt);
-                   if(parsed && parsed.leads) {
-                     db = parsed;
-                     saveDB();
-                     render();
-                     showToast("Success", "Database imported (JSON).");
-                     return;
-                   }
+                   if(parsed && parsed.leads) { db = parsed; saveDB(); render(); return; }
                } catch(e) {}
            }
-
-           // Assume CSV
-           try {
-               const lines = txt.split(/\r?\n/);
-               if (lines.length < 2) return alert("Invalid data.");
-               
-               // Simple CSV Parser (ignores complex commas inside quotes for simplicity unless specific regex used)
-               const parseCSVLine = (str) => {
-                   const arr = [];
-                   let quote = false;
-                   let col = "";
-                   for (let c of str) {
-                       if (c === '"') { quote = !quote; continue; }
-                       if (c === ',' && !quote) { arr.push(col); col = ""; continue; }
-                       col += c;
-                   }
-                   arr.push(col);
-                   return arr;
-               };
-
-               // Parse Header
-               const headers = parseCSVLine(lines[0]).map(h => h.trim());
-               const newLeads = [];
-
-               for (let i = 1; i < lines.length; i++) {
-                   if (!lines[i].trim()) continue;
-                   const cols = parseCSVLine(lines[i]);
-                   let lead = { id: uid(), activity: [], updatedAt: nowIso(), createdAt: nowIso() };
-                   
-                   const getVal = (headerName) => {
-                       const idx = headers.indexOf(headerName);
-                       return idx > -1 ? (cols[idx] || "").trim() : "";
-                   };
-
-                   lead.company = getVal("Company");
-                   lead.phone = getVal("Phone");
-                   lead.city = getVal("City/State");
-                   lead.industry = getVal("Industry");
-                   lead.gbp1 = getVal("GBP 1 (Relevance)");
-                   lead.gbp2 = getVal("GBP 2 (Conversion)");
-                   lead.gbp3 = getVal("GBP 3 (Systems)");
-                   lead.recommendation = getVal("Recommendation");
-                   lead.website = getVal("Website");
-                   lead.stage = getVal("Status") || "New Lead";
-                   
-                   const contact = getVal("Contact Person");
-                   if (contact) {
-                       const parts = contact.split(" ");
-                       lead.firstName = parts[0];
-                       lead.lastName = parts.slice(1).join(" ");
-                   }
-                   
-                   // Date mapping - Safe Check
-                   const nextDate = getVal("Next Follow Up Date");
-                   if (nextDate) {
-                       const d = new Date(nextDate);
-                       if (!isNaN(d.getTime())) {
-                           lead.nextDue = d.toISOString();
-                       }
-                   }
-
-                   // DM Logic
-                   const spoke = getVal("Spoke to Decision Maker");
-                   if (spoke.toUpperCase() === "TRUE") lead.dmAccess = "Yes";
-                   else lead.dmAccess = "Unknown";
-
-                   // Aggregate Notes
-                   let noteLog = [];
-                   ["1st", "2nd", "3rd", "4th", "5th", "6th", "7th"].forEach(prefix => {
-                       const n = getVal(`${prefix} Attempt Notes`);
-                       if(n) noteLog.push(`${prefix}: ${n}`);
-                   });
-                   if(noteLog.length > 0) lead.notes = noteLog.join("\n");
-
-                   newLeads.push(lead);
+           // CSV Parser logic
+           const lines = txt.split(/\r?\n/);
+           if (lines.length < 2) return alert("Invalid CSV.");
+           const parseCSVLine = (str) => {
+               const arr = []; let quote = false; let col = "";
+               for (let c of str) {
+                   if (c === '"') { quote = !quote; continue; }
+                   if (c === ',' && !quote) { arr.push(col); col = ""; continue; }
+                   col += c;
                }
+               arr.push(col); return arr;
+           };
+           const headers = parseCSVLine(lines[0]).map(h => h.trim());
+           const newLeads = [];
+           for (let i = 1; i < lines.length; i++) {
+               if (!lines[i].trim()) continue;
+               const cols = parseCSVLine(lines[i]);
+               let lead = { id: uid(), activity: [], updatedAt: nowIso(), createdAt: nowIso() };
+               const getVal = (n) => { const idx = headers.indexOf(n); return idx > -1 ? (cols[idx] || "").trim() : ""; };
                
-               if (newLeads.length > 0) {
-                   db.leads = [...newLeads, ...db.leads];
-                   saveDB();
-                   render();
-                   showToast("Success", `Imported ${newLeads.length} leads from CSV.`);
-               } else {
-                   alert("No valid leads found in CSV.");
-               }
-
-           } catch(e) {
-               console.error(e);
-               alert("Import failed. Ensure valid JSON or CSV is in clipboard.");
+               lead.company = getVal("Company");
+               lead.phone = getVal("Phone");
+               lead.city = getVal("City/State");
+               lead.industry = getVal("Industry");
+               lead.gbp1 = getVal("GBP 1 (Relevance)");
+               lead.gbp2 = getVal("GBP 2 (Conversion)");
+               lead.gbp3 = getVal("GBP 3 (Systems)");
+               lead.recommendation = getVal("Recommendation");
+               lead.website = getVal("Website");
+               lead.stage = getVal("Status") || "New Lead";
+               newLeads.push(lead);
            }
-         } catch(e) { alert("Import failed. Copy JSON or CSV to clipboard first."); }
+           if (newLeads.length > 0) {
+               db.leads = [...newLeads, ...db.leads];
+               saveDB(); render();
+               showToast("Success", `Imported ${newLeads.length} leads.`);
+           }
+         } catch(e) { alert("Import failed."); }
       };
 
-      ["search", "filterStage", "filterRoute"].forEach(id => {
-        $(id).oninput = render;
+      ["search", "filterStage", "filterRoute"].forEach(id => { $(id).oninput = render; });
+      document.querySelectorAll('th[data-sort]').forEach(th => {
+        th.addEventListener('click', () => {
+          const key = th.getAttribute('data-sort');
+          if(sortState.key === key) { sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc'; }
+          else { sortState.key = key; sortState.dir = 'asc'; }
+          render();
+        });
       });
+
+      $("btnCreateNew").onclick = () => {
+          activeLeadId = null;
+          document.querySelectorAll("#modal input, #modal textarea, #modal select").forEach(el => el.value = "");
+          $("m_stage").value = "New Lead";
+          $("m_nextAction").value = "Call Attempt";
+          $("modalTitle").innerHTML = "Create New Lead";
+          $("logTbody").innerHTML = "";
+          $("modal").classList.add("open");
+      };
+
+      $("tbody").onclick = (e) => {
+        const btn = e.target.closest("button");
+        if(!btn) return;
+        const act = btn.getAttribute("data-act");
+        const id = btn.getAttribute("data-id");
+        activeLeadId = id;
+
+        if(act === "call") {
+          renderLog();
+          $("modal").classList.add("open");
+          $("btnCallStart").click(); // Auto-start
+        }
+        if(act === "edit") {
+          const l = db.leads.find(x => x.id === id);
+          if(l){
+              $("e_firstName").value = l.firstName||"";
+              $("e_lastName").value = l.lastName||"";
+              $("e_title").value = l.title||"";
+              $("e_company").value = l.company||"";
+              $("e_phone").value = l.phone||"";
+              $("e_email").value = l.email||"";
+              $("e_city").value = l.city||"";
+              $("e_industry").value = l.industry||"";
+              $("e_website").value = l.website||"";
+              $("e_recommendation").value = l.recommendation||"";
+              $("e_gbp1").value = l.gbp1||"";
+              $("e_gbp2").value = l.gbp2||"";
+              $("e_gbp3").value = l.gbp3||"";
+              $("editModal").classList.add("open");
+          }
+        }
+      };
+
+      function renderLog(){
+        const l = db.leads.find(x => x.id === activeLeadId);
+        if(!l) return;
+        
+        $("m_firstName").value = l.firstName || "";
+        $("m_lastName").value = l.lastName || "";
+        $("m_company").value = l.company || "";
+        $("m_title").value = l.title || "";
+        $("m_phone").value = l.phone || "";
+        $("m_email").value = l.email || "";
+        $("m_stage").value = l.stage; 
+        $("m_dmAccess").value = l.dmAccess;
+        $("m_scale").value = l.scale || "";
+        $("m_leakType").value = l.leakType;
+        $("m_urgency").value = l.urgency;
+        $("m_capacity").value = l.capacity;
+        $("m_nextAction").value = l.nextAction;
+        $("m_nextDue").value = toLocalInput(l.nextDue);
+        $("m_notes").value = l.notes || "";
+        $("m_industry").value = l.industry || "";
+        $("m_recommendation").value = l.recommendation || "";
+        $("m_website").value = l.website || "";
+        $("m_gbp1").value = l.gbp1 || "";
+        $("m_gbp2").value = l.gbp2 || "";
+        $("m_gbp3").value = l.gbp3 || "";
+
+        const phoneHtml = l.phone ? `<a href="tel:${safe(l.phone)}" style="margin-left:12px; font-weight:400; color:var(--brand); text-decoration:none; font-size:14px; background:#f1f5f9; padding:4px 8px; border-radius:4px;">${safe(l.phone)}</a>` : "";
+        const statusHtml = `<span class="pill stage" style="margin-left:8px; font-size:11px;">${l.stage}</span>`;
+        $("modalTitle").innerHTML = `${safe(l.company)} ${statusHtml} ${phoneHtml}`;
+        
+        const logs = l.activity || [];
+        $("logTbody").innerHTML = logs.map((log, i) => `
+          <tr>
+            <td class="small" style="vertical-align:top; width:130px;">${fmtDT(log.ts)}</td>
+            <td style="vertical-align:top">
+                <div style="font-weight:800; color:var(--ink); margin-bottom:4px;">${safe(log.action || "Log")}</div>
+                <div style="margin-bottom:4px;">${safe(log.text)}</div>
+                <div style="font-size:12px; color:var(--muted); background:#f8fafc; padding:4px 6px; border-radius:4px; display:inline-block;">${safe(log.details || "")}</div>
+            </td>
+            <td style="text-align:right; vertical-align:top"><button class="mini danger" data-idx="${i}">✕</button></td>
+          </tr>
+        `).join("");
+      }
 
       render();
     });
