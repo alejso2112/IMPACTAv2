@@ -27,7 +27,7 @@
     <form id="loginForm">
       <input type="email" id="email" placeholder="Email Address" required />
       <input type="password" id="password" placeholder="Password" required />
-      <button type="submit" id="submitBtn">Access Dashboard</button>
+      <button type="button" id="submitBtn">Access Dashboard</button>
     </form>
   </div>
 
@@ -44,19 +44,29 @@
     }
 
     // --- CONFIGURATION ---
-    const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co'; // Fixed Quote
+    const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
     
     // Initialize
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    let supabase;
+    try {
+        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    } catch (e) {
+        alert("Supabase Init Failed: " + e.message);
+    }
 
-    document.getElementById("loginForm").onsubmit = async (e) => {
-      e.preventDefault(); // STOP THE RELOAD
+    // Use Click Listener instead of OnSubmit to be safer
+    document.getElementById("submitBtn").addEventListener("click", async () => {
       
       const btn = document.getElementById("submitBtn");
       const err = document.getElementById("errorMsg");
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
+
+      if(!email || !pass) {
+          alert("Please enter email and password.");
+          return;
+      }
 
       // UI Feedback
       btn.textContent = "Verifying...";
@@ -72,8 +82,12 @@
             .eq('password', pass)
             .single();
 
-        if (error || !data) {
+        if (error) {
             console.error("Login Failed:", error);
+            throw new Error("Database Error: " + error.message);
+        }
+
+        if (!data) {
             throw new Error("Invalid email or password.");
         }
 
@@ -93,8 +107,9 @@
         err.textContent = error.message || "Connection failed.";
         btn.textContent = "Access Dashboard";
         btn.disabled = false;
+        alert("Login Failed: " + error.message);
       }
-    };
+    });
   </script>
 </body>
 </html>
