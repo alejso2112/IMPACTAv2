@@ -33,16 +33,21 @@
 
   <script>
     // --- CONFIGURATION ---
+    // FIXED: Removed the extra quote at the end of the URL below
     const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
+    
+    // Initialize Supabase
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     document.getElementById("loginForm").onsubmit = async (e) => {
-      e.preventDefault();
+      e.preventDefault(); // This command stops the page reload
+      
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
       const err = document.getElementById("errorMsg");
       
+      // Look up user in Supabase 'users' table
       const { data, error } = await supabase
         .from('users')
         .select('*')
@@ -51,11 +56,18 @@
         .single();
 
       if (error || !data) {
+        console.error("Login Error:", error);
         err.style.display = "block";
         err.textContent = "Invalid credentials or connection error.";
       } else {
+        // Success: Save user and redirect
         localStorage.setItem("impacta_user", JSON.stringify(data));
-        window.location.href = data.role === "manager" ? "admin.html" : "rep.html";
+        
+        if(data.role === "manager") {
+            window.location.href = "admin.html";
+        } else {
+            window.location.href = "rep.html";
+        }
       }
     };
   </script>
