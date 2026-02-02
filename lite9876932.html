@@ -24,17 +24,15 @@
     <h1>Revenue Engine</h1>
     <p>Cloud Access // Secure Login</p>
     <div id="errorMsg" class="error"></div>
-    
     <form id="loginForm">
       <input type="email" id="email" placeholder="Email Address" required />
       <input type="password" id="password" placeholder="Password" required />
-      
       <button type="submit" id="submitBtn">Access Dashboard</button>
     </form>
   </div>
 
-<script>
-    // 1. SAFETY CHECK: Ensure Supabase loaded
+  <script>
+    // 1. SAFETY CHECK
     if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient === 'undefined') {
         const msg = "CRITICAL ERROR: Supabase library failed to load. Check your internet connection.";
         document.getElementById("errorMsg").style.display = "block";
@@ -43,33 +41,29 @@
     }
 
     // --- CONFIGURATION ---
+    // FIXED: Removed extra quote at the end of the URL
     const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
     
-    // Initialize Client
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // --- THE FIX ---
-    // We listen to the FORM submit event (handles both Click and Enter key)
     document.getElementById("loginForm").addEventListener("submit", async (event) => {
-      
-      // 1. CRITICAL: Stop the browser from reloading the page
-      event.preventDefault(); 
+      event.preventDefault(); // STOP THE RELOAD
 
       const btn = document.getElementById("submitBtn");
       const err = document.getElementById("errorMsg");
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
 
-      // UI Feedback: Show user we are working
+      // UI Feedback
       const originalText = btn.textContent;
-      btn.textContent = "Verifying Credentials...";
+      btn.textContent = "Verifying...";
       btn.disabled = true;
       err.style.display = "none";
       
       try {
-        console.log("Attempting login for:", email); // Debugging log
-
+        console.log("Attempting login...");
+        
         // Database Query
         const { data, error } = await supabase
             .from('users')
@@ -79,14 +73,13 @@
             .single();
 
         if (error || !data) {
+            console.error("Login Error:", error);
             throw new Error("Incorrect email or password.");
         }
 
-        // Success: Save user info
+        // Success
         localStorage.setItem("impacta_user", JSON.stringify(data));
         
-        console.log("Login successful. Redirecting...");
-
         // Redirect based on role
         if(data.role === "manager") {
             window.location.href = "admin.html";
@@ -95,12 +88,9 @@
         }
 
       } catch (error) {
-        // Handle Login Failure
-        console.error("Login Error:", error);
+        console.error(error);
         err.style.display = "block";
-        err.textContent = "Access Denied: Please check your email and password."; 
-        
-        // Reset button
+        err.textContent = error.message || "Connection failed.";
         btn.textContent = originalText;
         btn.disabled = false;
       }
