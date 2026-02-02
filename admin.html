@@ -58,9 +58,9 @@
       <div id="users" class="view">
         <h1>User Manager</h1>
         <div class="card" style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:10px; align-items:end; background:#f8fafc;">
-          <div><label style="font-size:12px;">Name</label><input id="new_name"></div>
-          <div><label style="font-size:12px;">Email</label><input id="new_email"></div>
-          <div><label style="font-size:12px;">Password</label><input id="new_pass"></div>
+          <div><label style="font-size:12px;">Name</label><input id="new_name" placeholder="John Doe"></div>
+          <div><label style="font-size:12px;">Email</label><input id="new_email" placeholder="john@impacta.com"></div>
+          <div><label style="font-size:12px;">Password</label><input id="new_pass" placeholder="secret123"></div>
           <button class="btn" onclick="addUser()">Add Rep</button>
         </div>
         <div class="card">
@@ -91,16 +91,23 @@
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
     const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    // State
+    // --- AUTH CHECK ---
     let leads = [];
     let users = [];
     const currentUser = JSON.parse(localStorage.getItem("impacta_user"));
-
+    
+    // Redirect if not manager
     if(!currentUser || currentUser.role !== 'manager') window.location.href = 'lite9876932.html';
 
+    // --- MAIN DATA FETCH ---
     async function fetchData() {
-      const { data: uData } = await supabase.from('users').select('*');
-      const { data: lData } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
+      // 1. Get Users
+      const { data: uData, error: uErr } = await supabase.from('users').select('*');
+      if(uErr) console.error("Error fetching users:", uErr);
+
+      // 2. Get Leads
+      const { data: lData, error: lErr } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
+      if(lErr) console.error("Error fetching leads:", lErr);
       
       users = uData || [];
       leads = lData || [];
@@ -110,6 +117,7 @@
       renderReports();
     }
 
+    // --- UI LOGIC ---
     function switchTab(id) {
       document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
       document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
@@ -118,8 +126,11 @@
 
     function renderLeadAssign() {
       const userSel = document.getElementById("assignUserSel");
-      userSel.innerHTML = '<option value="">-- Select Rep --</option>' + users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+      // Populate dropdown
+      userSel.innerHTML = '<option value="">-- Select Rep --</option>' + 
+        users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
       
+      // Populate Table
       document.getElementById("assignBody").innerHTML = leads.map(l => {
         const owner = users.find(u => u.id === l.assigned_to)?.name || '<span style="color:#ef4444">Unassigned</span>';
         return `<tr>
@@ -129,21 +140,32 @@
           <td>${owner}</td>
         </tr>`;
       }).join('');
+      
+      if(leads.length === 0) {
+          document.getElementById("assignBody").innerHTML = `<tr><td colspan="4" style="padding:20px;text-align:center;">No leads found. Check Database.</td></tr>`;
+      }
     }
 
     function toggleAll(source) {
       document.querySelectorAll('.lead-check').forEach(c => c.checked = source.checked);
     }
 
+    // --- BUTTON ACTIONS ---
+
     async function assignLeads() {
       const userId = document.getElementById("assignUserSel").value;
-      if(!userId) return alert("Select a user.");
-      const checked = Array.from(document.querySelectorAll('.lead-check:checked')).map(c => c.value);
+      if(!userId) return alert("Please select a Rep from the dropdown first.");
       
-      if(checked.length > 0) {
-        await supabase.from('leads').update({ assigned_to: userId }).in('id', checked);
-        fetchData();
-        alert("Assigned.");
+      const checked = Array.from(document.querySelectorAll('.lead-check:checked')).map(c => c.value);
+      if(checked.length === 0) return alert("No leads selected.");
+      
+      const { error } = await supabase.from('leads').update({ assigned_to: userId }).in('id', checked);
+      
+      if(error) {
+          alert("Error assigning: " + error.message);
+      } else {
+          alert(`Successfully assigned ${checked.length} leads.`);
+          fetchData();
       }
     }
 
@@ -152,21 +174,30 @@
       const email = document.getElementById("new_email").value;
       const pass = document.getElementById("new_pass").value;
       
+      if(!name || !email || !pass) return alert("Please fill in all fields.");
+
       const { error } = await supabase.from('users').insert([{ name, email, password: pass, role: 'rep' }]);
-      if(error) alert("Error adding user");
-      else {
-        document.getElementById("new_name").value = "";
-        fetchData();
+      
+      if(error) {
+          alert("Error creating user: " + error.message);
+      } else {
+          document.getElementById("new_name").value = "";
+          document.getElementById("new_email").value = "";
+          document.getElementById("new_pass").value = "";
+          alert("User created!");
+          fetchData();
       }
     }
 
     async function removeUser(id) {
-      if(confirm("Remove user?")) {
-        await supabase.from('users').delete().eq('id', id);
-        fetchData();
+      if(confirm("Are you sure you want to remove this user?")) {
+        const { error } = await supabase.from('users').delete().eq('id', id);
+        if(error) alert("Error removing: " + error.message);
+        else fetchData();
       }
     }
 
+    // --- RENDER HELPERS ---
     function renderUsers() {
       document.getElementById("userTable").innerHTML = users.map(u => `<tr>
         <td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
@@ -190,6 +221,7 @@
 
     function logout() { localStorage.removeItem("impacta_user"); window.location.href = 'lite9876932.html'; }
 
+    // Init
     fetchData();
   </script>
 </body>
