@@ -33,15 +33,12 @@
     </form>
   </div>
 
-  <script>
-    // 1. SAFETY CHECK: Did the brain load?
+<script>
+    // 1. SAFETY CHECK: Ensure Supabase loaded
     if (typeof window.supabase === 'undefined' || typeof window.supabase.createClient === 'undefined') {
-        const msg = "CRITICAL ERROR: Supabase library failed to load.\n\nAre you offline? Is your network blocking CDN scripts?";
-        alert(msg);
+        const msg = "CRITICAL ERROR: Supabase library failed to load. Check your internet connection.";
         document.getElementById("errorMsg").style.display = "block";
-        document.getElementById("errorMsg").textContent = "Library Load Error. Check Internet.";
-        document.getElementById("submitBtn").disabled = true;
-        document.getElementById("submitBtn").textContent = "System Offline";
+        document.getElementById("errorMsg").textContent = msg;
         throw new Error(msg); 
     }
 
@@ -49,33 +46,30 @@
     const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
     
-    // Initialize
-    let supabase;
-    try {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch (e) {
-        alert("Supabase Init Failed: " + e.message);
-    }
+    // Initialize Client
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
     // --- THE FIX ---
-    // Listen to the FORM submit event, not just the button click
-    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+    // We listen to the FORM submit event (handles both Click and Enter key)
+    document.getElementById("loginForm").addEventListener("submit", async (event) => {
       
-      // 1. STOP THE RELOAD
-      e.preventDefault(); 
+      // 1. CRITICAL: Stop the browser from reloading the page
+      event.preventDefault(); 
 
       const btn = document.getElementById("submitBtn");
       const err = document.getElementById("errorMsg");
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
 
-      // UI Feedback
+      // UI Feedback: Show user we are working
       const originalText = btn.textContent;
-      btn.textContent = "Verifying...";
+      btn.textContent = "Verifying Credentials...";
       btn.disabled = true;
       err.style.display = "none";
       
       try {
+        console.log("Attempting login for:", email); // Debugging log
+
         // Database Query
         const { data, error } = await supabase
             .from('users')
@@ -84,20 +78,16 @@
             .eq('password', pass)
             .single();
 
-        if (error) {
-            // Supabase usually returns an error object if the query fails (or no rows found if .single() is used)
-            console.error("Login Failed:", error);
-            throw new Error("Invalid Credentials");
+        if (error || !data) {
+            throw new Error("Incorrect email or password.");
         }
 
-        if (!data) {
-            throw new Error("Invalid email or password.");
-        }
-
-        // Success
+        // Success: Save user info
         localStorage.setItem("impacta_user", JSON.stringify(data));
         
-        // Redirect
+        console.log("Login successful. Redirecting...");
+
+        // Redirect based on role
         if(data.role === "manager") {
             window.location.href = "admin.html";
         } else {
@@ -105,16 +95,14 @@
         }
 
       } catch (error) {
-        // Handle Error gracefully
+        // Handle Login Failure
+        console.error("Login Error:", error);
         err.style.display = "block";
-        // Show a generic message for security, or the specific one if you prefer
-        err.textContent = "Access Denied: Invalid Email or Password"; 
+        err.textContent = "Access Denied: Please check your email and password."; 
         
+        // Reset button
         btn.textContent = originalText;
         btn.disabled = false;
-        
-        // Optional: clear password field on failure
-        document.getElementById("password").value = "";
       }
     });
   </script>
