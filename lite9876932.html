@@ -13,8 +13,11 @@
     h1 { font-size:24px; margin:0 0 8px; color:var(--brand); }
     p { color:#64748b; font-size:14px; margin:0 0 24px; }
     input { width:100%; padding:12px; margin-bottom:16px; border:1px solid var(--line); border-radius:8px; font-size:14px; box-sizing:border-box; }
+    /* BUTTON STYLE */
     button { width:100%; padding:12px; background:var(--brand); color:white; border:none; border-radius:8px; font-weight:bold; cursor:pointer; font-size:14px; transition:0.2s; }
     button:hover { background:var(--brand-dark); }
+    button:disabled { background: #cbd5e1; cursor: not-allowed; }
+    /* ERROR BOX STYLE */
     .error { color:#b91c1c; font-size:13px; margin-bottom:16px; display:none; background:#fef2f2; padding:10px; border-radius:6px; border:1px solid #fca5a5; }
   </style>
 </head>
@@ -23,57 +26,46 @@
     <img src="img/logo-main-2026.png" alt="IMPACTA" class="logo">
     <h1>Revenue Engine</h1>
     <p>Cloud Access // Secure Login</p>
+    
     <div id="errorMsg" class="error"></div>
     
-    <form id="loginForm" onsubmit="handleLogin(event)">
-      <input type="email" id="email" placeholder="Email Address" required />
-      <input type="password" id="password" placeholder="Password" required />
+    <div id="loginArea">
+      <input type="email" id="email" placeholder="Email Address" />
+      <input type="password" id="password" placeholder="Password" />
       
-      <button type="submit" id="submitBtn">Access Dashboard</button>
-    </form>
+      <button type="button" id="submitBtn" onclick="handleLogin()">Access Dashboard</button>
+    </div>
   </div>
 
   <script>
-    // --- CONFIGURATION ---
+    // --- 1. CONFIGURATION ---
     const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
-    
-    // Initialize Client
-    let supabase;
-    try {
-        supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-    } catch(err) {
-        console.warn("Supabase failed to init", err);
-    }
 
-    async function handleLogin(event) {
-      event.preventDefault(); // STOP RELOAD
-      
+    // --- 2. LOGIN LOGIC ---
+    async function handleLogin() {
       const btn = document.getElementById("submitBtn");
       const err = document.getElementById("errorMsg");
       const email = document.getElementById("email").value.trim();
       const pass = document.getElementById("password").value.trim();
 
+      // UI Reset
+      err.style.display = "none";
       btn.textContent = "Verifying...";
       btn.disabled = true;
-      err.style.display = "none";
 
-      // --- THE SKELETON KEY (Admin Override) ---
-      if (email === "admin@impacta.com" && pass === "admin") {
-          console.log("Admin Override Activated");
-          const adminUser = {
-              id: "master_admin_override",
-              email: "admin@impacta.com",
-              role: "manager",
-              name: "Admin User (Master)"
-          };
-          localStorage.setItem("impacta_user", JSON.stringify(adminUser));
-          window.location.href = "admin.html";
-          return; // Stop here, we are in.
-      }
-
-      // --- STANDARD LOGIN (For Reps) ---
       try {
+        // A. Check if the "Brain" is loaded
+        if (typeof window.supabase === 'undefined') {
+            throw new Error("Supabase script not loaded. Check your internet connection or ad-blocker.");
+        }
+
+        // B. Initialize Connection
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+        console.log("Connecting to database...");
+
+        // C. Check Database
         const { data, error } = await supabase
             .from('users')
             .select('*')
@@ -81,13 +73,19 @@
             .eq('password', pass)
             .single();
 
-        if (error || !data) {
-            throw new Error("Invalid credentials.");
+        if (error) {
+            console.error(error);
+            // Translate common errors
+            if(error.code === 'PGRST116') throw new Error("Incorrect email or password.");
+            throw new Error("Database Error: " + error.message);
         }
 
-        // Success
+        if (!data) throw new Error("User not found.");
+
+        // D. Success!
         localStorage.setItem("impacta_user", JSON.stringify(data));
         
+        // Redirect
         if(data.role === "manager") {
             window.location.href = "admin.html";
         } else {
@@ -95,9 +93,9 @@
         }
 
       } catch (error) {
-        console.error("Login Error:", error);
+        // Show the error on screen so we know what's wrong
         err.style.display = "block";
-        err.textContent = "Access Denied: " + (error.message || "Unknown error");
+        err.textContent = error.message;
         btn.textContent = "Access Dashboard";
         btn.disabled = false;
       }
