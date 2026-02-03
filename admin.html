@@ -1,197 +1,265 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IMPACTA Admin</title>
-    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
-    <style>
-        /* Reusing CRM CSS for consistency */
-        :root{ --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9; --radius:12px; --sans: system-ui, -apple-system, sans-serif; }
-        *{box-sizing:border-box}
-        body{ margin:0; font-family:var(--sans); background: var(--bg); color:var(--ink); font-size: 14px; }
-        .wrap{ max-width:1400px; margin:0 auto; padding: 24px; }
-        .topbar{ background: #fff; border-bottom:1px solid var(--line); padding: 16px 24px; display:flex; justify-content: space-between; align-items: center; }
-        .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:8px; background:var(--brand); color:#fff; font-weight:600; cursor:pointer; border:none; text-decoration: none;}
-        .btn:hover{background:var(--brand-dark)}
-        .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
-        .card { background: #fff; border-radius: var(--radius); border: 1px solid var(--line); padding: 24px; margin-bottom: 24px; }
-        h2 { margin-top: 0; color: var(--brand); }
-        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
-        th, td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
-        th { background: #f8fafc; color: var(--muted); font-size: 12px; text-transform: uppercase; }
-        select, input { padding: 8px; border: 1px solid var(--line); border-radius: 6px; width: 100%; }
-        .grid-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
-        .assign-bar { display: flex; gap: 10px; align-items: center; background: #eef2ff; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #c7d2fe; }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Admin | IMPACTA CRM</title>
+  <style>
+    :root{ --brand:#0c62ab; --bg:#f1f5f9; --ink:#0f172a; --line:#e2e8f0; --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+    body{ margin:0; font-family:var(--font); background:var(--bg); color:var(--ink); }
+    .topbar { background:#fff; border-bottom:1px solid var(--line); padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
+    .brand img { height:36px; }
+    .btn { padding:10px 16px; border-radius:6px; font-weight:600; cursor:pointer; border:none; background:var(--brand); color:white; font-size:14px; }
+    .btn.sec { background:white; color:var(--ink); border:1px solid var(--line); }
+    .container { max-width:1200px; margin:24px auto; padding:0 24px; display:grid; gap:24px; }
+    .card { background:white; border-radius:12px; border:1px solid var(--line); padding:24px; }
+    h2 { margin-top:0; font-size:18px; color:var(--brand); }
+    table { width:100%; border-collapse:collapse; margin-top:16px; }
+    th, td { text-align:left; padding:12px; border-bottom:1px solid var(--line); font-size:14px; }
+    th { background:#f8fafc; color:#64748b; font-size:12px; text-transform:uppercase; }
+    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
+    input, select { width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; box-sizing:border-box; }
+    .badge { padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; background:#e2e8f0; }
+    .badge.admin { background:#dbeafe; color:#1e40af; }
+  </style>
 </head>
 <body>
 
 <div class="topbar">
-    <div style="display:flex; gap:12px; align-items:center;">
-        <img src="img/logo-main-2026.png" style="height:32px;">
-        <h1 style="margin:0; font-size:18px;">Admin Dashboard</h1>
-    </div>
-    <div style="display:flex; gap:10px;">
-        <a href="crm.html" class="btn secondary">View CRM</a>
-        <button id="btnLogout" class="btn secondary">Logout</button>
-    </div>
+  <div class="brand"><img src="img/logo-main-2026.png" alt="IMPACTA"></div>
+  <div style="display:flex; gap:10px;">
+    <a href="crm.html" class="btn sec" style="text-decoration:none;">Open CRM</a>
+    <button class="btn sec" onclick="logout()">Logout</button>
+  </div>
 </div>
 
-<main class="wrap">
-    
-    <div class="grid-2">
-        <div class="card">
-            <h2>Create New User</h2>
-            <p style="color:var(--muted); margin-bottom:16px;">This creates an account and sets role to 'Agent'.</p>
-            <form id="createUserForm">
-                <label>Email</label>
-                <input type="email" id="newEmail" required style="margin-bottom:12px;">
-                <label>Password</label>
-                <input type="password" id="newPass" required style="margin-bottom:12px;">
-                <button type="submit" class="btn" style="width:100%">Create User</button>
-            </form>
-            <p id="userMsg" style="margin-top:10px; font-weight:bold;"></p>
-            
-            <h3 style="margin-top:24px; font-size:16px;">Agent List</h3>
-            <ul id="agentList" style="padding-left:20px; color:var(--muted);">Loading...</ul>
-        </div>
-
-        <div class="card">
-            <h2>Lead Assignment</h2>
-            
-            <div class="assign-bar">
-                <strong>Assign Selected To:</strong>
-                <select id="assignSelect" style="max-width:200px;"><option>Loading agents...</option></select>
-                <button id="btnAssign" class="btn">Apply</button>
-            </div>
-
-            <div style="max-height: 500px; overflow-y:auto;">
-                <table id="leadTable">
-                    <thead>
-                        <tr>
-                            <th style="width:40px;"><input type="checkbox" id="selectAll"></th>
-                            <th>Company / Lead</th>
-                            <th>Assigned To</th>
-                            <th>Stage</th>
-                        </tr>
-                    </thead>
-                    <tbody id="leadBody">
-                        <tr><td colspan="4">Loading leads...</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<div class="container">
+  
+  <div class="card">
+    <h2>Manage Users</h2>
+    <div class="row">
+      <input id="newUserEmail" placeholder="New User Email" type="email" />
+      <input id="newUserPass" placeholder="Password (min 6 chars)" type="text" />
     </div>
+    <div class="row">
+        <select id="newUserRole">
+            <option value="agent">Agent</option>
+            <option value="admin">Admin</option>
+        </select>
+        <button class="btn" id="btnCreate" onclick="createUser()">Create User</button>
+    </div>
+    
+    <table>
+      <thead><tr><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead>
+      <tbody id="userList"></tbody>
+    </table>
+  </div>
 
-</main>
+  <div class="card">
+    <h2>Lead Assignment / Import</h2>
+    <div style="display:flex; gap:12px; margin-bottom:16px; align-items:center; flex-wrap:wrap;">
+      <button class="btn sec" onclick="importCSV()">Import CSV from Clipboard</button>
+      <div style="flex:1"></div>
+      <select id="assignUser" style="width:200px"><option value="">Select Agent...</option></select>
+      <button class="btn" onclick="assignLeads()">Assign Unassigned Leads</button>
+    </div>
+    
+    <div style="max-height:400px; overflow-y:auto; border:1px solid var(--line); border-radius:8px;">
+      <table>
+        <thead><tr><th>Company</th><th>Assigned To</th><th>Stage</th></tr></thead>
+        <tbody id="leadList"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-    const SUPABASE_URL = 'https://uafnhxcsrrdispsbpuxj.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhZm5oeGNzcnJkaXNwc2JwdXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTMwNDYsImV4cCI6MjA4NTY2OTA0Nn0.B5sAP0rE7PVImVWDWlJ2d08y1qZv-rbAlU6WZtbkZRs';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAd6SXuX3nNzoCr07ENc-u_QRU1Not_FAI",
+    authDomain: "impactacrm.firebaseapp.com",
+    projectId: "impactacrm",
+    storageBucket: "impactacrm.firebasestorage.app",
+    messagingSenderId: "323514822260",
+    appId: "1:323514822260:web:9eec9a85f865abb780ab21",
+    measurementId: "G-DW3JFMDG6Y"
+  };
+  // ---------------------------------------
 
-    let agents = [];
+  const app = firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const db = firebase.firestore();
 
-    async function init() {
-        // Auth Check
-        const { data: { session } } = await supabase.auth.getSession();
-        if(!session) window.location.href = 'index.html';
+  // Check Admin
+  auth.onAuthStateChanged(user => {
+    if (!user) return window.location.href = 'index.html';
+    db.collection('users').doc(user.uid).get().then(doc => {
+        if (!doc.exists || doc.data().role !== 'admin') {
+            window.location.href = 'crm.html';
+        } else {
+            loadData();
+        }
+    });
+  });
 
-        // Check Admin
-        const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
-        if(profile.role !== 'admin') { alert("Access Denied"); window.location.href = 'crm.html'; return; }
+  let allUsers = [];
 
-        loadAgents();
-        loadLeads();
-    }
-
-    async function loadAgents() {
-        const { data, error } = await supabase.from('profiles').select('*').eq('role', 'agent');
-        agents = data || [];
+  function loadData() {
+    // 1. Users
+    db.collection('users').onSnapshot(snap => {
+        allUsers = [];
+        const list = document.getElementById('userList');
+        const assign = document.getElementById('assignUser');
+        list.innerHTML = '';
+        assign.innerHTML = '<option value="">Select Agent...</option>';
         
-        // Populate List
-        const ul = document.getElementById('agentList');
-        ul.innerHTML = agents.map(a => `<li>${a.email}</li>`).join('');
-
-        // Populate Dropdown
-        const sel = document.getElementById('assignSelect');
-        sel.innerHTML = `<option value="">-- Select Agent --</option>` + 
-                        agents.map(a => `<option value="${a.id}">${a.email}</option>`).join('');
-    }
-
-    async function loadLeads() {
-        // Fetch leads + joined profile email
-        const { data, error } = await supabase
-            .from('leads')
-            .select('id, company, first_name, last_name, stage, assigned_to')
-            .order('created_at', { ascending: false });
-
-        const tbody = document.getElementById('leadBody');
-        if(!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="4">No leads found.</td></tr>'; return; }
-
-        tbody.innerHTML = data.map(l => {
-            const agentName = agents.find(a => a.id === l.assigned_to)?.email || '<span style="color:red">Unassigned</span>';
-            const name = l.company || `${l.first_name} ${l.last_name}`;
-            return `
+        snap.forEach(doc => {
+            const u = doc.data();
+            u.id = doc.id;
+            allUsers.push(u);
+            list.innerHTML += `
                 <tr>
-                    <td><input type="checkbox" class="lead-check" value="${l.id}"></td>
-                    <td><strong>${name}</strong></td>
-                    <td>${agentName}</td>
-                    <td>${l.stage}</td>
+                    <td>${u.email}</td>
+                    <td><span class="badge ${u.role}">${u.role}</span></td>
+                    <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : '-'}</td>
+                    <td><button class="btn sec" style="padding:4px 8px; font-size:12px" onclick="deleteUser('${doc.id}')">Remove</button></td>
                 </tr>
             `;
-        }).join('');
-    }
+            if(u.role === 'agent') {
+                assign.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
+            }
+        });
+        // 2. Leads (Load after users to map names)
+        loadLeads();
+    });
+  }
 
-    // Assign Logic
-    document.getElementById('btnAssign').onclick = async () => {
-        const agentId = document.getElementById('assignSelect').value;
-        if(!agentId) return alert("Select an agent.");
-        
-        const selected = Array.from(document.querySelectorAll('.lead-check:checked')).map(cb => cb.value);
-        if(selected.length === 0) return alert("Select leads.");
+  function loadLeads() {
+     db.collection('leads').orderBy('createdAt', 'desc').onSnapshot(snap => {
+         const list = document.getElementById('leadList');
+         list.innerHTML = '';
+         snap.forEach(doc => {
+             const l = doc.data();
+             const agent = allUsers.find(u => u.id === l.assignedTo);
+             const assignedName = agent ? agent.email : '<span style="color:#b91c1c">Unassigned</span>';
+             
+             list.innerHTML += `
+                <tr>
+                    <td>${l.company || 'Unknown'}</td>
+                    <td>${assignedName}</td>
+                    <td>${l.stage}</td>
+                </tr>
+             `;
+         });
+     });
+  }
 
-        const { error } = await supabase.from('leads').update({ assigned_to: agentId }).in('id', selected);
-        
-        if(error) alert(error.message);
-        else {
-            alert(`Assigned ${selected.length} leads.`);
-            loadLeads();
-        }
-    };
+  // Create User via Secondary App (Trick to stay logged in)
+  function createUser() {
+    const email = document.getElementById('newUserEmail').value;
+    const password = document.getElementById('newUserPass').value;
+    const role = document.getElementById('newUserRole').value;
 
-    // Toggle All
-    document.getElementById('selectAll').onclick = (e) => {
-        document.querySelectorAll('.lead-check').forEach(cb => cb.checked = e.target.checked);
-    };
+    if (!email || !password) return alert('Fill fields');
 
-    // Logout
-    document.getElementById('btnLogout').onclick = async () => {
-        await supabase.auth.signOut();
-        window.location.href = 'index.html';
-    };
+    const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
 
-    // Create User (Note: This is a hacky way client-side, normally requires Service Role)
-    document.getElementById('createUserForm').onsubmit = async (e) => {
-        e.preventDefault();
-        const email = document.getElementById('newEmail').value;
-        const password = document.getElementById('newPass').value;
-        
-        // WARNING: Client-side creation logs the NEW user in immediately.
-        // We handle this by alerting the admin to re-login or use incognito.
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        
-        if(error) {
-            document.getElementById('userMsg').style.color = "red";
-            document.getElementById('userMsg').innerText = error.message;
-        } else {
-            alert("User created! Important: You have been signed in as the new user. Please log out and log back in as Admin.");
-            window.location.reload();
-        }
-    };
+    secondaryApp.auth().createUserWithEmailAndPassword(email, password)
+        .then((cred) => {
+            // Write to Firestore using PRIMARY app (Admin privileges)
+            db.collection('users').doc(cred.user.uid).set({
+                email: email,
+                role: role,
+                createdAt: new Date()
+            }).then(() => {
+                alert('User created!');
+                document.getElementById('newUserEmail').value = '';
+                document.getElementById('newUserPass').value = '';
+                secondaryApp.delete(); // Cleanup
+            });
+        })
+        .catch((error) => {
+            alert("Error: " + error.message);
+            secondaryApp.delete();
+        });
+  }
 
-    init();
+  function assignLeads() {
+      const agentId = document.getElementById('assignUser').value;
+      if (!agentId) return alert('Select Agent');
+      
+      // Query unassigned leads
+      db.collection('leads').where('assignedTo', '==', null).get()
+        .then(snap => {
+            if (snap.empty) return alert('No unassigned leads found.');
+            const batch = db.batch();
+            snap.forEach(doc => {
+                batch.update(doc.ref, { assignedTo: agentId });
+            });
+            batch.commit().then(() => alert(`Assigned ${snap.size} leads.`));
+        });
+  }
+
+  async function importCSV() {
+    try {
+      const txt = await navigator.clipboard.readText();
+      if (!txt) return alert('Clipboard empty');
+      const lines = txt.trim().split(/\r?\n/);
+      if (lines.length < 2) return alert('Invalid CSV');
+      
+      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
+      
+      let count = 0;
+      const batch = db.batch(); // Firebase batch (limit 500)
+      
+      for (let i = 1; i < lines.length; i++) {
+        const row = lines[i].split(',').map(c => c.trim().replace(/"/g, ''));
+        if (row.length < 2) continue;
+
+        const getVal = (keys) => {
+            const idx = headers.findIndex(h => keys.some(k => h.includes(k)));
+            return idx > -1 ? row[idx] : null;
+        };
+
+        const newRef = db.collection('leads').doc(); // Auto ID
+        const lead = {
+            company: getVal(['company', 'business']) || 'Unknown',
+            firstName: getVal(['first']),
+            lastName: getVal(['last']),
+            email: getVal(['email']),
+            phone: getVal(['phone']),
+            city: getVal(['city']),
+            industry: getVal(['industry']),
+            gbp1: getVal(['gbp 1']),
+            gbp2: getVal(['gbp 2']),
+            gbp3: getVal(['gbp 3']),
+            website: getVal(['website']),
+            stage: 'New Lead',
+            assignedTo: null,
+            createdAt: new Date()
+        };
+        batch.set(newRef, lead);
+        count++;
+      }
+      
+      batch.commit().then(() => alert(`Imported ${count} leads.`));
+
+    } catch (e) { alert('Error: ' + e.message); }
+  }
+  
+  function deleteUser(uid) {
+      // Deletes from DB only (Auth deletion requires Cloud Functions or Admin SDK)
+      if(confirm('Remove user from database? (They will lose access)')) {
+          db.collection('users').doc(uid).delete();
+      }
+  }
+
+  function logout() { auth.signOut().then(() => window.location.href = 'index.html'); }
 </script>
 </body>
 </html>
