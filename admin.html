@@ -13,19 +13,42 @@
     .btn.sec { background:white; color:var(--ink); border:1px solid var(--line); }
     .btn.danger { background:#fee2e2; color:#b91c1c; border:1px solid #fecaca; }
     .btn.danger:hover { background:#fecaca; }
-    .container { max-width:1200px; margin:24px auto; padding:0 24px; display:grid; gap:24px; }
+    .container { max-width:1400px; margin:24px auto; padding:0 24px; display:grid; gap:24px; }
     .card { background:white; border-radius:12px; border:1px solid var(--line); padding:24px; }
     h2 { margin-top:0; font-size:18px; color:var(--brand); }
-    table { width:100%; border-collapse:collapse; margin-top:16px; }
-    th, td { text-align:left; padding:12px; border-bottom:1px solid var(--line); font-size:14px; }
-    th { background:#f8fafc; color:#64748b; font-size:12px; text-transform:uppercase; }
+    table { width:100%; border-collapse:collapse; margin-top:0; }
+    th, td { text-align:left; padding:12px; border-bottom:1px solid var(--line); font-size:13px; }
+    th { background:#f8fafc; color:#64748b; font-size:11px; text-transform:uppercase; font-weight:700; position:sticky; top:0; }
     .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-    input, select { width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; box-sizing:border-box; }
+    input, select { width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; box-sizing:border-box; font-size:13px; }
     .badge { padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; background:#e2e8f0; }
     .badge.admin { background:#dbeafe; color:#1e40af; }
-    
-    /* Checkbox Styling */
     input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
+
+    /* FILTERS BAR */
+    .filter-bar { display:grid; grid-template-columns: repeat(5, 1fr) auto; gap:10px; margin-bottom:16px; padding:16px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; align-items:end; }
+    .filter-group label { display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase; }
+    
+    /* MODAL Styling Polished */
+    .modal { position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:1000; }
+    .modal.open { display:flex; }
+    .modal .panel { width:min(600px, 95%); background:#fff; border-radius:12px; border:1px solid var(--line); overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); }
+    .modal .hd { padding:16px 24px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; background:#fff; }
+    .modal .hd h3 { margin:0; font-size:16px; font-weight:700; color:var(--ink); }
+    
+    /* FIXED PADDING HERE */
+    .modal .bd { padding:24px; display:flex; flex-direction:column; gap:16px; }
+    
+    textarea.import-area { 
+        width:100%; height:200px; padding:16px; 
+        border:1px solid var(--line); border-radius:8px; 
+        font-family:var(--font); font-size:13px; line-height:1.5;
+        resize:vertical; outline:none; background:#f8fafc; box-sizing: border-box;
+    }
+    textarea.import-area:focus { border-color:var(--brand); background:#fff; box-shadow:0 0 0 3px rgba(12,98,171,.1); }
+    
+    /* Full width button in modal */
+    .modal-btn { width: 100%; justify-content: center; padding: 12px; font-size: 15px; margin-top: 8px; }
   </style>
 </head>
 <body>
@@ -42,42 +65,72 @@
   
   <div class="card">
     <h2>Manage Users</h2>
-    <div class="row">
+    <div class="row" style="grid-template-columns: 2fr 2fr 1fr 1fr;">
       <input id="newUserEmail" placeholder="New User Email" type="email" />
       <input id="newUserPass" placeholder="Password (min 6 chars)" type="text" />
+      <select id="newUserRole">
+          <option value="agent">Agent</option>
+          <option value="admin">Admin</option>
+      </select>
+      <button class="btn" id="btnCreate" onclick="createUser()">Create</button>
     </div>
-    <div class="row">
-        <select id="newUserRole">
-            <option value="agent">Agent</option>
-            <option value="admin">Admin</option>
-        </select>
-        <button class="btn" id="btnCreate" onclick="createUser()">Create User</button>
-    </div>
-    
-    <table>
+    <table style="margin-top:0;">
       <thead><tr><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead>
       <tbody id="userList"></tbody>
     </table>
   </div>
 
   <div class="card">
-    <h2>Lead Assignment / Import</h2>
-    <div style="display:flex; gap:12px; margin-bottom:16px; align-items:center; flex-wrap:wrap;">
-      <button class="btn sec" onclick="importCSV()">Import CSV from Clipboard</button>
-      
-      <button class="btn danger" id="btnBulkDelete" style="display:none;" onclick="bulkDelete()">Delete Selected</button>
-      
-      <div style="flex:1"></div>
-      <select id="assignUser" style="width:200px"><option value="">Select Agent...</option></select>
-      <button class="btn" onclick="assignLeads()">Assign Unassigned Leads</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <h2>Lead Database</h2>
+        <div style="display:flex; gap:10px;">
+            <button class="btn sec" onclick="openImportModal()">Import CSV</button>
+            <button class="btn danger" id="btnBulkDelete" style="display:none;" onclick="bulkDelete()">Delete Selected</button>
+        </div>
+    </div>
+
+    <div class="filter-bar">
+        <div class="filter-group">
+            <label>Status</label>
+            <select id="f_stage" onchange="applyFilters()"><option value="">All</option></select>
+        </div>
+        <div class="filter-group">
+            <label>City</label>
+            <select id="f_city" onchange="applyFilters()"><option value="">All</option></select>
+        </div>
+        <div class="filter-group">
+            <label>State</label>
+            <select id="f_state" onchange="applyFilters()"><option value="">All</option></select>
+        </div>
+        <div class="filter-group">
+            <label>Industry</label>
+            <select id="f_industry" onchange="applyFilters()"><option value="">All</option></select>
+        </div>
+        <div class="filter-group">
+            <label>Assigned To</label>
+            <select id="f_assign" onchange="applyFilters()"><option value="">All</option></select>
+        </div>
+        <div>
+            <button class="btn sec" style="width:100%" onclick="resetFilters()">Reset</button>
+        </div>
     </div>
     
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px;">
+        <span style="font-size:13px; font-weight:600; color:var(--ink);">Bulk Assign:</span>
+        <select id="assignUser" style="width:200px; padding:6px;"><option value="">Select Agent...</option></select>
+        <button class="btn" style="padding:6px 12px;" onclick="assignLeads()">Assign Filtered/Selected</button>
+        <span id="recordCount" style="margin-left:auto; font-size:12px; color:#64748b;">0 records</span>
+    </div>
+
     <div style="max-height:600px; overflow-y:auto; border:1px solid var(--line); border-radius:8px;">
       <table>
         <thead>
             <tr>
                 <th style="width:40px; text-align:center;"><input type="checkbox" id="selectAll" onclick="toggleAll(this)"></th>
                 <th>Company</th>
+                <th>City</th>
+                <th>State</th>
+                <th>Industry</th>
                 <th>Assigned To</th>
                 <th>Stage</th>
                 <th style="text-align:right">Actions</th>
@@ -90,12 +143,28 @@
 
 </div>
 
+<div class="modal" id="importModal">
+  <div class="panel">
+    <div class="hd">
+      <h3>Import Leads (CSV)</h3>
+      <button class="btn sec" onclick="closeImportModal()" style="border:none; background:transparent; color:#64748b; font-size:18px; padding:0;">&times;</button>
+    </div>
+    <div class="bd">
+      <p style="margin:0; color:#64748b; font-size:13px;">
+        Paste your CSV data below. First row must be headers.
+      </p>
+      <textarea id="importText" class="import-area" placeholder="Company,Phone,City,State,Industry..."></textarea>
+      <button class="btn modal-btn" onclick="processImport()">Process Import</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // --- YOUR FIREBASE CONFIG ---
+  // YOUR CONFIG
   const firebaseConfig = {
     apiKey: "AIzaSyAd6SXuX3nNzoCr07ENc-u_QRU1Not_FAI",
     authDomain: "impactacrm.firebaseapp.com",
@@ -105,13 +174,11 @@
     appId: "1:323514822260:web:9eec9a85f865abb780ab21",
     measurementId: "G-DW3JFMDG6Y"
   };
-  // ---------------------------------------
 
   const app = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
   const db = firebase.firestore();
 
-  // Check Admin
   auth.onAuthStateChanged(user => {
     if (!user) return window.location.href = 'index.html';
     db.collection('users').doc(user.uid).get().then(doc => {
@@ -124,21 +191,25 @@
   });
 
   let allUsers = [];
+  let allLeads = []; // Store full dataset
+  let filteredLeads = []; // Store current view
 
   function loadData() {
-    // 1. Users
     db.collection('users').onSnapshot(snap => {
         allUsers = [];
-        const list = document.getElementById('userList');
-        const assign = document.getElementById('assignUser');
-        list.innerHTML = '';
-        assign.innerHTML = '<option value="">Select Agent...</option>';
+        const userTbody = document.getElementById('userList');
+        const assignSel = document.getElementById('assignUser');
+        const filterAssign = document.getElementById('f_assign');
+        
+        userTbody.innerHTML = '';
+        assignSel.innerHTML = '<option value="">Select Agent...</option>';
+        filterAssign.innerHTML = '<option value="">All</option><option value="unassigned">Unassigned</option>';
         
         snap.forEach(doc => {
             const u = doc.data();
             u.id = doc.id;
             allUsers.push(u);
-            list.innerHTML += `
+            userTbody.innerHTML += `
                 <tr>
                     <td>${u.email}</td>
                     <td><span class="badge ${u.role}">${u.role}</span></td>
@@ -147,49 +218,122 @@
                 </tr>
             `;
             if(u.role === 'agent') {
-                assign.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
+                assignSel.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
+                filterAssign.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
             }
         });
-        // 2. Leads (Load after users to map names)
         loadLeads();
     });
   }
 
   function loadLeads() {
      db.collection('leads').orderBy('createdAt', 'desc').onSnapshot(snap => {
-         const list = document.getElementById('leadList');
-         list.innerHTML = '';
+         allLeads = [];
          snap.forEach(doc => {
-             const l = doc.data();
-             const agent = allUsers.find(u => u.id === l.assignedTo);
-             const assignedName = agent ? agent.email : '<span style="color:#b91c1c">Unassigned</span>';
-             
-             let actions = '';
-             if(l.assignedTo) {
-                 actions += `<button class="btn sec" style="padding:4px 8px; font-size:11px; margin-right:6px;" onclick="unassignLead('${doc.id}')">Unassign</button>`;
+             let l = doc.data();
+             l.id = doc.id;
+             // Normalize State for filtering (last 2 chars of city if missing)
+             if(!l.state && l.city && l.city.includes(',')) {
+                 let parts = l.city.split(',');
+                 l.stateExtracted = parts[parts.length-1].trim();
+                 l.cityClean = parts[0].trim();
+             } else {
+                 l.stateExtracted = l.state || '';
+                 l.cityClean = l.city || '';
              }
-             actions += `<button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteLead('${doc.id}')">🗑</button>`;
-
-             list.innerHTML += `
-                <tr>
-                    <td style="text-align:center;"><input type="checkbox" class="lead-check" value="${doc.id}" onclick="updateBulkState()"></td>
-                    <td>${l.company || 'Unknown'}</td>
-                    <td>${assignedName}</td>
-                    <td>${l.stage}</td>
-                    <td style="text-align:right">${actions}</td>
-                </tr>
-             `;
+             allLeads.push(l);
          });
-         // Reset bulk state on reload
-         document.getElementById('selectAll').checked = false;
-         updateBulkState();
+         
+         populateFilterOptions();
+         applyFilters(); // Render
      });
   }
 
-  // --- CHECKBOX LOGIC ---
+  function populateFilterOptions() {
+      const getUnique = (key) => [...new Set(allLeads.map(l => l[key]).filter(x => x))].sort();
+      
+      const stages = getUnique('stage');
+      const cities = getUnique('cityClean');
+      const states = getUnique('stateExtracted');
+      const industries = getUnique('industry');
+
+      const fill = (id, arr) => {
+          const el = document.getElementById(id);
+          const current = el.value;
+          el.innerHTML = '<option value="">All</option>' + arr.map(x => `<option value="${x}">${x}</option>`).join('');
+          el.value = current;
+      };
+
+      fill('f_stage', stages);
+      fill('f_city', cities);
+      fill('f_state', states);
+      fill('f_industry', industries);
+  }
+
+  function applyFilters() {
+      const s_stage = document.getElementById('f_stage').value;
+      const s_city = document.getElementById('f_city').value;
+      const s_state = document.getElementById('f_state').value;
+      const s_industry = document.getElementById('f_industry').value;
+      const s_assign = document.getElementById('f_assign').value;
+
+      filteredLeads = allLeads.filter(l => {
+          if(s_stage && l.stage !== s_stage) return false;
+          if(s_city && l.cityClean !== s_city) return false;
+          if(s_state && l.stateExtracted !== s_state) return false;
+          if(s_industry && l.industry !== s_industry) return false;
+          
+          if(s_assign === 'unassigned') {
+              if(l.assignedTo) return false;
+          } else if(s_assign && l.assignedTo !== s_assign) {
+              return false;
+          }
+          return true;
+      });
+
+      renderTable();
+  }
+
+  function renderTable() {
+      const tbody = document.getElementById('leadList');
+      tbody.innerHTML = '';
+      document.getElementById('recordCount').textContent = `${filteredLeads.length} records`;
+      document.getElementById('selectAll').checked = false;
+      updateBulkState();
+
+      filteredLeads.forEach(l => {
+          const agent = allUsers.find(u => u.id === l.assignedTo);
+          const assignedName = agent ? agent.email : '<span style="color:#b91c1c">Unassigned</span>';
+          
+          let actions = '';
+          if(l.assignedTo) {
+              actions += `<button class="btn sec" style="padding:4px 8px; font-size:11px; margin-right:6px;" onclick="unassignLead('${l.id}')">Unassign</button>`;
+          }
+          actions += `<button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteLead('${l.id}')">🗑</button>`;
+
+          tbody.innerHTML += `
+            <tr>
+                <td style="text-align:center;"><input type="checkbox" class="lead-check" value="${l.id}" onclick="updateBulkState()"></td>
+                <td style="font-weight:600">${l.company || 'Unknown'}</td>
+                <td>${l.cityClean}</td>
+                <td>${l.stateExtracted}</td>
+                <td>${l.industry || '-'}</td>
+                <td style="font-size:12px">${assignedName}</td>
+                <td><span class="badge">${l.stage}</span></td>
+                <td style="text-align:right">${actions}</td>
+            </tr>
+          `;
+      });
+  }
+
+  function resetFilters() {
+      ['f_stage','f_city','f_state','f_industry','f_assign'].forEach(id => document.getElementById(id).value = '');
+      applyFilters();
+  }
+
+  // --- BULK OPERATIONS ---
   function toggleAll(source) {
-      const checkboxes = document.querySelectorAll('.lead-check');
-      checkboxes.forEach(cb => cb.checked = source.checked);
+      document.querySelectorAll('.lead-check').forEach(cb => cb.checked = source.checked);
       updateBulkState();
   }
 
@@ -207,108 +351,85 @@
   function bulkDelete() {
       const checked = document.querySelectorAll('.lead-check:checked');
       if(checked.length === 0) return;
-
-      if(!confirm(`Are you sure you want to permanently delete ${checked.length} leads?`)) return;
+      if(!confirm(`Delete ${checked.length} leads?`)) return;
 
       const batch = db.batch();
-      checked.forEach(cb => {
-          const ref = db.collection('leads').doc(cb.value);
-          batch.delete(ref);
-      });
-
-      batch.commit().then(() => {
-          alert('Leads deleted.');
-          document.getElementById('selectAll').checked = false;
-          updateBulkState();
-      }).catch(e => alert(e.message));
-  }
-
-  // --- ACTIONS ---
-
-  function unassignLead(leadId) {
-      if(confirm('Unassign this lead?')) {
-          db.collection('leads').doc(leadId).update({ assignedTo: null });
-      }
-  }
-
-  function deleteLead(leadId) {
-      if(confirm('Delete this lead permanently?')) {
-          db.collection('leads').doc(leadId).delete();
-      }
-  }
-
-  function createUser() {
-    const email = document.getElementById('newUserEmail').value;
-    const password = document.getElementById('newUserPass').value;
-    const role = document.getElementById('newUserRole').value;
-
-    if (!email || !password) return alert('Fill fields');
-
-    const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
-
-    secondaryApp.auth().createUserWithEmailAndPassword(email, password)
-        .then((cred) => {
-            db.collection('users').doc(cred.user.uid).set({
-                email: email,
-                role: role,
-                createdAt: new Date()
-            }).then(() => {
-                alert('User created!');
-                document.getElementById('newUserEmail').value = '';
-                document.getElementById('newUserPass').value = '';
-                secondaryApp.delete();
-            });
-        })
-        .catch((error) => {
-            alert("Error: " + error.message);
-            secondaryApp.delete();
-        });
+      checked.forEach(cb => batch.delete(db.collection('leads').doc(cb.value)));
+      batch.commit().then(() => alert('Deleted.'));
   }
 
   function assignLeads() {
       const agentId = document.getElementById('assignUser').value;
       if (!agentId) return alert('Select Agent');
       
-      db.collection('leads').where('assignedTo', '==', null).get()
-        .then(snap => {
-            if (snap.empty) return alert('No unassigned leads found.');
-            const batch = db.batch();
-            snap.forEach(doc => {
-                batch.update(doc.ref, { assignedTo: agentId });
-            });
-            batch.commit().then(() => alert(`Assigned ${snap.size} leads.`));
-        });
+      const checked = document.querySelectorAll('.lead-check:checked');
+      let targets = [];
+      
+      if(checked.length > 0) {
+          checked.forEach(cb => targets.push(cb.value));
+      } else {
+          targets = filteredLeads.filter(l => !l.assignedTo).map(l => l.id);
+          if(targets.length === 0) return alert('No unassigned leads in current filter.');
+      }
+
+      if(!confirm(`Assign ${targets.length} leads to selected agent?`)) return;
+
+      const batch = db.batch();
+      targets.forEach(id => {
+          batch.update(db.collection('leads').doc(id), { assignedTo: agentId });
+      });
+      batch.commit().then(() => { alert('Assigned.'); document.getElementById('selectAll').checked=false; });
   }
 
-  async function importCSV() {
-    try {
-      const txt = await navigator.clipboard.readText();
-      if (!txt) return alert('Clipboard empty');
-      const lines = txt.trim().split(/\r?\n/);
-      if (lines.length < 2) return alert('Invalid CSV');
-      
-      const headers = lines[0].split(',').map(h => h.trim().replace(/"/g, '').toLowerCase());
-      
-      let count = 0;
-      const batch = db.batch(); 
-      
-      for (let i = 1; i < lines.length; i++) {
-        const row = lines[i].split(',').map(c => c.trim().replace(/"/g, ''));
+  // --- IMPORT ---
+  function parseCSVLine(text) {
+      let res = [], cell = '', quote = false;
+      for (let i = 0; i < text.length; i++) {
+          let c = text[i];
+          if (c === '"') quote = !quote;
+          else if (c === ',' && !quote) { res.push(cell.trim().replace(/^"|"$/g, '')); cell = ''; }
+          else cell += c;
+      }
+      res.push(cell.trim().replace(/^"|"$/g, ''));
+      return res;
+  }
+
+  function openImportModal() { document.getElementById('importModal').classList.add('open'); }
+  function closeImportModal() { document.getElementById('importModal').classList.remove('open'); }
+
+  function processImport() {
+    const txt = document.getElementById('importText').value;
+    if (!txt.trim()) return alert('Paste CSV data first.');
+    
+    const lines = txt.trim().split(/\r?\n/);
+    if (lines.length < 2) return alert('Invalid CSV.');
+    
+    const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
+    
+    let count = 0;
+    const batch = db.batch(); 
+    
+    for (let i = 1; i < lines.length; i++) {
+        const row = parseCSVLine(lines[i]);
         if (row.length < 2) continue;
 
         const getVal = (keys) => {
             const idx = headers.findIndex(h => keys.some(k => h.includes(k)));
-            return idx > -1 ? row[idx] : null;
+            return idx > -1 ? row[idx] : '';
         };
+
+        let cityRaw = getVal(['city', 'location']);
+        let stateRaw = getVal(['state']);
+        
+        // Combine if separate
+        let finalCity = cityRaw;
+        if(stateRaw && !cityRaw.includes(stateRaw)) finalCity = `${cityRaw}, ${stateRaw}`;
 
         const newRef = db.collection('leads').doc(); 
         const lead = {
             company: getVal(['company', 'business']) || 'Unknown',
-            firstName: getVal(['first']),
-            lastName: getVal(['last']),
-            email: getVal(['email']),
             phone: getVal(['phone']),
-            city: getVal(['city']),
+            city: finalCity,
             industry: getVal(['industry']),
             gbp1: getVal(['gbp 1']),
             gbp2: getVal(['gbp 2']),
@@ -316,26 +437,40 @@
             recommendation: getVal(['recommendation', 'rec']),
             website: getVal(['website']),
             stage: 'New Lead',
+            nextAction: 'Call Attempt',
             assignedTo: null,
             createdAt: new Date()
         };
         batch.set(newRef, lead);
         count++;
-      }
-      
-      batch.commit().then(() => alert(`Imported ${count} leads.`));
-
-    } catch (e) { alert('Error: ' + e.message); }
-  }
-  
-  function deleteUser(uid) {
-      if(confirm('Remove user from database? (They will lose access)')) {
-          db.collection('users').doc(uid).delete();
-      }
+    }
+    
+    batch.commit().then(() => {
+        alert(`Imported ${count} leads.`);
+        closeImportModal();
+        document.getElementById('importText').value = '';
+    });
   }
 
+  function unassignLead(id) {
+      if(confirm('Unassign?')) db.collection('leads').doc(id).update({ assignedTo: null });
+  }
+  function deleteLead(id) {
+      if(confirm('Delete?')) db.collection('leads').doc(id).delete();
+  }
+  function createUser() {
+    const email = document.getElementById('newUserEmail').value;
+    const password = document.getElementById('newUserPass').value;
+    const role = document.getElementById('newUserRole').value;
+    if (!email || !password) return alert('Fill fields');
+    const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
+    secondaryApp.auth().createUserWithEmailAndPassword(email, password)
+        .then((cred) => {
+            db.collection('users').doc(cred.user.uid).set({ email: email, role: role, createdAt: new Date() })
+            .then(() => { alert('User created!'); secondaryApp.delete(); });
+        }).catch(e => { alert(e.message); secondaryApp.delete(); });
+  }
   function logout() { auth.signOut().then(() => window.location.href = 'index.html'); }
 </script>
 </body>
 </html>
-
