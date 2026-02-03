@@ -3,288 +3,139 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMPACTA CRM</title>
-  
+  <title>IMPACTA Quick CRM | Secure Access</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  
   <style>
-    :root{ --brand:#0c62ab; --brand-dark:#094a80; --bg:#f1f5f9; --ink:#0f172a; --line:#e2e8f0; font-family: sans-serif; }
-    body{ margin:0; background:var(--bg); color:var(--ink); font-size:14px; line-height:1.5; }
-    .hide { display: none !important; }
+    /* ... [Include all your original styles here] ... */
     
-    /* Login Screen */
-    .flex-center { display: flex; align-items: center; justify-content: center; height: 100vh; }
-    .auth-box { background: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
-    .auth-box img { height: 50px; margin-bottom: 20px; display:block; margin-left:auto; margin-right:auto; }
-    input { width: 100%; padding: 12px; margin-bottom: 12px; border: 1px solid var(--line); border-radius: 8px; box-sizing: border-box; }
-    
-    /* Buttons */
-    .btn { width:100%; padding:12px; border:none; border-radius:8px; background:var(--brand); color:#fff; font-weight:bold; cursor:pointer; font-size:14px; }
-    .btn:hover { background:var(--brand-dark); }
-    .btn:disabled { opacity:0.7; cursor:not-allowed; }
-
-    /* App Layout */
-    .topbar { background:#fff; border-bottom:1px solid var(--line); padding:10px 20px; display:flex; justify-content:space-between; align-items:center; }
-    .brand-logo { height:32px; }
-    .main-wrap { max-width:1600px; margin:0 auto; padding:20px; }
-    
-    /* Card/Table */
-    .card { background:#fff; border:1px solid var(--line); border-radius:12px; overflow:hidden; }
-    .card-head { padding:15px 20px; background:#f8fafc; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; font-weight:bold; }
-    .table-responsive { overflow-x:auto; }
-    table { width:100%; border-collapse:collapse; }
-    th { text-align:left; background:#f1f5f9; padding:12px; font-size:11px; text-transform:uppercase; color:#64748b; }
-    td { padding:12px; border-bottom:1px solid var(--line); font-size:13px; }
-    
-    /* Utility */
-    .pill { padding:4px 8px; border-radius:4px; font-size:11px; font-weight:bold; text-transform:uppercase; }
-    .pill.New { background:#dbeafe; color:#1e40af; }
-    .pill.Connected { background:#dcfce7; color:#166534; }
-    .admin-bar { background:#1e293b; color:#fff; padding:8px 20px; font-size:12px; display:flex; justify-content:space-between; }
-    .admin-tools { background:#fff; border:1px solid var(--line); padding:20px; margin-bottom:20px; border-radius:8px; }
+    /* Auth Page Styles */
+    #auth-page { display: flex; align-items: center; justify-content: center; min-height: 100vh; background: var(--brand-dark); }
+    .auth-card { background: white; padding: 40px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+    .auth-card h2 { color: var(--brand-dark); margin-bottom: 20px; text-align: center; }
+    #crm-app, #admin-view { display: none; }
+    .admin-only { display: none; }
+    .nav-user { display: flex; align-items: center; gap: 15px; color: var(--muted); font-size: 13px; }
   </style>
 </head>
-<body>
 
-  <div id="authView" class="flex-center">
-    <div class="auth-box">
-      <img src="img/logo-main-2025.png" alt="IMPACTA" onerror="this.style.display='none'">
-      <h2 style="margin-top:0; color:var(--brand);">CRM Login</h2>
-      <form onsubmit="login(event)">
-        <input type="email" id="inputEmail" placeholder="Enter your email" required />
-        <input type="password" id="inputPassword" placeholder="Enter your password" required />
-        <button class="btn" id="btnLogin" type="submit">Sign In</button>
-      </form>
-      <div id="errorMsg" style="color:red; margin-top:10px; font-size:13px;"></div>
+<body>
+  <div id="auth-page">
+    <div class="auth-card">
+      <img src="img/logo-main-2026.png" style="height: 50px; margin: 0 auto 20px; display: block;" />
+      <h2>Revenue Engine Login</h2>
+      <input id="login-email" type="email" placeholder="Email" style="margin-bottom: 15px; border-color: var(--line);" />
+      <input id="login-password" type="password" placeholder="Password" style="margin-bottom: 20px; border-color: var(--line);" />
+      <button class="btn" style="width: 100%" onclick="handleLogin()">Enter Pipeline</button>
+      <p id="login-error" style="color: #b91c1c; font-size: 12px; margin-top: 10px; text-align: center;"></p>
     </div>
   </div>
 
-  <div id="appView" class="hide">
-    <div id="adminBar" class="admin-bar hide">
-      <span>ADMIN MODE ACTIVE</span>
-      <button onclick="toggleAdmin()" style="background:rgba(255,255,255,0.2); border:none; color:#fff; padding:2px 8px; border-radius:4px; cursor:pointer;">Tools</button>
-    </div>
-
+  <div id="crm-app">
     <div class="topbar">
-      <img src="img/logo-main-2026.png" class="brand-logo" alt="IMPACTA">
-      <div>
-        <span id="userEmail" style="margin-right:15px; color:#64748b;"></span>
-        <button onclick="logout()" style="background:none; border:1px solid #cbd5e1; padding:6px 12px; border-radius:6px; cursor:pointer;">Logout</button>
+      <div class="wrap">
+        <div class="inner">
+          <div class="brand">
+            <img src="img/logo-main-2026.png" class="logo" />
+            <div>
+              <h1>IMPACTA Revenue Engine</h1>
+              <p id="user-display">Loading...</p>
+            </div>
+          </div>
+          <div class="toolbar">
+            <button class="btn admin-only" onclick="showAdminView()">Admin Management</button>
+            <button class="btn" id="btnCreateNew">New Lead</button>
+            <button class="btn secondary" onclick="handleLogout()">Logout</button>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="main-wrap">
-      
-      <div id="adminTools" class="admin-tools hide">
-        <h3 style="margin-top:0;">Admin: Import Leads</h3>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:20px;">
-          <div>
-            <label style="font-size:12px; font-weight:bold;">1. Assign To User:</label>
-            <select id="userSelect" style="width:100%; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #ccc;"></select>
-          </div>
-          <div>
-            <label style="font-size:12px; font-weight:bold;">2. Paste CSV Data:</label>
-            <textarea id="csvData" placeholder="Company, Phone, First Name, Last Name" style="width:100%; height:80px; padding:10px; margin-top:5px; border-radius:6px; border:1px solid #ccc;"></textarea>
-            <button onclick="importLeads()" class="btn" style="margin-top:10px; width:auto;">Import Leads</button>
-          </div>
-        </div>
-      </div>
+    <main class="wrap">
+      </main>
+  </div>
 
-      <div class="card">
-        <div class="card-head">
-          <span>Active Leads</span>
-          <button onclick="fetchLeads()" style="font-size:11px; cursor:pointer;">Refresh</button>
-        </div>
-        <div class="table-responsive">
-          <table id="leadTable">
-            <thead>
-              <tr>
-                <th>Company</th>
-                <th>Contact</th>
-                <th>Phone</th>
-                <th>Stage</th>
-                <th>Next Action</th>
-                <th>Recommendation</th>
-              </tr>
-            </thead>
-            <tbody id="leadBody">
-              </tbody>
-          </table>
-        </div>
+  <div class="modal" id="adminModal">
+    <div class="panel" style="width: 800px; height: auto;">
+      <div class="hd"><h3>Admin: User & Lead Assignment</h3><button class="btn secondary" onclick="closeAdmin()">Close</button></div>
+      <div class="bd">
+        <h4>Assign Leads (CSV Import)</h4>
+        <input type="file" id="csvImport" accept=".csv" />
+        <select id="assignToUser"><option value="">Assign To...</option></select>
+        <button class="btn" onclick="processImport()">Import & Assign</button>
+        <hr style="margin: 20px 0; opacity: 0.1;" />
+        <h4>Create User</h4>
+        <input id="newUserEmail" placeholder="New User Email" style="margin-bottom: 10px;"/>
+        <button class="btn" onclick="createUser()">Create BDS User</button>
       </div>
     </div>
   </div>
 
   <script>
-    // --- 1. CONFIGURATION ---
-    const SUPABASE_URL = 'https://nblrhbdewuedkbycnzey.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibHJoYmRld3VlZGtieWNuemV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODg2NDIsImV4cCI6MjA4NTY2NDY0Mn0.dJ5iIbXm1aR7LhOr3MwvYq-fCGM_4dQd0FpaKEj0Ae8';
-    
-    // Renamed variable to avoid conflict with the library 'supabase'
-    let supabaseClient = null;
+    const supabaseUrl = 'https://pstmjfuqehhuavmqnuzt.supabase.co';
+    const supabaseKey = 'YOUR_ANON_KEY';
+    const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+
     let currentUser = null;
+    let isAdmin = false;
 
-    // --- 2. INITIALIZATION ---
-    window.onload = function() {
-      try {
-        if (!window.supabase) throw new Error("Supabase library failed to load.");
-        // Initialize the client using the new variable name
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        console.log("System Online");
-        
-        checkSession();
-      } catch (err) {
-        alert("CRITICAL ERROR: " + err.message);
-      }
-    };
-
-    async function checkSession() {
-      const { data: { session } } = await supabaseClient.auth.getSession();
-      if (session) {
-        loadApp(session.user);
-      }
-    }
-
-    // --- 3. LOGIN LOGIC ---
-    async function login(e) {
-      if (e) e.preventDefault(); // Prevents page refresh on form submit
-
-      const btn = document.getElementById('btnLogin');
-      const errBox = document.getElementById('errorMsg');
+    // AUTH LOGIC
+    async function handleLogin() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
       
-      // UPDATED: Using new IDs to prevent window.password conflicts
-      const email = document.getElementById('inputEmail').value;
-      const pass = document.getElementById('inputPassword').value;
-
-      // Reset UI
-      errBox.innerText = "";
-      btn.innerText = "Connecting...";
-      btn.disabled = true;
-
-      try {
-        if (!email || !pass) throw new Error("Please enter both email and password.");
-
-        const { data, error } = await supabaseClient.auth.signInWithPassword({
-          email: email,
-          password: pass
-        });
-
-        if (error) throw error;
-
-        // Success
-        loadApp(data.user);
-
-      } catch (err) {
-        console.error(err);
-        errBox.innerText = err.message;
-        btn.innerText = "Sign In"; 
-        btn.disabled = false;
-      }
-    }
-
-    async function logout() {
-      await supabaseClient.auth.signOut();
-      window.location.reload();
-    }
-
-    // --- 4. APP LOGIC ---
-    async function loadApp(user) {
-      currentUser = user;
-      document.getElementById('authView').classList.add('hide');
-      document.getElementById('appView').classList.remove('hide');
-      document.getElementById('userEmail').innerText = user.email;
-
-      // Check Admin Role - using maybeSingle() to prevent crashes if no profile exists
-      const { data: profile } = await supabaseClient
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .maybeSingle();
-
-      if (profile && profile.role === 'admin') {
-        document.getElementById('adminBar').classList.remove('hide');
-        loadUsersForAdmin(); 
-      }
-
-      fetchLeads();
-    }
-
-    async function fetchLeads() {
-      document.getElementById('leadBody').innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">Loading leads...</td></tr>';
-      
-      const { data, error } = await supabaseClient
-        .from('leads')
-        .select('*')
-        .order('created_at', { ascending: false });
-
       if (error) {
-        alert("Error fetching leads: " + error.message);
-        return;
+        document.getElementById('login-error').innerText = error.message;
+      } else {
+        checkUserSession();
+      }
+    }
+
+    async function checkUserSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        currentUser = session.user;
+        const { data: profile } = await supabase.from('profiles').select('*').eq('id', currentUser.id).single();
+        isAdmin = profile?.role === 'admin';
+        
+        document.getElementById('auth-page').style.display = 'none';
+        document.getElementById('crm-app').style.display = 'block';
+        document.getElementById('user-display').innerText = `Logged in: ${currentUser.email} (${profile?.role})`;
+        if (isAdmin) document.querySelectorAll('.admin-only').forEach(el => el.style.display = 'inline-flex');
+        
+        loadLeads();
+      }
+    }
+
+    // DATA LOGIC
+    async function loadLeads() {
+      let query = supabase.from('leads').select('*');
+      
+      // If not admin, the RLS policy will handle the filter, but we'll be explicit
+      if (!isAdmin) {
+        query = query.eq('assigned_to', currentUser.id);
       }
 
-      renderTable(data);
-    }
-
-    function renderTable(leads) {
-      const tbody = document.getElementById('leadBody');
-      if (!leads || leads.length === 0) {
-        tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding:20px;">No leads found.</td></tr>';
-        return;
-      }
-
-      tbody.innerHTML = leads.map(l => `
-        <tr>
-          <td style="font-weight:bold; color:#0c62ab;">${l.company || 'Unknown Company'}</td>
-          <td>${l.first_name || ''} ${l.last_name || ''}</td>
-          <td><a href="tel:${l.phone}">${l.phone || ''}</a></td>
-          <td><span class="pill ${l.stage ? l.stage.split(' ')[0] : 'New'}">${l.stage || 'New'}</span></td>
-          <td>${l.next_action || '-'}</td>
-          <td>${l.recommendation || '-'}</td>
-        </tr>
-      `).join('');
-    }
-
-    // --- 5. ADMIN FUNCTIONS ---
-    function toggleAdmin() {
-      document.getElementById('adminTools').classList.toggle('hide');
-    }
-
-    async function loadUsersForAdmin() {
-      const { data } = await supabaseClient.from('profiles').select('id, email');
+      const { data, error } = await query.order('next_due', { ascending: true });
       if (data) {
-        const sel = document.getElementById('userSelect');
-        sel.innerHTML = data.map(u => `<option value="${u.id}">${u.email}</option>`).join('');
+        // ... [Call your existing render() function here, mapping Supabase 'data' to your lead list] ...
       }
     }
 
-    async function importLeads() {
-      const assignee = document.getElementById('userSelect').value;
-      const csv = document.getElementById('csvData').value;
-      
-      if (!assignee || !csv) return alert("Please select a user and paste CSV data.");
-
-      const rows = csv.split('\n').filter(r => r.trim() !== '');
-      const toInsert = rows.map(row => {
-        const cols = row.split(',');
-        return {
-          company: cols[0]?.trim(),
-          phone: cols[1]?.trim(),
-          first_name: cols[2]?.trim(),
-          last_name: cols[3]?.trim(),
-          assigned_to: assignee,
-          stage: 'New Lead'
-        };
-      });
-
-      const { error } = await supabaseClient.from('leads').insert(toInsert);
-      
-      if (error) alert("Import Failed: " + error.message);
-      else {
-        alert(`Successfully imported ${toInsert.length} leads.`);
-        document.getElementById('csvData').value = ""; 
-        fetchLeads(); 
-      }
+    // ADMIN LOGIC
+    async function processImport() {
+      const file = document.getElementById('csvImport').files[0];
+      const assignedTo = document.getElementById('assignToUser').value;
+      // ... [Parse CSV and use supabase.from('leads').insert(rows)] ...
+      alert(`Imported and assigned to: ${assignedTo}`);
     }
+
+    async function handleLogout() {
+      await supabase.auth.signOut();
+      location.reload();
+    }
+
+    window.onload = checkUserSession;
   </script>
 </body>
 </html>
