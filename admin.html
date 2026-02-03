@@ -86,142 +86,173 @@
     </div>
   </div>
 
-  <script>
+<script>
     // --- CONFIGURATION ---
     const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
     const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-
-    // State
-    let leads = [];
-    let users = [];
-    const currentUser = JSON.parse(localStorage.getItem("impacta_user"));
-
-    // Guard Clause
-    if(!currentUser || currentUser.role !== 'manager') window.location.href = 'lite9876932.html';
-
-    async function fetchData() {
-      // Fetch Users
-      const { data: uData, error: uErr } = await supabase.from('users').select('*');
-      if(uErr) console.error("User Fetch Error:", uErr);
-      
-      // Fetch Leads
-      const { data: lData, error: lErr } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
-      if(lErr) console.error("Lead Fetch Error:", lErr);
-      
-      users = uData || [];
-      leads = lData || [];
-      
-      renderLeadAssign();
-      renderUsers();
-      renderReports();
+    
+    // --- INITIALIZATION (SAFETY WRAPPED) ---
+    let supabase = null;
+    
+    // 1. Safety Check: Did the library load?
+    if (typeof window.supabase === 'undefined') {
+        console.error("CRITICAL: Supabase library not loaded. Check connection.");
+        alert("System Warning: Database library failed to load. You may not see data, but you can still logout.");
+    } else {
+        // 2. Try to connect, but don't crash if it fails
+        try {
+            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+        } catch(e) { 
+            console.error("Database Init Failed:", e);
+            alert("Database Connection Error. Check console.");
+        }
     }
 
+    // --- AUTHENTICATION GATEKEEPER ---
+    const currentUser = JSON.parse(localStorage.getItem("impacta_user"));
+    if(!currentUser || currentUser.role !== 'manager') {
+        window.location.href = 'lite9876932.html';
+    }
+
+    // --- STATE ---
+    let leads = [];
+    let users = [];
+
+    // --- CORE FUNCTIONS ---
+
+    async function fetchData() {
+        if(!supabase) return; // Guard Clause: If DB is down, stop here (don't crash).
+
+        // Fetch Users
+        const { data: uData, error: uErr } = await supabase.from('users').select('*');
+        if(uErr) console.error("User Fetch Error:", uErr);
+        
+        // Fetch Leads
+        const { data: lData, error: lErr } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
+        if(lErr) console.error("Lead Fetch Error:", lErr);
+        
+        users = uData || [];
+        leads = lData || [];
+        
+        renderLeadAssign();
+        renderUsers();
+        renderReports();
+    }
+
+    // --- UI LOGIC ---
+
     function switchTab(id) {
-      document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
-      document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
-      document.getElementById(id).classList.add('active');
+        document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
+        document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
     }
 
     function renderLeadAssign() {
-      const userSel = document.getElementById("assignUserSel");
-      userSel.innerHTML = '<option value="">-- Select Rep --</option>' + users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
-      
-      if(leads.length === 0) {
-          document.getElementById("assignBody").innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">No leads found in database.</td></tr>`;
-          return;
-      }
+        const userSel = document.getElementById("assignUserSel");
+        userSel.innerHTML = '<option value="">-- Select Rep --</option>' + users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+        
+        if(leads.length === 0) {
+            document.getElementById("assignBody").innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">No leads found (or database offline).</td></tr>`;
+            return;
+        }
 
-      document.getElementById("assignBody").innerHTML = leads.map(l => {
-        const owner = users.find(u => u.id === l.assigned_to)?.name || '<span style="color:#ef4444">Unassigned</span>';
-        return `<tr>
-          <td><input type="checkbox" class="lead-check" value="${l.id}"></td>
-          <td><b>${l.company || 'Unknown'}</b><br><span style="font-size:12px;color:#64748b">${l.first_name||''} ${l.last_name||''}</span></td>
-          <td>${l.stage}</td>
-          <td>${owner}</td>
-        </tr>`;
-      }).join('');
+        document.getElementById("assignBody").innerHTML = leads.map(l => {
+            const owner = users.find(u => u.id === l.assigned_to)?.name || '<span style="color:#ef4444">Unassigned</span>';
+            return `<tr>
+                <td><input type="checkbox" class="lead-check" value="${l.id}"></td>
+                <td><b>${l.company || 'Unknown'}</b><br><span style="font-size:12px;color:#64748b">${l.first_name||''} ${l.last_name||''}</span></td>
+                <td>${l.stage}</td>
+                <td>${owner}</td>
+            </tr>`;
+        }).join('');
     }
 
     function toggleAll(source) {
-      document.querySelectorAll('.lead-check').forEach(c => c.checked = source.checked);
+        document.querySelectorAll('.lead-check').forEach(c => c.checked = source.checked);
     }
 
-    // --- BUTTONS WITH ERROR REPORTING ---
+    // --- BUTTON ACTIONS (WITH ERROR HANDLING) ---
 
     async function assignLeads() {
-      const userId = document.getElementById("assignUserSel").value;
-      if(!userId) return alert("Select a user first.");
-      const checked = Array.from(document.querySelectorAll('.lead-check:checked')).map(c => c.value);
-      
-      if(checked.length === 0) return alert("No leads selected.");
+        if(!supabase) return alert("Error: Database disconnected.");
+        
+        const userId = document.getElementById("assignUserSel").value;
+        if(!userId) return alert("Select a user first.");
+        
+        const checked = Array.from(document.querySelectorAll('.lead-check:checked')).map(c => c.value);
+        if(checked.length === 0) return alert("No leads selected.");
 
-      const { error } = await supabase.from('leads').update({ assigned_to: userId }).in('id', checked);
-      
-      if(error) {
-          alert("DATABASE ERROR: " + error.message + "\n\nDid you run the SQL to disable RLS?");
-      } else {
-          alert("Success! Leads assigned.");
-          fetchData();
-      }
+        const { error } = await supabase.from('leads').update({ assigned_to: userId }).in('id', checked);
+        
+        if(error) alert("Database Error: " + error.message);
+        else {
+            alert("Success! Leads assigned.");
+            fetchData();
+        }
     }
 
     async function addUser() {
-      const name = document.getElementById("new_name").value;
-      const email = document.getElementById("new_email").value;
-      const pass = document.getElementById("new_pass").value;
-      
-      if(!name || !email || !pass) return alert("Fill in all fields.");
+        if(!supabase) return alert("Error: Database disconnected.");
 
-      const { error } = await supabase.from('users').insert([{ name, email, password: pass, role: 'rep' }]);
-      
-      if(error) {
-          alert("DATABASE ERROR: " + error.message + "\n\nDid you run the SQL to disable RLS?");
-      } else {
-          document.getElementById("new_name").value = "";
-          document.getElementById("new_email").value = "";
-          document.getElementById("new_pass").value = "";
-          alert("User created successfully.");
-          fetchData();
-      }
+        const name = document.getElementById("new_name").value;
+        const email = document.getElementById("new_email").value;
+        const pass = document.getElementById("new_pass").value;
+        
+        if(!name || !email || !pass) return alert("Fill in all fields.");
+
+        const { error } = await supabase.from('users').insert([{ name, email, password: pass, role: 'rep' }]);
+        
+        if(error) alert("Database Error: " + error.message);
+        else {
+            document.getElementById("new_name").value = "";
+            document.getElementById("new_email").value = "";
+            document.getElementById("new_pass").value = "";
+            alert("User created successfully.");
+            fetchData();
+        }
     }
 
     async function removeUser(id) {
-      if(confirm("Remove user?")) {
-        const { error } = await supabase.from('users').delete().eq('id', id);
-        if(error) {
-            alert("Delete failed: " + error.message);
-        } else {
-            fetchData();
+        if(!supabase) return alert("Error: Database disconnected.");
+        
+        if(confirm("Remove user?")) {
+            const { error } = await supabase.from('users').delete().eq('id', id);
+            if(error) alert("Delete failed: " + error.message);
+            else fetchData();
         }
-      }
     }
 
     function renderUsers() {
-      document.getElementById("userTable").innerHTML = users.map(u => `<tr>
-        <td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
-        <td><button class="btn danger" onclick="removeUser('${u.id}')">Remove</button></td>
-      </tr>`).join('');
+        document.getElementById("userTable").innerHTML = users.map(u => `<tr>
+            <td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
+            <td><button class="btn danger" onclick="removeUser('${u.id}')">Remove</button></td>
+        </tr>`).join('');
     }
 
     function renderReports() {
-      const sold = leads.filter(l => l.stage && l.stage.includes('Sold')).length;
-      document.getElementById("reportKpis").innerHTML = `
-        <div class="kpi-box"><div class="kpi-lbl">Total Leads</div><div class="kpi-val">${leads.length}</div></div>
-        <div class="kpi-box"><div class="kpi-lbl">Deals Closed</div><div class="kpi-val">${sold}</div></div>
-      `;
-      
-      document.getElementById("repStatsBody").innerHTML = users.map(u => {
-        const theirLeads = leads.filter(l => l.assigned_to === u.id);
-        const theirSales = theirLeads.filter(l => l.stage && l.stage.includes('Sold')).length;
-        return `<tr><td>${u.name}</td><td>${theirLeads.length}</td><td>${theirSales}</td></tr>`;
-      }).join('');
+        const sold = leads.filter(l => l.stage && l.stage.includes('Sold')).length;
+        document.getElementById("reportKpis").innerHTML = `
+            <div class="kpi-box"><div class="kpi-lbl">Total Leads</div><div class="kpi-val">${leads.length}</div></div>
+            <div class="kpi-box"><div class="kpi-lbl">Deals Closed</div><div class="kpi-val">${sold}</div></div>
+        `;
+        
+        document.getElementById("repStatsBody").innerHTML = users.map(u => {
+            const theirLeads = leads.filter(l => l.assigned_to === u.id);
+            const theirSales = theirLeads.filter(l => l.stage && l.stage.includes('Sold')).length;
+            return `<tr><td>${u.name}</td><td>${theirLeads.length}</td><td>${theirSales}</td></tr>`;
+        }).join('');
     }
 
-    function logout() { localStorage.removeItem("impacta_user"); window.location.href = 'lite9876932.html'; }
+    // --- LOGOUT (Guaranteed to Work) ---
+    function logout() { 
+        localStorage.removeItem("impacta_user"); 
+        window.location.href = 'lite9876932.html'; 
+    }
 
+    // Start Engine
     fetchData();
-  </script>
+</script>
 </body>
 </html>
+
 
