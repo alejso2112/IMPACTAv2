@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>IMPACTA CRM</title>
   
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.3/dist/umd/supabase.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   
   <style>
     :root{ --brand:#0c62ab; --brand-dark:#094a80; --bg:#f1f5f9; --ink:#0f172a; --line:#e2e8f0; font-family: sans-serif; }
@@ -51,8 +51,8 @@
       <img src="img/logo-main-2025.png" alt="IMPACTA" onerror="this.style.display='none'">
       <h2 style="margin-top:0; color:var(--brand);">CRM Login</h2>
       <form onsubmit="login(event)">
-        <input type="email" id="email" placeholder="Enter your email" required />
-        <input type="password" id="password" placeholder="Enter your password" required />
+        <input type="email" id="inputEmail" placeholder="Enter your email" required />
+        <input type="password" id="inputPassword" placeholder="Enter your password" required />
         <button class="btn" id="btnLogin" type="submit">Sign In</button>
       </form>
       <div id="errorMsg" style="color:red; margin-top:10px; font-size:13px;"></div>
@@ -117,10 +117,10 @@
 
   <script>
     // --- 1. CONFIGURATION ---
-    // Added .trim() to ensure no invisible copy-paste characters break the auth
-    const SUPABASE_URL = 'https://nblrhbdewuedkbycnzey.supabase.co'.trim();
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibHJoYmRld3VlZGtieWNuemV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODg2NDIsImV4cCI6MjA4NTY2NDY0Mn0.dJ5iIbXm1aR7LhOr3MwvYq-fCGM_4dQd0FpaKEj0Ae8'.trim();
+    const SUPABASE_URL = 'https://nblrhbdewuedkbycnzey.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ibHJoYmRld3VlZGtieWNuemV5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwODg2NDIsImV4cCI6MjA4NTY2NDY0Mn0.dJ5iIbXm1aR7LhOr3MwvYq-fCGM_4dQd0FpaKEj0Ae8';
     
+    // Renamed variable to avoid conflict with the library 'supabase'
     let supabaseClient = null;
     let currentUser = null;
 
@@ -128,19 +128,10 @@
     window.onload = function() {
       try {
         if (!window.supabase) throw new Error("Supabase library failed to load.");
-        
-        // FIX APPLIED: Added { auth: { persistSession: false } }
-        // This solves the "Failed to fetch" error when running on file:// protocol
-        // by stopping the browser from blocking LocalStorage writes.
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
-            auth: {
-                persistSession: false,
-                autoRefreshToken: false,
-                detectSessionInUrl: false
-            }
-        });
-        
+        // Initialize the client using the new variable name
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
         console.log("System Online");
+        
         checkSession();
       } catch (err) {
         alert("CRITICAL ERROR: " + err.message);
@@ -148,7 +139,6 @@
     };
 
     async function checkSession() {
-      // With persistSession: false, this will usually return null on refresh, which is expected for this lite version.
       const { data: { session } } = await supabaseClient.auth.getSession();
       if (session) {
         loadApp(session.user);
@@ -157,12 +147,14 @@
 
     // --- 3. LOGIN LOGIC ---
     async function login(e) {
-      if (e) e.preventDefault();
+      if (e) e.preventDefault(); // Prevents page refresh on form submit
 
       const btn = document.getElementById('btnLogin');
       const errBox = document.getElementById('errorMsg');
-      const email = document.getElementById('email').value.trim(); // Trim input
-      const pass = document.getElementById('password').value.trim(); // Trim input
+      
+      // UPDATED: Using new IDs to prevent window.password conflicts
+      const email = document.getElementById('inputEmail').value;
+      const pass = document.getElementById('inputPassword').value;
 
       // Reset UI
       errBox.innerText = "";
@@ -184,7 +176,7 @@
 
       } catch (err) {
         console.error(err);
-        errBox.innerText = err.message || "Connection failed. Check internet.";
+        errBox.innerText = err.message;
         btn.innerText = "Sign In"; 
         btn.disabled = false;
       }
@@ -202,7 +194,7 @@
       document.getElementById('appView').classList.remove('hide');
       document.getElementById('userEmail').innerText = user.email;
 
-      // Check Admin Role
+      // Check Admin Role - using maybeSingle() to prevent crashes if no profile exists
       const { data: profile } = await supabaseClient
         .from('profiles')
         .select('role')
