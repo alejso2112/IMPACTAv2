@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>IMPACTA Quick CRM</title>
+  <title>Login - IMPACTA Quick CRM</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  
   <style>
     :root{
       --brand:#0c62ab;
@@ -22,1175 +24,216 @@
       font-family:var(--sans);
       color:var(--ink);
       background: var(--bg);
-      line-height:1.5;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Login Layout */
+    .login-wrap {
+      width: 100%;
+      max-width: 400px;
+      padding: 24px;
+    }
+
+    .brand-area {
+      text-align: center;
+      margin-bottom: 32px;
+    }
+    .logo {
+      height: 50px;
+      width: auto;
+      margin-bottom: 16px;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--brand-dark);
+      margin: 0 0 8px 0;
+      letter-spacing: -0.01em;
+    }
+    p.subtitle {
       font-size: 14px;
-    }
-    a{color:var(--brand); text-decoration:none}
-    .wrap{max-width:1800px; margin:0 auto; padding:0 24px} /* Widen layout for new columns */
-    
-    /* Topbar */
-    .topbar{
-      position:sticky; top:0; z-index:50;
-      border-bottom:1px solid var(--line);
-      background:rgba(255,255,255,.98);
-      backdrop-filter:blur(10px);
-    }
-    .topbar .inner{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:16px; padding:14px 0;
-    }
-    .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
-    
-    /* LOGO UPDATE: Image style */
-    .logo{
-      height:40px; width:auto; /* Constrain height, allow width to scale */
-      flex:0 0 auto;
-      display: block;
+      color: var(--muted);
+      margin: 0;
     }
 
-    .brand h1{margin:0; font-size:16px; font-weight:700; color:var(--brand-dark); letter-spacing:-0.01em;}
-    .brand p{margin:0; font-size:13px; color:var(--muted)}
-    
-    /* Buttons */
-    .btn{
-      display:inline-flex; align-items:center; justify-content:center;
-      gap:8px; padding:10px 16px;
-      border-radius:8px; border:1px solid rgba(12,98,171,.1);
-      background:var(--brand); color:#fff;
-      font-weight:600; font-size:14px;
-      cursor:pointer; transition:all .15s ease;
-      white-space:nowrap;
+    /* Card Style (Matches CRM) */
+    .card {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px;
+      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.05);
     }
-    .btn:hover{background:var(--brand-dark)}
-    .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
-    .btn.secondary:hover{background:#f8fafc; border-color:#cbd5e1}
-    .btn.danger{background:#fff; color:#b91c1c; border:1px solid rgba(185,28,28,.2);}
-    .btn.danger:hover{background:#fef2f2; border-color:#b91c1c}
-    .btn.success{background:#10b981; color:#fff; border-color:#059669;}
-    .btn.success:hover{background:#059669;}
-    .btn[disabled]{opacity:.5; cursor:not-allowed}
-    .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-end;}
-
-    /* Layout */
-    main{padding:24px 0 48px}
-    .grid{ display: block; }
-    
-    /* Card Style */
-    .card{
-      background:var(--brand);
-      color: #fff;
-      border:1px solid var(--brand-dark);
-      border-radius:var(--radius); 
-      box-shadow: 0 12px 30px -5px rgba(12, 98, 171, 0.25);
-      overflow:hidden;
-      display:flex; flex-direction:column;
-    }
-    .card .hd{
-      padding:16px 20px; display:flex; align-items:center; justify-content:space-between; gap:12px;
-      border-bottom:1px solid rgba(255,255,255,0.15); 
-      background: rgba(0,0,0,0.15);
-    }
-    .card .hd h2{margin:0; font-size:15px; font-weight:700; color:#fff;}
-    .card .bd{padding:20px; flex:1;}
-    
-    .hint{color:rgba(255,255,255,0.85); font-size:13px; margin:0}
-    .divider{height:1px; background:rgba(255,255,255,0.2); margin:20px 0}
-    label{display:block; font-size:13px; font-weight:600; color:#fff; margin:0 0 6px; letter-spacing: 0.01em;}
 
     /* Inputs */
-    .row{display:grid; grid-template-columns:1fr 1fr; gap:16px}
-    .row.one{grid-template-columns:1fr}
-    
-    input, select, textarea{
-      width:100%; padding:10px 12px;
-      border-radius:8px; border:1px solid rgba(255,255,255,0.4);
-      background:#fff; color:var(--ink); outline:none;
-      font-family:var(--sans); font-size:14px;
-      transition: border-color .15s, box-shadow .15s;
-    }
-    input::placeholder, textarea::placeholder { color: #94a3b8; }
-    input:focus, select:focus, textarea:focus{
-      border-color: #fff; 
-      box-shadow:0 0 0 3px rgba(255,255,255,0.25);
-    }
-    textarea{min-height:90px; resize:vertical}
-    .actions{display:flex; flex-wrap:wrap; gap:12px; margin-top:24px}
-
-    /* Empty State */
-    .empty-state {
-      text-align: center; padding: 40px 20px;
-      color: rgba(255,255,255,0.9);
-      display:none;
-    }
-    .empty-state.visible { display: block; }
-    
-    /* Chips */
-    .chips{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
-    .chip{
-      display:inline-flex; align-items:center; gap:6px;
-      border:1px solid rgba(255,255,255,0.25); background:rgba(255,255,255,0.15);
-      border-radius:6px; padding:5px 10px;
-      font-size:13px; font-weight:500; color:#fff;
-    }
-    .chip strong{color:#fff; font-weight:800}
-    .chip.good{background:#ecfdf5; color:#065f46; border-color:transparent;} .chip.good strong{color:#065f46}
-    .chip.warn{background:#fffbeb; color:#92400e; border-color:transparent;} .chip.warn strong{color:#92400e}
-    .chip.bad{background:#fef2f2; color:#b91c1c; border-color:transparent;} .chip.bad strong{color:#b91c1c}
-
-    /* KPIs */
-    .kpi{display:grid; grid-template-columns: repeat(4, 1fr); gap:12px;}
-    @media (max-width: 1200px){ .kpi{grid-template-columns: repeat(2, 1fr)} }
-    .kpi .box{
-      border:1px solid var(--line); border-radius:10px; padding:14px; 
-      background:#fff; color: var(--ink);
-    }
-    .kpi .box .label{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase; letter-spacing:0.5px;}
-    .kpi .box .value{font-size:22px; font-weight:800; color:var(--ink); margin-top:4px}
-
-    /* Filters */
-    .filters{
-      display:flex; flex-wrap:wrap; gap:12px; align-items:center;
-      margin-top:24px; padding:16px; 
-      background:#fff; border-radius:10px; border:1px solid var(--line);
-    }
-    .filters label{ color:var(--muted); margin-bottom: 4px; font-size:12px;} 
-    .filters .field{min-width:160px; flex:1}
-    .filters .field.small{min-width:120px; flex:0}
-    .filters input, .filters select { border-color: var(--line); }
-
-    /* TABLE STYLES */
-    .tablewrap{
-      border:1px solid var(--line);
-      border-radius:10px; background:#fff; margin-top:20px;
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
       color: var(--ink);
+      margin: 0 0 6px;
+    }
+    input {
       width: 100%;
-      overflow-x: auto; 
-    }
-    table{
-      width:100%; 
-      border-collapse:collapse; 
-      table-layout: auto; 
-    }
-    th, td{
-      padding:14px 12px;
-      border-bottom:1px solid var(--line);
-      font-size:13px;
-      vertical-align:top; 
-      white-space:normal; 
-      word-wrap: break-word;
-    }
-    th{
-      position:sticky; top:0; background:#f8fafc;
-      text-align:left; font-size:11px; font-weight:700;
-      text-transform:uppercase; color:var(--muted); letter-spacing: 0.5px;
-      z-index:10; white-space: nowrap; 
-      cursor: pointer; 
-      user-select: none;
-      transition: background 0.15s;
-    }
-    th:hover { background: #e2e8f0; color: var(--brand-dark); }
-    th.sort-asc::after { content: ' ▲'; color: var(--brand); }
-    th.sort-desc::after { content: ' ▼'; color: var(--brand); }
-    
-    tbody tr:nth-child(even) td { background-color: #f8fafc; }
-    tbody tr:hover td { background-color: #f1f5f9; }
-    
-    td.lead-col {
-      min-width:160px; max-width:240px;
-      font-weight:600; color:var(--brand-dark);
-      line-height: 1.4;
-    }
-    .lead-meta {font-weight:400; color:var(--muted); font-size:12px; display:block; margin-top:2px;}
-    
-    td.min-col { width: 1%; white-space: nowrap; } 
-    td.med-col { max-width: 130px; } 
-    td.gbp-col { min-width: 140px; max-width: 200px; font-size: 12px; color: #334155; }
-    
-    th:last-child { cursor: default; }
-    th:last-child:hover { background: #f8fafc; }
-    th:last-child, td:last-child {
-      position:sticky; right:0;
-      background:inherit; 
-      border-left:1px solid var(--line);
-      box-shadow:-4px 0 8px rgba(0,0,0,0.02);
-      z-index:5;
-      width: 1%; white-space: nowrap;
-    }
-
-    .pill{
-      display:inline-block; padding:4px 8px;
-      border-radius:6px; font-size:11px; font-weight:700;
-      text-transform:uppercase; letter-spacing:0.3px;
-      text-align: center;
-      line-height: 1.2;
-    }
-    .pill.stage{background:#e0f2fe; color:#0369a1;}
-    .pill.disq{background:#fee2e2; color:#b91c1c;}
-    .pill.nurture{background:#fef3c7; color:#b45309;}
-    .pill.sold{background:#dcfce7; color:#15803d;}
-
-    .rowactions{display:flex; gap:6px; align-items:center; justify-content:flex-end}
-    .mini{
-      padding:6px 10px; border-radius:6px;
-      font-size:12px; font-weight:600;
-      border:1px solid var(--line); background:#fff;
-      cursor:pointer; color:var(--ink);
-    }
-    .mini:hover{border-color:var(--brand); color:var(--brand);}
-    .mini.danger:hover{border-color:#b91c1c; color:#b91c1c;}
-    .mini.primary { background:var(--brand); color:#fff; border-color:var(--brand); }
-    .mini.primary:hover { background:var(--brand-dark); }
-    
-    .mono{font-family:var(--mono)}
-
-    /* Modal Styling - OFF-WHITE VERSION */
-    .modal{
-      position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px);
-      display:none; align-items:center; justify-content:center;
-      padding:20px; z-index:100;
-    }
-    .modal.open{display:flex}
-    .modal .panel{
-      width:min(1200px, 95%); 
-      height: 90vh; 
-      background:#f8fafc; /* OFF-WHITE BG */
-      border-radius:16px;
+      padding: 10px 12px;
+      border-radius: 8px;
       border: 1px solid var(--line);
-      box-shadow:0 30px 60px -12px rgba(0,0,0,0.25);
-      color: var(--ink); /* Ink text */
-      display: flex; flex-direction: column;
-      overflow: hidden;
-    }
-    .modal .panel .hd{
-      padding:16px 24px; display:flex; align-items:center; justify-content:space-between;
-      border-bottom:1px solid var(--line); 
-      background: #ffffff; /* White Header */
-      flex: 0 0 auto;
-    }
-    .modal .panel .hd h3{margin:0; font-size:16px; font-weight:700; color:var(--brand); display:flex; align-items:center; gap:10px;}
-
-    /* EDIT MODAL SPECIFIC (Blue Header) */
-    #editModal .panel .hd { background: var(--brand); border-bottom: 1px solid var(--brand-dark); }
-    #editModal .panel .hd h3 { color: #fff; }
-    #editModal .bd { padding: 24px; }
-    #editModal label { color: var(--ink); } /* Reset label color for edit form */
-
-    /* COMMAND BAR (HUD) */
-    .status-bar {
-      padding: 12px 24px;
-      background: #eef2ff; /* Light brand tint */
-      border-bottom: 1px solid var(--line);
-      display: flex; gap: 32px; align-items: center;
-      flex: 0 0 auto;
-    }
-    @media (max-width: 800px) {
-        .status-bar { flex-direction: column; align-items: stretch; gap: 12px; }
-    }
-    
-    .status-group {
-        display: flex; flex-direction: column; gap: 4px; flex: 1;
-    }
-    .status-label {
-        font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted);
-    }
-    
-    /* READ ONLY STATUS INPUT */
-    #m_stage {
-        background: transparent;
-        border: none;
-        font-size: 18px;
-        font-weight: 800;
-        color: var(--brand);
-        padding: 0;
-        margin: 0;
-        box-shadow: none;
-        width: 100%;
-        cursor: default;
-        text-transform: uppercase;
-    }
-    
-    /* NEXT ACTION SELECT (IN HUD) */
-    #m_nextAction {
-        background: #fff;
-        border: 2px solid #10b981; /* Green border for "Action" */
-        color: #064e3b;
-        font-weight: 600;
-        text-transform: uppercase;
-    }
-
-    /* Split Layout Body */
-    .modal .panel .bd-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr; /* Equal split */
-      gap: 0; /* Border separation instead of gap */
-      flex: 1 1 auto;
-      overflow: hidden;
-    }
-    .modal-col {
-      padding: 24px;
-      overflow-y: auto;
-    }
-    .modal-col.left {
-      border-right: 1px solid var(--line);
-    }
-    
-    /* Responsive stack for mobile */
-    @media (max-width: 900px) {
-      .modal .panel .bd-grid { grid-template-columns: 1fr; overflow-y: auto; }
-      .modal-col { overflow-y: visible; }
-      .modal-col.left { border-right: none; border-bottom: 1px solid var(--line); }
-    }
-
-    /* Modal Form Styles */
-    .modal-grid label { color: var(--muted); }
-    .modal-grid input, .modal-grid select, .modal-grid textarea {
-      border: 1px solid var(--line);
-      background: #ffffff; /* Pure White Input for "Pop" */
+      background: #fff;
       color: var(--ink);
+      outline: none;
+      font-family: var(--sans);
+      font-size: 14px;
+      transition: border-color .15s, box-shadow .15s;
+      margin-bottom: 16px;
     }
-    .modal-grid input:focus, .modal-grid select:focus, .modal-grid textarea:focus {
+    input:focus {
       border-color: var(--brand);
       box-shadow: 0 0 0 3px rgba(12, 98, 171, 0.1);
     }
-    
-    .note{font-size:13px; color:var(--muted); margin:12px 0 0; line-height:1.5;}
-    
-    /* White Island for Table inside Modal */
-    .modal .tablewrap {
-      background: #ffffff;
-      color: var(--ink);
-      border: 1px solid var(--line);
-    }
-    .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
-    .modal .tablewrap td { background: #ffffff; }
 
-    /* Call Controls */
-    .call-controls {
-      background: #fff; border:1px solid var(--line); border-radius:12px;
-      padding:16px; margin-bottom:20px;
-      display:flex; justify-content:space-between; align-items:center;
-      box-shadow:0 4px 12px rgba(0,0,0,0.03);
+    /* Button */
+    .btn {
+      width: 100%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all .15s ease;
+      margin-top: 8px;
     }
-    .timer { font-family:var(--mono); font-size:24px; font-weight:700; color:var(--brand); }
-    .timer.active { color:#b91c1c; animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%{opacity:1} 50%{opacity:0.6} 100%{opacity:1} }
-    
-    .quick-actions button.selected {
-      background: var(--brand); color:#fff; border-color:var(--brand);
+    .btn:hover { background: var(--brand-dark); }
+    .btn:disabled { opacity: 0.7; cursor: wait; }
+
+    /* Alert */
+    .alert {
+      padding: 12px;
+      border-radius: 8px;
+      background: #fef2f2;
+      color: #b91c1c;
+      font-size: 13px;
+      margin-bottom: 20px;
+      border: 1px solid #fee2e2;
+      display: none;
+      text-align: center;
     }
 
-    /* Toast */
-    .toast{
-      position:fixed; right:24px; bottom:24px;
-      background:#1e293b; color:#fff; border-radius:8px;
-      padding:12px 16px; display:none; max-width:300px; z-index:200;
-      box-shadow:0 20px 25px -5px rgba(0,0,0,0.1);
+    .footer {
+      text-align: center;
+      margin-top: 24px;
+      font-size: 12px;
+      color: var(--muted);
     }
-    .toast.show{display:block; animation:slideIn 0.3s ease-out;}
-    @keyframes slideIn{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
-    .toast .t{font-weight:700; font-size:13px; margin-bottom:2px;}
-    .toast .m{font-size:12px; opacity:0.9;}
   </style>
 </head>
-
 <body>
-  <div class="topbar">
-    <div class="wrap">
-      <div class="inner">
-        <div class="brand">
-          <img src="img/logo-main-2026.png" class="logo" alt="IMPACTA" />
-          <div>
-            <h1>IMPACTA Business Solutions</h1>
-            <p>Quick CRM — LocalStorage + CSV Export</p>
-          </div>
-        </div>
-        <div class="toolbar">
-          <button class="btn" id="btnCreateNew">Create New Lead</button>
-          <div style="width:1px; height:24px; background:var(--line); margin:0 8px;"></div>
-          <button class="btn secondary" id="btnSeed">Seed</button>
-          <button class="btn secondary" id="btnImport">Import CSV/JSON</button>
-          <button class="btn secondary" id="btnExportJson">Backup</button>
-          <button class="btn" id="btnExportCsv">Export CSV</button>
-          <button class="btn danger" id="btnWipe">Wipe</button>
-        </div>
-      </div>
+
+  <div class="login-wrap">
+    
+    <div class="brand-area">
+      <img src="img/logo-main-2026.png" class="logo" alt="IMPACTA" />
+      <h1>IMPACTA CRM</h1>
+      <p class="subtitle">Sign in to access your leads</p>
     </div>
-  </div>
 
-  <main class="wrap">
-    <div class="grid">
-      <section class="card">
-        <div class="hd">
-          <h2>Pipeline & Leads</h2>
-          <span class="hint mono" id="viewStatus">View: 0</span>
+    <div class="card">
+      <div id="errorMsg" class="alert"></div>
+
+      <form id="loginForm">
+        <div>
+          <label for="email">Email Address</label>
+          <input type="email" id="email" placeholder="name@company.com" required />
         </div>
-        <div class="bd">
-          <div class="kpi" id="kpiGrid"></div>
-          <div class="filters">
-            <div class="field"><label>Search</label><input id="search" placeholder="Filter..." /></div>
-            <div class="field small"><label>Stage</label><select id="filterStage"></select></div>
-            <div class="field small"><label>Route</label><select id="filterRoute">
-              <option value="All">All</option><option value="Unrouted">Unrouted</option>
-              <option value="48-Hour Fix">48-Hour Fix</option><option value="Paid Revenue Leak Diagnostic">Diagnostic</option>
-              <option value="Nurture">Nurture</option><option value="Disqualified">Disqualified</option>
-            </select></div>
-          </div>
-          <div class="tablewrap">
-            <table id="leadTable">
-              <thead>
-                <tr>
-                  <th data-sort="company" style="min-width:160px">Lead / Company</th>
-                  <th data-sort="phone">Phone</th>
-                  <th data-sort="city">City/State</th>
-                  <th data-sort="stage" style="width:100px">Stage</th>
-                  <th data-sort="gbp1">GBP 1</th>
-                  <th data-sort="gbp2">GBP 2</th>
-                  <th data-sort="gbp3">GBP 3</th>
-                  <th data-sort="recommendation">Rec</th>
-                  <th data-sort="nextAction" class="med-col">Next Action</th>
-                  <th data-sort="nextDue" style="width:100px">Next Due</th>
-                  <th style="text-align:right; width:140px;">Actions</th>
-                </tr>
-              </thead>
-              <tbody id="tbody"></tbody>
-            </table>
-          </div>
-          <p class="note">Tip: Use Next Due to drive your daily follow-up power hour. Click headers to sort.</p>
+
+        <div>
+          <label for="password">Password</label>
+          <input type="password" id="password" placeholder="••••••••" required />
         </div>
-      </section>
+
+        <button type="submit" class="btn" id="submitBtn">Sign In</button>
+      </form>
     </div>
-  </main>
 
-  <div class="modal" id="modal">
-    <div class="panel">
-      
-      <div class="hd">
-        <h3 id="modalTitle">Activity & Details</h3>
-        <button class="btn secondary" id="btnCloseModal" style="color:var(--brand)">Close</button>
-      </div>
-
-      <div class="status-bar">
-        <div class="status-group">
-            <span class="status-label">Status</span>
-            <input id="m_stage" readonly /> </div>
-        <div class="status-group">
-            <span class="status-label">Next Action</span>
-            <select id="m_nextAction">
-                <option value="Call Attempt">Call Attempt</option><option value="Follow-up Email">Follow-up Email</option>
-                <option value="Book 15-min">Book 15-min</option><option value="Confirm 15-min">Confirm 15-min</option>
-                <option value="Sold 48-Hour Fix">Sold 48-Hour Fix</option>
-                <option value="Sold Rev Diagnostic">Sold Rev Diagnostic</option>
-                <option value="Reschedule">Reschedule</option><option value="Nurture">Nurture</option><option value="Disqualify">Disqualify</option>
-            </select>
-        </div>
-      </div>
-
-      <div class="bd-grid">
-        
-        <div class="modal-col left">
-          <h4 style="margin:0 0 16px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Contact Info</h4>
-          
-          <div class="row modal-grid">
-            <div><label>First Name</label><input id="m_firstName" /></div>
-            <div><label>Last Name</label><input id="m_lastName" /></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Company</label><input id="m_company" /></div>
-            <div><label>Title</label><input id="m_title" /></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Phone</label><input id="m_phone" /></div>
-            <div><label>Email</label><input id="m_email" /></div>
-          </div>
-          
-          <h4 style="margin:20px 0 12px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Diagnostic Data</h4>
-          <div class="row modal-grid">
-            <div><label>Industry</label><input id="m_industry" /></div>
-            <div><label>Recommendation</label><input id="m_recommendation" /></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>GBP 1 (Relevance)</label><input id="m_gbp1" /></div>
-            <div><label>GBP 2 (Conversion)</label><input id="m_gbp2" /></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>GBP 3 (Systems)</label><input id="m_gbp3" /></div>
-            <div><label>Website</label><input id="m_website" /></div>
-          </div>
-
-          <h4 style="margin:20px 0 12px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Qualification</h4>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>DM Access</label><select id="m_dmAccess">
-                <option value="Unknown">Unknown</option><option value="Yes">Yes (DM)</option>
-                <option value="Proxy">Proxy</option><option value="No">No (blocked)</option>
-            </select></div>
-            <div><label>Scale</label><input id="m_scale" /></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Leak Type</label><select id="m_leakType">
-                <option value="Unknown">Unknown</option><option value="Response Time">Response Time</option>
-                <option value="Missed Calls">Missed Calls</option><option value="Follow-up">Follow-up</option>
-                <option value="Pipeline">Pipeline</option><option value="Show Rate">Show Rate</option>
-                <option value="Close Rate">Close Rate</option><option value="Retention">Retention</option>
-            </select></div>
-            <div><label>Urgency</label><select id="m_urgency">
-                <option value="0">0</option><option value="5">5</option><option value="8">8</option><option value="10">10</option>
-            </select></div>
-          </div>
-          <div class="row modal-grid" style="margin-top:12px">
-            <div><label>Capacity</label><select id="m_capacity">
-                <option value="Unknown">Unknown</option><option value="Yes">Yes</option><option value="Maybe">Maybe</option><option value="No">No</option>
-            </select></div>
-          </div>
-          
-          <div class="row one modal-grid" style="margin-top:12px">
-            <div><label>Notes</label><textarea id="m_notes" style="min-height:60px"></textarea></div>
-          </div>
-        </div>
-
-        <div class="modal-col right">
-          
-          <div class="call-controls">
-            <div id="callTimer" class="timer">00:00</div>
-            <div style="display:flex; gap:10px;">
-              <button class="btn success" id="btnCallStart">📞 Call</button>
-              <button class="btn danger" id="btnCallEnd" style="display:none;">End & Log</button>
-            </div>
-          </div>
-
-          <h4 style="margin:0 0 16px; color:var(--muted); font-size:13px; text-transform:uppercase; letter-spacing:0.5px;">Call Results</h4>
-          
-          <div class="row one">
-            <div class="modal-grid">
-                <label style="color:var(--ink)">1. Add Log Entry</label>
-                <textarea id="logNote" placeholder="Notes from the call..."></textarea>
-            </div>
-          </div>
-
-          <div class="row modal-grid" style="margin-top:12px;">
-             <div><label style="color:var(--ink)">Next Due Date</label><input id="m_nextDue" type="datetime-local" /></div>
-          </div>
-
-          <div class="row" style="margin-top:20px;">
-            <div>
-              <label style="color:var(--ink)">2. Quick Actions (Updates Status/Next)</label>
-              <div class="rowactions quick-actions" style="justify-content:flex-start; flex-wrap:wrap; gap:8px;">
-                <button class="mini" id="qaAttempt" data-stage="Attempting" data-next="Call Attempt">Attempt</button>
-                <button class="mini" id="qaConnected" data-stage="Connected" data-next="Book 15-min">Connected</button>
-                <button class="mini" id="qaBooked" data-stage="Booked – 15 Min Diagnostic" data-next="Confirm 15-min">Booked 15m</button>
-                <button class="mini" id="qaSold48" data-stage="Sold - 48 Hour Fix" data-next="Sold 48-Hour Fix">Sold 48hr</button>
-                <button class="mini" id="qaSoldRLD" data-stage="Sold - RLD" data-next="Sold Rev Diagnostic">Sold RLD</button>
-                <button class="mini" id="qaNoShow" data-stage="No-Show" data-next="Reschedule">No-show</button>
-              </div>
-            </div>
-          </div>
-          
-          <div class="actions" style="margin-top:24px; padding-top:16px; border-top:1px solid var(--line);">
-            <button class="btn" id="btnSaveLog" style="width:100%;">Save Log & Next</button>
-          </div>
-          
-          <div class="actions" style="margin-top:8px;">
-            <button class="btn secondary" id="btnAddLog" style="background:transparent; color:var(--muted); border-color:var(--line); width:100%">Post Note Only (No Status Change)</button>
-          </div>
-
-          <div class="divider" style="background:var(--line)"></div>
-          
-          <div class="tablewrap" style="max-height:250px; overflow-y:auto; margin-top:0;">
-            <table>
-              <thead><tr><th>Time</th><th>Entry</th><th style="text-align:right">Act</th></tr></thead>
-              <tbody id="logTbody"></tbody>
-            </table>
-          </div>
-        </div>
-
-      </div>
+    <div class="footer">
+      &copy; 2026 IMPACTA Business Solutions
     </div>
-  </div>
 
-  <div class="modal" id="editModal">
-    <div class="panel" style="width:min(900px, 95%); height:auto; max-height:90vh; display:block;">
-        <div class="hd">
-            <h3>Edit Lead Details</h3>
-            <button class="btn secondary" id="btnCloseEdit" style="background:rgba(255,255,255,0.2); color:#fff; border:none;">Close</button>
-        </div>
-        <div class="bd" style="overflow-y:auto;">
-            <form id="editForm" autocomplete="off">
-                <div class="row">
-                  <div><label>First Name</label><input id="e_firstName" /></div>
-                  <div><label>Last Name</label><input id="e_lastName" /></div>
-                </div>
-                <div class="row" style="margin-top:16px">
-                  <div><label>Title</label><input id="e_title" /></div>
-                  <div><label>Company</label><input id="e_company" /></div>
-                </div>
-                <div class="row" style="margin-top:16px">
-                  <div><label>Phone</label><input id="e_phone" /></div>
-                  <div><label>Email</label><input id="e_email" /></div>
-                </div>
-                <div class="row" style="margin-top:16px">
-                  <div><label>City/State</label><input id="e_city" /></div>
-                  <div><label>Industry</label><input id="e_industry" /></div>
-                </div>
-                <div class="row" style="margin-top:16px">
-                  <div><label>Website</label><input id="e_website" /></div>
-                  <div><label>Recommendation</label><input id="e_recommendation" /></div>
-                </div>
-                <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
-                    <label>Diagnostic Data (GBP)</label>
-                    <div class="row">
-                        <div><label>GBP 1</label><input id="e_gbp1" /></div>
-                        <div><label>GBP 2</label><input id="e_gbp2" /></div>
-                    </div>
-                    <div class="row" style="margin-top:12px">
-                        <div><label>GBP 3</label><input id="e_gbp3" /></div>
-                    </div>
-                </div>
-                <div class="actions" style="margin-top:24px">
-                    <button type="submit" class="btn">Save Changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast">
-    <div class="t" id="toastTitle">Saved</div>
-    <div class="m" id="toastMsg">Lead updated.</div>
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      const STORAGE_KEY = "impacta_crm_v1";
-      const STAGES = [
-        "New Lead", "Attempting", "Connected", 
-        "Booked – 15 Min Diagnostic", "Held – 15 Min Diagnostic", 
-        "No-Show", "Reschedule", "Qualified – Next Step Scheduled", 
-        "Sold - 48 Hour Fix", "Sold - RLD",
-        "Disqualified", "Nurture"
-      ];
+    // 1. Initialize Supabase
+    const SUPABASE_URL = 'https://dvsrsmpdrwdcliinlhvi.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImR2c3JzbXBkcndkY2xpaW5saHZpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTQyNDYsImV4cCI6MjA4NTY3MDI0Nn0.Fl4BsxixKaibRjR_1IWvpaw2OXrX5jTvsANVsl_d65s';
+    
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-      const $ = (id) => document.getElementById(id);
-      const uid = () => window.crypto && window.crypto.randomUUID ? window.crypto.randomUUID() : "id_" + Math.random().toString(36).substring(2)+Date.now();
-      const safe = (v) => (v ?? "").toString().trim();
-      const nowIso = () => new Date().toISOString();
-      const fmtDT = (iso) => {
-        if (!iso) return "";
-        const d = new Date(iso);
-        if (Number.isNaN(d.getTime())) return "";
-        return d.toLocaleDateString('en-US', { month:'short', day:'numeric', hour:'numeric', hour12:true }).replace(":00","");
-      };
+    // 2. DOM Elements
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passInput = document.getElementById('password');
+    const btn = document.getElementById('submitBtn');
+    const errorMsg = document.getElementById('errorMsg');
+
+    // 3. Handle Login
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
       
-      const toLocalInput = (iso) => {
-        if (!iso) return "";
-        const d = new Date(iso);
-        if (Number.isNaN(d.getTime())) return "";
-        const pad = (n) => String(n).padStart(2, "0");
-        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      };
+      // Reset UI
+      errorMsg.style.display = 'none';
+      errorMsg.textContent = '';
+      btn.textContent = 'Verifying...';
+      btn.disabled = true;
 
-      let db = { leads: [] };
-      let activeLeadId = null;
-      let sortState = { key: 'nextDue', dir: 'asc' }; // Priority Sort
-      let timerInterval = null;
-      let seconds = 0;
+      const email = emailInput.value;
+      const password = passInput.value;
 
       try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) db = JSON.parse(raw) || { leads: [] };
-      } catch(e) { console.error(e); }
-
-      function saveDB(){
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
-        if($("dbStatus")) $("dbStatus").textContent = `DB: ${db.leads.length} leads`;
-      }
-
-      function showToast(title, msg){
-        const t = $("toast");
-        $("toastTitle").textContent = title;
-        $("toastMsg").textContent = msg;
-        t.classList.add("show");
-        setTimeout(()=>t.classList.remove("show"), 2500);
-      }
-
-      const filterSel = $("filterStage");
-      if(filterSel) {
-        let opts = STAGES.map(s => `<option value="${s}">${s}</option>`).join("");
-        filterSel.innerHTML = `<option value="All">All</option>` + opts;
-      }
-
-      function getSortedFilteredLeads(){
-        const q = safe($("search").value).toLowerCase();
-        const stage = $("filterStage").value;
-        const route = $("filterRoute").value;
-        let leads = [...db.leads];
-
-        if (stage && stage !== "All") leads = leads.filter(l => l.stage === stage);
-        if (route && route !== "All") leads = leads.filter(l => (l.route || "Unrouted") === route);
-        if (q) leads = leads.filter(l => JSON.stringify(l).toLowerCase().includes(q));
-
-        if (sortState.key === 'nextDue') {
-          const now = new Date();
-          const todayStr = now.toDateString();
-          leads.sort((a,b) => {
-            const dA = a.nextDue ? new Date(a.nextDue) : null;
-            const dB = b.nextDue ? new Date(b.nextDue) : null;
-            const getCat = (d) => {
-              if(!d) return 3;
-              if(d.toDateString() === todayStr) return 0;
-              if(d < now) return 1;
-              return 2;
-            };
-            const catA = getCat(dA);
-            const catB = getCat(dB);
-            if(catA !== catB) return catA - catB;
-            if(dA && dB) return dA - dB;
-            return 0;
-          });
-          if(sortState.dir === 'desc') leads.reverse();
-        } else {
-          leads.sort((a,b) => {
-              let valA = a[sortState.key] || '';
-              let valB = b[sortState.key] || '';
-              if(valA < valB) return sortState.dir === 'asc' ? -1 : 1;
-              if(valA > valB) return sortState.dir === 'asc' ? 1 : -1;
-              return 0;
-          });
-        }
-        return leads;
-      }
-
-      function render(){
-        saveDB();
-        const leads = getSortedFilteredLeads();
-        $("viewStatus").textContent = `View: ${leads.length}`;
-        
-        const rows = leads.map(l => {
-          const name = safe(l.company) || safe(l.lastName) || "(Unknown)";
-          const sub = [l.firstName, l.lastName].join(" ");
-          let stg = l.stage.split(' ')[0]; 
-          if(l.stage.includes("Booked")) stg = "Booked";
-          
-          return `
-            <tr>
-              <td class="lead-col">${name}<br><span class="lead-meta">${sub}</span></td>
-              <td style="white-space:nowrap"><a href="tel:${safe(l.phone)}" style="color:var(--ink); text-decoration:none; font-weight:600; background:#e2e8f0; padding:2px 6px; border-radius:4px; font-size:12px;">${safe(l.phone)}</a></td>
-              <td class="med-col">${safe(l.city)}</td>
-              <td class="med-col"><span class="pill ${l.stage==='Disqualified'?'disq':l.stage==='Nurture'?'nurture':l.stage.includes('Sold')?'sold':'stage'}">${stg}</span></td>
-              <td class="gbp-col" title="${safe(l.gbp1)}">${safe(l.gbp1)}</td>
-              <td class="gbp-col" title="${safe(l.gbp2)}">${safe(l.gbp2)}</td>
-              <td class="gbp-col" title="${safe(l.gbp3)}">${safe(l.gbp3)}</td>
-              <td class="med-col">${safe(l.recommendation)}</td>
-              <td class="med-col">${safe(l.nextAction)}</td>
-              <td class="small">${fmtDT(l.nextDue)}</td>
-              <td style="text-align:right">
-                <div class="rowactions">
-                  <button class="mini primary" data-act="call" data-id="${l.id}">Call</button>
-                  <button class="mini" data-act="edit" data-id="${l.id}">Edit</button>
-                </div>
-              </td>
-            </tr>
-          `;
-        }).join("");
-        $("tbody").innerHTML = rows || `<tr><td colspan="11" style="text-align:center;color:#64748b;padding:20px">No leads found.</td></tr>`;
-
-        // KPIs
-        const total = leads.length;
-        const booked = leads.filter(l => l.stage.includes("Booked")).length;
-        const held = leads.filter(l => l.stage.includes("Held")).length;
-        const showRate = booked > 0 ? Math.round((held/booked)*100) : 0;
-        
-        const kpis = [
-          {l: "Total", v: total},
-          {l: "Booked", v: booked},
-          {l: "Shows", v: held},
-          {l: "Show Rate", v: showRate+"%"}
-        ];
-        $("kpiGrid").innerHTML = kpis.map(k => `
-          <div class="box"><div class="label">${k.l}</div><div class="value">${k.v}</div></div>
-        `).join("");
-      }
-
-      /* Call Timer Logic */
-      function startTimer(){
-        clearInterval(timerInterval);
-        seconds = 0;
-        $("callTimer").classList.add("active");
-        timerInterval = setInterval(() => {
-          seconds++;
-          const m = Math.floor(seconds / 60).toString().padStart(2, '0');
-          const s = (seconds % 60).toString().padStart(2, '0');
-          $("callTimer").textContent = `${m}:${s}`;
-        }, 1000);
-        $("btnCallStart").style.display = "none";
-        $("btnCallEnd").style.display = "inline-flex";
-      }
-
-      function stopTimer(){
-        clearInterval(timerInterval);
-        $("callTimer").classList.remove("active");
-        $("btnCallStart").style.display = "inline-flex";
-        $("btnCallEnd").style.display = "none";
-      }
-
-      $("btnCallStart").onclick = () => {
-         const phone = $("m_phone").value;
-         if(phone) window.location.href = `tel:${phone}`;
-         startTimer();
-      };
-
-      $("btnCallEnd").onclick = () => {
-         stopTimer();
-         const currentNote = $("logNote").value;
-         const duration = $("callTimer").textContent;
-         $("logNote").value = `[Call Duration: ${duration}] ` + currentNote;
-      };
-
-      // Quick Actions
-      document.querySelectorAll(".quick-actions button").forEach(btn => {
-        btn.onclick = (e) => {
-          e.preventDefault();
-          document.querySelectorAll(".quick-actions button").forEach(b => b.classList.remove("selected"));
-          btn.classList.add("selected");
-          $("m_stage").value = btn.dataset.stage;
-          $("m_nextAction").value = btn.dataset.next;
-        };
-      });
-
-      // Save Log
-      function getModalValues(idOverride) {
-        return {
-          id: idOverride || uid(),
-          firstName: $("m_firstName").value,
-          lastName: $("m_lastName").value,
-          title: $("m_title").value,
-          company: $("m_company").value,
-          industry: $("m_industry").value,
-          phone: $("m_phone").value,
-          email: $("m_email").value,
-          website: $("m_website").value,
-          recommendation: $("m_recommendation").value,
-          stage: $("m_stage").value || "New Lead",
-          dmAccess: $("m_dmAccess").value,
-          scale: $("m_scale").value,
-          leakType: $("m_leakType").value,
-          urgency: $("m_urgency").value,
-          capacity: $("m_capacity").value,
-          nextAction: $("m_nextAction").value,
-          nextDue: $("m_nextDue").value ? new Date($("m_nextDue").value).toISOString() : "",
-          notes: $("m_notes").value,
-          gbp1: $("m_gbp1").value,
-          gbp2: $("m_gbp2").value,
-          gbp3: $("m_gbp3").value,
-          updatedAt: nowIso()
-        };
-      }
-
-      $("btnSaveLog").onclick = () => {
-         let l = null;
-         let isNew = false;
-
-         if (activeLeadId) {
-           const idx = db.leads.findIndex(x => x.id === activeLeadId);
-           if(idx > -1) {
-               const updatedFields = getModalValues(activeLeadId);
-               db.leads[idx] = { ...db.leads[idx], ...updatedFields };
-               l = db.leads[idx];
-           }
-         } else {
-           isNew = true;
-           const newLead = getModalValues();
-           newLead.createdAt = nowIso();
-           newLead.activity = [];
-           db.leads.unshift(newLead);
-           l = newLead;
-           activeLeadId = newLead.id; 
-         }
-
-         if(!l) return;
-         
-         const nAct = $("m_nextAction").value;
-         const userNote = $("logNote").value;
-         const context = `→ ${nAct}`;
-         
-         if(userNote || nAct || isNew){
-           l.activity.unshift({ 
-               ts: nowIso(), 
-               action: isNew ? "Created" : "Log", 
-               text: userNote, 
-               details: context 
-           });
-         }
-         
-         saveDB();
-         
-         // Next Logic
-         const leads = getSortedFilteredLeads();
-         const currIdx = leads.findIndex(x => x.id === activeLeadId);
-         const nextLead = leads[currIdx + 1];
-         
-         if(nextLead){
-           activeLeadId = nextLead.id;
-           renderLog();
-           $("logNote").value = "";
-           $("callTimer").textContent = "00:00";
-           stopTimer();
-           document.querySelectorAll(".quick-actions button").forEach(b => b.classList.remove("selected"));
-           showToast("Saved", "Opening next lead...");
-         } else {
-           $("modal").classList.remove("open");
-           activeLeadId = null;
-           render();
-           showToast("Saved", "End of list.");
-         }
-      };
-
-      $("btnAddLog").onclick = () => {
-        const txt = $("logNote").value;
-        if(!txt) return alert("Please enter a note to post.");
-        if(!activeLeadId) { $("btnSaveLog").click(); return; }
-        
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(l) {
-            const context = `→ ${$("m_nextAction").value}`;
-            l.activity.unshift({ ts: nowIso(), action: "Note", text: txt, details: context });
-            $("logNote").value = "";
-            saveDB();
-            renderLog();
-            showToast("Posted", "Note added.");
-        }
-      };
-
-      $("btnCloseModal").onclick = () => { $("modal").classList.remove("open"); activeLeadId = null; stopTimer(); render(); };
-      $("btnCloseEdit").onclick = () => { $("editModal").classList.remove("open"); render(); };
-
-      // EDIT FORM SAVE
-      $("editForm").onsubmit = (e) => {
-          e.preventDefault();
-          if(!activeLeadId) return;
-          const l = db.leads.find(x => x.id === activeLeadId);
-          if(!l) return;
-
-          l.firstName = $("e_firstName").value;
-          l.lastName = $("e_lastName").value;
-          l.title = $("e_title").value;
-          l.company = $("e_company").value;
-          l.phone = $("e_phone").value;
-          l.email = $("e_email").value;
-          l.city = $("e_city").value;
-          l.industry = $("e_industry").value;
-          l.website = $("e_website").value;
-          l.recommendation = $("e_recommendation").value;
-          l.gbp1 = $("e_gbp1").value;
-          l.gbp2 = $("e_gbp2").value;
-          l.gbp3 = $("e_gbp3").value;
-          l.updatedAt = nowIso();
-
-          // Auto-Log
-          if(!l.activity) l.activity = [];
-          l.activity.unshift({ ts: nowIso(), action: "System", text: "Contact details updated.", details: "Edit Form" });
-
-          saveDB();
-          render();
-          $("editModal").classList.remove("open");
-          showToast("Saved", "Record updated.");
-      };
-
-      $("logTbody").onclick = (e) => {
-        if(e.target.tagName === "BUTTON"){
-           if(confirm("Delete this log?")){
-               const idx = e.target.getAttribute("data-idx");
-               const l = db.leads.find(x => x.id === activeLeadId);
-               l.activity.splice(idx, 1);
-               renderLog();
-               saveDB();
-           }
-        }
-      };
-      
-      $("btnSeed").onclick = () => {
-        const seed = { 
-          id: uid(), company: "Sample HVAC", stage: "Connected", city:"Ocala, FL",
-          firstName: "John", urgency: "8", scale: "$100k/mo",
-          leakType: "Response Time", dmAccess: "Yes", updatedAt: nowIso(), phone: "555-0199",
-          industry: "HVAC", gbp1: "6/10", gbp2: "4/10", gbp3: "2/10", recommendation: "48-Hour Fix"
-        };
-        db.leads.push(seed);
-        render();
-        showToast("Seeded", "Sample lead added.");
-      };
-
-      $("btnWipe").onclick = () => {
-        if(confirm("Delete ALL data?")) { db.leads = []; saveDB(); render(); }
-      };
-
-      $("btnExportCsv").onclick = () => {
-        const leads = getSortedFilteredLeads();
-        if(!leads.length) return alert("No leads to export.");
-        const headers = Object.keys(leads[0] || {}).join(",");
-        const rows = leads.map(l => Object.values(l).map(v => `"${safe(v).replace(/"/g, '""')}"`).join(","));
-        const blob = new Blob([[headers, ...rows].join("\n")], {type: "text/csv"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url; a.download = "leads.csv"; a.click();
-      };
-      
-      $("btnExportJson").onclick = () => {
-        const payload = JSON.stringify(db, null, 2);
-        const blob = new Blob([payload], {type: "application/json"});
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url; a.download = "impacta_backup.json"; a.click();
-      };
-      
-      $("btnImport").onclick = async () => {
-         try {
-           const txt = (await navigator.clipboard.readText()).trim().replace(/^\uFEFF/, '');
-           if (!txt) return alert("Clipboard is empty.");
-           
-           if (txt.startsWith("{") || txt.startsWith("[")) {
-               try {
-                   const parsed = JSON.parse(txt);
-                   if(parsed && parsed.leads) { db = parsed; saveDB(); render(); return; }
-               } catch(e) {}
-           }
-           // CSV Parser logic
-           const lines = txt.split(/\r?\n/);
-           if (lines.length < 2) return alert("Invalid CSV.");
-           const parseCSVLine = (str) => {
-               const arr = []; let quote = false; let col = "";
-               for (let c of str) {
-                   if (c === '"') { quote = !quote; continue; }
-                   if (c === ',' && !quote) { arr.push(col); col = ""; continue; }
-                   col += c;
-               }
-               arr.push(col); return arr;
-           };
-           const headers = parseCSVLine(lines[0]).map(h => h.trim());
-           const newLeads = [];
-           for (let i = 1; i < lines.length; i++) {
-               if (!lines[i].trim()) continue;
-               const cols = parseCSVLine(lines[i]);
-               let lead = { id: uid(), activity: [], updatedAt: nowIso(), createdAt: nowIso() };
-               const getVal = (n) => { const idx = headers.indexOf(n); return idx > -1 ? (cols[idx] || "").trim() : ""; };
-               
-               lead.company = getVal("Company");
-               lead.phone = getVal("Phone");
-               lead.city = getVal("City/State");
-               lead.industry = getVal("Industry");
-               lead.gbp1 = getVal("GBP 1 (Relevance)");
-               lead.gbp2 = getVal("GBP 2 (Conversion)");
-               lead.gbp3 = getVal("GBP 3 (Systems)");
-               lead.recommendation = getVal("Recommendation");
-               lead.website = getVal("Website");
-               lead.stage = getVal("Status") || "New Lead";
-               newLeads.push(lead);
-           }
-           if (newLeads.length > 0) {
-               db.leads = [...newLeads, ...db.leads];
-               saveDB(); render();
-               showToast("Success", `Imported ${newLeads.length} leads.`);
-           }
-         } catch(e) { alert("Import failed."); }
-      };
-
-      ["search", "filterStage", "filterRoute"].forEach(id => { $(id).oninput = render; });
-      document.querySelectorAll('th[data-sort]').forEach(th => {
-        th.addEventListener('click', () => {
-          const key = th.getAttribute('data-sort');
-          if(sortState.key === key) { sortState.dir = sortState.dir === 'asc' ? 'desc' : 'asc'; }
-          else { sortState.key = key; sortState.dir = 'asc'; }
-          render();
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email,
+          password: password,
         });
-      });
 
-      $("btnCreateNew").onclick = () => {
-          activeLeadId = null;
-          document.querySelectorAll("#modal input, #modal textarea, #modal select").forEach(el => el.value = "");
-          $("m_stage").value = "New Lead";
-          $("m_nextAction").value = "Call Attempt";
-          $("modalTitle").innerHTML = "Create New Lead";
-          $("logTbody").innerHTML = "";
-          $("modal").classList.add("open");
-      };
+        if (error) throw error;
 
-      $("tbody").onclick = (e) => {
-        const btn = e.target.closest("button");
-        if(!btn) return;
-        const act = btn.getAttribute("data-act");
-        const id = btn.getAttribute("data-id");
-        activeLeadId = id;
-
-        if(act === "call") {
-          renderLog();
-          $("modal").classList.add("open");
-          $("btnCallStart").click(); // Auto-start
-        }
-        if(act === "edit") {
-          const l = db.leads.find(x => x.id === id);
-          if(l){
-              $("e_firstName").value = l.firstName||"";
-              $("e_lastName").value = l.lastName||"";
-              $("e_title").value = l.title||"";
-              $("e_company").value = l.company||"";
-              $("e_phone").value = l.phone||"";
-              $("e_email").value = l.email||"";
-              $("e_city").value = l.city||"";
-              $("e_industry").value = l.industry||"";
-              $("e_website").value = l.website||"";
-              $("e_recommendation").value = l.recommendation||"";
-              $("e_gbp1").value = l.gbp1||"";
-              $("e_gbp2").value = l.gbp2||"";
-              $("e_gbp3").value = l.gbp3||"";
-              $("editModal").classList.add("open");
-          }
-        }
-      };
-
-      function renderLog(){
-        const l = db.leads.find(x => x.id === activeLeadId);
-        if(!l) return;
+        // Login Success
+        btn.textContent = 'Success! Redirecting...';
+        btn.style.background = '#10b981'; // Green for success
         
-        $("m_firstName").value = l.firstName || "";
-        $("m_lastName").value = l.lastName || "";
-        $("m_company").value = l.company || "";
-        $("m_title").value = l.title || "";
-        $("m_phone").value = l.phone || "";
-        $("m_email").value = l.email || "";
-        $("m_stage").value = l.stage; 
-        $("m_dmAccess").value = l.dmAccess;
-        $("m_scale").value = l.scale || "";
-        $("m_leakType").value = l.leakType;
-        $("m_urgency").value = l.urgency;
-        $("m_capacity").value = l.capacity;
-        $("m_nextAction").value = l.nextAction;
-        $("m_nextDue").value = toLocalInput(l.nextDue);
-        $("m_notes").value = l.notes || "";
-        $("m_industry").value = l.industry || "";
-        $("m_recommendation").value = l.recommendation || "";
-        $("m_website").value = l.website || "";
-        $("m_gbp1").value = l.gbp1 || "";
-        $("m_gbp2").value = l.gbp2 || "";
-        $("m_gbp3").value = l.gbp3 || "";
+        // Redirect to CRM
+        setTimeout(() => {
+          window.location.href = 'crm.html';
+        }, 800);
 
-        const phoneHtml = l.phone ? `<a href="tel:${safe(l.phone)}" style="margin-left:12px; font-weight:400; color:var(--brand); text-decoration:none; font-size:14px; background:#f1f5f9; padding:4px 8px; border-radius:4px;">${safe(l.phone)}</a>` : "";
-        const statusHtml = `<span class="pill stage" style="margin-left:8px; font-size:11px;">${l.stage}</span>`;
-        $("modalTitle").innerHTML = `${safe(l.company)} ${statusHtml} ${phoneHtml}`;
+      } catch (err) {
+        // Login Error
+        console.error("Login failed:", err.message);
+        errorMsg.textContent = "Invalid email or password.";
+        errorMsg.style.display = 'block';
         
-        const logs = l.activity || [];
-        $("logTbody").innerHTML = logs.map((log, i) => `
-          <tr>
-            <td class="small" style="vertical-align:top; width:130px;">${fmtDT(log.ts)}</td>
-            <td style="vertical-align:top">
-                <div style="font-weight:800; color:var(--ink); margin-bottom:4px;">${safe(log.action || "Log")}</div>
-                <div style="margin-bottom:4px;">${safe(log.text)}</div>
-                <div style="font-size:12px; color:var(--muted); background:#f8fafc; padding:4px 6px; border-radius:4px; display:inline-block;">${safe(log.details || "")}</div>
-            </td>
-            <td style="text-align:right; vertical-align:top"><button class="mini danger" data-idx="${i}">✕</button></td>
-          </tr>
-        `).join("");
+        btn.textContent = 'Sign In';
+        btn.disabled = false;
+        btn.style.background = ''; // Reset color
       }
-
-      render();
     });
+
+    // 4. Check if already logged in (Auto-redirect)
+    async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+         window.location.href = 'crm.html';
+      }
+    }
+    checkSession();
+
   </script>
 </body>
 </html>
