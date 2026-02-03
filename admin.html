@@ -1,258 +1,197 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <title>IMPACTA | Manager Command</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <style>
-    :root{ --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9; --radius:12px; --sans: system-ui, -apple-system, sans-serif; }
-    *{box-sizing:border-box} body{ margin:0; font-family:var(--sans); background:var(--bg); color:var(--ink); }
-    .app { display:grid; grid-template-columns: 240px 1fr; min-height:100vh; }
-    .sidebar { background:var(--brand-dark); color:white; padding:20px; display:flex; flex-direction:column; gap:8px; }
-    .nav-item { padding:12px; border-radius:8px; cursor:pointer; opacity:0.8; transition:0.2s; text-align:left; background:none; border:none; color:white; width:100%; font-size:14px; font-weight:600; }
-    .nav-item:hover, .nav-item.active { background:rgba(255,255,255,0.15); opacity:1; }
-    .main { padding:30px; overflow-y:auto; }
-    .card { background:white; border-radius:var(--radius); border:1px solid var(--line); padding:24px; margin-bottom:24px; box-shadow:0 4px 6px -1px rgba(0,0,0,0.05); }
-    h1 { margin:0 0 20px; font-size:24px; color:var(--brand); }
-    table { width:100%; border-collapse:collapse; font-size:14px; }
-    th { text-align:left; padding:12px; border-bottom:2px solid var(--line); color:var(--muted); font-size:12px; text-transform:uppercase; }
-    td { padding:12px; border-bottom:1px solid var(--line); }
-    input, select { padding:8px; border:1px solid var(--line); border-radius:6px; width:100%; }
-    .btn { padding:8px 16px; background:var(--brand); color:white; border:none; border-radius:6px; cursor:pointer; font-weight:600; }
-    .btn.danger { background:#ef4444; }
-    .view { display:none; } .view.active { display:block; }
-    .kpi-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:20px; }
-    .kpi-box { background:white; padding:20px; border-radius:var(--radius); border:1px solid var(--line); }
-    .kpi-val { font-size:28px; font-weight:800; color:var(--brand); }
-    .kpi-lbl { font-size:12px; color:var(--muted); text-transform:uppercase; font-weight:bold; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IMPACTA Admin</title>
+    <script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+    <style>
+        /* Reusing CRM CSS for consistency */
+        :root{ --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9; --radius:12px; --sans: system-ui, -apple-system, sans-serif; }
+        *{box-sizing:border-box}
+        body{ margin:0; font-family:var(--sans); background: var(--bg); color:var(--ink); font-size: 14px; }
+        .wrap{ max-width:1400px; margin:0 auto; padding: 24px; }
+        .topbar{ background: #fff; border-bottom:1px solid var(--line); padding: 16px 24px; display:flex; justify-content: space-between; align-items: center; }
+        .btn{ display:inline-flex; align-items:center; gap:8px; padding:10px 16px; border-radius:8px; background:var(--brand); color:#fff; font-weight:600; cursor:pointer; border:none; text-decoration: none;}
+        .btn:hover{background:var(--brand-dark)}
+        .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
+        .card { background: #fff; border-radius: var(--radius); border: 1px solid var(--line); padding: 24px; margin-bottom: 24px; }
+        h2 { margin-top: 0; color: var(--brand); }
+        table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        th, td { padding: 12px; border-bottom: 1px solid var(--line); text-align: left; }
+        th { background: #f8fafc; color: var(--muted); font-size: 12px; text-transform: uppercase; }
+        select, input { padding: 8px; border: 1px solid var(--line); border-radius: 6px; width: 100%; }
+        .grid-2 { display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+        .assign-bar { display: flex; gap: 10px; align-items: center; background: #eef2ff; padding: 12px; border-radius: 8px; margin-bottom: 12px; border: 1px solid #c7d2fe; }
+    </style>
 </head>
 <body>
-  <div class="app">
-    <div class="sidebar">
-      <h2 style="font-size:14px; text-transform:uppercase; letter-spacing:1px; opacity:0.7; margin-bottom:20px;">Manager OS</h2>
-      <button class="nav-item active" onclick="switchTab('leads')">Lead Assignment</button>
-      <button class="nav-item" onclick="switchTab('users')">User Manager</button>
-      <button class="nav-item" onclick="switchTab('reports')">Reports</button>
-      <div style="flex:1"></div>
-      <button class="nav-item" onclick="logout()">Logout</button>
-    </div>
 
+<div class="topbar">
+    <div style="display:flex; gap:12px; align-items:center;">
+        <img src="img/logo-main-2026.png" style="height:32px;">
+        <h1 style="margin:0; font-size:18px;">Admin Dashboard</h1>
+    </div>
+    <div style="display:flex; gap:10px;">
+        <a href="crm.html" class="btn secondary">View CRM</a>
+        <button id="btnLogout" class="btn secondary">Logout</button>
+    </div>
+</div>
+
+<main class="wrap">
     
-    <div class="main">
-      <div id="leads" class="view active">
-        <h1>Lead Assignment</h1>
+    <div class="grid-2">
         <div class="card">
-          <div style="display:flex; gap:10px; margin-bottom:20px; align-items:center;">
-            <select id="assignUserSel" style="max-width:200px;"></select>
-            <button class="btn" onclick="assignLeads()">Assign Selected</button>
-            <button class="btn" onclick="fetchData()">Refresh</button>
-          </div>
-          <table id="assignTable">
-            <thead><tr><th width="30"><input type="checkbox" onclick="toggleAll(this)"></th><th>Company / Lead</th><th>Status</th><th>Current Owner</th></tr></thead>
-            <tbody id="assignBody"></tbody>
-          </table>
+            <h2>Create New User</h2>
+            <p style="color:var(--muted); margin-bottom:16px;">This creates an account and sets role to 'Agent'.</p>
+            <form id="createUserForm">
+                <label>Email</label>
+                <input type="email" id="newEmail" required style="margin-bottom:12px;">
+                <label>Password</label>
+                <input type="password" id="newPass" required style="margin-bottom:12px;">
+                <button type="submit" class="btn" style="width:100%">Create User</button>
+            </form>
+            <p id="userMsg" style="margin-top:10px; font-weight:bold;"></p>
+            
+            <h3 style="margin-top:24px; font-size:16px;">Agent List</h3>
+            <ul id="agentList" style="padding-left:20px; color:var(--muted);">Loading...</ul>
         </div>
-      </div>
 
-      <div id="users" class="view">
-        <h1>User Manager</h1>
-        <div class="card" style="display:grid; grid-template-columns:1fr 1fr 1fr auto; gap:10px; align-items:end; background:#f8fafc;">
-          <div><label style="font-size:12px;">Name</label><input id="new_name" placeholder="John Doe"></div>
-          <div><label style="font-size:12px;">Email</label><input id="new_email" placeholder="john@impacta.com"></div>
-          <div><label style="font-size:12px;">Password</label><input id="new_pass" placeholder="Password123"></div>
-          <button class="btn" onclick="addUser()">Add Rep</button>
-        </div>
         <div class="card">
-          <table>
-            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Action</th></tr></thead>
-            <tbody id="userTable"></tbody>
-          </table>
-        </div>
-      </div>
+            <h2>Lead Assignment</h2>
+            
+            <div class="assign-bar">
+                <strong>Assign Selected To:</strong>
+                <select id="assignSelect" style="max-width:200px;"><option>Loading agents...</option></select>
+                <button id="btnAssign" class="btn">Apply</button>
+            </div>
 
-      <div id="reports" class="view">
-        <h1>Pipeline Health</h1>
-        <div class="kpi-grid" id="reportKpis" style="margin-bottom:20px;"></div>
-        <div class="card">
-          <h3>Activity by Rep</h3>
-          <table id="repStatsTable">
-            <thead><tr><th>Rep Name</th><th>Total Leads</th><th>Deals Closed</th></tr></thead>
-            <tbody id="repStatsBody"></tbody>
-          </table>
+            <div style="max-height: 500px; overflow-y:auto;">
+                <table id="leadTable">
+                    <thead>
+                        <tr>
+                            <th style="width:40px;"><input type="checkbox" id="selectAll"></th>
+                            <th>Company / Lead</th>
+                            <th>Assigned To</th>
+                            <th>Stage</th>
+                        </tr>
+                    </thead>
+                    <tbody id="leadBody">
+                        <tr><td colspan="4">Loading leads...</td></tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
+
+</main>
 
 <script>
-    // --- CONFIGURATION ---
-    const SUPABASE_URL = 'https://imszwgxngjuanjvxigel.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imltc3p3Z3huZ2p1YW5qdnhpZ2VsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Njk5OTI5NDUsImV4cCI6MjA4NTU2ODk0NX0.hag2-X1LVKmQe11QfBt9IYxQC7A9_uranVKgRBJaH4Q';
-    
-    // --- INITIALIZATION (SAFETY WRAPPED) ---
-    let supabase = null;
-    
-    // 1. Safety Check: Did the library load?
-    if (typeof window.supabase === 'undefined') {
-        console.error("CRITICAL: Supabase library not loaded. Check connection.");
-        alert("System Warning: Database library failed to load. You may not see data, but you can still logout.");
-    } else {
-        // 2. Try to connect, but don't crash if it fails
-        try {
-            supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-        } catch(e) { 
-            console.error("Database Init Failed:", e);
-            alert("Database Connection Error. Check console.");
-        }
+    const SUPABASE_URL = 'https://uafnhxcsrrdispsbpuxj.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVhZm5oeGNzcnJkaXNwc2JwdXhqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzAwOTMwNDYsImV4cCI6MjA4NTY2OTA0Nn0.B5sAP0rE7PVImVWDWlJ2d08y1qZv-rbAlU6WZtbkZRs';
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    let agents = [];
+
+    async function init() {
+        // Auth Check
+        const { data: { session } } = await supabase.auth.getSession();
+        if(!session) window.location.href = 'index.html';
+
+        // Check Admin
+        const { data: profile } = await supabase.from('profiles').select('role').eq('id', session.user.id).single();
+        if(profile.role !== 'admin') { alert("Access Denied"); window.location.href = 'crm.html'; return; }
+
+        loadAgents();
+        loadLeads();
     }
 
-    // --- AUTHENTICATION GATEKEEPER ---
-    const currentUser = JSON.parse(localStorage.getItem("impacta_user"));
-    if(!currentUser || currentUser.role !== 'manager') {
-        window.location.href = 'lite9876932.html';
+    async function loadAgents() {
+        const { data, error } = await supabase.from('profiles').select('*').eq('role', 'agent');
+        agents = data || [];
+        
+        // Populate List
+        const ul = document.getElementById('agentList');
+        ul.innerHTML = agents.map(a => `<li>${a.email}</li>`).join('');
+
+        // Populate Dropdown
+        const sel = document.getElementById('assignSelect');
+        sel.innerHTML = `<option value="">-- Select Agent --</option>` + 
+                        agents.map(a => `<option value="${a.id}">${a.email}</option>`).join('');
     }
 
-    // --- STATE ---
-    let leads = [];
-    let users = [];
+    async function loadLeads() {
+        // Fetch leads + joined profile email
+        const { data, error } = await supabase
+            .from('leads')
+            .select('id, company, first_name, last_name, stage, assigned_to')
+            .order('created_at', { ascending: false });
 
-    // --- CORE FUNCTIONS ---
+        const tbody = document.getElementById('leadBody');
+        if(!data || data.length === 0) { tbody.innerHTML = '<tr><td colspan="4">No leads found.</td></tr>'; return; }
 
-    async function fetchData() {
-        if(!supabase) return; // Guard Clause: If DB is down, stop here (don't crash).
-
-        // Fetch Users
-        const { data: uData, error: uErr } = await supabase.from('users').select('*');
-        if(uErr) console.error("User Fetch Error:", uErr);
-        
-        // Fetch Leads
-        const { data: lData, error: lErr } = await supabase.from('leads').select('*').order('created_at', { ascending: false });
-        if(lErr) console.error("Lead Fetch Error:", lErr);
-        
-        users = uData || [];
-        leads = lData || [];
-        
-        renderLeadAssign();
-        renderUsers();
-        renderReports();
-    }
-
-    // --- UI LOGIC ---
-
-    function switchTab(id) {
-        document.querySelectorAll('.view').forEach(e => e.classList.remove('active'));
-        document.querySelectorAll('.nav-item').forEach(e => e.classList.remove('active'));
-        document.getElementById(id).classList.add('active');
-    }
-
-    function renderLeadAssign() {
-        const userSel = document.getElementById("assignUserSel");
-        userSel.innerHTML = '<option value="">-- Select Rep --</option>' + users.map(u => `<option value="${u.id}">${u.name}</option>`).join('');
-        
-        if(leads.length === 0) {
-            document.getElementById("assignBody").innerHTML = `<tr><td colspan="4" style="text-align:center; padding:20px;">No leads found (or database offline).</td></tr>`;
-            return;
-        }
-
-        document.getElementById("assignBody").innerHTML = leads.map(l => {
-            const owner = users.find(u => u.id === l.assigned_to)?.name || '<span style="color:#ef4444">Unassigned</span>';
-            return `<tr>
-                <td><input type="checkbox" class="lead-check" value="${l.id}"></td>
-                <td><b>${l.company || 'Unknown'}</b><br><span style="font-size:12px;color:#64748b">${l.first_name||''} ${l.last_name||''}</span></td>
-                <td>${l.stage}</td>
-                <td>${owner}</td>
-            </tr>`;
+        tbody.innerHTML = data.map(l => {
+            const agentName = agents.find(a => a.id === l.assigned_to)?.email || '<span style="color:red">Unassigned</span>';
+            const name = l.company || `${l.first_name} ${l.last_name}`;
+            return `
+                <tr>
+                    <td><input type="checkbox" class="lead-check" value="${l.id}"></td>
+                    <td><strong>${name}</strong></td>
+                    <td>${agentName}</td>
+                    <td>${l.stage}</td>
+                </tr>
+            `;
         }).join('');
     }
 
-    function toggleAll(source) {
-        document.querySelectorAll('.lead-check').forEach(c => c.checked = source.checked);
-    }
-
-    // --- BUTTON ACTIONS (WITH ERROR HANDLING) ---
-
-    async function assignLeads() {
-        if(!supabase) return alert("Error: Database disconnected.");
+    // Assign Logic
+    document.getElementById('btnAssign').onclick = async () => {
+        const agentId = document.getElementById('assignSelect').value;
+        if(!agentId) return alert("Select an agent.");
         
-        const userId = document.getElementById("assignUserSel").value;
-        if(!userId) return alert("Select a user first.");
-        
-        const checked = Array.from(document.querySelectorAll('.lead-check:checked')).map(c => c.value);
-        if(checked.length === 0) return alert("No leads selected.");
+        const selected = Array.from(document.querySelectorAll('.lead-check:checked')).map(cb => cb.value);
+        if(selected.length === 0) return alert("Select leads.");
 
-        const { error } = await supabase.from('leads').update({ assigned_to: userId }).in('id', checked);
+        const { error } = await supabase.from('leads').update({ assigned_to: agentId }).in('id', selected);
         
-        if(error) alert("Database Error: " + error.message);
+        if(error) alert(error.message);
         else {
-            alert("Success! Leads assigned.");
-            fetchData();
+            alert(`Assigned ${selected.length} leads.`);
+            loadLeads();
         }
-    }
+    };
 
-    async function addUser() {
-        if(!supabase) return alert("Error: Database disconnected.");
+    // Toggle All
+    document.getElementById('selectAll').onclick = (e) => {
+        document.querySelectorAll('.lead-check').forEach(cb => cb.checked = e.target.checked);
+    };
 
-        const name = document.getElementById("new_name").value;
-        const email = document.getElementById("new_email").value;
-        const pass = document.getElementById("new_pass").value;
+    // Logout
+    document.getElementById('btnLogout').onclick = async () => {
+        await supabase.auth.signOut();
+        window.location.href = 'index.html';
+    };
+
+    // Create User (Note: This is a hacky way client-side, normally requires Service Role)
+    document.getElementById('createUserForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const email = document.getElementById('newEmail').value;
+        const password = document.getElementById('newPass').value;
         
-        if(!name || !email || !pass) return alert("Fill in all fields.");
-
-        const { error } = await supabase.from('users').insert([{ name, email, password: pass, role: 'rep' }]);
+        // WARNING: Client-side creation logs the NEW user in immediately.
+        // We handle this by alerting the admin to re-login or use incognito.
+        const { data, error } = await supabase.auth.signUp({ email, password });
         
-        if(error) alert("Database Error: " + error.message);
-        else {
-            document.getElementById("new_name").value = "";
-            document.getElementById("new_email").value = "";
-            document.getElementById("new_pass").value = "";
-            alert("User created successfully.");
-            fetchData();
+        if(error) {
+            document.getElementById('userMsg').style.color = "red";
+            document.getElementById('userMsg').innerText = error.message;
+        } else {
+            alert("User created! Important: You have been signed in as the new user. Please log out and log back in as Admin.");
+            window.location.reload();
         }
-    }
+    };
 
-    async function removeUser(id) {
-        if(!supabase) return alert("Error: Database disconnected.");
-        
-        if(confirm("Remove user?")) {
-            const { error } = await supabase.from('users').delete().eq('id', id);
-            if(error) alert("Delete failed: " + error.message);
-            else fetchData();
-        }
-    }
-
-    function renderUsers() {
-        document.getElementById("userTable").innerHTML = users.map(u => `<tr>
-            <td>${u.name}</td><td>${u.email}</td><td>${u.role}</td>
-            <td><button class="btn danger" onclick="removeUser('${u.id}')">Remove</button></td>
-        </tr>`).join('');
-    }
-
-    function renderReports() {
-        const sold = leads.filter(l => l.stage && l.stage.includes('Sold')).length;
-        document.getElementById("reportKpis").innerHTML = `
-            <div class="kpi-box"><div class="kpi-lbl">Total Leads</div><div class="kpi-val">${leads.length}</div></div>
-            <div class="kpi-box"><div class="kpi-lbl">Deals Closed</div><div class="kpi-val">${sold}</div></div>
-        `;
-        
-        document.getElementById("repStatsBody").innerHTML = users.map(u => {
-            const theirLeads = leads.filter(l => l.assigned_to === u.id);
-            const theirSales = theirLeads.filter(l => l.stage && l.stage.includes('Sold')).length;
-            return `<tr><td>${u.name}</td><td>${theirLeads.length}</td><td>${theirSales}</td></tr>`;
-        }).join('');
-    }
-
-    // --- LOGOUT (Guaranteed to Work) ---
-    function logout() { 
-        localStorage.removeItem("impacta_user"); 
-        window.location.href = 'lite9876932.html'; 
-    }
-
-    // Start Engine
-    fetchData();
+    init();
 </script>
 </body>
 </html>
-
-
