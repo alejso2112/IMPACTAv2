@@ -6,17 +6,25 @@
   <title>IMPACTA CRM</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{ --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b; --line:#e2e8f0; --bg:#f1f5f9; --radius:12px; --mono: ui-monospace, monospace; --sans: system-ui, sans-serif; }
+    /* CORE VARIABLES */
+    :root{
+      --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b;
+      --line:#e2e8f0; --bg:#f1f5f9; --radius:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
     *{box-sizing:border-box}
     body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; }
     a{color:var(--brand); text-decoration:none}
     .wrap{max-width:1800px; margin:0 auto; padding:0 24px}
     
+    /* TOPBAR */
     .topbar{ position:sticky; top:0; z-index:50; border-bottom:1px solid var(--line); background:rgba(255,255,255,.98); backdrop-filter:blur(10px); }
     .topbar .inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0; }
     .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
     .logo{ height:40px; width:auto; display: block; }
     
+    /* BUTTONS */
     .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border-radius:8px; border:1px solid rgba(12,98,171,.1); background:var(--brand); color:#fff; font-weight:600; font-size:14px; cursor:pointer; transition:all .15s ease; white-space:nowrap; }
     .btn:hover{background:var(--brand-dark)}
     .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
@@ -27,12 +35,13 @@
     .btn.success:hover{background:#059669;}
     .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-end;}
 
+    /* CARDS */
     .card{ background:var(--brand); color: #fff; border:1px solid var(--brand-dark); border-radius:var(--radius); box-shadow: 0 12px 30px -5px rgba(12, 98, 171, 0.25); overflow:hidden; display:flex; flex-direction:column; }
     .card .hd{ padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.15); }
     .card .hd h2{margin:0; font-size:15px; font-weight:700; color:#fff;}
     .card .bd{padding:20px; flex:1;}
-    .hint{color:rgba(255,255,255,0.85); font-size:13px; margin:0}
     
+    /* MAIN LAYOUT */
     main{padding:24px 0 48px}
     input, select, textarea{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.4); background:#fff; color:var(--ink); outline:none; font-family:var(--sans); font-size:14px; }
     input:focus, select:focus, textarea:focus{ border-color: #fff; box-shadow:0 0 0 3px rgba(255,255,255,0.25); }
@@ -40,6 +49,7 @@
     .pill{ display:inline-block; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; text-transform:uppercase; text-align: center; }
     .pill.stage{background:#e0f2fe; color:#0369a1;}
     
+    /* TABLE */
     .tablewrap{ border:1px solid var(--line); border-radius:10px; background:#fff; margin-top:20px; color: var(--ink); width: 100%; overflow-x: auto; }
     table{ width:100%; border-collapse:collapse; }
     th, td{ padding:14px 12px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
@@ -54,7 +64,7 @@
     .kpi .box .label{font-size:11px; font-weight:700; color:var(--muted); text-transform:uppercase;}
     .kpi .box .value{font-size:22px; font-weight:800; color:var(--ink); margin-top:4px}
 
-    /* Modal */
+    /* MODAL */
     .modal{ position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
     .modal.open{display:flex}
     .modal .panel{ width:min(1200px, 95%); height: 90vh; background:#f8fafc; border-radius:16px; border: 1px solid var(--line); color: var(--ink); display: flex; flex-direction: column; overflow: hidden; }
@@ -205,17 +215,24 @@
             <div><label>Phone</label><input id="m_phone" readonly /></div>
             <div><label>Email</label><input id="m_email" readonly /></div>
           </div>
-          <div class="row modal-grid">
-            <div><label>Recommendation</label><input id="m_rec" readonly /></div>
-            <div><label>Website</label><input id="m_website" readonly /></div>
+          <div class="modal-grid">
+            <label>Recommendation</label>
+            <textarea id="m_rec" readonly style="height:70px; resize:none;"></textarea>
           </div>
-          <div class="row modal-grid">
-            <div><label>GBP 1</label><input id="m_gbp1" readonly /></div>
-            <div><label>GBP 2</label><input id="m_gbp2" readonly /></div>
+          <div class="modal-grid">
+            <label>Website</label>
+            <input id="m_website" readonly />
           </div>
+          
           <div class="row modal-grid">
-             <div><label>GBP 3</label><input id="m_gbp3" readonly /></div>
+            <div><label>GBP 1</label><textarea id="m_gbp1" readonly style="height:80px; resize:none;"></textarea></div>
+            <div><label>GBP 2</label><textarea id="m_gbp2" readonly style="height:80px; resize:none;"></textarea></div>
           </div>
+          <div class="modal-grid">
+             <label>GBP 3</label>
+             <textarea id="m_gbp3" readonly style="height:80px; resize:none;"></textarea>
+          </div>
+
           <div class="modal-grid"><label>Notes</label><textarea id="m_notes" readonly style="height:100px"></textarea></div>
         </div>
 
@@ -323,6 +340,7 @@
   const db = firebase.firestore();
 
   let currentUser = null;
+  let userRole = 'agent'; // Default
   let leads = [];
   let activeLeadId = null;
   let sortKey = 'nextDue';
@@ -334,7 +352,14 @@
         if(!user) return window.location.href = 'index.html';
         currentUser = user;
         document.getElementById('userDisplay').textContent = user.email;
-        fetchLeads();
+        
+        // Fetch User Role
+        db.collection('users').doc(user.uid).get().then(doc => {
+            if(doc.exists) {
+                userRole = doc.data().role || 'agent';
+            }
+            fetchLeads();
+        });
     });
 
     const STAGES = ["New Lead", "Attempting", "Connected", "Booked – 15 Min Diagnostic", "Held – 15 Min Diagnostic", "No-Show", "Reschedule", "Sold - 48 Hour Fix", "Sold - RLD", "Sold - PPA", "Disqualified", "Nurture"];
@@ -343,7 +368,6 @@
     sel.onchange = render;
     document.getElementById('search').oninput = render;
 
-    // Button Events
     document.getElementById('btnCloseModal').onclick = () => { document.getElementById('modal').classList.remove('open'); stopTimer(); };
   }
 
@@ -353,9 +377,6 @@
         snap.forEach(doc => {
             const data = doc.data();
             data.id = doc.id;
-            // Admin sees all. Agent sees assigned OR null.
-            // Using a simple local check for now as we trust the backend rules we set up in SQL (but here in NoSQL we rely on rules later)
-            // For now, this just filters the view.
             temp.push(data); 
         });
         leads = temp;
@@ -375,14 +396,11 @@
     });
 
     let filtered = leads.filter(l => {
-        // Filter by user assignment (Client side for view)
-        // If assignedTo exists and is not me, hide it. 
-        // We will improve this by fetching correctly later, but for now filtering is fine.
-        // Wait, Admin should see everything. We don't have role here in memory easily without another fetch.
-        // Let's rely on the assumption that if it came down from the DB, we can see it.
-        // (If you want strict Agent view, uncomment below)
-        /* if(l.assignedTo && l.assignedTo !== currentUser.uid) return false;
-        */
+        // PERMISSION CHECK
+        if (userRole !== 'admin') {
+            // Agents only see their own assigned leads OR unassigned leads
+            if (l.assignedTo && l.assignedTo !== currentUser.uid) return false;
+        }
 
         if(filter && l.stage !== filter) return false;
         if(search && !JSON.stringify(l).toLowerCase().includes(search)) return false;
@@ -409,7 +427,7 @@
         return `
         <tr>
             <td class="lead-col">${l.company || 'Unknown'}<span class="lead-meta">${l.firstName || ''} ${l.lastName || ''}</span></td>
-            <td><a href="tel:${l.phone}">${l.phone || '-'}</a></td>
+            <td>${l.phone || '-'}</td>
             <td>${l.city || '-'}</td>
             <td><span class="pill stage">${l.stage}</span></td>
             <td>${l.nextAction || '-'}</td>
@@ -439,10 +457,10 @@
     document.getElementById('m_email').value = l.email || '';
     document.getElementById('m_stage').value = l.stage || 'New Lead';
     document.getElementById('m_nextAction').value = l.nextAction || 'Call Attempt';
+    
+    // VALUES POPULATION (Textareas)
     document.getElementById('m_rec').value = l.recommendation || '';
     document.getElementById('m_website').value = l.website || '';
-    
-    // ADDED GBP FIELDS
     document.getElementById('m_gbp1').value = l.gbp1 || '';
     document.getElementById('m_gbp2').value = l.gbp2 || '';
     document.getElementById('m_gbp3').value = l.gbp3 || '';
