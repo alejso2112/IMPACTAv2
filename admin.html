@@ -18,7 +18,8 @@
     h2 { margin-top:0; font-size:18px; color:var(--brand); }
     table { width:100%; border-collapse:collapse; margin-top:0; }
     th, td { text-align:left; padding:12px; border-bottom:1px solid var(--line); font-size:13px; }
-    th { background:#f8fafc; color:#64748b; font-size:11px; text-transform:uppercase; font-weight:700; position:sticky; top:0; }
+    th { background:#f8fafc; color:#64748b; font-size:11px; text-transform:uppercase; font-weight:700; position:sticky; top:0; cursor: pointer; }
+    th:hover { color: var(--brand); }
     .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
     input, select { width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; box-sizing:border-box; font-size:13px; }
     .badge { padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; background:#e2e8f0; }
@@ -98,7 +99,7 @@
         </div>
         <div class="filter-group">
             <label>Assigned To</label>
-            <select id="f_assign" onchange="applyFilters()"><option value="">All</option></select>
+            <select id="f_assign" onchange="applyFilters()"><option value="unassigned">Unassigned</option></select>
         </div>
         <div>
             <button class="btn sec" style="width:100%" onclick="resetFilters()">Reset</button>
@@ -118,14 +119,14 @@
       <table>
         <thead>
             <tr>
-                <th style="width:40px; text-align:center;"><input type="checkbox" id="selectAll" onclick="toggleAll(this)"></th>
-                <th>Company</th>
-                <th>City</th>
-                <th>State</th>
-                <th>Industry</th>
-                <th>Assigned To</th>
-                <th>Stage</th>
-                <th style="text-align:right">Actions</th>
+                <th style="width:40px; text-align:center; cursor:default;"><input type="checkbox" id="selectAll" onclick="toggleAll(this)"></th>
+                <th onclick="setSort('company')">Company</th>
+                <th onclick="setSort('cityClean')">City</th>
+                <th onclick="setSort('stateExtracted')">State</th>
+                <th onclick="setSort('industry')">Industry</th>
+                <th onclick="setSort('assignedName')">Assigned To</th>
+                <th onclick="setSort('stage')">Stage</th>
+                <th style="text-align:right; cursor:default;">Actions</th>
             </tr>
         </thead>
         <tbody id="leadList"></tbody>
@@ -184,17 +185,16 @@
   let allUsers = [];
   let allLeads = []; 
   let filteredLeads = []; 
+  let sortKey = 'createdAt'; // Default sort
 
   function loadData() {
     db.collection('users').onSnapshot(snap => {
         allUsers = [];
         const userTbody = document.getElementById('userList');
         const assignSel = document.getElementById('assignUser');
-        const filterAssign = document.getElementById('f_assign');
         
         userTbody.innerHTML = '';
         assignSel.innerHTML = '<option value="">Select Agent...</option>';
-        filterAssign.innerHTML = '<option value="">All</option><option value="unassigned">Unassigned</option>';
         
         snap.forEach(doc => {
             const u = doc.data();
@@ -210,7 +210,6 @@
             `;
             if(u.role === 'agent') {
                 assignSel.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
-                filterAssign.innerHTML += `<option value="${doc.id}">${u.email}</option>`;
             }
         });
         loadLeads();
@@ -223,7 +222,10 @@
          snap.forEach(doc => {
              let l = doc.data();
              l.id = doc.id;
-             // Normalize State for filtering
+             // Helper properties for sort/filter
+             const agent = allUsers.find(u => u.id === l.assignedTo);
+             l.assignedName = agent ? agent.email : 'Unassigned';
+             
              if(!l.state && l.city && l.city.includes(',')) {
                  let parts = l.city.split(',');
                  l.stateExtracted = parts[parts.length-1].trim();
@@ -240,9 +242,7 @@
      });
   }
 
-  // --- NEW: POPULATE WITH COUNTS ---
   function populateFilterOptions() {
-      // Helper to count occurrences
       const getCounts = (key) => {
           const counts = {};
           allLeads.forEach(l => {
@@ -252,29 +252,56 @@
           return counts;
       };
 
+      // Special logic for Assigned To counts
+      const getAssignCounts = () => {
+          const counts = { 'unassigned': 0 };
+          allUsers.forEach(u => counts[u.id] = 0);
+          
+          allLeads.forEach(l => {
+              if(!l.assignedTo) counts['unassigned']++;
+              else if(counts[l.assignedTo] !== undefined) counts[l.assignedTo]++;
+          });
+          return counts;
+      };
+
       const stageCounts = getCounts('stage');
       const cityCounts = getCounts('cityClean');
       const stateCounts = getCounts('stateExtracted');
       const indCounts = getCounts('industry');
+      const assignCounts = getAssignCounts();
 
-      const buildOptions = (counts, elId) => {
+      const buildOptions = (counts, elId, isAssign = false) => {
           const el = document.getElementById(elId);
           const current = el.value;
-          const sortedKeys = Object.keys(counts).sort();
-          
           let html = '<option value="">All</option>';
-          sortedKeys.forEach(k => {
-              if(!k) return;
-              html += `<option value="${k}">${k} (${counts[k]})</option>`;
-          });
+          
+          if(isAssign) {
+              // Special build for assignment dropdown
+              html += `<option value="unassigned">Unassigned (${assignCounts['unassigned']})</option>`;
+              allUsers.forEach(u => {
+                  if(u.role === 'agent') {
+                      html += `<option value="${u.id}">${u.email} (${assignCounts[u.id] || 0})</option>`;
+                  }
+              });
+          } else {
+              const sortedKeys = Object.keys(counts).sort();
+              sortedKeys.forEach(k => {
+                  if(!k) return;
+                  html += `<option value="${k}">${k} (${counts[k]})</option>`;
+              });
+          }
+          
           el.innerHTML = html;
-          el.value = current; 
+          // Preserve selection or Default to Unassigned for assignment dropdown
+          if(isAssign && current === '') el.value = 'unassigned';
+          else el.value = current;
       };
 
       buildOptions(stageCounts, 'f_stage');
       buildOptions(cityCounts, 'f_city');
       buildOptions(stateCounts, 'f_state');
       buildOptions(indCounts, 'f_industry');
+      buildOptions(assignCounts, 'f_assign', true);
   }
 
   function applyFilters() {
@@ -301,6 +328,8 @@
       renderTable();
   }
 
+  window.setSort = (key) => { sortKey = key; renderTable(); };
+
   function renderTable() {
       const tbody = document.getElementById('leadList');
       tbody.innerHTML = '';
@@ -308,15 +337,27 @@
       document.getElementById('selectAll').checked = false;
       updateBulkState();
 
-      filteredLeads.forEach(l => {
-          const agent = allUsers.find(u => u.id === l.assignedTo);
-          const assignedName = agent ? agent.email : '<span style="color:#b91c1c">Unassigned</span>';
+      // Sort
+      filteredLeads.sort((a,b) => {
+          let va = a[sortKey] || ''; 
+          let vb = b[sortKey] || '';
+          // Case insensitive string sort
+          if (typeof va === 'string') va = va.toLowerCase();
+          if (typeof vb === 'string') vb = vb.toLowerCase();
           
+          if(va < vb) return -1;
+          if(va > vb) return 1;
+          return 0;
+      });
+
+      filteredLeads.forEach(l => {
           let actions = '';
           if(l.assignedTo) {
               actions += `<button class="btn sec" style="padding:4px 8px; font-size:11px; margin-right:6px;" onclick="unassignLead('${l.id}')">Unassign</button>`;
           }
           actions += `<button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteLead('${l.id}')">🗑</button>`;
+          
+          const assignDisplay = l.assignedTo ? l.assignedName : '<span style="color:#b91c1c">Unassigned</span>';
 
           tbody.innerHTML += `
             <tr>
@@ -325,7 +366,7 @@
                 <td>${l.cityClean}</td>
                 <td>${l.stateExtracted}</td>
                 <td>${l.industry || '-'}</td>
-                <td style="font-size:12px">${assignedName}</td>
+                <td style="font-size:12px">${assignDisplay}</td>
                 <td><span class="badge">${l.stage}</span></td>
                 <td style="text-align:right">${actions}</td>
             </tr>
@@ -334,7 +375,12 @@
   }
 
   function resetFilters() {
-      ['f_stage','f_city','f_state','f_industry','f_assign'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('f_stage').value = '';
+      document.getElementById('f_city').value = '';
+      document.getElementById('f_state').value = '';
+      document.getElementById('f_industry').value = '';
+      // Reset assign to default 'unassigned'
+      document.getElementById('f_assign').value = 'unassigned';
       applyFilters();
   }
 
@@ -373,13 +419,13 @@
       let targets = [];
       
       if(checked.length > 0) {
-          checked.forEach(cb => targets.push(cb.value));
+          targets = Array.from(checked).map(cb => cb.value);
       } else {
           targets = filteredLeads.filter(l => !l.assignedTo).map(l => l.id);
           if(targets.length === 0) return alert('No unassigned leads in current filter.');
       }
 
-      if(!confirm(`Assign ${targets.length} leads to selected agent?`)) return;
+      if(!confirm(`Assign ${targets.length} leads?`)) return;
 
       const batch = db.batch();
       targets.forEach(id => {
@@ -388,7 +434,6 @@
       batch.commit().then(() => { alert('Assigned.'); document.getElementById('selectAll').checked=false; });
   }
 
-  // --- NEW: BULK UNASSIGN ---
   function bulkUnassign() {
       const checked = document.querySelectorAll('.lead-check:checked');
       let targets = [];
@@ -396,12 +441,12 @@
       if(checked.length > 0) {
           targets = Array.from(checked).map(cb => cb.value);
       } else {
-          // If none checked, unassign ALL visible filtered leads
+          // If none checked, unassign ALL visible filtered leads that are currently assigned
           targets = filteredLeads.filter(l => l.assignedTo).map(l => l.id);
-          if(targets.length === 0) return alert('No assigned leads in current view to unassign.');
+          if(targets.length === 0) return alert('No assigned leads in current view.');
       }
 
-      if(!confirm(`Unassign ${targets.length} leads? They will return to the pool.`)) return;
+      if(!confirm(`Unassign ${targets.length} leads?`)) return;
 
       const batch = db.batch();
       targets.forEach(id => {
