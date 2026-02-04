@@ -185,7 +185,8 @@
   let allUsers = [];
   let allLeads = []; 
   let filteredLeads = []; 
-  let sortKey = 'createdAt'; // Default sort
+  let sortKey = 'createdAt'; 
+  let sortDesc = true;
 
   function loadData() {
     db.collection('users').onSnapshot(snap => {
@@ -222,7 +223,6 @@
          snap.forEach(doc => {
              let l = doc.data();
              l.id = doc.id;
-             // Helper properties for sort/filter
              const agent = allUsers.find(u => u.id === l.assignedTo);
              l.assignedName = agent ? agent.email : 'Unassigned';
              
@@ -252,7 +252,6 @@
           return counts;
       };
 
-      // Special logic for Assigned To counts
       const getAssignCounts = () => {
           const counts = { 'unassigned': 0 };
           allUsers.forEach(u => counts[u.id] = 0);
@@ -276,7 +275,6 @@
           let html = '<option value="">All</option>';
           
           if(isAssign) {
-              // Special build for assignment dropdown
               html += `<option value="unassigned">Unassigned (${assignCounts['unassigned']})</option>`;
               allUsers.forEach(u => {
                   if(u.role === 'agent') {
@@ -292,7 +290,6 @@
           }
           
           el.innerHTML = html;
-          // Preserve selection or Default to Unassigned for assignment dropdown
           if(isAssign && current === '') el.value = 'unassigned';
           else el.value = current;
       };
@@ -328,7 +325,15 @@
       renderTable();
   }
 
-  window.setSort = (key) => { sortKey = key; renderTable(); };
+  window.setSort = (key) => { 
+      if(sortKey === key) {
+          sortDesc = !sortDesc; 
+      } else {
+          sortKey = key;
+          sortDesc = true; 
+      }
+      renderTable(); 
+  };
 
   function renderTable() {
       const tbody = document.getElementById('leadList');
@@ -337,16 +342,19 @@
       document.getElementById('selectAll').checked = false;
       updateBulkState();
 
-      // Sort
       filteredLeads.sort((a,b) => {
           let va = a[sortKey] || ''; 
           let vb = b[sortKey] || '';
-          // Case insensitive string sort
           if (typeof va === 'string') va = va.toLowerCase();
           if (typeof vb === 'string') vb = vb.toLowerCase();
           
-          if(va < vb) return -1;
-          if(va > vb) return 1;
+          if(sortDesc) {
+              if(va < vb) return 1;
+              if(va > vb) return -1;
+          } else {
+              if(va < vb) return -1;
+              if(va > vb) return 1;
+          }
           return 0;
       });
 
@@ -379,12 +387,10 @@
       document.getElementById('f_city').value = '';
       document.getElementById('f_state').value = '';
       document.getElementById('f_industry').value = '';
-      // Reset assign to default 'unassigned'
       document.getElementById('f_assign').value = 'unassigned';
       applyFilters();
   }
 
-  // --- BULK OPERATIONS ---
   function toggleAll(source) {
       document.querySelectorAll('.lead-check').forEach(cb => cb.checked = source.checked);
       updateBulkState();
@@ -441,7 +447,6 @@
       if(checked.length > 0) {
           targets = Array.from(checked).map(cb => cb.value);
       } else {
-          // If none checked, unassign ALL visible filtered leads that are currently assigned
           targets = filteredLeads.filter(l => l.assignedTo).map(l => l.id);
           if(targets.length === 0) return alert('No assigned leads in current view.');
       }
@@ -458,7 +463,6 @@
       });
   }
 
-  // --- IMPORT ---
   function parseCSVLine(text) {
       let res = [], cell = '', quote = false;
       for (let i = 0; i < text.length; i++) {
