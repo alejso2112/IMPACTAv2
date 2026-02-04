@@ -14,8 +14,11 @@
       --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
     *{box-sizing:border-box}
-    /* PREVENT COPY ON MAIN PAGE */
-    body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; user-select: none; -webkit-user-select: none; }
+    
+    /* GLOBAL NO SELECT (Protect Data) */
+    body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; 
+      user-select: none; -webkit-user-select: none; /* Disable copy/highlight globally */
+    }
     
     a{color:var(--brand); text-decoration:none}
     .wrap{max-width:1800px; margin:0 auto; padding:0 24px}
@@ -25,7 +28,6 @@
     .topbar .inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0; }
     .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
     .logo{ height:32px; width:auto; display: block; }
-    /* BRANDING UPDATE */
     .brand h1 { margin:0; font-size:20px; font-weight:800; color:var(--brand); line-height:1.1; letter-spacing: -0.02em; }
     .brand p { margin:0; font-size:12px; color:var(--muted); font-weight:500; }
     
@@ -59,6 +61,7 @@
     table{ width:100%; border-collapse:collapse; }
     th, td{ padding:14px 12px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
     th{ position:sticky; top:0; background:#f8fafc; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--muted); cursor: pointer; white-space:nowrap; }
+    th:hover { color: var(--brand); }
     td.lead-col { font-weight:600; color:var(--brand-dark); min-width: 180px; }
     td.data-col { font-size:12px; color:#334155; min-width: 140px; }
     .lead-meta {font-weight:400; color:var(--muted); font-size:12px; display:block;}
@@ -110,6 +113,9 @@
     .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
     .modal .tablewrap td { background: #ffffff; }
     
+    /* MODAL STYLES FOR HISTORY */
+    #historyModal .panel { width: min(900px, 95%); }
+    
     #editModal .panel .hd { background: var(--brand); } 
     #editModal .panel .hd h3 { color: #fff; }
     #editModal .panel { height: auto; max-height:90vh; }
@@ -128,6 +134,7 @@
           </div>
         </div>
         <div class="toolbar">
+          <button class="btn secondary" onclick="openHistory()">Call History</button>
           <button class="btn" id="btnCreateNew">+ New Lead</button>
           <div style="width:1px; height:24px; background:var(--line); margin:0 8px;"></div>
           <button class="btn secondary" onclick="logout()">Logout</button>
@@ -161,10 +168,10 @@
             <thead>
               <tr>
                 <th onclick="setSort('company')">Company / Lead</th>
-                <th>Phone</th>
-                <th>City</th>
-                <th>Stage</th>
-                <th>Next Action</th>
+                <th onclick="setSort('phone')">Phone</th>
+                <th onclick="setSort('city')">City</th>
+                <th onclick="setSort('stage')">Stage</th>
+                <th onclick="setSort('nextAction')">Next Action</th>
                 <th>Rec</th>
                 <th>GBP 1</th>
                 <th>GBP 2</th>
@@ -326,6 +333,23 @@
     </div>
   </div>
 
+  <div class="modal" id="historyModal">
+    <div class="panel">
+        <div class="hd">
+            <h3>Call History (Last 50)</h3>
+            <button class="btn secondary" onclick="document.getElementById('historyModal').classList.remove('open')">Close</button>
+        </div>
+        <div class="bd" style="padding:0;">
+            <div class="tablewrap" style="border:none; margin-top:0; border-radius:0;">
+                <table style="margin-top:0;">
+                    <thead><tr><th>Date</th><th>Lead</th><th>Result</th><th>Note</th><th style="text-align:right">Action</th></tr></thead>
+                    <tbody id="historyBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+  </div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -351,16 +375,14 @@
   let userRole = 'agent'; 
   let leads = [];
   let activeLeadId = null;
-  let sortKey = 'nextDue';
+  let sortKey = 'nextDue'; // Sort by date
+  let sortDesc = true;     // Descending (Newest/Today -> Past)
   let timerInt = null;
   let seconds = 0;
 
-  // Block copy/paste unless in modal
+  // Prevent copy outside modals
   document.addEventListener('copy', (e) => {
-      // Check if the target is inside a modal
-      if (!e.target.closest('.modal')) {
-          e.preventDefault();
-      }
+      if (!e.target.closest('.modal')) e.preventDefault();
   });
 
   async function init() {
@@ -403,11 +425,21 @@
     const filter = document.getElementById('filterStage').value;
     const search = document.getElementById('search').value.toLowerCase();
     
-    // Sort
+    // Default: Sort by nextDue descending (Future -> Today -> Past)
+    // User requested "Today down the list into the past"
     leads.sort((a,b) => {
-        let va = a[sortKey]; let vb = b[sortKey];
-        if(!va) return 1; if(!vb) return -1;
-        return va > vb ? 1 : -1;
+        let va = a[sortKey]; 
+        let vb = b[sortKey];
+        
+        // Handle null dates (push to bottom)
+        if(!va) return 1; 
+        if(!vb) return -1;
+        
+        // Convert Firestore timestamp or date string to millis
+        let timeA = va.toDate ? va.toDate().getTime() : new Date(va).getTime();
+        let timeB = vb.toDate ? vb.toDate().getTime() : new Date(vb).getTime();
+
+        return sortDesc ? (timeB - timeA) : (timeA - timeB);
     });
 
     let filtered = leads.filter(l => {
@@ -454,8 +486,18 @@
     }).join('');
   }
 
-  window.setSort = (key) => { sortKey = key; render(); };
+  // Click-to-Sort Handler
+  window.setSort = (key) => { 
+      if(sortKey === key) {
+          sortDesc = !sortDesc; // Toggle
+      } else {
+          sortKey = key;
+          sortDesc = true; // Default Descending
+      }
+      render(); 
+  };
 
+  // --- WORK FLOW ---
   window.openWork = (id) => {
     activeLeadId = id;
     const l = leads.find(x => x.id === id);
@@ -475,23 +517,19 @@
     document.getElementById('m_gbp3').value = l.gbp3 || '';
     
     document.getElementById('m_notes').value = l.notes || '';
-    
     document.getElementById('logNote').value = '';
     
-    // Default Next Due to Today if empty
+    // Default Next Due to NOW if empty
+    let d;
     if(l.nextDue) {
-       // Format for datetime-local (YYYY-MM-DDTHH:MM)
-       const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
-       const offset = d.getTimezoneOffset() * 60000;
-       const localISOTime = (new Date(d - offset)).toISOString().slice(0, 16);
-       document.getElementById('m_nextDue').value = localISOTime;
+       d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
     } else {
-       // Set to current time
-       const now = new Date();
-       const offset = now.getTimezoneOffset() * 60000;
-       const localISOTime = (new Date(now - offset)).toISOString().slice(0, 16);
-       document.getElementById('m_nextDue').value = localISOTime;
+       d = new Date(); // Default to Today/Now
     }
+    // Format for datetime-local
+    const offset = d.getTimezoneOffset() * 60000;
+    const localISOTime = (new Date(d - offset)).toISOString().slice(0, 16);
+    document.getElementById('m_nextDue').value = localISOTime;
 
     document.getElementById('callTimer').textContent = '00:00';
     stopTimer();
@@ -509,6 +547,47 @@
     document.getElementById('modal').classList.add('open');
   };
 
+  // --- CALL HISTORY REPORT ---
+  window.openHistory = () => {
+      const tbody = document.getElementById('historyBody');
+      tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
+      document.getElementById('historyModal').classList.add('open');
+
+      db.collectionGroup('activities')
+        .where('createdBy', '==', currentUser.uid)
+        .orderBy('createdAt', 'desc')
+        .limit(50)
+        .get().then(snap => {
+            tbody.innerHTML = '';
+            snap.forEach(doc => {
+                const act = doc.data();
+                // To get the lead, we need the parent ID. 
+                // The structure is leads/{leadId}/activities/{actId}
+                // doc.ref.parent.parent.id gives us the lead ID
+                const leadId = doc.ref.parent.parent.id;
+                const lead = leads.find(l => l.id === leadId);
+                const leadName = lead ? (lead.company || 'Unknown') : 'Unknown Lead';
+                const date = act.createdAt ? new Date(act.createdAt.toDate()).toLocaleString() : '-';
+                const phone = lead ? lead.phone : '';
+
+                tbody.innerHTML += `
+                    <tr>
+                        <td style="font-size:11px">${date}</td>
+                        <td style="font-weight:600">${leadName}</td>
+                        <td>${act.action}</td>
+                        <td style="font-size:12px; color:#666; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${act.text || ''}</td>
+                        <td style="text-align:right">
+                            ${phone ? `<a href="tel:${phone}" class="btn success" style="padding:4px 8px; font-size:11px; display:inline-block; margin-right:4px;">Call</a>` : ''}
+                            <button class="btn" style="padding:4px 8px; font-size:11px" onclick="openWork('${leadId}'); document.getElementById('historyModal').classList.remove('open');">Work</button>
+                        </td>
+                    </tr>
+                `;
+            });
+            if(snap.empty) tbody.innerHTML = '<tr><td colspan="5">No calls found.</td></tr>';
+        });
+  };
+
+  // Call Timer Logic
   document.getElementById('btnCallStart').onclick = () => {
     if(timerInt) return;
     const phone = document.getElementById('m_phone').value;
@@ -583,7 +662,7 @@
       const l = leads.find(x => x.id === id);
       document.getElementById('e_first').value = l.firstName;
       document.getElementById('e_last').value = l.lastName;
-      document.getElementById('e_title').value = l.title; // Edit Title
+      document.getElementById('e_title').value = l.title || '';
       document.getElementById('e_comp').value = l.company;
       document.getElementById('e_phone').value = l.phone;
       document.getElementById('e_email').value = l.email;
