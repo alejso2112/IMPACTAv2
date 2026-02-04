@@ -14,7 +14,9 @@
       --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
     }
     *{box-sizing:border-box}
-    body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; }
+    /* PREVENT COPY ON MAIN PAGE */
+    body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; user-select: none; -webkit-user-select: none; }
+    
     a{color:var(--brand); text-decoration:none}
     .wrap{max-width:1800px; margin:0 auto; padding:0 24px}
     
@@ -55,7 +57,6 @@
     th, td{ padding:14px 12px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
     th{ position:sticky; top:0; background:#f8fafc; text-align:left; font-size:11px; font-weight:700; text-transform:uppercase; color:var(--muted); cursor: pointer; white-space:nowrap; }
     td.lead-col { font-weight:600; color:var(--brand-dark); min-width: 180px; }
-    /* FIXED: Better readability for data columns */
     td.data-col { font-size:12px; color:#334155; min-width: 140px; }
     .lead-meta {font-weight:400; color:var(--muted); font-size:12px; display:block;}
     
@@ -65,7 +66,10 @@
     .kpi .box .value{font-size:22px; font-weight:800; color:var(--ink); margin-top:4px}
 
     /* MODAL */
-    .modal{ position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; }
+    .modal{ position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:100; 
+        /* ALLOW SELECT IN MODAL */
+        user-select: text; -webkit-user-select: text; 
+    }
     .modal.open{display:flex}
     .modal .panel{ width:min(1200px, 95%); height: 90vh; background:#f8fafc; border-radius:16px; border: 1px solid var(--line); color: var(--ink); display: flex; flex-direction: column; overflow: hidden; }
     .modal .panel .hd{ padding:16px 24px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--line); background: #ffffff; }
@@ -83,7 +87,6 @@
     .modal-col.left { border-right: 1px solid var(--line); }
     @media (max-width: 900px) { .bd-grid { grid-template-columns: 1fr; } .modal-col.left { border-right: none; border-bottom: 1px solid var(--line); } }
 
-    /* FIXED: Readability for Field Names */
     .modal-grid label, .filters label { color: #0f172a; display:block; margin-bottom:4px; font-size:13px; font-weight:700; }
     .modal-grid input, .modal-grid select, .modal-grid textarea { border: 1px solid var(--line); background: #ffffff; color: var(--ink); margin-bottom:12px; width:100%; padding:8px; border-radius:6px; }
     .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
@@ -100,12 +103,10 @@
     .mini:hover { border-color:var(--brand); color:var(--brand); }
     .mini.selected { background: var(--brand); color:#fff; border-color:var(--brand); }
 
-    /* White Island Table */
     .modal .tablewrap { background: #ffffff; border: 1px solid var(--line); margin-top:0; }
     .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
     .modal .tablewrap td { background: #ffffff; }
     
-    /* Edit Modal Specifics */
     #editModal .panel .hd { background: var(--brand); } 
     #editModal .panel .hd h3 { color: #fff; }
     #editModal .panel { height: auto; max-height:90vh; }
@@ -209,19 +210,20 @@
         <div class="modal-col left">
           <div class="row modal-grid">
             <div><label>Name</label><input id="m_name" readonly /></div>
-            <div><label>Company</label><input id="m_company" readonly /></div>
+            <div><label>Title</label><input id="m_title" readonly /></div>
           </div>
           <div class="row modal-grid">
+            <div><label>Company</label><input id="m_company" readonly /></div>
             <div><label>Phone</label><input id="m_phone" readonly /></div>
-            <div><label>Email</label><input id="m_email" readonly /></div>
           </div>
+          <div class="row modal-grid">
+            <div><label>Email</label><input id="m_email" readonly /></div>
+            <div><label>Website</label><input id="m_website" readonly /></div>
+          </div>
+          
           <div class="modal-grid">
             <label>Recommendation</label>
             <textarea id="m_rec" readonly style="height:70px; resize:none;"></textarea>
-          </div>
-          <div class="modal-grid">
-            <label>Website</label>
-            <input id="m_website" readonly />
           </div>
           
           <div class="row modal-grid">
@@ -289,6 +291,9 @@
                     <div><label>First Name</label><input id="e_first" /></div>
                     <div><label>Last Name</label><input id="e_last" /></div>
                 </div>
+                <div class="modal-grid">
+                    <label>Title</label><input id="e_title" />
+                </div>
                 <div class="row modal-grid">
                     <div><label>Company</label><input id="e_comp" /></div>
                     <div><label>Phone</label><input id="e_phone" /></div>
@@ -340,12 +345,20 @@
   const db = firebase.firestore();
 
   let currentUser = null;
-  let userRole = 'agent'; // Default
+  let userRole = 'agent'; 
   let leads = [];
   let activeLeadId = null;
   let sortKey = 'nextDue';
   let timerInt = null;
   let seconds = 0;
+
+  // Block copy/paste unless in modal
+  document.addEventListener('copy', (e) => {
+      // Check if the target is inside a modal
+      if (!e.target.closest('.modal')) {
+          e.preventDefault();
+      }
+  });
 
   async function init() {
     auth.onAuthStateChanged(user => {
@@ -353,7 +366,6 @@
         currentUser = user;
         document.getElementById('userDisplay').textContent = user.email;
         
-        // Fetch User Role
         db.collection('users').doc(user.uid).get().then(doc => {
             if(doc.exists) {
                 userRole = doc.data().role || 'agent';
@@ -396,18 +408,14 @@
     });
 
     let filtered = leads.filter(l => {
-        // PERMISSION CHECK
         if (userRole !== 'admin') {
-            // Agents only see their own assigned leads OR unassigned leads
             if (l.assignedTo && l.assignedTo !== currentUser.uid) return false;
         }
-
         if(filter && l.stage !== filter) return false;
         if(search && !JSON.stringify(l).toLowerCase().includes(search)) return false;
         return true;
     });
 
-    // KPI
     const total = filtered.length;
     const booked = filtered.filter(l => l.stage && l.stage.includes('Booked')).length;
     document.getElementById('kpiGrid').innerHTML = `
@@ -416,7 +424,6 @@
     `;
     document.getElementById('viewStatus').textContent = `${total} Leads`;
 
-    // Table
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = filtered.map(l => {
         let next = '-';
@@ -446,19 +453,18 @@
 
   window.setSort = (key) => { sortKey = key; render(); };
 
-  // --- WORK FLOW ---
   window.openWork = (id) => {
     activeLeadId = id;
     const l = leads.find(x => x.id === id);
     
     document.getElementById('m_name').value = `${l.firstName||''} ${l.lastName||''}`;
+    document.getElementById('m_title').value = l.title || ''; 
     document.getElementById('m_company').value = l.company || '';
     document.getElementById('m_phone').value = l.phone || '';
     document.getElementById('m_email').value = l.email || '';
     document.getElementById('m_stage').value = l.stage || 'New Lead';
     document.getElementById('m_nextAction').value = l.nextAction || 'Call Attempt';
     
-    // VALUES POPULATION (Textareas)
     document.getElementById('m_rec').value = l.recommendation || '';
     document.getElementById('m_website').value = l.website || '';
     document.getElementById('m_gbp1').value = l.gbp1 || '';
@@ -468,10 +474,25 @@
     document.getElementById('m_notes').value = l.notes || '';
     
     document.getElementById('logNote').value = '';
+    
+    // Default Next Due to Today if empty
+    if(l.nextDue) {
+       // Format for datetime-local (YYYY-MM-DDTHH:MM)
+       const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
+       const offset = d.getTimezoneOffset() * 60000;
+       const localISOTime = (new Date(d - offset)).toISOString().slice(0, 16);
+       document.getElementById('m_nextDue').value = localISOTime;
+    } else {
+       // Set to current time
+       const now = new Date();
+       const offset = now.getTimezoneOffset() * 60000;
+       const localISOTime = (new Date(now - offset)).toISOString().slice(0, 16);
+       document.getElementById('m_nextDue').value = localISOTime;
+    }
+
     document.getElementById('callTimer').textContent = '00:00';
     stopTimer();
 
-    // Fetch Logs
     db.collection('leads').doc(id).collection('activities').orderBy('createdAt', 'desc').onSnapshot(snap => {
         let html = '';
         snap.forEach(d => {
@@ -485,7 +506,6 @@
     document.getElementById('modal').classList.add('open');
   };
 
-  // Call Timer
   document.getElementById('btnCallStart').onclick = () => {
     if(timerInt) return;
     const phone = document.getElementById('m_phone').value;
@@ -549,7 +569,6 @@
     document.getElementById('modal').classList.remove('open');
   };
 
-  // --- EDIT & CREATE ---
   document.getElementById('btnCreateNew').onclick = () => {
       document.getElementById('editForm').reset();
       activeLeadId = null;
@@ -561,6 +580,7 @@
       const l = leads.find(x => x.id === id);
       document.getElementById('e_first').value = l.firstName;
       document.getElementById('e_last').value = l.lastName;
+      document.getElementById('e_title').value = l.title; // Edit Title
       document.getElementById('e_comp').value = l.company;
       document.getElementById('e_phone').value = l.phone;
       document.getElementById('e_email').value = l.email;
@@ -579,6 +599,7 @@
       const payload = {
           firstName: document.getElementById('e_first').value,
           lastName: document.getElementById('e_last').value,
+          title: document.getElementById('e_title').value,
           company: document.getElementById('e_comp').value,
           phone: document.getElementById('e_phone').value,
           email: document.getElementById('e_email').value,
