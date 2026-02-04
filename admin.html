@@ -29,25 +29,15 @@
     .filter-bar { display:grid; grid-template-columns: repeat(5, 1fr) auto; gap:10px; margin-bottom:16px; padding:16px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; align-items:end; }
     .filter-group label { display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase; }
     
-    /* MODAL Styling Polished */
+    /* MODAL Styling */
     .modal { position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:1000; }
     .modal.open { display:flex; }
     .modal .panel { width:min(600px, 95%); background:#fff; border-radius:12px; border:1px solid var(--line); overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); }
     .modal .hd { padding:16px 24px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; background:#fff; }
     .modal .hd h3 { margin:0; font-size:16px; font-weight:700; color:var(--ink); }
-    
-    /* FIXED PADDING HERE */
     .modal .bd { padding:24px; display:flex; flex-direction:column; gap:16px; }
-    
-    textarea.import-area { 
-        width:100%; height:200px; padding:16px; 
-        border:1px solid var(--line); border-radius:8px; 
-        font-family:var(--font); font-size:13px; line-height:1.5;
-        resize:vertical; outline:none; background:#f8fafc; box-sizing: border-box;
-    }
+    textarea.import-area { width:100%; height:200px; padding:16px; border:1px solid var(--line); border-radius:8px; font-family:var(--font); font-size:13px; line-height:1.5; resize:vertical; outline:none; background:#f8fafc; box-sizing: border-box; }
     textarea.import-area:focus { border-color:var(--brand); background:#fff; box-shadow:0 0 0 3px rgba(12,98,171,.1); }
-    
-    /* Full width button in modal */
     .modal-btn { width: 100%; justify-content: center; padding: 12px; font-size: 15px; margin-top: 8px; }
   </style>
 </head>
@@ -116,9 +106,11 @@
     </div>
     
     <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px;">
-        <span style="font-size:13px; font-weight:600; color:var(--ink);">Bulk Assign:</span>
+        <span style="font-size:13px; font-weight:600; color:var(--ink);">Bulk Actions:</span>
         <select id="assignUser" style="width:200px; padding:6px;"><option value="">Select Agent...</option></select>
-        <button class="btn" style="padding:6px 12px;" onclick="assignLeads()">Assign Filtered/Selected</button>
+        <button class="btn" style="padding:6px 12px;" onclick="assignLeads()">Assign</button>
+        <button class="btn sec" style="padding:6px 12px;" onclick="bulkUnassign()">Unassign Selected</button>
+        
         <span id="recordCount" style="margin-left:auto; font-size:12px; color:#64748b;">0 records</span>
     </div>
 
@@ -164,7 +156,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // YOUR CONFIG
   const firebaseConfig = {
     apiKey: "AIzaSyAd6SXuX3nNzoCr07ENc-u_QRU1Not_FAI",
     authDomain: "impactacrm.firebaseapp.com",
@@ -191,8 +182,8 @@
   });
 
   let allUsers = [];
-  let allLeads = []; // Store full dataset
-  let filteredLeads = []; // Store current view
+  let allLeads = []; 
+  let filteredLeads = []; 
 
   function loadData() {
     db.collection('users').onSnapshot(snap => {
@@ -232,7 +223,7 @@
          snap.forEach(doc => {
              let l = doc.data();
              l.id = doc.id;
-             // Normalize State for filtering (last 2 chars of city if missing)
+             // Normalize State for filtering
              if(!l.state && l.city && l.city.includes(',')) {
                  let parts = l.city.split(',');
                  l.stateExtracted = parts[parts.length-1].trim();
@@ -245,29 +236,45 @@
          });
          
          populateFilterOptions();
-         applyFilters(); // Render
+         applyFilters(); 
      });
   }
 
+  // --- NEW: POPULATE WITH COUNTS ---
   function populateFilterOptions() {
-      const getUnique = (key) => [...new Set(allLeads.map(l => l[key]).filter(x => x))].sort();
-      
-      const stages = getUnique('stage');
-      const cities = getUnique('cityClean');
-      const states = getUnique('stateExtracted');
-      const industries = getUnique('industry');
-
-      const fill = (id, arr) => {
-          const el = document.getElementById(id);
-          const current = el.value;
-          el.innerHTML = '<option value="">All</option>' + arr.map(x => `<option value="${x}">${x}</option>`).join('');
-          el.value = current;
+      // Helper to count occurrences
+      const getCounts = (key) => {
+          const counts = {};
+          allLeads.forEach(l => {
+              const val = l[key] || 'Unknown';
+              counts[val] = (counts[val] || 0) + 1;
+          });
+          return counts;
       };
 
-      fill('f_stage', stages);
-      fill('f_city', cities);
-      fill('f_state', states);
-      fill('f_industry', industries);
+      const stageCounts = getCounts('stage');
+      const cityCounts = getCounts('cityClean');
+      const stateCounts = getCounts('stateExtracted');
+      const indCounts = getCounts('industry');
+
+      const buildOptions = (counts, elId) => {
+          const el = document.getElementById(elId);
+          const current = el.value;
+          const sortedKeys = Object.keys(counts).sort();
+          
+          let html = '<option value="">All</option>';
+          sortedKeys.forEach(k => {
+              if(!k) return;
+              html += `<option value="${k}">${k} (${counts[k]})</option>`;
+          });
+          el.innerHTML = html;
+          el.value = current; 
+      };
+
+      buildOptions(stageCounts, 'f_stage');
+      buildOptions(cityCounts, 'f_city');
+      buildOptions(stateCounts, 'f_state');
+      buildOptions(indCounts, 'f_industry');
   }
 
   function applyFilters() {
@@ -281,7 +288,7 @@
           if(s_stage && l.stage !== s_stage) return false;
           if(s_city && l.cityClean !== s_city) return false;
           if(s_state && l.stateExtracted !== s_state) return false;
-          if(s_industry && l.industry !== s_industry) return false;
+          if(s_industry && (l.industry || 'Unknown') !== s_industry) return false;
           
           if(s_assign === 'unassigned') {
               if(l.assignedTo) return false;
@@ -381,6 +388,31 @@
       batch.commit().then(() => { alert('Assigned.'); document.getElementById('selectAll').checked=false; });
   }
 
+  // --- NEW: BULK UNASSIGN ---
+  function bulkUnassign() {
+      const checked = document.querySelectorAll('.lead-check:checked');
+      let targets = [];
+      
+      if(checked.length > 0) {
+          targets = Array.from(checked).map(cb => cb.value);
+      } else {
+          // If none checked, unassign ALL visible filtered leads
+          targets = filteredLeads.filter(l => l.assignedTo).map(l => l.id);
+          if(targets.length === 0) return alert('No assigned leads in current view to unassign.');
+      }
+
+      if(!confirm(`Unassign ${targets.length} leads? They will return to the pool.`)) return;
+
+      const batch = db.batch();
+      targets.forEach(id => {
+          batch.update(db.collection('leads').doc(id), { assignedTo: null });
+      });
+      batch.commit().then(() => { 
+          alert('Unassigned.'); 
+          document.getElementById('selectAll').checked=false; 
+      });
+  }
+
   // --- IMPORT ---
   function parseCSVLine(text) {
       let res = [], cell = '', quote = false;
@@ -421,7 +453,6 @@
         let cityRaw = getVal(['city', 'location']);
         let stateRaw = getVal(['state']);
         
-        // Combine if separate
         let finalCity = cityRaw;
         if(stateRaw && !cityRaw.includes(stateRaw)) finalCity = `${cityRaw}, ${stateRaw}`;
 
