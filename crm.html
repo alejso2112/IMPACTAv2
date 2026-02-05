@@ -388,8 +388,16 @@
         if(search && !JSON.stringify(l).toLowerCase().includes(search)) return false;
         if(filterStage && l.stage !== filterStage) return false;
 
+        // --- THE VOID PREVENTION FIX ---
         if(filterDue !== 'all') {
-            if(!l.nextDue) return false; 
+            if(!l.nextDue) {
+                // Treated as URGENT / TODAY.
+                // Show if filter is 'today_past' or 'overdue'
+                if(filterDue === 'today_past' || filterDue === 'overdue') return true; 
+                // Hide if looking for future dates
+                return false; 
+            }
+            
             const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
             
             if(filterDue === 'today_past') { if(d > todayEnd) return false; }
@@ -407,7 +415,7 @@
 
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = filtered.map(l => {
-        let next = '-';
+        let next = '<span style="color:#b91c1c; font-weight:800; letter-spacing:0.05em">URGENT</span>';
         let style = '';
         if (l.nextDue) {
             const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
