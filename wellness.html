@@ -30,11 +30,9 @@
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
   <meta property="og:title" content="Wellness Growth: Filled Rooms & High-Ticket Packages" />
@@ -64,9 +62,11 @@
   </script>
   
   <style>
-      body { font-family: 'Noto Sans', sans-serif; }
-      /* Ensure container width matches legacy styles while allowing Tailwind padding */
-      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+      body { font-family: 'Noto Sans', sans-serif; scroll-behavior: smooth; }
+      .text-impacta { color: #0c62ab; }
+      .bg-impacta { background-color: #0c62ab; }
+      .border-impacta { border-color: #0c62ab; }
+      .hover-bg-impacta:hover { background-color: #084a85; }
   </style>
 </head>
 
@@ -79,8 +79,8 @@
         </a>
 
         <div class="hidden md:flex items-center gap-8">
-             <a href="services.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Services</a>
-            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            <a href="services.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Services</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a>
             
             <div class="relative group">
                 <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
@@ -96,283 +96,226 @@
                             <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
                             <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
                             <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
-                                <a href="landscaping.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Landscaping</a>
-                                <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
-                                <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
-                            </div>
-                            <div class="flex-1 space-y-2">
-                                <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
-                                <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
-                                <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
-                                <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
-                                <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
-                                <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
-                                <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
-                                <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
-                                <a href="wellness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Wellness Spa</a>
+                            <a href="landscaping.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Landscaping</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                            <a href="wellness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Wellness Spa</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-                <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
-                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
-<a href="contact-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Contact</a>
+            <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+            <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
+            <a href="contact-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Contact</a>
 
-                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
-                    Book My 48-hour Fix
-                </a>
-            </div>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                Book My 48-hour Fix
+            </a>
+        </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+        <a href="services.html" class="text-gray-700 font-medium text-lg block">Services</a>
+        <a href="about-us.html" class="text-gray-700 font-medium text-lg block">About Us</a>
+        
+        <div>
+            <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                Industries 
+                <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
             </button>
-        </div>
-
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
-            <a href="services.html" class="text-gray-700 font-medium text-lg block">Services</a>
-            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
-            
-            <div>
-                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
-                    Industries 
-                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
-                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
-                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
-                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
-                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
-                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
-                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
-                    <a href="landscaping.html" class="block text-gray-600 text-base">Landscaping</a>
-                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
-                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
-                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
-                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
-                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
-                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
-                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
-                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
-                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
-                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
-                    <a href="wellness.html" class="block text-gray-600 text-base">Wellness Spa</a>
-                </div>
+            <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                <a href="landscaping.html" class="block text-gray-600 text-base">Landscaping</a>
+                <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                <a href="wellness.html" class="block text-gray-600 text-base">Wellness Spa</a>
             </div>
-
-            <a href="pricing.html" class="text-gray-700 font-medium text-lg block">Pricing</a>
-            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
-<a href="contact-us.html" class="text-gray-700 font-medium text-lg block">Contact</a>
-            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
         </div>
+
+        <a href="pricing.html" class="text-gray-700 font-medium text-lg block">Pricing</a>
+        <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+        <a href="contact-us.html" class="text-gray-700 font-medium text-lg block">Contact</a>
+        <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
+    </div>
   </nav>
 
-
   <main class="flex-grow pt-24 pb-12">
-    <div class="container">
-
-      <section class="section-spacing" style="padding-top:20px;">
-        <div style="
-          background:linear-gradient(180deg,#ffffff,#f0f6fd);
-          padding:60px 50px;
-          border-radius:18px;
-          border-left:6px solid var(--brand);
-          box-shadow:0 25px 65px rgba(0,0,0,0.15);
-        ">
-
-          <span class="pill">Wellness & Med Spas</span>
-
-          <h1 style="font-size:40px; margin-bottom:16px; color:var(--brand); line-height:1.1;">
-            Filled Treatment Rooms & High-Ticket Packages for Spas.
-          </h1>
-
-          <p style="font-size:18px; max-width:780px; color:#0b1220;">
-            Empty treatment rooms destroy margins. IMPACTA builds the automated systems that capture interest instantly,
-            book qualified consultations, and turn single-session visitors into high-value members and package buyers.
-          </p>
-
+    
+    <div class="bg-slate-50 pt-32 pb-20 md:pt-48 md:pb-32">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="bg-blue-100 text-impacta px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider mb-6 inline-block">Wellness & Med Spas</span>
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">Filled Treatment Rooms & <br/><span class="text-[#0c62ab]">High-Ticket Packages.</span></h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Empty treatment rooms destroy margins. IMPACTA builds the automated systems that capture interest instantly, book qualified consultations, and turn single-session visitors into high-value members and package buyers.
+            </p>
         </div>
-      </section>
-
-
-      <section class="stats-bar" style="
-        margin-top:24px;
-        padding:32px;
-        border-radius:14px;
-        background:#ffffff;
-        border:1px solid #e8eef7;
-        box-shadow:0 12px 35px rgba(0,0,0,0.08);
-      ">
-
-        <div>
-          <div class="stat-number">70%</div>
-          <div class="small muted">Booking decisions made on mobile</div>
-        </div>
-
-        <div>
-          <div class="stat-number">30%</div>
-          <div class="small muted">Revenue increase from packages vs. single sessions</div>
-        </div>
-
-        <div>
-          <div class="stat-number">24hr</div>
-          <div class="small muted">Window where interest is highest</div>
-        </div>
-
-        <div>
-          <div class="stat-number">$150–$3k</div>
-          <div class="small muted">Avg. value range (Service vs. Med Spa Package)</div>
-        </div>
-
-      </section>
-
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">We Build Pipelines for Every Wellness Sector</h2>
-
-        <div style="
-          display:grid;
-          grid-template-columns:repeat(3,1fr);
-          gap:24px;
-        ">
-
-          <div class="service" style="padding:32px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-            <h3 style="color:var(--brand); font-size:22px;">Massage & Bodywork</h3>
-            <ul class="features-list">
-              <li>Therapeutic massage booking</li>
-              <li>First-time client offers</li>
-              <li>Rebooking automation</li>
-            </ul>
-          </div>
-
-          <div class="service" style="
-            padding:32px;
-            border-left:6px solid var(--brand);
-            background:linear-gradient(180deg,#ffffff,#f0f6fd);
-            box-shadow:0 18px 50px rgba(0,0,0,0.14);
-          ">
-            <h3 style="color:var(--brand); font-size:22px;">Med Spa & Aesthetics</h3>
-            <ul class="features-list">
-              <li>Botox/Filler consultations</li>
-              <li>Laser treatment packages</li>
-              <li>High-ticket sales nurturing</li>
-            </ul>
-          </div>
-
-          <div class="service" style="padding:32px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-            <h3 style="color:var(--brand); font-size:22px;">Holistic Health</h3>
-            <ul class="features-list">
-              <li>Acupuncture & Chiropractic</li>
-              <li>Wellness memberships</li>
-              <li>New patient onboarding</li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
-
-
-      <section class="section-spacing">
-        <div class="service" style="
-          padding:42px;
-          background:#ffffff;
-          border-left:6px solid var(--brand);
-          box-shadow:0 26px 70px rgba(0,0,0,0.14);
-        ">
-          <h2 style="color:var(--brand); font-size:28px; margin-bottom:16px;">
-            Why Clients Choose One Spa Over Another
-          </h2>
-
-          <p>Wellness is personal. Trust and ease of access are the deciding factors:</p>
-
-          <ul class="features-list" style="margin-top:12px;">
-            <li><strong>Instant Gratification:</strong> Can they book *now* when they feel the need?</li>
-            <li><strong>Social Proof:</strong> Reviews and before/afters visible immediately.</li>
-            <li><strong>Clarity:</strong> Understanding exactly what the treatment involves and costs.</li>
-            <li><strong>Warmth:</strong> Feeling welcomed and guided before they walk in the door.</li>
-          </ul>
-        </div>
-      </section>
-
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">Wellness Client Tiers</h2>
-
-        <div class="grid-3">
-
-          <div class="service" style="padding:28px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-            <h3>Tier 1: Single Session</h3>
-            <p>New clients trying a service. Focus: Seamless booking & intake.</p>
-          </div>
-
-          <div class="service" style="
-            padding:28px;
-            border-left:6px solid var(--brand);
-            background:#ffffff;
-            box-shadow:0 18px 50px rgba(0,0,0,0.14);
-          ">
-            <h3>Tier 2: Memberships</h3>
-            <p>Recurring revenue stability. Focus: Value proposition & retention.</p>
-          </div>
-
-          <div class="service" style="padding:28px; box-shadow:0 14px 35px rgba(0,0,0,0.10);">
-            <h3>Tier 3: High-Ticket Packages</h3>
-            <p>Transformational results (Series/Med Spa). Focus: Consultation & financing.</p>
-          </div>
-
-        </div>
-      </section>
-
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">Our Performance Model for Spas</h2>
-
-        <div class="pricing-grid-ppa">
-
-          <div class="price-card" style="padding:32px;">
-            <h4>Wellness Diagnostic — $350</h4>
-            <ul class="features-list">
-              <li>Booking flow audit</li>
-              <li>Menu & package optimization</li>
-              <li>Rebooking rate analysis</li>
-              <li>Full growth roadmap</li>
-            </ul>
-          </div>
-
-          <div class="price-card" style="
-            padding:32px;
-            box-shadow:0 22px 60px rgba(12,98,171,0.20);
-            transform:translateY(-10px);
-          ">
-            <h4>Pay-Per-Appointment (Wellness)</h4>
-            <ul class="features-list">
-              <li>Qualified bookings & consults</li>
-              <li>No-show protection system</li>
-              <li>Membership interest filtering</li>
-              <li>Performance reporting</li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
-
-
-      <section class="section-spacing ">
-        <div id="cta-box" class="service" style="
-          padding:48px;
-          text-align:center;
-          box-shadow:0 20px 50px rgba(0,0,0,0.16);
-        ">
-          <h2 style="margin-bottom:16px;">Ready to Fill Your Treatment Rooms?</h2>
-          <p class="small muted" style="margin-bottom:24px;">
-            Start with your Wellness Diagnostic to uncover capacity leaks and get your custom PPA rate.
-          </p>
-          <a href="book-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-        </div>
-      </section>
-
-
     </div>
+
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 bg-blue-50/50 p-8 rounded-2xl border border-blue-100">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">70%</div>
+                    <div class="text-sm text-gray-500 mt-1">Booking decisions made on mobile</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">30%</div>
+                    <div class="text-sm text-gray-500 mt-1">Revenue increase from packages vs. single sessions</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">24hr</div>
+                    <div class="text-sm text-gray-500 mt-1">Window where interest is highest</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">$1.5k+</div>
+                    <div class="text-sm text-gray-500 mt-1">Avg. Med Spa Package Value</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">We Build Pipelines for Every Wellness Sector</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">Massage & Bodywork</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Therapeutic massage booking</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> First-time client offers</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Rebooking automation</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-[#0c62ab] relative transform md:-translate-y-2">
+                    <div class="absolute top-0 right-0 bg-[#0c62ab] text-white text-xs px-2 py-1 rounded-bl">Best Fit</div>
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">Med Spa & Aesthetics</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Botox/Filler consultations</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Laser treatment packages</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> High-ticket sales nurturing</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">Holistic Health</h3>
+                    <ul class="space-y-3 text-gray-600">
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Acupuncture & Chiropractic</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> Wellness memberships</li>
+                        <li class="flex items-center gap-2"><span class="text-green-500">✓</span> New patient onboarding</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white p-10 rounded-2xl shadow-lg border-l-8 border-[#0c62ab]">
+                <h2 class="text-2xl md:text-3xl font-bold text-[#0c62ab] mb-4">Why Clients Choose One Spa Over Another</h2>
+                <p class="mb-6 text-gray-600 italic">Wellness is personal. Trust and ease of access are the deciding factors.</p>
+                <ul class="grid md:grid-cols-2 gap-4 text-lg text-gray-700">
+                    <li class="flex items-center gap-3"><span class="text-green-500 text-xl">✓</span> Instant Gratification booking</li>
+                    <li class="flex items-center gap-3"><span class="text-green-500 text-xl">✓</span> Visible Social Proof</li>
+                    <li class="flex items-center gap-3"><span class="text-green-500 text-xl">✓</span> Clear pricing & scope</li>
+                    <li class="flex items-center gap-3"><span class="text-green-500 text-xl">✓</span> Warm, guided welcome</li>
+                    <li class="flex items-center gap-3 col-span-2"><span class="text-green-500 text-xl">✓</span> Seamless pre-visit communication</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Wellness Client Tiers</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="p-8 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tier 1: Single Session</h3>
+                    <p class="text-gray-600">New clients trying a service. Focus: Seamless booking & intake.</p>
+                </div>
+                <div class="p-8 bg-blue-50 rounded-xl border border-blue-100 shadow-md transform md:-translate-y-2">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-3">Tier 2: Memberships</h3>
+                    <p class="text-gray-600">Recurring revenue stability. Focus: Value proposition & retention.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Tier 3: High-Ticket</h3>
+                    <p class="text-gray-600">Transformational results (Series/Med Spa). Focus: Consultation & financing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Our Performance Model for Spas</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700">
+                    <h4 class="text-xl font-bold mb-6 text-white">Wellness Diagnostic — $350</h4>
+                    <ul class="space-y-4 text-slate-300">
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Booking flow audit</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Menu & package optimization</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Rebooking rate analysis</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Full growth roadmap</li>
+                    </ul>
+                </div>
+                <div class="bg-[#0c62ab] p-8 rounded-xl shadow-2xl transform md:scale-105">
+                    <h4 class="text-xl font-bold mb-6 text-white">Pay-Per-Appointment (Wellness)</h4>
+                    <ul class="space-y-4 text-blue-100">
+                        <li class="flex gap-3"><span class="text-white">✓</span> Qualified bookings & consults</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> No-show protection system</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> Membership interest filtering</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> Performance reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-12 text-center shadow-lg">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Fill Your Treatment Rooms?</h2>
+                <p class="text-gray-600 mb-8">Start with your Wellness Diagnostic to uncover capacity leaks and get your custom PPA rate.</p>
+                <a href="revenue-diagnostic.html" class="inline-block bg-[#0c62ab] text-white px-8 py-4 rounded-md font-bold hover:bg-[#084a85] transition-colors">Start My Diagnostic</a>
+            </div>
+        </div>
+    </section>
+
   </main>
 
   <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
@@ -416,5 +359,4 @@
   </script>
 
 </body>
-
 </html>

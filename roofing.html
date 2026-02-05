@@ -29,11 +29,9 @@
   <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
   <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
   
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700;800&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="css/style.css">
 
   <meta property="og:site_name" content="IMPACTA Business Solutions" />
   <meta property="og:title" content="Roofing Growth: Turn Storm Leads into Confirmed Inspections" />
@@ -63,9 +61,11 @@
   </script>
   
   <style>
-      body { font-family: 'Noto Sans', sans-serif; }
-      /* Ensure container width matches legacy styles while allowing Tailwind padding */
-      .container { max-width: 1100px; margin: 0 auto; padding-left: 20px; padding-right: 20px; }
+      body { font-family: 'Noto Sans', sans-serif; scroll-behavior: smooth; }
+      .text-impacta { color: #0c62ab; }
+      .bg-impacta { background-color: #0c62ab; }
+      .border-impacta { border-color: #0c62ab; }
+      .hover-bg-impacta:hover { background-color: #084a85; }
   </style>
 </head>
 
@@ -78,8 +78,8 @@
         </a>
 
         <div class="hidden md:flex items-center gap-8">
-             <a href="services.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Services</a>
-            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a> 
+            <a href="services.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Services</a>
+            <a href="about-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a>
             
             <div class="relative group">
                 <button class="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
@@ -95,265 +95,213 @@
                             <a href="home-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Home Services</a>
                             <a href="hvac.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">HVAC</a>
                             <a href="insurance.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Insurance</a>
-                                <a href="landscaping.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Landscaping</a>
-                                <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
-                                <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
-                            </div>
-                            <div class="flex-1 space-y-2">
-                                <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
-                                <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
-                                <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
-                                <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
-                                <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
-                                <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
-                                <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
-                                <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
-                                <a href="wellness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Wellness Spa</a>
+                            <a href="landscaping.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Landscaping</a>
+                            <a href="medical.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Medical</a>
+                            <a href="painting.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Painting</a>
+                        </div>
+                        <div class="flex-1 space-y-2">
+                            <a href="Pest-control.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Pest Control</a>
+                            <a href="plumbing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Plumbing</a>
+                            <a href="professional-services.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Professional Services</a>
+                            <a href="real-estate.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Real Estate</a>
+                            <a href="restaurants.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Restaurants</a>
+                            <a href="roofing.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Roofing</a>
+                            <a href="salons.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Salons</a>
+                            <a href="solar.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Solar</a>
+                            <a href="wellness.html" class="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">Wellness Spa</a>
                         </div>
                     </div>
                 </div>
             </div>
 
-       <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
-                <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
-<a href="contact-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Contact</a>
+            <a href="pricing.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
+            <a href="faqs.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
+            <a href="contact-us.html" class="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Contact</a>
 
-                <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
-                    Book My 48-hour Fix
-                </a>
-            </div>
+            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">
+                Book My 48-hour Fix
+            </a>
+        </div>
 
-            <button id="mobile-menu-btn" class="md:hidden text-gray-600">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        <button id="mobile-menu-btn" class="md:hidden text-gray-600">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+        </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
+        <a href="services.html" class="text-gray-700 font-medium text-lg block">Services</a>
+        <a href="about-us.html" class="text-gray-700 font-medium text-lg block">About Us</a>
+        
+        <div>
+            <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
+                Industries 
+                <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
             </button>
-        </div>
-
-        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 border-t flex-col gap-4 max-h-[85vh] overflow-y-auto">
-            <a href="services.html" class="text-gray-700 font-medium text-lg block">Services</a>
-            <a href="about-us.html" class="text-gray-700 font-medium text-lg block font-bold text-[#0c62ab]">About Us</a>
-            
-            <div>
-                <button id="mobile-industry-btn" class="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
-                    Industries 
-                    <svg id="mobile-industry-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="transition-transform"><path d="m6 9 6 6 6-6"/></svg>
-                </button>
-                <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
-                    <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
-                    <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
-                    <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
-                    <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
-                    <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
-                    <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
-                    <a href="landscaping.html" class="block text-gray-600 text-base">Landscaping</a>
-                    <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
-                    <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
-                    <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
-                    <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
-                    <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
-                    <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
-                    <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
-                    <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
-                    <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
-                    <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
-                    <a href="wellness.html" class="block text-gray-600 text-base">Wellness Spa</a>
-                </div>
+            <div id="mobile-industry-list" class="hidden pl-4 mt-3 border-l-2 border-gray-100 space-y-3 pb-2">
+                <a href="automotive.html" class="block text-gray-600 text-base">Auto - Repair</a>
+                <a href="auto-sales.html" class="block text-gray-600 text-base">Auto - Sales</a>
+                <a href="fitness.html" class="block text-gray-600 text-base">Fitness</a>
+                <a href="home-services.html" class="block text-gray-600 text-base">Home Services</a>
+                <a href="hvac.html" class="block text-gray-600 text-base">HVAC</a>
+                <a href="insurance.html" class="block text-gray-600 text-base">Insurance</a>
+                <a href="landscaping.html" class="block text-gray-600 text-base">Landscaping</a>
+                <a href="medical.html" class="block text-gray-600 text-base">Medical</a>
+                <a href="painting.html" class="block text-gray-600 text-base">Painting</a>
+                <a href="Pest-control.html" class="block text-gray-600 text-base">Pest Control</a>
+                <a href="plumbing.html" class="block text-gray-600 text-base">Plumbing</a>
+                <a href="professional-services.html" class="block text-gray-600 text-base">Professional Services</a>
+                <a href="real-estate.html" class="block text-gray-600 text-base">Real Estate</a>
+                <a href="restaurants.html" class="block text-gray-600 text-base">Restaurants</a>
+                <a href="roofing.html" class="block text-gray-600 text-base">Roofing</a>
+                <a href="salons.html" class="block text-gray-600 text-base">Salons</a>
+                <a href="solar.html" class="block text-gray-600 text-base">Solar</a>
+                <a href="wellness.html" class="block text-gray-600 text-base">Wellness Spa</a>
             </div>
-
-            <a href="pricing.html" class="text-gray-700 font-medium text-lg block">Pricing</a>
-            <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
-<a href="contact-us.html" class="text-gray-700 font-medium text-lg block">Contact</a>
-            <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
         </div>
+
+        <a href="pricing.html" class="text-gray-700 font-medium text-lg block">Pricing</a>
+        <a href="faqs.html" class="text-gray-700 font-medium text-lg block">FAQs</a>
+        <a href="contact-us.html" class="text-gray-700 font-medium text-lg block">Contact</a>
+        <a href="48-hour-fix.html" class="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
+    </div>
   </nav>
 
-
   <main class="flex-grow pt-24 pb-12">
-    <div class="container">
-
-      <section class="section-spacing" style="padding-top:20px;">
-        <div style="
-          display:grid;
-          grid-template-columns:1fr 1fr;
-          gap:28px;
-          align-items:center;
-        ">
-
-          <div class="hero-copy" style="
-            padding:40px;
-            border-radius:14px;
-            border-left:6px solid var(--brand);
-            background:var(--white);
-            box-shadow:0 22px 50px rgba(0,0,0,0.20);
-          ">
-            <span class="pill">Roofing Industry</span>
-            <h1 style="font-size:38px; line-height:1.1; margin-bottom:12px; color:var(--brand);">
-              More Roofing Appointments. Zero Retainers. Pay Only for Results.
-            </h1>
-            <p style="font-size:17px; color:#0b1220;">
-              Roofing is competitive — speed, trust, and follow-up determine who wins the job.
-              We help roofing companies capture more storms, more inspections, and more replacements
-              with performance-based client acquisition systems.
+    
+    <div class="bg-slate-50 pt-32 pb-20 md:pt-48 md:pb-32">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <span class="bg-blue-100 text-impacta px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider mb-6 inline-block">Roofing Industry</span>
+            <h1 class="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">More Roofing Appointments. <br/><span class="text-[#0c62ab]">Zero Retainers.</span></h1>
+            <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                Roofing is competitive — speed, trust, and follow-up determine who wins the job. IMPACTA helps roofing companies capture more storms, more inspections, and more replacements with performance-based systems.
             </p>
-          </div>
-
-          <div class="service" style="
-            padding:32px;
-            box-shadow:0 20px 45px rgba(0,0,0,0.14);
-            border-radius:14px;
-            background:linear-gradient(180deg,#ffffff,#f6faff);
-          ">
-            <h3 style="font-size:22px; color:var(--brand); margin-bottom:20px;">
-              Roofing By The Numbers
-            </h3>
-            <ul class="features-list" style="font-size:15px;">
-              <li>⚡ 78% of roofing leads go with the <b>first company to respond</b></li>
-              <li>📞 40–60% of calls are missed during storm weeks</li>
-              <li>💰 $12,000+ average lost revenue per missed inspection</li>
-              <li>🏠 Homeowners get 3–5 quotes — follow-up wins deals</li>
-            </ul>
-          </div>
-
         </div>
-      </section>
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">
-          The Biggest Revenue Leaks in Roofing
-        </h2>
-
-        <div style="display:grid; gap:20px;">
-
-          <div class="service" style="
-            display:flex;
-            gap:20px;
-            padding:28px;
-            box-shadow:0 12px 40px rgba(0,0,0,0.08);
-          ">
-            <h3 style="min-width:200px; color:var(--brand);">Missed Storm Calls</h3>
-            <p>When storms hit, missed calls = lost roofs. Roofers often lose 5–10 deals per day simply from call
-              overflow.</p>
-          </div>
-
-          <div class="service" style="
-            display:flex;
-            gap:20px;
-            padding:28px;
-            box-shadow:0 12px 40px rgba(0,0,0,0.08);
-          ">
-            <h3 style="min-width:200px; color:var(--brand);">Slow First Contact</h3>
-            <p>If you’re not the first roofer to respond, you’re fighting uphill. Homeowners choose speed over everything.
-            </p>
-          </div>
-
-          <div class="service" style="
-            display:flex;
-            gap:20px;
-            padding:28px;
-            box-shadow:0 12px 40px rgba(0,0,0,0.08);
-          ">
-            <h3 style="min-width:200px; color:var(--brand);">No-Show Inspections</h3>
-            <p>Unqualified, unconfirmed roofing appointments waste hours and gas every day.</p>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">
-          How IMPACTA Fixes Your Roofing Pipeline
-        </h2>
-
-        <div class="grid-3">
-          <div class="service" style="padding:28px; box-shadow:0 16px 40px rgba(0,0,0,0.10);">
-            <h3>60-Second Lead Response</h3>
-            <p>Instant SMS + email engages roofing leads before competitors do.</p>
-          </div>
-
-          <div class="service" style="padding:28px; box-shadow:0 16px 40px rgba(0,0,0,0.10);">
-            <h3>SQA Roofing Qualification</h3>
-            <p>We filter by roof type, damage level, insurance vs retail and urgency.</p>
-          </div>
-
-          <div class="service" style="padding:28px; box-shadow:0 16px 40px rgba(0,0,0,0.10);">
-            <h3>Storm Surge Follow-Up</h3>
-            <p>11-touch sequence built for storm + hail season spikes.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section-spacing">
-        <div class="service" style="
-          padding:40px;
-          background:linear-gradient(180deg,#ffffff,#eef7ff);
-          border-left:6px solid var(--brand);
-          box-shadow:0 20px 50px rgba(0,0,0,0.12);
-        ">
-          <h2 style="font-size:28px; margin-bottom:16px; color:var(--brand);">
-            Why Roofers Choose IMPACTA
-          </h2>
-          <p>
-            Roofing requires speed, trust, and immediate contact. Homeowners don’t wait — they hire fast.
-            Our system ensures you're the first to respond, the easiest to book with, and the most
-            professionally positioned.
-          </p>
-        </div>
-      </section>
-
-      <section class="section-spacing">
-        <h2 style="text-align:center; margin-bottom:32px;">
-          Our Performance-Based Model for Roofing
-        </h2>
-
-        <div class="pricing-grid-ppa">
-
-          <div class="price-card" style="padding:32px;">
-            <h4>Phase 1: $350 Roofing Diagnostic</h4>
-            <p class="small muted">We analyze your roofing pipeline end-to-end.</p>
-            <ul class="features-list">
-              <li>Missed storm call audit</li>
-              <li>Follow-up weakness analysis</li>
-              <li>Lead quality & roof type breakdown</li>
-              <li>Full roofing growth plan</li>
-            </ul>
-          </div>
-
-          <div class="price-card" style="
-            padding:32px;
-            box-shadow:0 20px 50px rgba(12,98,171,0.18);
-            transform:translateY(-8px);
-          ">
-            <h4>Phase 2: Pay-Per-Appointment (Roofing)</h4>
-            <p class="small muted">You only pay for qualified roofing inspections.</p>
-            <ul class="features-list">
-              <li>Storm lead outreach</li>
-              <li>SQA roofing filtering</li>
-              <li>Inspection booking</li>
-              <li>Qualification reporting</li>
-            </ul>
-          </div>
-
-        </div>
-      </section>
-
-      <section class="section-spacing ">
-        <div id="cta-box" class="service" style="
-          padding:48px;
-          text-align:center;
-          box-shadow:0 20px 50px rgba(0,0,0,0.16);
-        ">
-          <h2 style="margin-bottom:16px;">Ready to Book More Roofing Inspections?</h2>
-          <p class="small muted" style="margin-bottom:24px;">
-            Start with your Roofing Diagnostic to uncover leaks and unlock your custom PPA rate.
-          </p>
-          <a href="revenue-diagnostic.html" class="btn" style="padding:16px 26px;">Start My Diagnostic</a>
-        </div>
-      </section>
-
-
     </div>
+
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 bg-blue-50/50 p-8 rounded-2xl border border-blue-100">
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">78%</div>
+                    <div class="text-sm text-gray-500 mt-1">Hire the FIRST company to respond</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">60%</div>
+                    <div class="text-sm text-gray-500 mt-1">Of calls are missed during storms</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">$12k</div>
+                    <div class="text-sm text-gray-500 mt-1">Average lost revenue per missed inspection</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-[#0c62ab]">3–5</div>
+                    <div class="text-sm text-gray-500 mt-1">Quotes per homeowner — follow-up wins</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">The Biggest Revenue Leaks in Roofing</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">Missed Storm Calls</h3>
+                    <p class="text-gray-600 mb-4">When storms hit, missed calls = lost roofs. Roofers often lose 5–10 deals per day simply from call overflow.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-md border-t-4 border-[#0c62ab] relative transform md:-translate-y-2">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">Slow First Contact</h3>
+                    <p class="text-gray-600 mb-4">If you’re not the first roofer to respond, you’re fighting uphill. Homeowners choose speed over everything.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition-all">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-4">No-Show Inspections</h3>
+                    <p class="text-gray-600 mb-4">Unqualified, unconfirmed roofing appointments waste hours and gas every day.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">How IMPACTA Fixes Your Roofing Pipeline</h2>
+            </div>
+            <div class="grid md:grid-cols-3 gap-8 text-center">
+                <div class="p-8 bg-white rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">60-Second Lead Response</h3>
+                    <p class="text-gray-600">Instant SMS + email engages roofing leads before competitors do.</p>
+                </div>
+                <div class="p-8 bg-blue-50 rounded-xl border-2 border-[#0c62ab] shadow-md transform md:-translate-y-2">
+                    <h3 class="text-xl font-bold text-[#0c62ab] mb-2">SQA Qualification</h3>
+                    <p class="text-gray-600">We filter by roof type, damage level, insurance vs retail and urgency.</p>
+                </div>
+                <div class="p-8 bg-white rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold text-gray-900 mb-2">Storm Surge Follow-Up</h3>
+                    <p class="text-gray-600">11-touch sequence built for storm + hail season spikes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-white p-10 rounded-2xl shadow-lg border-l-8 border-[#0c62ab]">
+                <h2 class="text-2xl md:text-3xl font-bold text-[#0c62ab] mb-4">Why Roofers Choose IMPACTA</h2>
+                <p class="text-gray-700 text-lg">
+                    Roofing requires speed, trust, and immediate contact. Homeowners don’t wait — they hire fast. Our system ensures you're the first to respond, the easiest to book with, and the most professionally positioned.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-slate-900 text-white">
+        <div class="max-w-5xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">Our Performance-Based Model for Roofing</h2>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div class="bg-slate-800 p-8 rounded-xl border border-slate-700">
+                    <h4 class="text-xl font-bold mb-6 text-white">Roofing Diagnostic — $350</h4>
+                    <p class="text-slate-400 mb-4 text-sm">We analyze your roofing pipeline end-to-end.</p>
+                    <ul class="space-y-4 text-slate-300">
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Missed storm call audit</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Follow-up weakness analysis</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Lead quality breakdown</li>
+                        <li class="flex gap-3"><span class="text-blue-400">✓</span> Full roofing growth plan</li>
+                    </ul>
+                </div>
+                <div class="bg-[#0c62ab] p-8 rounded-xl shadow-2xl transform md:scale-105">
+                    <h4 class="text-xl font-bold mb-6 text-white">Pay-Per-Appointment (Roofing)</h4>
+                    <p class="text-blue-200 mb-4 text-sm font-semibold">You only pay for qualified roofing inspections.</p>
+                    <ul class="space-y-4 text-blue-100">
+                        <li class="flex gap-3"><span class="text-white">✓</span> Storm lead outreach</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> SQA roofing filtering</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> Inspection booking</li>
+                        <li class="flex gap-3"><span class="text-white">✓</span> Qualification reporting</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-6">
+            <div class="bg-blue-50 border border-blue-100 rounded-2xl p-12 text-center shadow-lg">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Book More Roofing Inspections?</h2>
+                <p class="text-gray-600 mb-8">Start with your Roofing Diagnostic to uncover leaks and unlock your custom PPA rate.</p>
+                <a href="revenue-diagnostic.html" class="inline-block bg-[#0c62ab] text-white px-8 py-4 rounded-md font-bold hover:bg-[#084a85] transition-colors">Start My Diagnostic</a>
+            </div>
+        </div>
+    </section>
+
   </main>
 
-<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+  <footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
         <div class="text-sm opacity-90">
             <strong>IMPACTA Business Solutions Inc.</strong><br />
@@ -368,6 +316,7 @@
         </div>
     </div>
   </footer>
+
   <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
   <script>
     // Header Logic for Mobile Menu
@@ -393,5 +342,4 @@
   </script>
 
 </body>
-
 </html>
