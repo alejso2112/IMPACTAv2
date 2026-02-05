@@ -6,7 +6,6 @@
   <title>IMPACTA CRM</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    /* CORE VARIABLES */
     :root{
       --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b;
       --line:#e2e8f0; --bg:#f1f5f9; --radius:12px;
@@ -17,13 +16,12 @@
     
     /* GLOBAL NO SELECT (Protect Data) */
     body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; 
-      user-select: none; -webkit-user-select: none; /* Disable copy/highlight globally */
+      user-select: none; -webkit-user-select: none; 
     }
     
     a{color:var(--brand); text-decoration:none}
     .wrap{max-width:1800px; margin:0 auto; padding:0 24px}
     
-    /* TOPBAR */
     .topbar{ position:sticky; top:0; z-index:50; border-bottom:1px solid var(--line); background:rgba(255,255,255,.98); backdrop-filter:blur(10px); }
     .topbar .inner{ display:flex; align-items:center; justify-content:space-between; gap:16px; padding:14px 0; }
     .brand{display:flex; align-items:center; gap:12px; min-width:260px;}
@@ -31,7 +29,6 @@
     .brand h1 { margin:0; font-size:20px; font-weight:800; color:var(--brand); line-height:1.1; letter-spacing: -0.02em; }
     .brand p { margin:0; font-size:12px; color:var(--muted); font-weight:500; }
     
-    /* BUTTONS */
     .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:10px 16px; border-radius:8px; border:1px solid rgba(12,98,171,.1); background:var(--brand); color:#fff; font-weight:600; font-size:14px; cursor:pointer; transition:all .15s ease; white-space:nowrap; }
     .btn:hover{background:var(--brand-dark)}
     .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
@@ -42,13 +39,11 @@
     .btn.success:hover{background:#059669;}
     .toolbar{display:flex; flex-wrap:wrap; gap:10px; align-items:center; justify-content:flex-end;}
 
-    /* CARDS */
     .card{ background:var(--brand); color: #fff; border:1px solid var(--brand-dark); border-radius:var(--radius); box-shadow: 0 12px 30px -5px rgba(12, 98, 171, 0.25); overflow:hidden; display:flex; flex-direction:column; }
     .card .hd{ padding:16px 20px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.15); background: rgba(0,0,0,0.15); }
     .card .hd h2{margin:0; font-size:15px; font-weight:700; color:#fff;}
     .card .bd{padding:20px; flex:1;}
     
-    /* MAIN LAYOUT */
     main{padding:24px 0 48px}
     input, select, textarea{ width:100%; padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.4); background:#fff; color:var(--ink); outline:none; font-family:var(--sans); font-size:14px; }
     input:focus, select:focus, textarea:focus{ border-color: #fff; box-shadow:0 0 0 3px rgba(255,255,255,0.25); }
@@ -56,7 +51,6 @@
     .pill{ display:inline-block; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; text-transform:uppercase; text-align: center; }
     .pill.stage{background:#e0f2fe; color:#0369a1;}
     
-    /* TABLE */
     .tablewrap{ border:1px solid var(--line); border-radius:10px; background:#fff; margin-top:20px; color: var(--ink); width: 100%; overflow-x: auto; }
     table{ width:100%; border-collapse:collapse; }
     th, td{ padding:14px 12px; border-bottom:1px solid var(--line); font-size:13px; vertical-align:top; }
@@ -98,7 +92,6 @@
     .row { display:grid; grid-template-columns: 1fr 1fr; gap:12px; }
     .row.one { grid-template-columns: 1fr; }
 
-    /* Call Controls */
     .call-controls { background: #fff; border:1px solid var(--line); border-radius:12px; padding:16px; margin-bottom:20px; display:flex; justify-content:space-between; align-items:center; }
     .timer { font-family:var(--mono); font-size:24px; font-weight:700; color:var(--brand); }
     .timer.active { color:#b91c1c; animation: pulse 1.5s infinite; }
@@ -113,9 +106,7 @@
     .modal .tablewrap th { background: #f1f5f9; color: var(--muted); }
     .modal .tablewrap td { background: #ffffff; }
     
-    /* MODAL STYLES FOR HISTORY */
     #historyModal .panel { width: min(900px, 95%); }
-    
     #editModal .panel .hd { background: var(--brand); } 
     #editModal .panel .hd h3 { color: #fff; }
     #editModal .panel { height: auto; max-height:90vh; }
@@ -158,6 +149,16 @@
              <input id="search" placeholder="Filter by name..." style="border-color:var(--line);">
           </div>
           <div>
+             <label>Due Date</label>
+             <select id="filterDue" style="border-color:var(--line);">
+                 <option value="today_past">Due Today & Past</option>
+                 <option value="all">All Dates</option>
+                 <option value="tomorrow">Tomorrow</option>
+                 <option value="week">This Week</option>
+                 <option value="overdue">Overdue Only</option>
+             </select>
+          </div>
+          <div>
              <label>Filter Stage</label>
              <select id="filterStage" style="border-color:var(--line);"></select>
           </div>
@@ -193,12 +194,8 @@
         <h3 id="modalTitle">Work Lead</h3>
         <button class="btn secondary" id="btnCloseModal" style="color:var(--brand)">Close</button>
       </div>
-      
       <div class="status-bar">
-        <div class="status-group">
-            <span class="status-label">Current Stage</span>
-            <input id="m_stage" readonly /> 
-        </div>
+        <div class="status-group"><span class="status-label">Current Stage</span><input id="m_stage" readonly /></div>
         <div class="status-group">
             <span class="status-label">Set Next Action</span>
             <select id="m_nextAction">
@@ -215,7 +212,6 @@
             </select>
         </div>
       </div>
-
       <div class="bd-grid">
         <div class="modal-col left">
           <div class="row modal-grid">
@@ -230,24 +226,14 @@
             <div><label>Email</label><input id="m_email" readonly /></div>
             <div><label>Website</label><input id="m_website" readonly /></div>
           </div>
-          
-          <div class="modal-grid">
-            <label>Recommendation</label>
-            <textarea id="m_rec" readonly style="height:70px; resize:none;"></textarea>
-          </div>
-          
+          <div class="modal-grid"><label>Recommendation</label><textarea id="m_rec" readonly style="height:70px; resize:none;"></textarea></div>
           <div class="row modal-grid">
             <div><label>GBP 1</label><textarea id="m_gbp1" readonly style="height:80px; resize:none;"></textarea></div>
             <div><label>GBP 2</label><textarea id="m_gbp2" readonly style="height:80px; resize:none;"></textarea></div>
           </div>
-          <div class="modal-grid">
-             <label>GBP 3</label>
-             <textarea id="m_gbp3" readonly style="height:80px; resize:none;"></textarea>
-          </div>
-
+          <div class="modal-grid"><label>GBP 3</label><textarea id="m_gbp3" readonly style="height:80px; resize:none;"></textarea></div>
           <div class="modal-grid"><label>Notes</label><textarea id="m_notes" readonly style="height:100px"></textarea></div>
         </div>
-
         <div class="modal-col right">
           <div class="call-controls">
             <div id="callTimer" class="timer">00:00</div>
@@ -256,17 +242,8 @@
               <button class="btn danger" id="btnCallEnd" style="display:none;">End</button>
             </div>
           </div>
-
-          <div class="modal-grid">
-            <label style="color:var(--ink)">Log Activity</label>
-            <textarea id="logNote" placeholder="Result of call..."></textarea>
-          </div>
-          
-          <div class="modal-grid" style="margin-top:10px">
-             <label style="color:var(--ink)">Next Due</label>
-             <input id="m_nextDue" type="datetime-local" />
-          </div>
-
+          <div class="modal-grid"><label style="color:var(--ink)">Log Activity</label><textarea id="logNote" placeholder="Result of call..."></textarea></div>
+          <div class="modal-grid" style="margin-top:10px"><label style="color:var(--ink)">Next Due</label><input id="m_nextDue" type="datetime-local" /></div>
           <div style="margin-top:20px;">
             <label style="font-size:12px; font-weight:700; color:var(--muted); text-transform:uppercase;">Quick Update</label>
             <div class="quick-actions">
@@ -278,14 +255,9 @@
                 <button class="mini" onclick="quickSet('Sold - PPA','Sold PPA')">Sold PPA</button>
             </div>
           </div>
-
           <button class="btn" id="btnSaveLog" style="width:100%; margin-top:20px;">Save & Next</button>
-
           <div class="tablewrap" style="max-height:200px; overflow-y:auto; margin-top:20px;">
-            <table>
-              <thead><tr><th>Date</th><th>Action</th><th>Note</th></tr></thead>
-              <tbody id="logTbody"></tbody>
-            </table>
+            <table><thead><tr><th>Date</th><th>Action</th><th>Note</th></tr></thead><tbody id="logTbody"></tbody></table>
           </div>
         </div>
       </div>
@@ -297,34 +269,15 @@
         <div class="hd"><h3>Edit Lead</h3><button class="btn secondary" onclick="document.getElementById('editModal').classList.remove('open')">Close</button></div>
         <div class="modal-col">
             <form id="editForm">
-                <div class="row modal-grid">
-                    <div><label>First Name</label><input id="e_first" /></div>
-                    <div><label>Last Name</label><input id="e_last" /></div>
-                </div>
-                <div class="modal-grid">
-                    <label>Title</label><input id="e_title" />
-                </div>
-                <div class="row modal-grid">
-                    <div><label>Company</label><input id="e_comp" /></div>
-                    <div><label>Phone</label><input id="e_phone" /></div>
-                </div>
-                <div class="row modal-grid">
-                    <div><label>City</label><input id="e_city" /></div>
-                    <div><label>Email</label><input id="e_email" /></div>
-                </div>
-                <div class="row modal-grid">
-                    <div><label>Website</label><input id="e_website" /></div>
-                    <div><label>Recommendation</label><input id="e_recommendation" /></div>
-                </div>
+                <div class="row modal-grid"><div><label>First Name</label><input id="e_first" /></div><div><label>Last Name</label><input id="e_last" /></div></div>
+                <div class="modal-grid"><label>Title</label><input id="e_title" /></div>
+                <div class="row modal-grid"><div><label>Company</label><input id="e_comp" /></div><div><label>Phone</label><input id="e_phone" /></div></div>
+                <div class="row modal-grid"><div><label>City</label><input id="e_city" /></div><div><label>Email</label><input id="e_email" /></div></div>
+                <div class="row modal-grid"><div><label>Website</label><input id="e_website" /></div><div><label>Recommendation</label><input id="e_recommendation" /></div></div>
                 <div style="margin-top:20px; padding-top:16px; border-top:1px solid var(--line);">
                     <label style="color:var(--brand)">Diagnostic Data (GBP)</label>
-                    <div class="row modal-grid">
-                        <div><label>GBP 1</label><input id="e_gbp1" /></div>
-                        <div><label>GBP 2</label><input id="e_gbp2" /></div>
-                    </div>
-                    <div class="row modal-grid" style="margin-top:12px">
-                        <div><label>GBP 3</label><input id="e_gbp3" /></div>
-                    </div>
+                    <div class="row modal-grid"><div><label>GBP 1</label><input id="e_gbp1" /></div><div><label>GBP 2</label><input id="e_gbp2" /></div></div>
+                    <div class="row modal-grid" style="margin-top:12px"><div><label>GBP 3</label><input id="e_gbp3" /></div></div>
                 </div>
                 <div class="modal-grid" style="margin-top:12px"><label>Initial Notes</label><textarea id="e_notes"></textarea></div>
                 <button class="btn" type="submit" style="margin-top:15px;">Save Changes</button>
@@ -335,10 +288,7 @@
 
   <div class="modal" id="historyModal">
     <div class="panel">
-        <div class="hd">
-            <h3>Call History (Last 50)</h3>
-            <button class="btn secondary" onclick="document.getElementById('historyModal').classList.remove('open')">Close</button>
-        </div>
+        <div class="hd"><h3>Call History (Last 50)</h3><button class="btn secondary" onclick="document.getElementById('historyModal').classList.remove('open')">Close</button></div>
         <div class="bd" style="padding:0;">
             <div class="tablewrap" style="border:none; margin-top:0; border-radius:0;">
                 <table style="margin-top:0;">
@@ -355,7 +305,7 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-  // --- PASTE YOUR FIREBASE CONFIG HERE ---
+  // --- FIREBASE CONFIG ---
   const firebaseConfig = {
     apiKey: "AIzaSyAd6SXuX3nNzoCr07ENc-u_QRU1Not_FAI",
     authDomain: "impactacrm.firebaseapp.com",
@@ -365,7 +315,6 @@
     appId: "1:323514822260:web:9eec9a85f865abb780ab21",
     measurementId: "G-DW3JFMDG6Y"
   };
-  // ---------------------------------------
 
   const app = firebase.initializeApp(firebaseConfig);
   const auth = firebase.auth();
@@ -374,27 +323,21 @@
   let currentUser = null;
   let userRole = 'agent'; 
   let leads = [];
-  let activeLeadId = null;
-  let sortKey = 'nextDue'; // Sort by date
-  let sortDesc = true;     // Descending (Newest/Today -> Past)
+  let sortKey = 'nextDue'; 
+  let sortDesc = true; 
   let timerInt = null;
   let seconds = 0;
+  let activeLeadId = null;
 
-  // Prevent copy outside modals
-  document.addEventListener('copy', (e) => {
-      if (!e.target.closest('.modal')) e.preventDefault();
-  });
+  document.addEventListener('copy', (e) => { if (!e.target.closest('.modal')) e.preventDefault(); });
 
   async function init() {
     auth.onAuthStateChanged(user => {
         if(!user) return window.location.href = 'index.html';
         currentUser = user;
         document.getElementById('userDisplay').textContent = user.email;
-        
         db.collection('users').doc(user.uid).get().then(doc => {
-            if(doc.exists) {
-                userRole = doc.data().role || 'agent';
-            }
+            if(doc.exists) userRole = doc.data().role || 'agent';
             fetchLeads();
         });
     });
@@ -402,9 +345,10 @@
     const STAGES = ["New Lead", "Attempting", "Connected", "Booked – 15 Min Diagnostic", "Held – 15 Min Diagnostic", "No-Show", "Reschedule", "Sold - 48 Hour Fix", "Sold - RLD", "Sold - PPA", "Disqualified", "Nurture"];
     const sel = document.getElementById('filterStage');
     sel.innerHTML = `<option value="">All Stages</option>` + STAGES.map(s=>`<option value="${s}">${s}</option>`).join('');
-    sel.onchange = render;
+    
+    document.getElementById('filterStage').onchange = render;
+    document.getElementById('filterDue').onchange = render;
     document.getElementById('search').oninput = render;
-
     document.getElementById('btnCloseModal').onclick = () => { document.getElementById('modal').classList.remove('open'); stopTimer(); };
   }
 
@@ -422,86 +366,67 @@
   }
 
   function render() {
-    const filter = document.getElementById('filterStage').value;
+    const filterStage = document.getElementById('filterStage').value;
+    const filterDue = document.getElementById('filterDue').value;
     const search = document.getElementById('search').value.toLowerCase();
     
-    // Default: Sort by nextDue descending (Future -> Today -> Past)
-    // User requested "Today down the list into the past"
     leads.sort((a,b) => {
-        let va = a[sortKey]; 
-        let vb = b[sortKey];
-        
-        // Handle null dates (push to bottom)
-        if(!va) return 1; 
-        if(!vb) return -1;
-        
-        // Convert Firestore timestamp or date string to millis
+        let va = a[sortKey]; let vb = b[sortKey];
+        if(!va) return 1; if(!vb) return -1;
         let timeA = va.toDate ? va.toDate().getTime() : new Date(va).getTime();
         let timeB = vb.toDate ? vb.toDate().getTime() : new Date(vb).getTime();
-
         return sortDesc ? (timeB - timeA) : (timeA - timeB);
     });
 
+    const now = new Date();
+    const todayEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+    const tomorrowEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 23, 59, 59);
+    const weekEnd = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+
     let filtered = leads.filter(l => {
-        if (userRole !== 'admin') {
-            if (l.assignedTo && l.assignedTo !== currentUser.uid) return false;
-        }
-        if(filter && l.stage !== filter) return false;
+        if (userRole !== 'admin' && (l.assignedTo && l.assignedTo !== currentUser.uid)) return false;
         if(search && !JSON.stringify(l).toLowerCase().includes(search)) return false;
+        if(filterStage && l.stage !== filterStage) return false;
+
+        if(filterDue !== 'all') {
+            if(!l.nextDue) return false; 
+            const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
+            
+            if(filterDue === 'today_past') { if(d > todayEnd) return false; }
+            else if(filterDue === 'overdue') { if(d >= now) return false; }
+            else if(filterDue === 'tomorrow') { if(d < todayEnd || d > tomorrowEnd) return false; }
+            else if(filterDue === 'week') { if(d < todayEnd || d > weekEnd) return false; }
+        }
         return true;
     });
 
     const total = filtered.length;
     const booked = filtered.filter(l => l.stage && l.stage.includes('Booked')).length;
-    document.getElementById('kpiGrid').innerHTML = `
-        <div class="box"><div class="label">Total</div><div class="value">${total}</div></div>
-        <div class="box"><div class="label">Booked</div><div class="value">${booked}</div></div>
-    `;
+    document.getElementById('kpiGrid').innerHTML = `<div class="box"><div class="label">Total</div><div class="value">${total}</div></div><div class="box"><div class="label">Booked</div><div class="value">${booked}</div></div>`;
     document.getElementById('viewStatus').textContent = `${total} Leads`;
 
     const tbody = document.getElementById('tbody');
     tbody.innerHTML = filtered.map(l => {
         let next = '-';
+        let style = '';
         if (l.nextDue) {
             const d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
             next = d.toLocaleDateString() + ' ' + d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+            if(d < new Date()) style = 'color:#b91c1c; font-weight:700';
         }
-        return `
-        <tr>
-            <td class="lead-col">${l.company || 'Unknown'}<span class="lead-meta">${l.firstName || ''} ${l.lastName || ''}</span></td>
-            <td>${l.phone || '-'}</td>
-            <td>${l.city || '-'}</td>
-            <td><span class="pill stage">${l.stage}</span></td>
-            <td>${l.nextAction || '-'}</td>
-            <td class="data-col">${l.recommendation || '-'}</td>
-            <td class="data-col">${l.gbp1 || '-'}</td>
-            <td class="data-col">${l.gbp2 || '-'}</td>
-            <td class="data-col">${l.gbp3 || '-'}</td>
-            <td style="color:${new Date(l.nextDue) < new Date() ? 'red' : 'inherit'}">${next}</td>
-            <td style="text-align:right">
-                <button class="mini" onclick="openWork('${l.id}')">Work</button>
-                <button class="mini" onclick="openEdit('${l.id}')">Edit</button>
-            </td>
-        </tr>`;
+        return `<tr><td class="lead-col">${l.company || 'Unknown'}<span class="lead-meta">${l.firstName || ''} ${l.lastName || ''}</span></td><td>${l.phone || '-'}</td><td>${l.city || '-'}</td><td><span class="pill stage">${l.stage}</span></td><td>${l.nextAction || '-'}</td><td class="data-col">${l.recommendation || '-'}</td><td class="data-col">${l.gbp1 || '-'}</td><td class="data-col">${l.gbp2 || '-'}</td><td class="data-col">${l.gbp3 || '-'}</td><td style="${style}">${next}</td><td style="text-align:right"><button class="mini" onclick="openWork('${l.id}')">Work</button><button class="mini" onclick="openEdit('${l.id}')">Edit</button></td></tr>`;
     }).join('');
   }
 
-  // Click-to-Sort Handler
   window.setSort = (key) => { 
-      if(sortKey === key) {
-          sortDesc = !sortDesc; // Toggle
-      } else {
-          sortKey = key;
-          sortDesc = true; // Default Descending
-      }
+      if(sortKey === key) sortDesc = !sortDesc;
+      else { sortKey = key; sortDesc = true; }
       render(); 
   };
 
-  // --- WORK FLOW ---
   window.openWork = (id) => {
     activeLeadId = id;
     const l = leads.find(x => x.id === id);
-    
     document.getElementById('m_name').value = `${l.firstName||''} ${l.lastName||''}`;
     document.getElementById('m_title').value = l.title || ''; 
     document.getElementById('m_company').value = l.company || '';
@@ -509,28 +434,17 @@
     document.getElementById('m_email').value = l.email || '';
     document.getElementById('m_stage').value = l.stage || 'New Lead';
     document.getElementById('m_nextAction').value = l.nextAction || 'Call Attempt';
-    
     document.getElementById('m_rec').value = l.recommendation || '';
     document.getElementById('m_website').value = l.website || '';
     document.getElementById('m_gbp1').value = l.gbp1 || '';
     document.getElementById('m_gbp2').value = l.gbp2 || '';
     document.getElementById('m_gbp3').value = l.gbp3 || '';
-    
     document.getElementById('m_notes').value = l.notes || '';
     document.getElementById('logNote').value = '';
     
-    // Default Next Due to NOW if empty
-    let d;
-    if(l.nextDue) {
-       d = l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue);
-    } else {
-       d = new Date(); // Default to Today/Now
-    }
-    // Format for datetime-local
+    let d = l.nextDue ? (l.nextDue.toDate ? l.nextDue.toDate() : new Date(l.nextDue)) : new Date();
     const offset = d.getTimezoneOffset() * 60000;
-    const localISOTime = (new Date(d - offset)).toISOString().slice(0, 16);
-    document.getElementById('m_nextDue').value = localISOTime;
-
+    document.getElementById('m_nextDue').value = (new Date(d - offset)).toISOString().slice(0, 16);
     document.getElementById('callTimer').textContent = '00:00';
     stopTimer();
 
@@ -543,11 +457,9 @@
         });
         document.getElementById('logTbody').innerHTML = html;
     });
-
     document.getElementById('modal').classList.add('open');
   };
 
-  // --- CALL HISTORY REPORT ---
   window.openHistory = () => {
       const tbody = document.getElementById('historyBody');
       tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
@@ -561,33 +473,17 @@
             tbody.innerHTML = '';
             snap.forEach(doc => {
                 const act = doc.data();
-                // To get the lead, we need the parent ID. 
-                // The structure is leads/{leadId}/activities/{actId}
-                // doc.ref.parent.parent.id gives us the lead ID
                 const leadId = doc.ref.parent.parent.id;
                 const lead = leads.find(l => l.id === leadId);
                 const leadName = lead ? (lead.company || 'Unknown') : 'Unknown Lead';
                 const date = act.createdAt ? new Date(act.createdAt.toDate()).toLocaleString() : '-';
                 const phone = lead ? lead.phone : '';
-
-                tbody.innerHTML += `
-                    <tr>
-                        <td style="font-size:11px">${date}</td>
-                        <td style="font-weight:600">${leadName}</td>
-                        <td>${act.action}</td>
-                        <td style="font-size:12px; color:#666; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${act.text || ''}</td>
-                        <td style="text-align:right">
-                            ${phone ? `<a href="tel:${phone}" class="btn success" style="padding:4px 8px; font-size:11px; display:inline-block; margin-right:4px;">Call</a>` : ''}
-                            <button class="btn" style="padding:4px 8px; font-size:11px" onclick="openWork('${leadId}'); document.getElementById('historyModal').classList.remove('open');">Work</button>
-                        </td>
-                    </tr>
-                `;
+                tbody.innerHTML += `<tr><td style="font-size:11px">${date}</td><td style="font-weight:600">${leadName}</td><td>${act.action}</td><td style="font-size:12px; color:#666; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${act.text || ''}</td><td style="text-align:right">${phone ? `<a href="tel:${phone}" class="btn success" style="padding:4px 8px; font-size:11px; display:inline-block; margin-right:4px;">Call</a>` : ''}<button class="btn" style="padding:4px 8px; font-size:11px" onclick="openWork('${leadId}'); document.getElementById('historyModal').classList.remove('open');">Work</button></td></tr>`;
             });
             if(snap.empty) tbody.innerHTML = '<tr><td colspan="5">No calls found.</td></tr>';
         });
   };
 
-  // Call Timer Logic
   document.getElementById('btnCallStart').onclick = () => {
     if(timerInt) return;
     const phone = document.getElementById('m_phone').value;
@@ -627,26 +523,14 @@
     const nextAct = document.getElementById('m_nextAction').value;
     const nextDueVal = document.getElementById('m_nextDue').value;
     const note = document.getElementById('logNote').value;
-
-    const updateData = {
-        stage: stage,
-        nextAction: nextAct,
-        updatedAt: new Date()
-    };
+    const updateData = { stage: stage, nextAction: nextAct, updatedAt: new Date() };
     if(nextDueVal) updateData.nextDue = new Date(nextDueVal);
-
     db.collection('leads').doc(activeLeadId).update(updateData);
-
     if(note || stage) {
         db.collection('leads').doc(activeLeadId).collection('activities').add({
-            action: 'Log',
-            text: note,
-            details: `-> ${stage} | Next: ${nextAct}`,
-            createdAt: new Date(),
-            createdBy: currentUser.uid
+            action: 'Log', text: note, details: `-> ${stage} | Next: ${nextAct}`, createdAt: new Date(), createdBy: currentUser.uid
         });
     }
-
     alert('Saved');
     document.getElementById('modal').classList.remove('open');
   };
@@ -693,21 +577,17 @@
           gbp3: document.getElementById('e_gbp3').value,
           notes: document.getElementById('e_notes').value,
       };
-
-      if(activeLeadId) {
-          db.collection('leads').doc(activeLeadId).update(payload);
-      } else {
+      if(activeLeadId) db.collection('leads').doc(activeLeadId).update(payload);
+      else {
           payload.assignedTo = currentUser.uid;
           payload.createdAt = new Date();
           payload.stage = 'New Lead';
           db.collection('leads').add(payload);
       }
-      
       document.getElementById('editModal').classList.remove('open');
   };
 
   function logout() { auth.signOut().then(() => window.location.href = 'index.html'); }
-
   init();
 </script>
 </body>
