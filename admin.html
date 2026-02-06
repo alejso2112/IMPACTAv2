@@ -576,6 +576,7 @@
       db.collection('users').doc(id).update({ name }).then(() => closeModal('editUserModal'));
   }
 
+  
   async function fetchHistory() {
       const tbody = document.getElementById('historyBody');
       tbody.innerHTML = '<tr><td colspan="5" class="loading">Loading History...</td></tr>';
