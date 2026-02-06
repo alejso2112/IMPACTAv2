@@ -206,6 +206,25 @@
     </div>
 </div>
 
+<div class="modal" id="editUserModal">
+  <div class="panel" style="width: 400px;">
+    <div class="hd">
+      <h3>Edit User Details</h3>
+      <button class="btn sec" onclick="closeEditModal()" style="border:none; background:transparent; color:#64748b; font-size:18px; padding:0;">&times;</button>
+    </div>
+    <div class="bd">
+      <input type="hidden" id="editUserId">
+      
+      <div class="filter-group" style="margin-bottom:12px;">
+        <label style="font-size:11px; font-weight:700; color:#64748b; display:block; margin-bottom:4px;">FULL NAME</label>
+        <input id="editUserNameField" type="text" placeholder="Enter Name" style="width:100%;" />
+      </div>
+
+      <button class="btn modal-btn" onclick="saveUserEdit()">Save Changes</button>
+    </div>
+  </div>
+</div>
+
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
@@ -261,13 +280,17 @@
             // Display User Name or Email
             const displayName = u.name || '-';
             
+            // RENDER ROW WITH EDIT BUTTON
             userTbody.innerHTML += `
                 <tr>
                     <td>${displayName}</td>
                     <td>${u.email}</td>
                     <td><span class="badge ${u.role}">${u.role}</span></td>
                     <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : '-'}</td>
-                    <td><button class="btn sec" style="padding:4px 8px; font-size:12px" onclick="deleteUser('${doc.id}')">Remove</button></td>
+                    <td>
+                        <button class="btn sec" style="padding:4px 8px; font-size:12px; margin-right:5px;" onclick="openEditModal('${doc.id}')">Edit</button>
+                        <button class="btn danger" style="padding:4px 8px; font-size:12px" onclick="deleteUser('${doc.id}')">Remove</button>
+                    </td>
                 </tr>
             `;
             
@@ -691,6 +714,45 @@
   function deleteLead(id) {
       if(confirm('Delete?')) db.collection('leads').doc(id).delete();
   }
+  
+  // --- EDIT USER LOGIC ---
+  function openEditModal(userId) {
+      // Find the user object in our local memory (allUsers)
+      const user = allUsers.find(u => u.id === userId);
+      if(!user) return;
+
+      // Populate fields
+      document.getElementById('editUserId').value = userId;
+      document.getElementById('editUserNameField').value = user.name || '';
+      
+      // Open Modal
+      document.getElementById('editUserModal').classList.add('open');
+  }
+
+  function closeEditModal() {
+      document.getElementById('editUserModal').classList.remove('open');
+  }
+
+  function saveUserEdit() {
+      const id = document.getElementById('editUserId').value;
+      const newName = document.getElementById('editUserNameField').value;
+      
+      if(!newName || !newName.trim()) return alert('Name cannot be empty.');
+
+      // Update Firestore
+      db.collection('users').doc(id).update({ 
+          name: newName.trim() 
+      })
+      .then(() => {
+          alert('User updated successfully.');
+          closeEditModal();
+      })
+      .catch(error => {
+          console.error("Error updating user: ", error);
+          alert('Error updating user: ' + error.message);
+      });
+  }
+
   function createUser() {
     const name = document.getElementById('newUserName').value; // Changed
     const email = document.getElementById('newUserEmail').value;
