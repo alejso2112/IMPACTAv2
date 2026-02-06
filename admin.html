@@ -3,227 +3,254 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Admin | IMPACTA CRM</title>
+  <title>IMPACTA ADMIN CONSOLE</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <style>
-    :root{ --brand:#0c62ab; --bg:#f1f5f9; --ink:#0f172a; --line:#e2e8f0; --font: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
-    body{ margin:0; font-family:var(--font); background:var(--bg); color:var(--ink); }
-    .topbar { background:#fff; border-bottom:1px solid var(--line); padding:16px 24px; display:flex; justify-content:space-between; align-items:center; }
-    .brand img { height:36px; }
-    .btn { padding:10px 16px; border-radius:6px; font-weight:600; cursor:pointer; border:none; background:var(--brand); color:white; font-size:14px; }
-    .btn.sec { background:white; color:var(--ink); border:1px solid var(--line); }
-    .btn.danger { background:#fee2e2; color:#b91c1c; border:1px solid #fecaca; }
-    .btn.danger:hover { background:#fecaca; }
-    .container { max-width:1400px; margin:24px auto; padding:0 24px; display:grid; gap:24px; }
-    .card { background:white; border-radius:12px; border:1px solid var(--line); padding:24px; }
-    h2 { margin-top:0; font-size:18px; color:var(--brand); }
-    table { width:100%; border-collapse:collapse; margin-top:0; }
-    th, td { text-align:left; padding:12px; border-bottom:1px solid var(--line); font-size:13px; }
-    th { background:#f8fafc; color:#64748b; font-size:11px; text-transform:uppercase; font-weight:700; position:sticky; top:0; cursor: pointer; }
-    th:hover { color: var(--brand); }
-    .row { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px; }
-    input, select { width:100%; padding:10px; border:1px solid var(--line); border-radius:6px; box-sizing:border-box; font-size:13px; }
+    /* --- STRATEGIC STYLING --- */
+    :root{
+      --brand:#0c62ab; --brand-dark:#094a80; --ink:#0f172a; --muted:#64748b;
+      --line:#e2e8f0; --bg:#f8fafc; --radius:12px;
+      --sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    }
+    *{box-sizing:border-box}
+    
+    body{ margin:0; font-family:var(--sans); color:var(--ink); background: var(--bg); line-height:1.5; font-size: 14px; }
+    
+    /* UTILITIES */
+    .wrap{max-width:1600px; margin:0 auto; padding:0 24px}
+    .flex{display:flex; align-items:center; gap:12px}
+    .col{flex-direction:column; align-items:flex-start}
+    
+    /* TOPBAR */
+    .topbar{ position:sticky; top:0; z-index:50; border-bottom:1px solid var(--line); background:#fff; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); }
+    .topbar .inner{ padding:14px 0; display:flex; justify-content:space-between; align-items:center; }
+    .brand h1 { margin:0; font-size:20px; font-weight:800; color:var(--brand); letter-spacing: -0.02em; }
+    .brand p { margin:0; font-size:11px; color:var(--muted); font-weight:600; text-transform:uppercase; letter-spacing:0.05em;}
+    
+    /* BUTTONS */
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:8px 16px; border-radius:8px; border:1px solid transparent; background:var(--brand); color:#fff; font-weight:600; font-size:13px; cursor:pointer; transition:all .15s ease; }
+    .btn:hover{background:var(--brand-dark)}
+    .btn.secondary{background:#fff; color:var(--ink); border:1px solid var(--line);}
+    .btn.secondary:hover{background:#f1f5f9; border-color:#cbd5e1}
+    .btn.danger{background:#fff; color:#b91c1c; border:1px solid #fecaca;}
+    .btn.danger:hover{background:#fef2f2; border-color:#b91c1c}
+
+    /* CARDS */
+    .card{ background:#fff; border:1px solid var(--line); border-radius:var(--radius); box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1); overflow:hidden; margin-bottom:24px; }
+    .card .hd{ padding:16px 24px; border-bottom:1px solid var(--line); background:#f8fafc; display:flex; justify-content:space-between; align-items:center; }
+    .card .hd h2{ margin:0; font-size:16px; font-weight:700; color:var(--ink); }
+    .card .bd{ padding:24px; }
+
+    /* FILTERS (RESTORED LEAD DATABASE STYLE) */
+    .filter-bar { display:grid; grid-template-columns: repeat(5, 1fr) auto; gap:10px; margin-bottom:16px; padding:16px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; align-items:end; }
+    .filter-group label { display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase; }
+    select, input { width:100%; padding:8px 12px; border-radius:6px; border:1px solid var(--line); font-size:13px; background:#fff; color:var(--ink); outline:none; }
+    select:focus, input:focus { border-color:var(--brand); ring:2px var(--brand); }
+
+    /* GENERAL FILTERS (History/Personnel) */
+    .filters { display:flex; gap:16px; flex-wrap:wrap; align-items:flex-end; background:#f1f5f9; padding:16px; border-radius:8px; border:1px solid var(--line); margin-bottom:20px; }
+
+    /* TABLES */
+    .tablewrap{ width:100%; overflow-x:auto; border:1px solid var(--line); border-radius:8px; }
+    table{ width:100%; border-collapse:collapse; background:#fff; }
+    th, td{ padding:12px 16px; border-bottom:1px solid var(--line); text-align:left; font-size:13px; vertical-align:top; }
+    th{ background:#f8fafc; font-weight:700; color:var(--muted); text-transform:uppercase; font-size:11px; white-space:nowrap; position:sticky; top:0; z-index:10; cursor:pointer;}
+    th:hover { color:var(--brand); }
+    tr:last-child td { border-bottom:none; }
+    tr:hover td { background:#f8fafc; }
+    
+    .status-pill { display:inline-block; padding:2px 8px; border-radius:12px; font-size:11px; font-weight:700; text-transform:uppercase; background:#e0f2fe; color:#0369a1; }
     .badge { padding:2px 8px; border-radius:99px; font-size:11px; font-weight:700; background:#e2e8f0; }
     .badge.admin { background:#dbeafe; color:#1e40af; }
     input[type="checkbox"] { width: 16px; height: 16px; cursor: pointer; }
 
-    /* FILTERS BAR */
-    .filter-bar { display:grid; grid-template-columns: repeat(5, 1fr) auto; gap:10px; margin-bottom:16px; padding:16px; background:#f8fafc; border:1px solid var(--line); border-radius:8px; align-items:end; }
-    .filter-group label { display:block; font-size:11px; font-weight:700; color:#64748b; margin-bottom:4px; text-transform:uppercase; }
-    
-    /* MODAL Styling */
+    /* MODAL */
     .modal { position:fixed; inset:0; background:rgba(15,23,42,.7); backdrop-filter:blur(4px); display:none; align-items:center; justify-content:center; padding:20px; z-index:1000; }
     .modal.open { display:flex; }
-    .modal .panel { width:min(600px, 95%); background:#fff; border-radius:12px; border:1px solid var(--line); overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); }
+    .modal .panel { width:min(500px, 95%); background:#fff; border-radius:12px; border:1px solid var(--line); overflow:hidden; display:flex; flex-direction:column; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); }
     .modal .hd { padding:16px 24px; border-bottom:1px solid var(--line); display:flex; justify-content:space-between; align-items:center; background:#fff; }
-    .modal .hd h3 { margin:0; font-size:16px; font-weight:700; color:var(--ink); }
-    .modal .bd { padding:24px; display:flex; flex-direction:column; gap:16px; }
-    textarea.import-area { width:100%; height:200px; padding:16px; border:1px solid var(--line); border-radius:8px; font-family:var(--font); font-size:13px; line-height:1.5; resize:vertical; outline:none; background:#f8fafc; box-sizing: border-box; }
-    textarea.import-area:focus { border-color:var(--brand); background:#fff; box-shadow:0 0 0 3px rgba(12,98,171,.1); }
-    .modal-btn { width: 100%; justify-content: center; padding: 12px; font-size: 15px; margin-top: 8px; }
+    .modal .bd { padding:24px; }
+    textarea.import-area { width:100%; height:200px; padding:12px; border:1px solid var(--line); border-radius:8px; font-family:var(--sans); font-size:13px; resize:vertical; outline:none; background:#f8fafc; }
 
-    /* CALL LOGS MODAL SPECIFIC */
-    #callLogsModal .panel { width: min(900px, 95%); max-height: 90vh; }
-    #callLogsModal .bd { padding: 0; overflow:hidden; display: flex; flex-direction: column; height: 100%; }
-    .logs-filter { padding: 16px; background: #f8fafc; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: repeat(4, 1fr) auto; gap: 10px; align-items: end; }
-    .logs-list { flex: 1; overflow-y: auto; padding: 0; }
-    .logs-list table { margin: 0; }
-    .logs-list th { position: sticky; top: 0; background: #fff; z-index: 10; }
+    .loading { color:var(--muted); font-style:italic; padding:20px; text-align:center; }
   </style>
 </head>
+
 <body>
 
-<div class="topbar">
-  <div class="brand"><img src="img/logo-main-2026.png" alt="IMPACTA"></div>
-  <div style="display:flex; gap:10px;">
-    <a href="crm.html" class="btn sec" style="text-decoration:none;">Open CRM</a>
-    <button class="btn sec" onclick="logout()">Logout</button>
-  </div>
-</div>
-
-<div class="container">
-  
-  <div class="card">
-    <h2>Manage Users</h2>
-    <div class="row" style="grid-template-columns: 2fr 2fr 2fr 1fr 1fr;">
-      <input id="newUserName" placeholder="Full Name" type="text" />
-      <input id="newUserEmail" placeholder="New User Email" type="email" />
-      <input id="newUserPass" placeholder="Password (min 6 chars)" type="text" />
-      <select id="newUserRole">
-          <option value="agent">Agent</option>
-          <option value="admin">Admin</option>
-      </select>
-      <button class="btn" id="btnCreate" onclick="createUser()">Create</button>
+  <div class="topbar">
+    <div class="wrap">
+      <div class="inner">
+        <div class="brand">
+          <h1>IMPACTA ADMIN</h1>
+          <p>Strategic Revenue Console</p>
+        </div>
+        <div class="flex">
+          <span id="adminUser" style="font-size:12px; color:var(--muted); font-weight:600;"></span>
+          <a href="crm.html" class="btn secondary">Open CRM</a>
+          <button class="btn secondary" onclick="logout()">Logout</button>
+        </div>
+      </div>
     </div>
-    <table style="margin-top:0;">
-      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th>Actions</th></tr></thead>
-      <tbody id="userList"></tbody>
-    </table>
   </div>
 
-  <div class="card">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
-        <h2>Lead Database</h2>
-        <div style="display:flex; gap:10px;">
-            <button class="btn sec" onclick="openCallLogsModal()">View Call Logs</button>
-            <button class="btn sec" onclick="openImportModal()">Import CSV</button>
-            <button class="btn danger" id="btnBulkDelete" style="display:none;" onclick="bulkDelete()">Delete Selected</button>
-        </div>
-    </div>
-
-    <div class="filter-bar">
-        <div class="filter-group">
-            <label>Status</label>
-            <select id="f_stage" onchange="applyFilters()"><option value="">All</option></select>
-        </div>
-        <div class="filter-group">
-            <label>City</label>
-            <select id="f_city" onchange="applyFilters()"><option value="">All</option></select>
-        </div>
-        <div class="filter-group">
-            <label>State</label>
-            <select id="f_state" onchange="applyFilters()"><option value="">All</option></select>
-        </div>
-        <div class="filter-group">
-            <label>Industry</label>
-            <select id="f_industry" onchange="applyFilters()"><option value="">All</option></select>
-        </div>
-        <div class="filter-group">
-            <label>Assigned To</label>
-            <select id="f_assign" onchange="applyFilters()"><option value="unassigned">Unassigned</option></select>
-        </div>
-        <div>
-            <button class="btn sec" style="width:100%" onclick="resetFilters()">Reset</button>
-        </div>
-    </div>
+  <main class="wrap" style="padding-top:30px;">
     
-    <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px;">
-        <span style="font-size:13px; font-weight:600; color:var(--ink);">Bulk Actions:</span>
-        <select id="assignUser" style="width:200px; padding:6px;"><option value="">Select Agent...</option></select>
-        <button class="btn" style="padding:6px 12px;" onclick="assignLeads()">Assign</button>
-        <button class="btn sec" style="padding:6px 12px;" onclick="bulkUnassign()">Unassign Selected</button>
-        
-        <span id="recordCount" style="margin-left:auto; font-size:12px; color:#64748b;">0 records</span>
-    </div>
+    <section class="card">
+      <div class="hd">
+        <div class="flex col" style="gap:2px;">
+          <h2>Global Activity History</h2>
+          <span style="font-size:12px; color:var(--muted);">Real-time monitoring of all agent interactions.</span>
+        </div>
+        <div><button class="btn" onclick="fetchHistory()">🔄 Refresh Data</button></div>
+      </div>
+      <div class="bd">
+        <div class="filters">
+            <div class="filter-group" style="flex:1;">
+                <label>Agent / Caller</label>
+                <select id="h_caller"><option value="all">All Agents</option></select>
+            </div>
+            <div class="filter-group"><label>Year</label><select id="h_year"></select></div>
+            <div class="filter-group"><label>Month</label><select id="h_month"></select></div>
+            <div class="filter-group"><label>Day</label><select id="h_day"></select></div>
+            <div class="filter-group">
+                <button class="btn secondary" onclick="setToToday()">Reset to Today</button>
+            </div>
+        </div>
+        <div class="tablewrap" style="max-height:400px; overflow-y:auto;">
+          <table id="historyTable">
+            <thead>
+              <tr>
+                <th style="width:160px;">Timestamp</th>
+                <th style="width:150px;">Agent</th>
+                <th style="width:200px;">Lead / Company</th>
+                <th style="width:150px;">Action</th>
+                <th>Notes / Outcome</th>
+              </tr>
+            </thead>
+            <tbody id="historyBody"><tr><td colspan="5" class="loading">Loading History...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
 
-    <div style="max-height:600px; overflow-y:auto; border:1px solid var(--line); border-radius:8px;">
-      <table>
-        <thead>
-            <tr>
-                <th style="width:40px; text-align:center; cursor:default;"><input type="checkbox" id="selectAll" onclick="toggleAll(this)"></th>
-                <th onclick="setSort('company')">Company</th>
-                <th onclick="setSort('cityClean')">City</th>
-                <th onclick="setSort('stateExtracted')">State</th>
-                <th onclick="setSort('industry')">Industry</th>
-                <th onclick="setSort('assignedName')">Assigned To</th>
-                <th onclick="setSort('stage')">Stage</th>
-                <th style="text-align:right; cursor:default;">Actions</th>
-            </tr>
-        </thead>
-        <tbody id="leadList"></tbody>
-      </table>
-    </div>
-  </div>
+    <section class="card">
+      <div class="hd">
+        <h2>Lead Database</h2>
+        <div class="flex">
+            <button class="btn secondary" onclick="openImportModal()">Import CSV</button>
+        </div>
+      </div>
+      <div class="bd">
+         
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label>Status</label>
+                <select id="f_stage" onchange="applyFilters()"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>City</label>
+                <select id="f_city" onchange="applyFilters()"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>State</label>
+                <select id="f_state" onchange="applyFilters()"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Industry</label>
+                <select id="f_industry" onchange="applyFilters()"><option value="">All</option></select>
+            </div>
+            <div class="filter-group">
+                <label>Assigned To</label>
+                <select id="f_assign" onchange="applyFilters()"><option value="unassigned">Unassigned</option></select>
+            </div>
+            <div>
+                <button class="btn secondary" style="width:100%" onclick="resetFilters()">Reset</button>
+            </div>
+        </div>
 
-</div>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; padding:10px; background:#f1f5f9; border-radius:6px; border:1px solid var(--line);">
+            <span style="font-size:13px; font-weight:600; color:var(--ink);">Bulk Actions:</span>
+            <select id="assignUser" style="width:200px; padding:8px;"><option value="">Select Agent...</option></select>
+            <button class="btn" style="padding:8px 16px;" onclick="assignLeads()">Assign</button>
+            <button class="btn secondary" style="padding:8px 16px;" onclick="bulkUnassign()">Unassign Selected</button>
+            <button class="btn danger" style="padding:8px 16px; margin-left:8px;" onclick="bulkDelete()">Delete Selected</button>
+            
+            <span id="recordCount" style="margin-left:auto; font-size:12px; color:#64748b; font-weight:600;">0 records</span>
+        </div>
 
-<div class="modal" id="importModal">
-  <div class="panel">
-    <div class="hd">
-      <h3>Import Leads (CSV)</h3>
-      <button class="btn sec" onclick="closeImportModal()" style="border:none; background:transparent; color:#64748b; font-size:18px; padding:0;">&times;</button>
-    </div>
-    <div class="bd">
-      <p style="margin:0; color:#64748b; font-size:13px;">
-        Paste your CSV data below. First row must be headers.
-      </p>
-      <textarea id="importText" class="import-area" placeholder="Company,Phone,City,State,Industry..."></textarea>
-      <button class="btn modal-btn" onclick="processImport()">Process Import</button>
-    </div>
-  </div>
-</div>
+         <div class="tablewrap" style="max-height:600px; overflow-y:auto; border:1px solid var(--line);">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width:40px; text-align:center;"><input type="checkbox" id="selectAll" onclick="toggleAll(this)"></th>
+                        <th onclick="setSort('company')">Company</th>
+                        <th onclick="setSort('cityClean')">City</th>
+                        <th onclick="setSort('stateExtracted')">State</th>
+                        <th onclick="setSort('industry')">Industry</th>
+                        <th onclick="setSort('assignedName')">Assigned To</th>
+                        <th onclick="setSort('stage')">Stage</th>
+                        <th style="text-align:right">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="leadList">
+                    <tr><td colspan="8" class="loading">Loading Leads...</td></tr>
+                </tbody>
+            </table>
+         </div>
+      </div>
+    </section>
 
-<div class="modal" id="callLogsModal">
-    <div class="panel">
+    <section class="card">
         <div class="hd">
-            <h3>User Call History</h3>
-            <button class="btn sec" onclick="document.getElementById('callLogsModal').classList.remove('open')" style="border:none; background:transparent; color:#64748b; font-size:18px; padding:0;">&times;</button>
+            <div class="flex col" style="gap:2px;">
+                <h2>Personnel & Access Control</h2>
+                <span style="font-size:12px; color:var(--muted);">Manage authorized agents and credentials.</span>
+            </div>
         </div>
         <div class="bd">
-            <div class="logs-filter">
-                <div>
-                    <label>Month</label>
-                    <select id="logMonth"></select>
+            <div class="filters" style="display:grid; grid-template-columns: 2fr 2fr 2fr 1fr 1fr; gap:12px;">
+                <div class="filter-group"><label>Full Name</label><input id="newUserName" placeholder="e.g. John Doe"></div>
+                <div class="filter-group"><label>Email</label><input id="newUserEmail" type="email" placeholder="agent@impacta.com"></div>
+                <div class="filter-group"><label>Password</label><input id="newUserPass" type="text" placeholder="Min 6 chars"></div>
+                <div class="filter-group">
+                    <label>Role</label>
+                    <select id="newUserRole"><option value="agent">Agent</option><option value="admin">Admin</option></select>
                 </div>
-                <div>
-                    <label>Day</label>
-                    <select id="logDay"></select>
-                </div>
-                <div>
-                    <label>Year</label>
-                    <select id="logYear"></select>
-                </div>
-                <div>
-                    <label>User</label>
-                    <select id="logUser"><option value="">All Users</option></select>
-                </div>
-                <button class="btn" onclick="fetchCallLogs()">Filter</button>
+                <div><button class="btn" style="width:100%" onclick="createUser()">+ Create User</button></div>
             </div>
-            <div class="logs-list">
-                <table style="width:100%; border-collapse: collapse;">
-                    <thead>
-                        <tr>
-                            <th>Time</th>
-                            <th>User</th>
-                            <th>Lead</th>
-                            <th>Result</th>
-                            <th>Note</th>
-                        </tr>
-                    </thead>
-                    <tbody id="logsTbody"></tbody>
+            <div class="tablewrap" style="margin-top:20px;">
+                <table>
+                    <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Created</th><th style="text-align:right">Actions</th></tr></thead>
+                    <tbody id="userList"><tr><td colspan="5" class="loading">Loading Personnel...</td></tr></tbody>
                 </table>
             </div>
         </div>
-    </div>
-</div>
+    </section>
 
-<div class="modal" id="editUserModal">
-  <div class="panel" style="width: 400px;">
-    <div class="hd">
-      <h3>Edit User Details</h3>
-      <button class="btn sec" onclick="closeEditModal()" style="border:none; background:transparent; color:#64748b; font-size:18px; padding:0;">&times;</button>
-    </div>
-    <div class="bd">
-      <input type="hidden" id="editUserId">
-      
-      <div class="filter-group" style="margin-bottom:12px;">
-        <label style="font-size:11px; font-weight:700; color:#64748b; display:block; margin-bottom:4px;">FULL NAME</label>
-        <input id="editUserNameField" type="text" placeholder="Enter Name" style="width:100%;" />
+  </main>
+
+  <div class="modal" id="editUserModal">
+    <div class="panel">
+      <div class="hd"><h3>Edit Personnel</h3><button class="btn secondary" onclick="closeModal('editUserModal')">&times;</button></div>
+      <div class="bd">
+        <input type="hidden" id="editUserId">
+        <div class="filter-group" style="margin-bottom:16px;"><label>Full Name</label><input id="editUserNameField" style="width:100%"></div>
+        <button class="btn" style="width:100%" onclick="saveUserEdit()">Save Changes</button>
       </div>
-
-      <button class="btn modal-btn" onclick="saveUserEdit()">Save Changes</button>
     </div>
   </div>
-</div>
+
+  <div class="modal" id="importModal">
+    <div class="panel">
+      <div class="hd"><h3>Import Leads (CSV)</h3><button class="btn secondary" onclick="closeModal('importModal')">&times;</button></div>
+      <div class="bd">
+        <p style="font-size:13px; color:var(--muted); margin-top:0;">Headers required: Company, Phone, City, State, Industry, Recommendation, etc.</p>
+        <textarea id="importText" class="import-area" placeholder="Company,Phone,City,State..."></textarea>
+        <button class="btn" style="width:100%; margin-top:12px;" onclick="processImport()">Process Import</button>
+      </div>
+    </div>
+  </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
@@ -244,233 +271,192 @@
   const auth = firebase.auth();
   const db = firebase.firestore();
 
-  auth.onAuthStateChanged(user => {
-    if (!user) return window.location.href = 'index.html';
-    db.collection('users').doc(user.uid).get().then(doc => {
-        if (!doc.exists || doc.data().role !== 'admin') {
-            window.location.href = 'crm.html';
-        } else {
-            loadData();
-        }
-    });
-  });
-
+  let userMap = {}; 
+  let allLeads = [];
+  let filteredLeads = [];
   let allUsers = [];
-  let allLeads = []; 
-  let filteredLeads = []; 
   let sortKey = 'createdAt'; 
   let sortDesc = true;
 
-  function loadData() {
-    db.collection('users').onSnapshot(snap => {
-        allUsers = [];
-        const userTbody = document.getElementById('userList');
-        const assignSel = document.getElementById('assignUser');
-        const logUserSel = document.getElementById('logUser');
+  function init() {
+    auth.onAuthStateChanged(user => {
+        if(!user) return window.location.href = 'index.html';
         
-        userTbody.innerHTML = '';
-        assignSel.innerHTML = '<option value="">Select Agent...</option>';
-        logUserSel.innerHTML = '<option value="">All Users</option>';
-        
-        snap.forEach(doc => {
-            const u = doc.data();
-            u.id = doc.id;
-            allUsers.push(u);
-            
-            // Display User Name or Email
-            const displayName = u.name || '-';
-            
-            // RENDER ROW WITH EDIT BUTTON
-            userTbody.innerHTML += `
-                <tr>
-                    <td>${displayName}</td>
-                    <td>${u.email}</td>
-                    <td><span class="badge ${u.role}">${u.role}</span></td>
-                    <td>${u.createdAt ? new Date(u.createdAt.toDate()).toLocaleDateString() : '-'}</td>
-                    <td>
-                        <button class="btn sec" style="padding:4px 8px; font-size:12px; margin-right:5px;" onclick="openEditModal('${doc.id}')">Edit</button>
-                        <button class="btn danger" style="padding:4px 8px; font-size:12px" onclick="deleteUser('${doc.id}')">Remove</button>
-                    </td>
-                </tr>
-            `;
-            
-            // Populate Dropdowns with Name
-            if(u.role === 'agent') {
-                const optText = u.name ? u.name : u.email;
-                assignSel.innerHTML += `<option value="${doc.id}">${optText}</option>`;
-                logUserSel.innerHTML += `<option value="${doc.id}">${optText}</option>`;
+        db.collection('users').doc(user.uid).get().then(doc => {
+            const role = doc.exists ? doc.data().role : 'agent';
+            if(role !== 'admin') {
+                alert("Access Denied: Strategic Oversight Clearance Required.");
+                window.location.href = 'crm.html';
+                return;
             }
+            document.getElementById('adminUser').textContent = `Admin: ${user.email}`;
+            populateDateFilters();
+            listenToUsers(); // Starts User Listener
+            fetchHistory(); // Starts History
+            listenToLeads(); // Starts Lead Listener & Table Render
         });
-        loadLeads();
+    });
+
+    ['h_year', 'h_month', 'h_day', 'h_caller'].forEach(id => {
+        document.getElementById(id).addEventListener('change', fetchHistory);
     });
   }
 
-  function loadLeads() {
-     db.collection('leads').orderBy('createdAt', 'desc').onSnapshot(snap => {
-         allLeads = [];
-         snap.forEach(doc => {
-             let l = doc.data();
-             l.id = doc.id;
-             const agent = allUsers.find(u => u.id === l.assignedTo);
-             // Use Name if available, else Email
-             l.assignedName = agent ? (agent.name || agent.email) : 'Unassigned';
-             
-             if(!l.state && l.city && l.city.includes(',')) {
+  // --- 1. DATE FILTERS (HISTORY) ---
+  function populateDateFilters() {
+    const today = new Date();
+    const selYear = document.getElementById('h_year');
+    const selMonth = document.getElementById('h_month');
+    const selDay = document.getElementById('h_day');
+    const curYear = today.getFullYear();
+
+    for(let y = curYear - 2; y <= curYear + 1; y++) selYear.add(new Option(y, y, y === curYear, y === curYear));
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    months.forEach((m, i) => selMonth.add(new Option(m, i, i === today.getMonth(), i === today.getMonth())));
+    for(let d=1; d<=31; d++) selDay.add(new Option(d, d, d === today.getDate(), d === today.getDate()));
+  }
+
+  function setToToday() {
+      const today = new Date();
+      document.getElementById('h_year').value = today.getFullYear();
+      document.getElementById('h_month').value = today.getMonth();
+      document.getElementById('h_day').value = today.getDate();
+      document.getElementById('h_caller').value = 'all';
+      fetchHistory();
+  }
+
+  // --- 2. USER MANAGEMENT & DROPDOWNS ---
+  function listenToUsers() {
+      db.collection('users').onSnapshot(snap => {
+          allUsers = [];
+          const sel = document.getElementById('h_caller');
+          const assignSel = document.getElementById('assignUser');
+          const tbody = document.getElementById('userList');
+          
+          sel.innerHTML = '<option value="all">All Agents</option>';
+          assignSel.innerHTML = '<option value="">Select Agent...</option>';
+          tbody.innerHTML = '';
+
+          snap.forEach(doc => {
+              const d = doc.data();
+              d.id = doc.id;
+              allUsers.push(d);
+              userMap[doc.id] = d;
+
+              let name = d.name || d.email;
+              sel.add(new Option(name, doc.id));
+              
+              if(d.role === 'agent') {
+                  assignSel.add(new Option(name, doc.id));
+              }
+
+              const created = d.createdAt ? new Date(d.createdAt.toDate()).toLocaleDateString() : '-';
+              const badgeClass = d.role === 'admin' ? 'badge admin' : 'badge';
+              
+              tbody.innerHTML += `
+                <tr>
+                    <td style="font-weight:600">${name}</td>
+                    <td>${d.email}</td>
+                    <td><span class="${badgeClass}">${d.role}</span></td>
+                    <td style="color:var(--muted); font-size:12px;">${created}</td>
+                    <td style="text-align:right">
+                        <button class="btn secondary" style="padding:4px 8px; font-size:11px;" onclick="openEditUser('${doc.id}')">Edit</button>
+                        <button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteUser('${doc.id}')">Remove</button>
+                    </td>
+                </tr>`;
+          });
+          
+          // Re-populate lead filters if leads already loaded
+          if(allLeads.length > 0) populateLeadFilterOptions();
+      });
+  }
+
+  // --- 3. LEAD OPERATIONS (RESTORED LOGIC) ---
+  function listenToLeads() {
+      db.collection('leads').onSnapshot(snap => {
+          allLeads = [];
+          snap.forEach(doc => {
+              let l = doc.data();
+              l.id = doc.id;
+              const agent = allUsers.find(u => u.id === l.assignedTo);
+              l.assignedName = agent ? (agent.name || agent.email) : 'Unassigned';
+              
+              // Extract City/State for Filtering
+              if(!l.state && l.city && l.city.includes(',')) {
                  let parts = l.city.split(',');
                  l.stateExtracted = parts[parts.length-1].trim();
                  l.cityClean = parts[0].trim();
-             } else {
+              } else {
                  l.stateExtracted = l.state || '';
                  l.cityClean = l.city || '';
-             }
-             allLeads.push(l);
-         });
-         
-         populateFilterOptions();
-         applyFilters(); 
-     });
+              }
+              allLeads.push(l);
+          });
+          populateLeadFilterOptions();
+          applyFilters();
+      });
   }
 
-  function populateFilterOptions() {
-      const getCounts = (key) => {
+  function populateLeadFilterOptions() {
+      // Helper to build dropdowns
+      const build = (key, elId, isAssign=false) => {
           const counts = {};
-          allLeads.forEach(l => {
-              const val = l[key] || 'Unknown';
-              counts[val] = (counts[val] || 0) + 1;
-          });
-          return counts;
-      };
-
-      const getAssignCounts = () => {
-          const counts = { 'unassigned': 0 };
-          allUsers.forEach(u => counts[u.id] = 0);
+          if(isAssign) counts['unassigned'] = 0;
           
           allLeads.forEach(l => {
-              if(!l.assignedTo) counts['unassigned']++;
-              else if(counts[l.assignedTo] !== undefined) counts[l.assignedTo]++;
+              if(isAssign) {
+                  if(!l.assignedTo) counts['unassigned']++;
+                  else counts[l.assignedTo] = (counts[l.assignedTo] || 0) + 1;
+              } else {
+                  const val = l[key] || 'Unknown';
+                  counts[val] = (counts[val] || 0) + 1;
+              }
           });
-          return counts;
-      };
 
-      const stageCounts = getCounts('stage');
-      const cityCounts = getCounts('cityClean');
-      const stateCounts = getCounts('stateExtracted');
-      const indCounts = getCounts('industry');
-      const assignCounts = getAssignCounts();
-
-      const buildOptions = (counts, elId, isAssign = false) => {
           const el = document.getElementById(elId);
           const current = el.value;
           let html = '<option value="">All</option>';
           
           if(isAssign) {
-              html += `<option value="unassigned">Unassigned (${assignCounts['unassigned']})</option>`;
-              allUsers.forEach(u => {
-                  if(u.role === 'agent') {
-                      // Use Name in Filter Dropdown
-                      const displayName = u.name || u.email;
-                      html += `<option value="${u.id}">${displayName} (${assignCounts[u.id] || 0})</option>`;
-                  }
+              html += `<option value="unassigned">Unassigned (${counts['unassigned']})</option>`;
+              allUsers.filter(u => u.role === 'agent').forEach(u => {
+                  html += `<option value="${u.id}">${u.name || u.email} (${counts[u.id] || 0})</option>`;
               });
           } else {
-              const sortedKeys = Object.keys(counts).sort();
-              sortedKeys.forEach(k => {
-                  if(!k) return;
-                  html += `<option value="${k}">${k} (${counts[k]})</option>`;
+              Object.keys(counts).sort().forEach(k => {
+                  if(k) html += `<option value="${k}">${k} (${counts[k]})</option>`;
               });
           }
-          
           el.innerHTML = html;
-          if(isAssign && current === '') el.value = 'unassigned';
-          else el.value = current;
+          el.value = current || (isAssign && current === '' ? 'unassigned' : '');
+          if(isAssign && current === 'unassigned') el.value = 'unassigned';
       };
 
-      buildOptions(stageCounts, 'f_stage');
-      buildOptions(cityCounts, 'f_city');
-      buildOptions(stateCounts, 'f_state');
-      buildOptions(indCounts, 'f_industry');
-      buildOptions(assignCounts, 'f_assign', true);
+      build('stage', 'f_stage');
+      build('cityClean', 'f_city');
+      build('stateExtracted', 'f_state');
+      build('industry', 'f_industry');
+      build('assignedTo', 'f_assign', true);
   }
 
   function applyFilters() {
       const s_stage = document.getElementById('f_stage').value;
       const s_city = document.getElementById('f_city').value;
       const s_state = document.getElementById('f_state').value;
-      const s_industry = document.getElementById('f_industry').value;
+      const s_ind = document.getElementById('f_industry').value;
       const s_assign = document.getElementById('f_assign').value;
 
       filteredLeads = allLeads.filter(l => {
           if(s_stage && l.stage !== s_stage) return false;
           if(s_city && l.cityClean !== s_city) return false;
           if(s_state && l.stateExtracted !== s_state) return false;
-          if(s_industry && (l.industry || 'Unknown') !== s_industry) return false;
-          
-          if(s_assign === 'unassigned') {
-              if(l.assignedTo) return false;
-          } else if(s_assign && l.assignedTo !== s_assign) {
-              return false;
-          }
+          if(s_ind && (l.industry || 'Unknown') !== s_ind) return false;
+          if(s_assign === 'unassigned') { if(l.assignedTo) return false; }
+          else if(s_assign && l.assignedTo !== s_assign) return false;
           return true;
       });
 
       renderTable();
-  }
-
-  window.setSort = (key) => { 
-      if(sortKey === key) {
-          sortDesc = !sortDesc; 
-      } else {
-          sortKey = key;
-          sortDesc = true; 
-      }
-      renderTable(); 
-  };
-
-  function renderTable() {
-      const tbody = document.getElementById('leadList');
-      tbody.innerHTML = '';
-      document.getElementById('recordCount').textContent = `${filteredLeads.length} records`;
-      document.getElementById('selectAll').checked = false;
-      updateBulkState();
-
-      filteredLeads.sort((a,b) => {
-          let va = a[sortKey] || ''; 
-          let vb = b[sortKey] || '';
-          if (typeof va === 'string') va = va.toLowerCase();
-          if (typeof vb === 'string') vb = vb.toLowerCase();
-          
-          if(sortDesc) {
-              if(va < vb) return 1;
-              if(va > vb) return -1;
-          } else {
-              if(va < vb) return -1;
-              if(va > vb) return 1;
-          }
-          return 0;
-      });
-
-      filteredLeads.forEach(l => {
-          let actions = '';
-          if(l.assignedTo) {
-              actions += `<button class="btn sec" style="padding:4px 8px; font-size:11px; margin-right:6px;" onclick="unassignLead('${l.id}')">Unassign</button>`;
-          }
-          actions += `<button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteLead('${l.id}')">🗑</button>`;
-          
-          const assignDisplay = l.assignedTo ? l.assignedName : '<span style="color:#b91c1c">Unassigned</span>';
-
-          tbody.innerHTML += `
-            <tr>
-                <td style="text-align:center;"><input type="checkbox" class="lead-check" value="${l.id}" onclick="updateBulkState()"></td>
-                <td style="font-weight:600">${l.company || 'Unknown'}</td>
-                <td>${l.cityClean}</td>
-                <td>${l.stateExtracted}</td>
-                <td>${l.industry || '-'}</td>
-                <td style="font-size:12px">${assignDisplay}</td>
-                <td><span class="badge">${l.stage}</span></td>
-                <td style="text-align:right">${actions}</td>
-            </tr>
-          `;
-      });
   }
 
   function resetFilters() {
@@ -482,299 +468,174 @@
       applyFilters();
   }
 
-  function toggleAll(source) {
-      document.querySelectorAll('.lead-check').forEach(cb => cb.checked = source.checked);
-      updateBulkState();
+  window.setSort = (key) => { 
+      if(sortKey === key) sortDesc = !sortDesc; 
+      else { sortKey = key; sortDesc = true; }
+      renderTable(); 
+  };
+
+  function renderTable() {
+      const tbody = document.getElementById('leadList');
+      tbody.innerHTML = '';
+      document.getElementById('recordCount').textContent = `${filteredLeads.length} records`;
+      document.getElementById('selectAll').checked = false;
+
+      // Sort
+      filteredLeads.sort((a,b) => {
+          let va = a[sortKey] || ''; let vb = b[sortKey] || '';
+          if (typeof va === 'string') va = va.toLowerCase();
+          if (typeof vb === 'string') vb = vb.toLowerCase();
+          if(sortDesc) return va < vb ? 1 : -1;
+          return va < vb ? -1 : 1;
+      });
+
+      // Render (Top 100 max for perf)
+      filteredLeads.slice(0, 100).forEach(l => {
+          let actions = '';
+          if(l.assignedTo) actions += `<button class="btn secondary" style="padding:4px 8px; font-size:11px; margin-right:6px;" onclick="unassignSingle('${l.id}')">Unassign</button>`;
+          actions += `<button class="btn danger" style="padding:4px 8px; font-size:11px;" onclick="deleteSingle('${l.id}')">🗑</button>`;
+          const assignDisplay = l.assignedTo ? l.assignedName : '<span style="color:#b91c1c; font-weight:700;">Unassigned</span>';
+
+          tbody.innerHTML += `
+            <tr>
+                <td style="text-align:center;"><input type="checkbox" class="lead-check" value="${l.id}"></td>
+                <td style="font-weight:600">${l.company || 'Unknown'}</td>
+                <td>${l.cityClean}</td>
+                <td>${l.stateExtracted}</td>
+                <td>${l.industry || '-'}</td>
+                <td style="font-size:12px">${assignDisplay}</td>
+                <td><span class="badge">${l.stage}</span></td>
+                <td style="text-align:right">${actions}</td>
+            </tr>`;
+      });
   }
 
-  function updateBulkState() {
-      const count = document.querySelectorAll('.lead-check:checked').length;
-      const btn = document.getElementById('btnBulkDelete');
-      if (count > 0) {
-          btn.style.display = 'inline-flex';
-          btn.textContent = `Delete Selected (${count})`;
-      } else {
-          btn.style.display = 'none';
-      }
-  }
-
-  function bulkDelete() {
-      const checked = document.querySelectorAll('.lead-check:checked');
-      if(checked.length === 0) return;
-      if(!confirm(`Delete ${checked.length} leads?`)) return;
-
-      const batch = db.batch();
-      checked.forEach(cb => batch.delete(db.collection('leads').doc(cb.value)));
-      batch.commit().then(() => alert('Deleted.'));
-  }
+  // BULK ACTIONS
+  function toggleAll(src) { document.querySelectorAll('.lead-check').forEach(cb => cb.checked = src.checked); }
+  function getChecked() { return Array.from(document.querySelectorAll('.lead-check:checked')).map(cb => cb.value); }
 
   function assignLeads() {
-      const agentId = document.getElementById('assignUser').value;
-      if (!agentId) return alert('Select Agent');
+      const uid = document.getElementById('assignUser').value;
+      const ids = getChecked();
+      if(!uid) return alert('Select Agent');
+      if(ids.length===0) return alert('No leads selected');
       
-      const checked = document.querySelectorAll('.lead-check:checked');
-      let targets = [];
-      
-      if(checked.length > 0) {
-          targets = Array.from(checked).map(cb => cb.value);
-      } else {
-          targets = filteredLeads.filter(l => !l.assignedTo).map(l => l.id);
-          if(targets.length === 0) return alert('No unassigned leads in current filter.');
-      }
-
-      if(!confirm(`Assign ${targets.length} leads?`)) return;
-
       const batch = db.batch();
-      targets.forEach(id => {
-          batch.update(db.collection('leads').doc(id), { assignedTo: agentId });
-      });
-      batch.commit().then(() => { alert('Assigned.'); document.getElementById('selectAll').checked=false; });
+      ids.forEach(id => batch.update(db.collection('leads').doc(id), { assignedTo: uid }));
+      batch.commit().then(() => alert('Assigned!'));
   }
 
   function bulkUnassign() {
-      const checked = document.querySelectorAll('.lead-check:checked');
-      let targets = [];
+      const ids = getChecked();
+      if(ids.length===0) return alert('No leads selected');
+      if(!confirm(`Unassign ${ids.length} leads?`)) return;
       
-      if(checked.length > 0) {
-          targets = Array.from(checked).map(cb => cb.value);
-      } else {
-          targets = filteredLeads.filter(l => l.assignedTo).map(l => l.id);
-          if(targets.length === 0) return alert('No assigned leads in current view.');
-      }
-
-      if(!confirm(`Unassign ${targets.length} leads?`)) return;
-
       const batch = db.batch();
-      targets.forEach(id => {
-          batch.update(db.collection('leads').doc(id), { assignedTo: null });
-      });
-      batch.commit().then(() => { 
-          alert('Unassigned.'); 
-          document.getElementById('selectAll').checked=false; 
-      });
-  }
-
-  // --- IMPORT ---
-  function parseCSVLine(text) {
-      let res = [], cell = '', quote = false;
-      for (let i = 0; i < text.length; i++) {
-          let c = text[i];
-          if (c === '"') quote = !quote;
-          else if (c === ',' && !quote) { res.push(cell.trim().replace(/^"|"$/g, '')); cell = ''; }
-          else cell += c;
-      }
-      res.push(cell.trim().replace(/^"|"$/g, ''));
-      return res;
-  }
-
-  function openImportModal() { document.getElementById('importModal').classList.add('open'); }
-  function closeImportModal() { document.getElementById('importModal').classList.remove('open'); }
-
-  function processImport() {
-    const txt = document.getElementById('importText').value;
-    if (!txt.trim()) return alert('Paste CSV data first.');
-    
-    const lines = txt.trim().split(/\r?\n/);
-    if (lines.length < 2) return alert('Invalid CSV.');
-    
-    const headers = parseCSVLine(lines[0]).map(h => h.trim().toLowerCase());
-    
-    let count = 0;
-    const batch = db.batch(); 
-    
-    for (let i = 1; i < lines.length; i++) {
-        const row = parseCSVLine(lines[i]);
-        if (row.length < 2) continue;
-
-        const getVal = (keys) => {
-            const idx = headers.findIndex(h => keys.some(k => h.includes(k)));
-            return idx > -1 ? row[idx] : '';
-        };
-
-        let cityRaw = getVal(['city', 'location']);
-        let stateRaw = getVal(['state']);
-        
-        let finalCity = cityRaw;
-        if(stateRaw && !cityRaw.includes(stateRaw)) finalCity = `${cityRaw}, ${stateRaw}`;
-
-        const newRef = db.collection('leads').doc(); 
-        const lead = {
-            company: getVal(['company', 'business']) || 'Unknown',
-            phone: getVal(['phone']),
-            city: finalCity,
-            industry: getVal(['industry']),
-            gbp1: getVal(['gbp 1']),
-            gbp2: getVal(['gbp 2']),
-            gbp3: getVal(['gbp 3']),
-            recommendation: getVal(['recommendation', 'rec']),
-            website: getVal(['website']),
-            stage: 'New Lead',
-            nextAction: 'Call Attempt',
-            assignedTo: null,
-            createdAt: new Date()
-        };
-        batch.set(newRef, lead);
-        count++;
-    }
-    
-    batch.commit().then(() => {
-        alert(`Imported ${count} leads.`);
-        closeImportModal();
-        document.getElementById('importText').value = '';
-    });
+      ids.forEach(id => batch.update(db.collection('leads').doc(id), { assignedTo: null }));
+      batch.commit().then(() => alert('Unassigned!'));
   }
   
-  // --- CALL LOGS LOGIC ---
-  function openCallLogsModal() {
-      // Populate Date Dropdowns
-      const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
-      const monthSel = document.getElementById('logMonth');
-      const daySel = document.getElementById('logDay');
-      const yearSel = document.getElementById('logYear');
-      
-      const now = new Date();
-      
-      monthSel.innerHTML = months.map((m, i) => `<option value="${i}" ${i===now.getMonth()?'selected':''}>${m}</option>`).join('');
-      
-      let daysHtml = '';
-      for(let i=1; i<=31; i++) daysHtml += `<option value="${i}" ${i===now.getDate()?'selected':''}>${i}</option>`;
-      daySel.innerHTML = daysHtml;
-      
-      let yearsHtml = '';
-      for(let i=2023; i<=2030; i++) yearsHtml += `<option value="${i}" ${i===now.getFullYear()?'selected':''}>${i}</option>`;
-      yearSel.innerHTML = yearsHtml;
-
-      document.getElementById('callLogsModal').classList.add('open');
-      fetchCallLogs();
+  function bulkDelete() {
+      const ids = getChecked();
+      if(ids.length===0) return alert('No leads selected');
+      if(!confirm(`DELETE ${ids.length} leads? This cannot be undone.`)) return;
+      const batch = db.batch();
+      ids.forEach(id => batch.delete(db.collection('leads').doc(id)));
+      batch.commit().then(() => alert('Deleted!'));
   }
 
-  function fetchCallLogs() {
-      const m = parseInt(document.getElementById('logMonth').value);
-      const d = parseInt(document.getElementById('logDay').value);
-      const y = parseInt(document.getElementById('logYear').value);
-      const uid = document.getElementById('logUser').value;
+  function unassignSingle(id) { db.collection('leads').doc(id).update({ assignedTo: null }); }
+  function deleteSingle(id) { if(confirm('Delete?')) db.collection('leads').doc(id).delete(); }
 
-      const start = new Date(y, m, d);
-      const end = new Date(y, m, d + 1);
-
-      let query = db.collectionGroup('activities')
-          .where('createdAt', '>=', start)
-          .where('createdAt', '<', end)
-          .orderBy('createdAt', 'desc');
-      
-      if(uid) {
-          query = query.where('createdBy', '==', uid);
-      }
-
-      const tbody = document.getElementById('logsTbody');
-      tbody.innerHTML = '<tr><td colspan="5">Loading...</td></tr>';
-
-      query.get().then(snap => {
-          tbody.innerHTML = '';
-          if(snap.empty) {
-              tbody.innerHTML = '<tr><td colspan="5">No logs found for this date.</td></tr>';
-              return;
-          }
-
-          const promises = snap.docs.map(doc => {
-             const act = doc.data();
-             const leadId = doc.ref.parent.parent.id;
-             return db.collection('leads').doc(leadId).get().then(lSnap => {
-                 const lData = lSnap.data();
-                 const agent = allUsers.find(u => u.id === act.createdBy);
-                 return {
-                     time: act.createdAt.toDate().toLocaleTimeString(),
-                     agent: agent ? (agent.name || agent.email) : 'Unknown',
-                     lead: lData ? (lData.company || 'Unknown') : 'Deleted Lead',
-                     result: act.action,
-                     note: act.text || '-'
-                 };
-             });
-          });
-
-          Promise.all(promises).then(rows => {
-              rows.forEach(r => {
-                  tbody.innerHTML += `
-                    <tr>
-                        <td>${r.time}</td>
-                        <td>${r.agent}</td>
-                        <td>${r.lead}</td>
-                        <td>${r.result}</td>
-                        <td style="font-size:12px; color:#555;">${r.note}</td>
-                    </tr>
-                  `;
-              });
-          });
-      });
-  }
-
-  function unassignLead(id) {
-      if(confirm('Unassign?')) db.collection('leads').doc(id).update({ assignedTo: null });
-  }
-  function deleteLead(id) {
-      if(confirm('Delete?')) db.collection('leads').doc(id).delete();
-  }
-  
-  // --- EDIT USER LOGIC ---
-  function openEditModal(userId) {
-      // Find the user object in our local memory (allUsers)
-      const user = allUsers.find(u => u.id === userId);
-      if(!user) return;
-
-      // Populate fields
-      document.getElementById('editUserId').value = userId;
-      document.getElementById('editUserNameField').value = user.name || '';
-      
-      // Open Modal
-      document.getElementById('editUserModal').classList.add('open');
-  }
-
-  function closeEditModal() {
-      document.getElementById('editUserModal').classList.remove('open');
-  }
-
-  function saveUserEdit() {
-      const id = document.getElementById('editUserId').value;
-      const newName = document.getElementById('editUserNameField').value;
-      
-      if(!newName || !newName.trim()) return alert('Name cannot be empty.');
-
-      // Update Firestore
-      db.collection('users').doc(id).update({ 
-          name: newName.trim() 
-      })
-      .then(() => {
-          alert('User updated successfully.');
-          closeEditModal();
-      })
-      .catch(error => {
-          console.error("Error updating user: ", error);
-          alert('Error updating user: ' + error.message);
-      });
-  }
-
+  // --- 4. HISTORY & USERS (Standard) ---
   function createUser() {
-    const name = document.getElementById('newUserName').value; // Changed
+    const name = document.getElementById('newUserName').value; 
     const email = document.getElementById('newUserEmail').value;
     const password = document.getElementById('newUserPass').value;
     const role = document.getElementById('newUserRole').value;
-    
-    if (!email || !password || !name) return alert('Fill fields'); // Changed
+    if (!email || !password || !name) return alert('Fill all fields');
     
     const secondaryApp = firebase.initializeApp(firebaseConfig, "Secondary");
     secondaryApp.auth().createUserWithEmailAndPassword(email, password)
         .then((cred) => {
-            // Include NAME in user creation
-            db.collection('users').doc(cred.user.uid).set({ 
-                name: name, // New Field
-                email: email, 
-                role: role, 
-                createdAt: new Date() 
-            })
+            db.collection('users').doc(cred.user.uid).set({ name, email, role, createdAt: new Date() })
             .then(() => { alert('User created!'); secondaryApp.delete(); });
         }).catch(e => { alert(e.message); secondaryApp.delete(); });
   }
+
+  function deleteUser(id) { if(confirm('Remove user?')) db.collection('users').doc(id).delete(); }
+  function openEditUser(id) {
+      const u = allUsers.find(x => x.id === id);
+      document.getElementById('editUserId').value = id;
+      document.getElementById('editUserNameField').value = u.name || '';
+      document.getElementById('editUserModal').classList.add('open');
+  }
+  function saveUserEdit() {
+      const id = document.getElementById('editUserId').value;
+      const name = document.getElementById('editUserNameField').value;
+      db.collection('users').doc(id).update({ name }).then(() => closeModal('editUserModal'));
+  }
+
+  async function fetchHistory() {
+      const tbody = document.getElementById('historyBody');
+      tbody.innerHTML = '<tr><td colspan="5" class="loading">Loading History...</td></tr>';
+      const year = parseInt(document.getElementById('h_year').value);
+      const month = parseInt(document.getElementById('h_month').value);
+      const day = parseInt(document.getElementById('h_day').value);
+      const caller = document.getElementById('h_caller').value;
+      const start = new Date(year, month, day);
+      const end = new Date(year, month, day, 23, 59, 59);
+
+      let query = db.collectionGroup('activities').where('createdAt', '>=', start).where('createdAt', '<=', end);
+      if(caller !== 'all') query = query.where('createdBy', '==', caller);
+
+      try {
+          const snap = await query.get();
+          const logs = [];
+          snap.forEach(doc => { let d=doc.data(); d._leadId=doc.ref.parent.parent.id; logs.push(d); });
+          logs.sort((a,b)=>b.createdAt.toDate()-a.createdAt.toDate());
+          
+          if(logs.length===0) return tbody.innerHTML = '<tr><td colspan="5" style="padding:20px; text-align:center">No activity found.</td></tr>';
+          
+          tbody.innerHTML = logs.map(log => {
+             const d = log.createdAt.toDate().toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+             const agent = userMap[log.createdBy] ? (userMap[log.createdBy].name || 'Unknown') : 'Unknown';
+             const l = allLeads.find(x=>x.id===log._leadId);
+             const lName = l ? l.company : 'ID: '+log._leadId.substr(0,5);
+             return `<tr><td style="font-family:monospace; color:var(--muted)">${d}</td><td style="font-weight:600">${agent}</td><td style="color:var(--brand)">${lName}</td><td><span class="status-pill" style="background:#f1f5f9; color:var(--ink)">${log.action}</span></td><td style="color:var(--muted)">${log.text||''}</td></tr>`;
+          }).join('');
+      } catch(e) { console.error(e); tbody.innerHTML=`<tr><td colspan="5" style="color:red">Error: ${e.message}</td></tr>`; }
+  }
+
+  // IMPORT
+  function openImportModal() { document.getElementById('importModal').classList.add('open'); }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  function processImport() {
+      const txt = document.getElementById('importText').value;
+      if(!txt.trim()) return alert('Paste CSV');
+      const lines = txt.trim().split(/\r?\n/);
+      const headers = lines[0].split(',').map(h=>h.trim().toLowerCase().replace(/"/g,''));
+      
+      const batch = db.batch();
+      let count = 0;
+      for(let i=1; i<lines.length; i++) {
+          // Basic CSV parse (comma split) - handling simple CSVs
+          const row = lines[i].split(',').map(c=>c.trim().replace(/^"|"$/g,''));
+          if(row.length < 2) continue;
+          const get = (k) => { const idx = headers.findIndex(h=>h.includes(k)); return idx>-1?row[idx]:''; };
+          
+          const ref = db.collection('leads').doc();
+          batch.set(ref, {
+              company: get('company')||'Unknown', phone: get('phone'), city: get('city'), industry: get('industry'),
+              stage: 'New Lead', nextAction: 'Call Attempt', assignedTo: null, createdAt: new Date()
+          });
+          count++;
+      }
+      batch.commit().then(() => { alert(`Imported ${count}`); closeModal('importModal'); });
+  }
+
   function logout() { auth.signOut().then(() => window.location.href = 'index.html'); }
+  init();
 </script>
 </body>
 </html>
