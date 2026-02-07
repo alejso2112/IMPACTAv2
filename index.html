@@ -14,11 +14,11 @@
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <meta name="description" content="Stop losing leads to voicemail. IMPACTA builds 60-second response engines and fixes Google Maps. No retainers. Just results. Book your 48-Hour Fix.">
+    <meta name="description" content="Stop losing leads to voicemail. IMPACTA builds 60-second response engines and fixes Google Maps for local businesses. No retainers. Just results. Book your 48-Hour Fix.">
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="canonical" href="https://impactabusinesssolutions.com/" />
     <link rel="manifest" href="/manifest.json">
-    <link rel="icon" type="image/x-icon" href="img/logo-mobile-2025.png">
+    <link rel="icon" type="image/x-icon" href="img/logo-mobile-2025">
     <link rel="icon" href="img/favicon-2025.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <meta property="og:title" content="IMPACTA Business Solutions | RevOps & Growth" />
@@ -60,16 +60,7 @@
     </style>
 </head>
 <body>
-    <div id="root">
-        <nav>
-            <a href="solutions.html">Solutions</a>
-            <a href="industries.html">Industries</a>
-            <a href="pricing.html">Pricing</a>
-            <a href="48-hour-fix.html">Book 48-Hour Fix</a>
-        </nav>
-        <h1>Stop Leaking Revenue</h1>
-        <p>IMPACTA Business Solutions</p>
-    </div>
+    <div id="root"></div>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
@@ -379,3 +370,149 @@
                                 <h3 className="text-xl font-bold mb-6 border-b border-slate-700 pb-4">The IMPACTA Roadmap</h3>
                                 <div className="space-y-6">
                                     {[{ step: "01", title: "Diagnostic Audit", desc: "We identify the #1 revenue leak." }, { step: "02", title: "The 48-Hour Fix", desc: "We install the tech to plug the hole." }, { step: "03", title: "PPA Performance", desc: "We scale lead flow on a Pay-Per-Appointment or Aquistion basis." }, { step: "04", title: "Operational Handoff", desc: "We train your team to run the engine." }].map((step, i) => (
+                                        <div key={i} className="flex gap-4">
+                                            <div className="text-2xl font-bold text-blue-500 opacity-50">{step.step}</div>
+                                            <div><div className="font-bold text-white">{step.title}</div><div className="text-sm text-slate-400">{step.desc}</div></div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const IndustriesSection = () => (
+            <section id="industries" className="py-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6 text-center">
+                    <SectionHeading subtitle="Who We Help" title="Industries We Scale" />
+                    <div className="flex flex-wrap justify-center gap-4">
+                        {industriesDisplay.map((ind, i) => (
+                            <a 
+                                key={i} 
+                                href={ind.link} 
+                                className="px-6 py-3 bg-white shadow-sm rounded-full text-gray-700 font-medium border border-gray-200 hover:text-[#0c62ab] hover:border-[#0c62ab] transition-colors cursor-pointer"
+                            >
+                                {ind.name}
+                            </a>
+                        ))}
+                    </div>
+                </div>
+            </section>
+        );
+
+        const PricingSection = () => (
+            <section id="pricing" className="py-20 bg-gray-50">
+                <div className="max-w-7xl mx-auto px-6">
+                    <SectionHeading subtitle="Transparent Investment" title="Choose Your Path" />
+                    <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                        <Card className="border-gray-200">
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">3-Point Diagnostic</h3><div className="text-3xl font-bold text-impacta mt-4">Free</div><p className="text-sm text-gray-500 mt-2">Perfect for "Quick Checks"</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Google Business Profile Audit</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> "Ghost Call" Test</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Basic Leak Report</li></ul>
+                            <Button variant="outline" className="w-full !text-gray-900 !border-gray-300 hover:!bg-gray-50" onClick={() => window.location.href = 'free-diagnostic.html'}>Get It Now</Button>
+                        </Card>
+                        <div className="relative transform md:-translate-y-4">
+                           <div className="absolute top-0 left-0 w-full -mt-4 text-center"><span className="bg-impacta text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Most Popular</span></div>
+                           <Card className="border-impacta shadow-xl bg-blue-50/50">
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">Revenue Leak Diagnostic</h3><div className="text-4xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">Credited back if we partner</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-700 text-sm font-medium"><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Full Pipeline Snapshot</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Custom SQA Definition</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> 60-Second Response Blueprint</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> ROI Projection Model</li></ul>
+                            <Button variant="primary" className="w-full shadow-blue-200 hover:!bg-white hover:!text-[#0c62ab]" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Session</Button>
+                          </Card>
+                        </div>
+                        <Card className="border-gray-200">
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">48-Hour Fix</h3><div className="text-3xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">One specific bottleneck removal</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Select ONE Menu Item</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Implementation in 2 Days</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Access to CRM required</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> No Ongoing Retainer</li></ul>
+                            <Button variant="outline" className="w-full !text-gray-900 !border-gray-300 hover:!bg-gray-50" onClick={() => window.location.href = '48-hour-fix.html'}>Select Fix</Button>
+                        </Card>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const FAQSection = () => {
+            const [activeIndex, setActiveIndex] = useState(null);
+            const toggle = (i) => setActiveIndex(activeIndex === i ? null : i);
+
+            return (
+                <section id="faq" className="py-20 bg-white">
+                    <div className="max-w-3xl mx-auto px-6">
+                        <SectionHeading subtitle="Transparency" title="Common Questions" />
+                        <div className="space-y-4">
+                            {faqs.map((faq, i) => (
+                                <div key={i} className={`border rounded-xl transition-all duration-300 ${activeIndex === i ? 'border-impacta shadow-md bg-blue-50/10' : 'border-gray-200'}`}>
+                                    <button onClick={() => toggle(i)} className="w-full flex justify-between items-center p-5 text-left font-bold text-gray-900 hover:text-impacta transition-colors">
+                                        <span>{faq.question}</span>
+                                        <div className={`transform transition-transform duration-300 ${activeIndex === i ? 'rotate-180' : ''}`}>
+                                            {activeIndex === i ? <IconMinus className="w-5 h-5 text-impacta" /> : <IconPlus className="w-5 h-5 text-gray-400" />}
+                                        </div>
+                                    </button>
+                                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${activeIndex === i ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'}`}>
+                                        <div className="p-5 pt-0 text-gray-600 leading-relaxed">{faq.answer}</div>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const CTASection = () => (
+            <section className="py-20 bg-white">
+                <div className="max-w-4xl mx-auto px-6">
+                    <div className="bg-impacta rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
+                        <div className="relative z-10">
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Fix Your Pipeline?</h2>
+                            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">The diagnostic is $350. If we don't find a leak worth at least $3,500 in lost revenue, we refund you on the spot.</p>
+                            <Button variant="secondary" className="mx-auto" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Your Revenue Diagnostic</Button>
+                            <p className="mt-4 text-sm text-blue-200 opacity-75">No retainers. No long-term contracts.</p>
+                        </div>
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
+                        <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
+                    </div>
+                </div>
+            </section>
+        );
+
+        const Footer = () => (
+<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="text-sm opacity-90">
+            <strong>IMPACTA Business Solutions Inc.</strong><br />
+            <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+            <a href="tel:+13525657234" class="hover:text-white transition-colors mt-2 inline-block font-semibold">
+                (352) 565-7234
+            </a>
+        </div>
+        <div class="flex gap-6 text-sm font-medium justify-center md:justify-end">
+            <a href="privacy.html" class="hover:text-white transition-colors">Privacy Policy</a>
+            <a href="terms.html" class="hover:text-white transition-colors">Terms of Service</a>
+        </div>
+    </div>
+  </footer>
+        );
+
+        const App = () => {
+            return (
+                <div className="min-h-screen bg-white text-gray-900">
+                    <Navbar />
+                    <Hero />
+                    <ProblemSection />
+                    <SolutionsSection />
+                    <MethodologySection />
+                    <IndustriesSection />
+                    <PricingSection />
+                    <FAQSection />
+                    <CTASection />
+                    <Footer />
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
+</body>
+</html>
