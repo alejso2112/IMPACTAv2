@@ -9,18 +9,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IMPACTA Business Solutions | Stop Leaking Revenue</title>
-      
+    <link rel="icon" href="img/favicon-2025.png" type="image/png">
+    <link rel="apple-touch-icon" href="img/appicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <meta name="description" content="Stop losing leads to voicemail. IMPACTA builds 60-second response engines and fixes Google Maps for local businesses. No retainers. Just results. Book your 48-Hour Fix.">
+    <meta name="description" content="Stop losing leads. IMPACTA builds 60-second response engines and fixes Google Maps for local businesses. No retainers. Just results. Book your 48-Hour Fix.">
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <link rel="canonical" href="https://impactabusinesssolutions.com/" />
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" type="image/x-icon" href="img/logo-mobile-2025">
-    <link rel="icon" href="img/favicon-2025.png" type="image/png">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="manifest" href="manifest.json">
+    <meta name="robots" content="index, follow">
     <meta property="og:title" content="IMPACTA Business Solutions | RevOps & Growth" />
     <meta property="og:description" content="Stop Leaking Revenue. Start Owning It. We fix sales pipelines and Google Maps listings." />
     <meta property="og:image" content="https://impactabusinesssolutions.com/img/og-image.png" />
@@ -58,6 +58,23 @@
             background: #94a3b8;
         }
     </style>
+    <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "IMPACTA Business Solutions",
+  "image": "https://impactabusinesssolutions.com/img/logo-main-2025.png",
+  "@id": "https://impactabusinesssolutions.com",
+  "url": "https://impactabusinesssolutions.com",
+  "telephone": "", 
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "US"
+  },
+  "description": "IMPACTA builds 60-second response engines and fixes Google Maps for local businesses. No retainers. Just results.",
+  "priceRange": "$$"
+}
+</script>
 </head>
 <body>
     <div id="root"></div>
@@ -128,6 +145,7 @@
         ];
 
         const faqs = [
+            { question: "Do I have to buy the Diagnostic first?", answer: "No. If you know you have a specific problem (like missed calls), you can buy the '48-Hour Fix' directly. We simply install the solution." },
             { question: "What exactly is 'RevOps'?", answer: "Revenue Operations (RevOps) is the strategic alignment of sales, marketing, and customer success into a single engine. Instead of silos, we build one system where data and processes flow to maximize growth and stop leaks." },
             { question: "Why do you charge $350 for a Diagnostic?", answer: "Free audits are usually just sales pitches. Our $350 Diagnostic is a high-level strategic consult. We spend time inside your CRM and ad accounts to find actual leaks. If we partner on a PPA basis, this fee is 100% credited back." },
             { question: "What does 'Performance-Based' (PPA) actually mean?", answer: "It means skin in the game. After setup, we don't charge lazy retainers. We get paid based on outcomes—typically per Sales Qualified Appointment or Aquistion (SQA). If we don't perform, you don't pay." },
@@ -184,7 +202,8 @@
                         
                         {/* DESKTOP MENU */}
                         <div className="hidden md:flex items-center gap-8">
-                            <a href="services.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>Services</a>
+                            {/* Updated Solutions -> Services */}
+                            <a href="#services" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>Services</a>
                             <a href="about-us.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>About Us</a>
                             
                             {/* Desktop Dropdown with 2 Columns - No Scroll */}
@@ -215,7 +234,8 @@
 
                             <a href="pricing.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>Pricing</a>
                             <a href="faqs.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>FAQs</a>
-                            <a href="contact-us.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>Contact</a>
+                            {/* Added Contact Link */}
+                            <a href="#contact" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-gray-600' : 'text-gray-100'}`}>Contact</a>
 
                             <Button 
                                 variant={scrolled ? 'primary' : 'outline'} 
@@ -235,7 +255,8 @@
                     {/* MOBILE MENU */}
                     {isOpen && (
                         <div className="absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 flex flex-col gap-4 md:hidden border-t max-h-[85vh] overflow-y-auto">
-                            <a href="services.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Services</a>
+                            {/* Updated Solutions -> Services */}
+                            <a href="#services" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Services</a>
                             <a href="about-us.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>About Us</a>
                             
                             {/* Mobile Accordion for Industries (Single Long List) */}
@@ -260,7 +281,8 @@
 
                             <a href="pricing.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Pricing</a>
                             <a href="faqs.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>FAQs</a>
-                            <a href="contact-us.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Contact</a>
+                            {/* Added Contact Link Mobile */}
+                            <a href="#contact" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Contact</a>
                             <Button variant="primary" className="w-full mt-4" onClick={() => window.location.href = '48-hour-fix.html'}>Get My 48-Hour Fix</Button>
                         </div>
                     )}
@@ -324,8 +346,9 @@
             </section>
         );
 
+        // UPDATED: Changed id="solutions" to id="services"
         const SolutionsSection = () => (
-            <section id="solutions" className="py-20 bg-white">
+            <section id="services" className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
                     <SectionHeading subtitle="Tactical Interventions" title="The 48-Hour Fix Menu" />
                     <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16">We don't do vague "consulting." We identify the bottleneck and install a specific, proven system to fix it. Usually within two business days.</p>
@@ -475,8 +498,9 @@
             </section>
         );
 
+        // UPDATED: Added id="contact" for the Contact link anchor
         const Footer = () => (
-<footer class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
+<footer id="contact" class="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
     <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
         <div class="text-sm opacity-90">
             <strong>IMPACTA Business Solutions Inc.</strong><br />
