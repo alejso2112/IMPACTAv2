@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Client Portal Login — IMPACTA</title>
+  <style>
+    /* BRANDING VARIABLES */
+    :root {
+      --brand: #0c62ab;
+      --ink: #0f172a;
+      --muted: #64748b;
+      --bg: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --radius: 12px;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      background-image: radial-gradient(#e0f2fe 1px, transparent 1px);
+      background-size: 24px 24px;
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .login-container {
+      background: var(--surface);
+      padding: 48px;
+      border-radius: var(--radius);
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .logo {
+      height: 48px;
+      margin-bottom: 32px;
+    }
+
+    h1 {
+      font-size: 24px;
+      color: var(--ink);
+      margin: 0 0 8px 0;
+      font-weight: 800;
+    }
+
+    p {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 0 0 24px 0;
+      line-height: 1.5;
+    }
+
+    /* INPUT STYLING */
+    .input-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 16px;
+      font-size: 18px;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      text-align: center;
+      letter-spacing: 2px;
+      color: var(--ink);
+      font-weight: 600;
+      outline: none;
+      transition: all 0.2s;
+      box-sizing: border-box; /* Fixes padding issues */
+    }
+
+    input:focus {
+      border-color: var(--brand);
+      box-shadow: 0 0 0 3px rgba(12, 98, 171, 0.1);
+    }
+
+    input::placeholder {
+      color: #cbd5e1;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+
+    /* BUTTON STYLING */
+    button {
+      width: 100%;
+      background: var(--brand);
+      color: white;
+      border: none;
+      padding: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    button:hover {
+      background: #0a5596;
+    }
+
+    button:disabled {
+      background: #94a3b8;
+      cursor: not-allowed;
+    }
+
+    /* MESSAGES */
+    .error-msg {
+      display: none;
+      background: #fef2f2;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 16px;
+      border: 1px solid #fee2e2;
+    }
+
+    .footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="login-container">
+    <img src="img/logo-main-2025.png" alt="IMPACTA" class="logo">
+    
+    <h1>Secure Client Access</h1>
+    <p>Please enter the 5-character access code provided in your email.</p>
+
+    <form id="login-form">
+      <div class="input-group">
+        <input type="text" id="access-code" placeholder="ENTER CODE" required autocomplete="off">
+      </div>
+      <button type="submit" id="submit-btn">View Diagnostic</button>
+    </form>
+
+    <div id="error-message" class="error-msg">
+      <strong>Access Denied:</strong> That code was not found. Please double-check and try again.
+    </div>
+
+    <div class="footer">
+      &copy; 2026 IMPACTA Business Solutions. <br>Authorized access only.
+    </div>
+  </div>
+
+  <script>
+    const form = document.getElementById('login-form');
+    const input = document.getElementById('access-code');
+    const btn = document.getElementById('submit-btn');
+    const errorMsg = document.getElementById('error-message');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      // 1. Clean the input (Trim spaces)
+      const code = input.value.trim();
+      
+      if (!code) return;
+
+      // 2. Visual Feedback (Loading state)
+      btn.textContent = "Verifying...";
+      btn.disabled = true;
+      errorMsg.style.display = 'none';
+
+      // 3. Construct the URL based on the code
+      // We assume files are stored in a 'reports' folder
+      const targetUrl = `reports/${code}.html`;
+
+      try {
+        // 4. Check if the file actually exists using a HEAD request
+        const response = await fetch(targetUrl, { method: 'HEAD' });
+
+        if (response.ok) {
+          // 5. Success: Redirect to the file
+          window.location.href = targetUrl;
+        } else {
+          // 6. Fail: Show error
+          throw new Error('File not found');
+        }
+      } catch (err) {
+        btn.textContent = "View Diagnostic";
+        btn.disabled = false;
+        errorMsg.style.display = 'block';
+        input.focus();
+      }
+    });
+  </script>
+
+</body>
+</html>
