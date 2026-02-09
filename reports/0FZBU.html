@@ -44,7 +44,7 @@ th{ background: #f1f5f9; font-weight: 700; color: var(--muted); text-transform: 
 .kv{ display:grid; grid-template-columns: 100px 1fr; gap: 6px 12px; font-size: 13px; margin-top:12px;}
 .kv .k{ font-weight:700; color:var(--muted); }
 
-/* PRINT BUTTON */
+/* BUTTONS */
 .print-btn { 
   background: var(--brand); color: white; border:none; padding: 10px 20px; 
   border-radius: 6px; font-weight: 700; cursor: pointer; text-decoration: none;
@@ -52,11 +52,25 @@ th{ background: #f1f5f9; font-weight: 700; color: var(--muted); text-transform: 
 }
 .print-btn:hover { opacity: 0.9; }
 
-/* PRINT OPTIMIZATION (MAKES IT A PDF) */
+/* ACTION BUTTON (NEW) */
+.action-btn {
+  background: var(--brand); 
+  color: white; 
+  padding: 8px 16px; 
+  border-radius: 6px; 
+  font-weight: 700; 
+  font-size: 12px; 
+  display: inline-block; 
+  text-decoration: none;
+  transition: background 0.2s;
+}
+.action-btn:hover { background: #0a5596; }
+
+/* PRINT OPTIMIZATION */
 @media print {
   @page { margin: 0.5cm; size: portrait; }
   body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .no-print, .print-btn { display: none !important; }
+  .no-print, .print-btn, .action-btn { display: none !important; }
   .wrap { max-width: 100%; padding: 0; }
   .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
   a { text-decoration: none; color: #000; }
@@ -220,9 +234,12 @@ th{ background: #f1f5f9; font-weight: 700; color: var(--muted); text-transform: 
           <li><strong>Review Response Clean-up:</strong> Reply to last 20 reviews to boost activity.</li>
         </ul>
       </div>
-      <div style="text-align:right;">
+      <div style="text-align:right; min-width: 120px;">
         <div style="font-size:24px; font-weight:900; color:var(--brand);">$350</div>
-        <div style="font-size:11px; color:var(--muted);">One-time Fee</div>
+        <div style="font-size:11px; color:var(--muted); margin-bottom: 10px;">One-time Fee</div>
+        
+        <a href="https://impactabusinesssolutions.com/48-hour-fix.html" class="action-btn">Install the Fix &rarr;</a>
+        
       </div>
     </div>
   </div>
