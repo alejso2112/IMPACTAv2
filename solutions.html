@@ -17,7 +17,6 @@
 
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="icon" href="img/favicon-2025.png" sizes="any" type="image/png">
-    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png">
 
     <style>
         body { font-family: 'Noto Sans', sans-serif; scroll-behavior: smooth; }
@@ -25,7 +24,6 @@
         .bg-impacta { background-color: #0c62ab; }
         .border-impacta { border-color: #0c62ab; }
         .hover-bg-impacta:hover { background-color: #084a85; }
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
@@ -49,77 +47,67 @@
         const IconArrowRight = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>;
         const IconShield = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>;
 
-        // --- LINKS ---
         const industryLinks = [
-            { name: "Auto - Repair", link: "automotive.html" },
-            { name: "Auto - Sales", link: "auto-sales.html" },
-            { name: "Fitness", link: "fitness.html" },
-            { name: "Home Services", link: "home-services.html" },
-            { name: "HVAC", link: "hvac.html" },
-            { name: "Insurance", link: "insurance.html" },
-            { name: "Landscaping", link: "landscaping.html" },
-            { name: "Medical", link: "medical.html" },
-            { name: "Painting", link: "painting.html" },
-            { name: "Pest Control", link: "Pest-control.html" },
-            { name: "Plumbing", link: "plumbing.html" },
-            { name: "Professional Services", link: "professional-services.html" },
-            { name: "Real Estate", link: "real-estate.html" },
-            { name: "Restaurants", link: "restaurants.html" },
-            { name: "Roofing", link: "roofing.html" },
-            { name: "Salons", link: "salons.html" },
-            { name: "Solar", link: "solar.html" },
-            { name: "Wellness & Spa", link: "wellness.html" }
+            { name: "Auto - Repair", link: "automotive.html" }, { name: "Auto - Sales", link: "auto-sales.html" },
+            { name: "Fitness", link: "fitness.html" }, { name: "Home Services", link: "home-services.html" },
+            { name: "HVAC", link: "hvac.html" }, { name: "Insurance", link: "insurance.html" },
+            { name: "Landscaping", link: "landscaping.html" }, { name: "Medical", link: "medical.html" },
+            { name: "Painting", link: "painting.html" }, { name: "Pest Control", link: "Pest-control.html" },
+            { name: "Plumbing", link: "plumbing.html" }, { name: "Professional Services", link: "professional-services.html" },
+            { name: "Real Estate", link: "real-estate.html" }, { name: "Restaurants", link: "restaurants.html" },
+            { name: "Roofing", link: "roofing.html" }, { name: "Salons", link: "salons.html" },
+            { name: "Solar", link: "solar.html" }, { name: "Wellness & Spa", link: "wellness.html" }
         ];
-
-        // --- COMPONENTS ---
 
         const Navbar = () => {
             const [isOpen, setIsOpen] = useState(false);
             const [isMobileIndustriesOpen, setIsMobileIndustriesOpen] = useState(false);
             const midPoint = Math.ceil(industryLinks.length / 2);
-            const leftCol = industryLinks.slice(0, midPoint);
-            const rightCol = industryLinks.slice(midPoint);
-
             return (
-                <nav className="fixed w-full z-50 transition-all duration-300 bg-white shadow-md py-3 top-0 left-0">
+                <nav className="fixed w-full z-50 bg-white shadow-md py-3 top-0 left-0">
                     <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
                         <a href="index.html" className="flex items-center">
-                            <img src="img/logo-main-2025.png" alt="IMPACTA" className="h-12 w-auto object-contain rounded-md" />
+                            <img src="img/logo-main-2025.png" alt="IMPACTA" className="h-12 w-auto object-contain" />
                         </a>
+                        
+                        {/* DESKTOP MENU */}
                         <div className="hidden md:flex items-center gap-8">
-                            {/* ACTIVE LINK: Solutions */}
-                            <a href="services.html" className="text-sm font-bold text-[#0c62ab] hover:text-[#0c62ab] transition-colors">Services</a>
-                            
-                            <a href="about-us.html" className="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">About Us</a>
+                            <a href="services.html" className="text-sm font-bold text-impacta transition-colors">Services</a>
+                            <a href="about-us.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">About Us</a>
                             
                             <div className="relative group">
-                                <button className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">
+                                <button className="flex items-center gap-1 text-sm font-medium text-gray-600 hover:text-impacta transition-colors">
                                     Industries <IconChevronDown className="w-4 h-4" />
                                 </button>
                                 <div className="absolute hidden group-hover:block top-full left-1/2 -translate-x-1/2 pt-4 w-[600px]">
                                     <div className="bg-white rounded-xl shadow-2xl p-6 border border-gray-100 flex flex-row gap-8">
                                         <div className="flex-1 space-y-2">
-                                            {leftCol.map((ind, i) => <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">{ind.name}</a>)}
+                                            {industryLinks.slice(0, midPoint).map((ind, i) => <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-impacta rounded-lg transition-colors">{ind.name}</a>)}
                                         </div>
                                         <div className="flex-1 space-y-2">
-                                            {rightCol.map((ind, i) => <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-[#0c62ab] rounded-lg transition-colors">{ind.name}</a>)}
+                                            {industryLinks.slice(midPoint).map((ind, i) => <a key={i} href={ind.link} className="block px-3 py-2 text-sm font-medium text-gray-600 hover:bg-blue-50 hover:text-impacta rounded-lg transition-colors">{ind.name}</a>)}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <a href="pricing.html" className="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">Pricing</a>
-                            <a href="faqs.html" className="text-sm font-medium text-gray-600 hover:text-[#0c62ab] transition-colors">FAQs</a>
-                            <a href="48-hour-fix.html" className="bg-[#0c62ab] text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm flex items-center justify-center">Book My 48-hour Fix</a>
+                            
+                            <a href="pricing.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">Pricing</a>
+                            <a href="faqs.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">FAQs</a>
+                            <a href="contact-us.html" className="text-sm font-medium text-gray-600 hover:text-impacta transition-colors">Contact</a>
+                            
+                            <a href="48-hour-fix.html" className="bg-impacta text-white px-6 py-2 rounded-md font-semibold hover:bg-[#084a85] transition-colors text-sm">Book My 48-hour Fix</a>
                         </div>
+
+                        {/* MOBILE TOGGLE */}
                         <button className="md:hidden text-gray-600" onClick={() => setIsOpen(!isOpen)}>
                             {isOpen ? <IconX className="w-6 h-6" /> : <IconMenu className="w-6 h-6" />}
                         </button>
                     </div>
-                    {/* Mobile Menu */}
+
+                    {/* MOBILE MENU */}
                     {isOpen && (
                         <div className="absolute top-full left-0 w-full bg-white shadow-xl py-6 px-6 flex flex-col gap-4 md:hidden border-t max-h-[85vh] overflow-y-auto">
-                            <a href="services.html" className="text-[#0c62ab] font-bold text-lg block">Services</a>
+                            <a href="services.html" className="text-impacta font-bold text-lg block">Services</a>
                             <a href="about-us.html" className="text-gray-700 font-medium text-lg block">About Us</a>
                             <div>
                                 <button onClick={() => setIsMobileIndustriesOpen(!isMobileIndustriesOpen)} className="flex items-center justify-between w-full text-gray-700 font-medium text-lg">
@@ -133,7 +121,8 @@
                             </div>
                             <a href="pricing.html" className="text-gray-700 font-medium text-lg block">Pricing</a>
                             <a href="faqs.html" className="text-gray-700 font-medium text-lg block">FAQs</a>
-                            <a href="48-hour-fix.html" className="bg-[#0c62ab] text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
+                            <a href="contact-us.html" className="text-gray-700 font-medium text-lg block">Contact</a>
+                            <a href="48-hour-fix.html" className="bg-impacta text-white px-6 py-3 rounded-md font-semibold text-center block w-full mt-4">Book My 48-Hour Fix</a>
                         </div>
                     )}
                 </nav>
@@ -144,7 +133,7 @@
             <div className="bg-slate-50 pt-32 pb-20 md:pt-48 md:pb-32">
                 <div className="max-w-4xl mx-auto px-6 text-center">
                     <span className="bg-blue-100 text-impacta px-4 py-1 rounded-full text-sm font-bold uppercase tracking-wider mb-6 inline-block">Operational Solutions</span>
-                    <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">Tactical Fixes or <br/><span className="text-[#0c62ab]">Strategic Engines?</span></h1>
+                    <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 leading-tight">Tactical Fixes or <br/><span className="text-impacta">Strategic Engines?</span></h1>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto">
                         Choose your path: Plug a specific revenue leak in 48 hours, or partner with us to build a complete performance-based acquisition system.
                     </p>
@@ -152,17 +141,17 @@
             </div>
         );
 
-        const FixCard = ({ icon, title, description, badge }) => (
-            <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 relative overflow-hidden group">
-                <div className="flex justify-between items-start mb-6">
-                    <div className="bg-blue-50 p-3 rounded-lg text-impacta group-hover:bg-[#0c62ab] group-hover:text-white transition-colors">{icon}</div>
-                    {badge && <span className="bg-green-100 text-green-700 text-xs font-bold px-2 py-1 rounded uppercase">{badge}</span>}
+        const EngineCard = ({ icon, title, description, stat, price }) => (
+            <div className="flex gap-6 p-6 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors group">
+                <div className="bg-blue-50 p-4 rounded-full h-fit group-hover:bg-white group-hover:shadow-md transition-all text-impacta">
+                    {icon}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
-                <p className="text-gray-600 leading-relaxed mb-6">{description}</p>
-                <div className="pt-6 border-t border-gray-100">
-                    <div className="flex items-center gap-2 text-sm text-gray-500 font-medium">
-                        <IconClock className="w-4 h-4" /> Implementation: 2 Days
+                <div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+                    <p className="text-gray-600 mb-4">{description}</p>
+                    <div className="flex items-center gap-4 text-sm font-semibold">
+                        <span className="text-impacta bg-blue-100 px-3 py-1 rounded-full">{stat}</span>
+                        <span className="text-gray-500">{price}</span>
                     </div>
                 </div>
             </div>
@@ -171,38 +160,46 @@
         const FixesSection = () => (
             <section className="py-20 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl font-bold text-slate-900 mb-4">The 48-Hour Fix Menu</h2>
-                        <p className="text-gray-600 max-w-2xl mx-auto text-lg">One-time, flat-fee implementations. We log in, fix the bottleneck, and hand you the keys. No retainers.</p>
+                    <div className="mb-12 text-center">
+                        <span className="text-impacta font-bold tracking-wider uppercase text-sm mb-2 block">The Solution</span>
+                        <h2 className="text-3xl md:text-4xl font-bold text-gray-900">We Install These 4 Engines</h2>
                     </div>
-                    
-                    <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
-                        <FixCard 
+                    <p className="text-center text-gray-600 max-w-2xl mx-auto mb-16 text-lg">
+                        We don't do vague "consulting." We identify the bottleneck and install a specific, proven system to fix it. Usually within two business days.
+                    </p>
+                    <div className="grid md:grid-cols-2 gap-8">
+                        <EngineCard 
                             icon={<IconZap className="w-8 h-8" />}
-                            title="Speed-to-Lead Fix"
-                            description="We install missed-call auto-text back, instant routing, and after-hours capture logic so you stop losing leads to voicemail."
-                            badge="Most Popular"
+                            title="Auto-Capture Missed Calls"
+                            description="The 'Speed-to-Lead' Engine. We install an automated SMS text-back system that engages leads instantly when you can't answer the phone."
+                            stat="Recover 30% of Leads"
+                            price="$350 One-Time"
                         />
-                        <FixCard 
+                        <EngineCard 
                             icon={<IconClock className="w-8 h-8" />}
-                            title="Follow-Up Automation"
-                            description="Install a 7-14 day automated nurture sequence (SMS/Email) to revive cold leads without manual effort from your team."
+                            title="Revive Dead Leads"
+                            description="The 'Nurture' Engine. We build a 14-day automated sequence (SMS/Email) that chases prospects so your team doesn't have to."
+                            stat="2-3x Conversion Rate"
+                            price="$350 One-Time"
                         />
-                        <FixCard 
+                        <EngineCard 
                             icon={<IconCheckCircle className="w-8 h-8" />}
-                            title="No-Show Reduction"
-                            description="Automated appointment confirmations, 24h reminders, and easy reschedule flows to protect your calendar and time."
+                            title="Eliminate No-Shows"
+                            description="The 'Show-Up' Engine. We implement automated confirmations, 24h reminders, and reschedule flows to keep your calendar full."
+                            stat="80%+ Show Rates"
+                            price="$350 One-Time"
                         />
-                        <FixCard 
+                        <EngineCard 
                             icon={<IconBarChart3 className="w-8 h-8" />}
-                            title="Minimum Viable Pipeline"
-                            description="Structure your CRM with clear stages, deal tracking, and a basic dashboard so you know exactly where money is hiding."
+                            title="Visualize Your Revenue"
+                            description="The 'Pipeline' Engine. We set up clear deal stages and tracking dashboards so you stop guessing where your money is hiding."
+                            stat="100% Clarity"
+                            price="$350 One-Time"
                         />
                     </div>
-
-                    <div className="text-center mt-12">
-                        <a href="48-hour-fix.html" className="inline-flex items-center justify-center px-8 py-4 bg-impacta text-white font-bold rounded-lg hover:bg-[#084a85] transition-colors shadow-lg">
-                            Select Your Fix ($350 One-Time)
+                    <div className="mt-12 text-center">
+                        <a href="48-hour-fix.html" className="px-6 py-3 rounded-md font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer bg-impacta text-white hover:bg-blue-800 shadow-lg hover:shadow-xl mx-auto inline-flex">
+                            See How We Install This
                         </a>
                     </div>
                 </div>
@@ -211,56 +208,30 @@
 
         const PPASection = () => (
             <section className="py-24 bg-slate-900 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-blue-900/20 to-transparent pointer-events-none"></div>
                 <div className="max-w-7xl mx-auto px-6 relative z-10">
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div>
                             <div className="bg-blue-500/20 text-blue-300 font-bold px-4 py-1 rounded-full text-sm inline-block mb-6 border border-blue-500/30">Strategic Partnership</div>
                             <h2 className="text-4xl md:text-5xl font-bold mb-6 leading-tight">Ready for the Next Level?</h2>
                             <p className="text-xl text-slate-300 mb-8 leading-relaxed">
-                                Our Pay-Per-Appointment (PPA) model is for businesses ready to scale. We build the revenue engine, manage the ad spend, and coach your team. You only pay for qualified outcomes.
+                                Our Pay-Per-Appointment (PPA) model is for businesses ready to scale. We build the revenue engine and manage the spend. You only pay for qualified outcomes.
                             </p>
-                            
                             <ul className="space-y-4 mb-10">
-                                {[
-                                    "Zero Retainers. 100% Performance Aligned.",
-                                    "We define 'Qualified' together (SQA).",
-                                    "Includes weekly RevOps coaching for your team.",
-                                    "Transition to ownership in 90 days."
-                                ].map((item, i) => (
+                                {["Zero Retainers. 100% Performance Aligned.", "We define 'Qualified' together (SQA).", "Includes weekly RevOps coaching.", "Transition to ownership in 90 days."].map((item, i) => (
                                     <li key={i} className="flex items-center gap-3 text-slate-200">
-                                        <div className="bg-green-500/20 p-1 rounded-full"><IconCheckCircle className="w-5 h-5 text-green-400" /></div>
-                                        {item}
+                                        <IconCheckCircle className="w-5 h-5 text-green-400" /> {item}
                                     </li>
                                 ))}
                             </ul>
-
                             <a href="ppa-model.html" className="inline-flex items-center gap-2 text-white font-bold text-lg border-b-2 border-blue-400 pb-1 hover:text-blue-400 transition-colors">
                                 Learn about our PPA Model <IconArrowRight className="w-5 h-5" />
                             </a>
                         </div>
-                        
-                        <div className="relative">
-                            <div className="absolute inset-0 bg-blue-500 blur-[80px] opacity-20 rounded-full"></div>
-                            <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl relative">
-                                <div className="text-center mb-8">
-                                    <h3 className="text-2xl font-bold text-white mb-2">The PPA Difference</h3>
-                                    <p className="text-slate-400">Stop renting growth. Start owning it.</p>
-                                </div>
-                                <div className="space-y-4">
-                                    <div className="flex justify-between items-center p-4 rounded-lg bg-slate-700/50 opacity-60">
-                                        <span className="text-slate-300">Marketing Agency</span>
-                                        <span className="text-slate-300 font-mono">Retainer ($2k+/mo)</span>
-                                    </div>
-                                    <div className="flex justify-between items-center p-4 rounded-lg bg-slate-700/50 opacity-60">
-                                        <span className="text-slate-300">Lead Gen Vendor</span>
-                                        <span className="text-slate-300 font-mono">Pay Per Lead</span>
-                                    </div>
-                                    <div className="flex justify-between items-center p-6 rounded-lg bg-blue-600/20 border border-blue-500/50 transform scale-105 shadow-xl">
-                                        <span className="text-white font-bold flex items-center gap-2"><IconShield className="w-5 h-5 text-blue-400"/> IMPACTA PPA</span>
-                                        <span className="text-blue-300 font-mono font-bold">Pay Per SQA</span>
-                                    </div>
-                                </div>
+                        <div className="bg-slate-800 border border-slate-700 rounded-2xl p-8 shadow-2xl">
+                            <h3 className="text-2xl font-bold text-white mb-6 text-center">The PPA Difference</h3>
+                            <div className="space-y-4">
+                                <div className="flex justify-between p-4 rounded-lg bg-slate-700/50 opacity-60"><span className="text-slate-300">Agencies</span><span className="font-mono">Retainer ($2k+)</span></div>
+                                <div className="flex justify-between p-6 rounded-lg bg-blue-600/20 border border-blue-500/50 transform scale-105 shadow-xl"><span className="text-white font-bold flex items-center gap-2"><IconShield className="w-5 h-5 text-blue-400"/> IMPACTA PPA</span><span className="text-blue-300 font-bold">Pay Per SQA</span></div>
                             </div>
                         </div>
                     </div>
@@ -270,15 +241,12 @@
 
         const Footer = () => (
             <footer className="bg-slate-900 text-slate-400 py-12 border-t border-slate-800 mt-auto">
-                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-                    <div className="text-sm opacity-90">
+                <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+                    <div className="text-sm text-center md:text-left">
                         <strong className="text-white block mb-1">IMPACTA Business Solutions Inc.</strong>
-                        <span className="opacity-75">Owned & Operated in Ocala, FL</span><br />
-                        <a href="tel:+13525657234" className="hover:text-white transition-colors mt-2 inline-block font-semibold">
-                            (352) 565-7234
-                        </a>
+                        <span className="opacity-75">Ocala, FL • (352) 565-7234</span>
                     </div>
-                    <div className="flex gap-6 text-sm font-medium justify-center md:justify-end">
+                    <div className="flex gap-6 text-sm">
                         <a href="privacy.html" className="hover:text-white transition-colors">Privacy Policy</a>
                         <a href="terms.html" className="hover:text-white transition-colors">Terms of Service</a>
                     </div>
@@ -286,22 +254,17 @@
             </footer>
         );
 
-        const App = () => {
-            return (
-                <div className="min-h-screen bg-white text-gray-900 flex flex-col">
-                    <Navbar />
-                    <Hero />
-                    <FixesSection />
-                    <PPASection />
-                    <Footer />
-                </div>
-            );
-        };
+        const App = () => (
+            <div className="min-h-screen bg-white text-gray-900 flex flex-col">
+                <Navbar />
+                <Hero />
+                <FixesSection />
+                <PPASection />
+                <Footer />
+            </div>
+        );
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
-    <script src="//code.tidio.co/rwctzm2ealpho8lccg7riwlftjngpqu1.js" async></script>
 </body>
-
 </html>
