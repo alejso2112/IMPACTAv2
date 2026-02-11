@@ -1,0 +1,487 @@
+Free 3 Point Diagnostic
+Custom Gem
+Gemini said
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Free 3-Point GBP Diagnostic — Native Pest Management</title>
+        <link rel="icon" href="https://impactabusinesssolutions.com/img/favicon-2026.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://impactabusinesssolutions.com/img/appicon.png">
+    <style>
+        /* CORE BRANDING */
+        :root {
+            --brand: #0c62ab;
+            --ink: #0f172a;
+            --muted: #475569;
+            --bg: #ffffff;
+            --card: #f8fafc;
+            --border: #e5e7eb;
+            --good: #16a34a;
+            --warn: #f59e0b;
+            --bad: #dc2626;
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box
+        }
+
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            line-height: 1.55;
+        }
+
+        a {
+            color: var(--brand);
+            text-decoration: none
+        }
+
+        /* LAYOUT */
+        .wrap {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .topbar {
+            background: #fff;
+            padding: 18px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brandlogo {
+            height: 40px;
+            width: auto;
+        }
+
+        .pill {
+            background: #eff6ff;
+            border: 1px solid #dbeafe;
+            color: var(--brand);
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        /* CARDS & GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: 1.35fr .65fr;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 768px) {
+            .grid {
+                grid-template-columns: 1fr
+            }
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            page-break-inside: avoid;
+        }
+
+        .card h2 {
+            margin: 0 0 10px 0;
+            font-size: 22px;
+            color: var(--brand);
+        }
+
+        .card h3 {
+            margin: 0 0 10px 0;
+            font-size: 16px;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* METRICS */
+        .kpis {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .kpi {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 12px;
+        }
+
+        .kpi .label {
+            font-size: 10px;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .kpi .value {
+            font-size: 20px;
+            font-weight: 900;
+            margin-top: 4px;
+            color: var(--brand);
+        }
+
+        .kpi .note {
+            font-size: 11px;
+            color: var(--muted);
+            margin-top: 4px;
+            line-height: 1.2;
+        }
+
+        /* TABLES & LISTS */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            overflow: hidden;
+            font-size: 13px;
+        }
+
+        th,
+        td {
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #f1f5f9;
+            font-weight: 700;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-size: 11px;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 700;
+            border: 1px solid transparent;
+        }
+
+        .badge.good {
+            background: #dcfce7;
+            color: #166534;
+            border-color: #bbf7d0;
+        }
+
+        .badge.warn {
+            background: #ffedd5;
+            color: #9a3412;
+            border-color: #fed7aa;
+        }
+
+        .badge.bad {
+            background: #fee2e2;
+            color: #991b1b;
+            border-color: #fecaca;
+        }
+
+        /* CALLOUTS */
+        .callout {
+            margin-top: 16px;
+            border-left: 4px solid var(--brand);
+            background: #eff6ff;
+            border-radius: 6px;
+            padding: 16px;
+            font-size: 14px;
+        }
+
+        .kv {
+            display: grid;
+            grid-template-columns: 100px 1fr;
+            gap: 6px 12px;
+            font-size: 13px;
+            margin-top: 12px;
+        }
+
+        .kv .k {
+            font-weight: 700;
+            color: var(--muted);
+        }
+
+        /* BUTTONS */
+        .print-btn {
+            background: var(--brand);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 700;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+        }
+
+        .print-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ACTION BUTTON (NEW) */
+        .action-btn {
+            background: var(--brand);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+            display: inline-block;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #0a5596;
+        }
+
+        /* PRINT OPTIMIZATION (MAKES IT A PDF) */
+        @media print {
+            @page {
+                margin: 0.5cm;
+                size: portrait;
+            }
+
+            body {
+                background: #fff;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .no-print,
+            .print-btn,
+            .action-btn {
+                display: none !important;
+            }
+
+            .wrap {
+                max-width: 100%;
+                padding: 0;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #ccc;
+                break-inside: avoid;
+            }
+
+            a {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <div class="topbar"> <img src="https://impactabusinesssolutions.com/img/logo-main-2025.png" alt="IMPACTA"
+            class="brandlogo">
+        <div class="no-print"> <button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
+        </div>
+    </div>
+
+    <main class="wrap">
+        <div class="card" style="border-left: 5px solid var(--brand);">
+            <div style="display:flex; justify-content:space-between; align-items:start;">
+                <div>
+                    <h1 style="margin:0; font-size:24px; color:var(--ink);">3-Point GBP Diagnostic</h1>
+                    <p style="margin:4px 0 0; color:var(--muted); font-size:14px;">Prepared for: <strong>Native Pest
+                            Management</strong></p>
+                </div> <span class="pill">February 11, 2026</span>
+            </div>
+        </div>
+
+        <section class="grid">
+            <div class="card">
+                <h2>Executive Summary</h2>
+                <p style="font-size:14px; color:var(--muted); line-height:1.6;"> We audited <strong>Native Pest
+                        Management's</strong> digital presence in West Palm Beach. You are a market leader with
+                    <strong>exceptional review volume (4.9★)</strong> and strong brand authority. However, your sheer
+                    size has created subtle "Systems Leaks" in <strong>After-Hours Capture</strong> and <strong>Response
+                        Personalization</strong> that are likely bleeding high-intent leads to smaller, hungrier
+                    competitors who offer 24/7 instant booking. </p>
+
+                <div class="kpis">
+                    <div class="kpi">
+                        <div class="label">Health Score</div>
+                        <div class="value">8.5 / 10</div>
+                        <div class="note">Market Leader</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="label">Primary Leak</div>
+                        <div class="value">Systems</div>
+                        <div class="note">Weekend/Night Gap</div>
+                    </div>
+                    <div class="kpi">
+                        <div class="label">Quick Win</div>
+                        <div class="value">Automation</div>
+                        <div class="note">Capture Sunday leads</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h3>Business Snapshot</h3>
+                <div class="kv">
+                    <div class="k">Name</div>
+                    <div class="v">Native Pest Management</div>
+                    <div class="k">Category</div>
+                    <div class="v">Pest Control Service</div>
+                    <div class="k">Location</div>
+                    <div class="v">West Palm Beach, FL</div>
+                    <div class="k">Rating</div>
+                    <div class="v"><strong>4.9★</strong> (3,000+ Reviews)</div>
+                    <div class="k">Status</div>
+                    <div class="v"><span class="badge good">High Performer</span></div>
+                </div>
+            </div>
+        </section>
+
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                <h3>1. Relevance & Completeness</h3> <span class="badge good">Score: 9/10</span>
+            </div>
+            <table>
+                <tr>
+                    <th width="30%">Check</th>
+                    <th width="20%">Status</th>
+                    <th>Finding</th>
+                </tr>
+                <tr>
+                    <td><strong>Categories</strong></td>
+                    <td><span class="badge good">Optimized</span></td>
+                    <td>Primary and secondary categories (Termite, Lawn Care, Animal Control) are correctly utilized.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Attributes</strong></td>
+                    <td><span class="badge warn">Missed Opp</span></td>
+                    <td>While "Eco-friendly" is highlighted in text, specific attributes for "Emergency Service" or
+                        "Same Day" appear inconsistent across directories.</td>
+                </tr>
+            </table>
+            <div class="callout"> <strong>🚀 Fix:</strong> Ensure "Emergency Service" attributes are active to capture
+                the high-urgency panic searches (e.g., "rats in attic now"). </div>
+        </div>
+
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                <h3>2. Conversion Signals</h3> <span class="badge warn">Score: 7/10</span>
+            </div>
+            <table>
+                <tr>
+                    <th width="30%">Check</th>
+                    <th width="20%">Status</th>
+                    <th>Finding</th>
+                </tr>
+                <tr>
+                    <td><strong>Reviews</strong></td>
+                    <td><span class="badge warn">Template Fatigue</span></td>
+                    <td>You reply to everyone (excellent!), but the responses are often identical templates ("Thank you
+                        so much... I will let our team know"). This signals "corporate bot" to new leads.</td>
+                </tr>
+                <tr>
+                    <td><strong>Visual Proof</strong></td>
+                    <td><span class="badge warn">Static</span></td>
+                    <td>Photos are high quality but lack "Process Videos." Competitors are starting to use GBP Video to
+                        show "The Tech Experience" to build trust before the click.</td>
+                </tr>
+                <tr>
+                    <td><strong>Offers</strong></td>
+                    <td><span class="badge good">Active</span></td>
+                    <td>Good use of "New Customer" offers. This is a strong conversion driver you are already
+                        leveraging.</td>
+                </tr>
+            </table>
+            <div class="callout"> <strong>🚀 Fix:</strong> Vary review responses to include specific details mentioned
+                by the customer (e.g., "Glad Jacob could help with the ants!") to prove human attention. </div>
+        </div>
+
+        <div class="card">
+            <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
+                <h3>3. Lead Capture Systems</h3> <span class="badge bad">Score: 5/10</span>
+            </div>
+            <table>
+                <tr>
+                    <th width="30%">Check</th>
+                    <th width="20%">Status</th>
+                    <th>Finding</th>
+                </tr>
+                <tr>
+                    <td><strong>Availability</strong></td>
+                    <td><span class="badge bad">After-Hours Gap</span></td>
+                    <td>You close at 5:00 PM and are closed Sundays. Bugs don't respect business hours. Callers during
+                        these times likely bounce to 24/7 national chains.</td>
+                </tr>
+                <tr>
+                    <td><strong>Chat/SMS</strong></td>
+                    <td><span class="badge warn">Unverified</span></td>
+                    <td>If "Missed Call Text Back" isn't active 24/7, you are losing the 60% of leads who call, get
+                        voicemail, and hang up to call the next number.</td>
+                </tr>
+            </table>
+            <div class="callout"> <strong>🚀 Fix:</strong> Implement an "After-Hours AI Receptionist" or SMS bridge that
+                instantly engages Sunday/Evening callers to book them for Monday morning. </div>
+        </div>
+
+        <div class="card" style="background:#f0f9ff; border:1px solid #bae6fd;">
+            <h2>Recommended Next Step</h2>
+            <p style="margin-bottom:16px;">Given your high volume but potential lead leakage during off-hours, we
+                recommend the <strong>Revenue Leak Diagnostic</strong>.</p>
+
+            <div style="display:flex; gap:20px; align-items:center;">
+                <div style="flex:1;">
+                    <h4 style="margin:0; color:var(--brand);">Revenue Leak Diagnostic</h4>
+                    <ul style="font-size:13px; color:var(--muted); padding-left:20px; margin-top:8px;">
+                        <li>Full "Mystery Shopper" test of your after-hours phone routing</li>
+                        <li>Audit of lead hand-off speed (Call to CRM)</li>
+                        <li>Identification of exactly how many leads rot over the weekend</li>
+                    </ul>
+                </div>
+                <div style="text-align:right; min-width: 120px;">
+                    <div style="font-size:24px; font-weight:900; color:var(--brand);">$350</div>
+                    <div style="font-size:11px; color:var(--muted); margin-bottom: 10px;">One-time Fee</div>
+
+                    <a href="https://impactabusinesssolutions.com/revenue-diagnostic.html"
+                        class="action-btn">Diagnose the Leak &rarr;</a>
+
+                </div>
+            </div>
+        </div>
+
+        <div style="text-align:center; font-size:11px; color:var(--muted); margin-top:20px;"> © 2026 IMPACTA Business
+            Solutions • Generated for Native Pest Management </div>
+    </main>
+
+</body>
+
+</html>
