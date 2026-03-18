@@ -1,163 +1,565 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Free 3-Point Diagnostic — Stonebridge Roofing</title>
-<link rel="icon" href="https://impactabusinesssolutions.com/img/favicon-2026.png" type="image/png">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://impactabusinesssolutions.com/img/favicon-2026.png" type="image/png">
 <link rel="apple-touch-icon" href="https://impactabusinesssolutions.com/img/appicon.png">
-<style>
-:root{ --brand:#0c62ab; --ink:#0f172a; --muted:#475569; --bg:#ffffff; --card:#f8fafc; --border:#e5e7eb; --good:#16a34a; --warn:#f59e0b; --bad:#dc2626; --radius: 14px; }
-*{box-sizing:border-box} body{ margin:0; font-family: system-ui,-apple-system,sans-serif; background: var(--bg); color: var(--ink); line-height: 1.55; }
-a{color:var(--brand); text-decoration:none}
-.wrap{max-width: 900px; margin:0 auto; padding: 20px;}
-.topbar{ background: #fff; padding: 18px; border-bottom: 1px solid var(--border); display:flex; justify-content:space-between; align-items:center;}
-.brandlogo { height: 40px; width: auto; }
-.pill{ background: #eff6ff; border: 1px solid #dbeafe; color: var(--brand); padding: 6px 12px; border-radius: 999px; font-size: 11px; font-weight: 700; text-transform:uppercase;}
-.grid{ display:grid; grid-template-columns: 1.35fr .65fr; gap:20px; margin-top:30px;}
-@media (max-width: 768px){ .grid{grid-template-columns:1fr} }
-.card{ background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; page-break-inside: avoid; }
-.card h2{margin:0 0 10px 0; font-size: 22px; color: var(--brand);}
-.card h3{margin:0 0 10px 0; font-size: 16px; font-weight: 700; text-transform:uppercase; color: var(--muted);}
-.kpis{ display:grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 16px; }
-.kpi{ background: #fff; border: 1px solid var(--border); border-radius: 8px; padding: 12px; }
-.kpi .label{font-size:10px; color:var(--muted); text-transform:uppercase; font-weight:700;}
-.kpi .value{font-size:20px; font-weight:900; margin-top:4px; color: var(--brand);}
-.kpi .note{font-size:11px; color:var(--muted); margin-top:4px; line-height:1.2;}
-table{ width:100%; border-collapse: collapse; background: #fff; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; font-size: 13px; }
-th, td{ padding: 10px 12px; border-bottom: 1px solid var(--border); text-align:left; vertical-align: top; }
-th{ background: #f1f5f9; font-weight: 700; color: var(--muted); text-transform: uppercase; font-size: 11px;}
-.badge{ display:inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; border: 1px solid transparent; }
-.badge.good{ background:#dcfce7; color:#166534; border-color:#bbf7d0; }
-.badge.warn{ background:#ffedd5; color:#9a3412; border-color:#fed7aa; }
-.badge.bad{ background:#fee2e2; color:#991b1b; border-color:#fecaca; }
-.callout{ margin-top: 16px; border-left: 4px solid var(--brand); background: #eff6ff; border-radius: 6px; padding: 16px; font-size: 14px; }
-.kv{ display:grid; grid-template-columns: 100px 1fr; gap: 6px 12px; font-size: 13px; margin-top:12px;}
-.kv .k{ font-weight:700; color:var(--muted); }
-.print-btn { background: var(--brand); color: white; border:none; padding: 10px 20px; border-radius: 6px; font-weight: 700; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; }
-.print-btn:hover { opacity: 0.9; }
-.action-btn { background: var(--brand); color: white; padding: 8px 16px; border-radius: 6px; font-weight: 700; font-size: 12px; display: inline-block; text-decoration: none; transition: background 0.2s; }
-.action-btn:hover { background: #0a5596; }
-@media print {
-@page { margin: 0.5cm; size: portrait; }
-body { background: #fff; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-.no-print, .print-btn, .action-btn { display: none !important; }
-.wrap { max-width: 100%; padding: 0; }
-.card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
-a { text-decoration: none; color: #000; }
-}
-</style>
+  <title>Free 3-Point GBP Diagnostic — Stonebridge Roofing</title>
+  <meta name="description" content="Free 3-Point Google Business Profile (GBP) Diagnostic for Stonebridge Roofing.">
+  <style>
+    :root{
+      --brand:#0c62ab;      /* IMPACTA blue */
+      --accent:#0c62ab;     /* IMPACTA blue */
+      --ink:#0f172a;
+      --muted:#475569;
+      --bg:#ffffff;
+      --card:#f8fafc;
+      --border:#e5e7eb;
+      --good:#16a34a;
+      --warn:#f59e0b;
+      --bad:#dc2626;
+      --shadow: 0 10px 22px rgba(2,8,23,.08);
+      --radius: 14px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.55;
+    }
+    a{color:var(--brand); text-decoration:none}
+    a:hover{text-decoration:underline}
+    
+    /* Header */
+    .topbar{
+      background: #ffffff;
+      color: var(--ink);
+      padding: 18px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap{max-width: 1100px; margin:0 auto}
+    .topbar .wrap{
+      display:flex; gap:18px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .brandlock{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    .brandlogo {
+      max-height: 50px;
+      width: auto;
+    }
+    .tagline{
+      font-size: 13.5px;
+      color: var(--muted);
+      font-weight: 500;
+    }
+    .meta{
+      display:flex; gap:10px; flex-wrap:wrap; justify-content:flex-end;
+    }
+    .pill{
+      background: #eff6ff;
+      border: 1px solid #dbeafe;
+      color: var(--brand);
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      white-space:nowrap;
+      font-weight: 600;
+    }
+    .accent-line{height:4px;background:var(--accent)}
+    
+    /* Content */
+    main{padding: 30px 18px 110px}
+    .grid{
+      display:grid;
+      grid-template-columns: 1.35fr .65fr;
+      gap:24px;
+      align-items:start;
+    }
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
+    }
+    .card{
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 24px;
+    }
+    .card h2{margin:0 0 8px 0; font-size: 24px; color: var(--brand);}
+    .card h3{margin:0 0 12px 0; font-size: 18px; font-weight: 700;}
+    .muted{color: var(--muted)}
+    .small{font-size: 13px}
+    .divider{height:1px;background:var(--border); margin:18px 0}
+    
+    /* KPI row */
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 16px;
+    }
+    @media (max-width: 600px){
+      .kpis{grid-template-columns:1fr}
+    }
+    .kpi{
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .kpi .label{font-size:12px;color:var(--muted); text-transform:uppercase; letter-spacing:0.5px; font-weight:600;}
+    .kpi .value{font-size:22px;font-weight:900;margin-top:6px; color: var(--brand);}
+    .kpi .note{font-size:13px;color:var(--muted); margin-top:6px; line-height:1.4;}
+    
+    /* Badges */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      background: #fff;
+      white-space:nowrap;
+    }
+    .good{color: var(--good); background:#dcfce7; border-color:#bbf7d0}
+    .warn{color: #b45309; background:#ffedd5; border-color:#fed7aa}
+    .bad{color: var(--bad); background:#fee2e2; border-color:#fecaca}
+    
+    /* Sections */
+    .sections{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 24px;
+    }
+    @media (max-width: 920px){
+      .sections{grid-template-columns:1fr}
+    }
+    .section-title{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      margin-bottom: 16px;
+    }
+    .titleleft{display:flex; align-items:center; gap:12px}
+    .num{
+      width: 36px; height: 36px;
+      border-radius: 10px;
+      display:grid; place-items:center;
+      font-weight: 800;
+      color: var(--brand);
+      background: #e0f2fe;
+      border: 1px solid #bae6fd;
+      flex: 0 0 auto;
+    }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius: 12px;
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+    th, td{
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      text-align:left;
+      vertical-align: top;
+      font-size: 14px;
+    }
+    th{
+      font-size: 12px;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: .5px;
+      background: #f8fafc;
+      font-weight: 600;
+    }
+    tr:last-child td{border-bottom:0}
+    .callout{
+      margin-top: 16px;
+      border-left: 4px solid var(--brand);
+      background: #eff6ff;
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid #dbeafe;
+    }
+    ul{margin: 8px 0 0 18px; padding:0;}
+    li{margin: 8px 0}
+    
+    /* Pricing / Next Step Styles */
+    .offer-grid {
+        display:grid; grid-template-columns: 1fr 1fr; gap:18px; margin-top:18px;
+    }
+    @media(max-width:700px){ .offer-grid{grid-template-columns:1fr} }
+    
+    .offer-card {
+        background:#fff; border:1px solid var(--border); border-radius:12px; padding:18px;
+        display:flex; flex-direction:column; justify-content:space-between;
+    }
+    .offer-card.recommended {
+        border: 2px solid var(--brand); position:relative; overflow:hidden;
+    }
+    .rec-tag {
+        background:var(--brand); color:#fff; font-size:10px; font-weight:800; text-transform:uppercase;
+        padding:4px 12px; position:absolute; top:0; right:0; border-bottom-left-radius:8px;
+    }
+    .price-lg { font-size:24px; font-weight:900; color:var(--ink); margin:8px 0; }
+    .price-sub { font-size:13px; color:var(--muted); font-weight:400; }
+    
+    /* Sidebar */
+    .sidebar h3{margin-bottom:12px; color: var(--ink);}
+    .kv{
+      display:grid;
+      grid-template-columns: 120px 1fr;
+      gap: 8px 12px;
+      margin-top: 12px;
+      font-size: 14px;
+    }
+    .kv .k{color: var(--muted); font-weight:600}
+    .kv .v{color: var(--ink)}
+    
+    /* Footer bar */
+    .footerbar{
+      position: fixed;
+      left:0; right:0; bottom:0;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 16px;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.04);
+      z-index: 100;
+    }
+    .footerbar .wrap{
+      display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      border: 0;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: none;
+      font-size: 14px;
+      color: #fff;
+      background: var(--brand);
+      transition: opacity 0.2s;
+    }
+    .btn:hover{opacity: 0.9;}
+    .btn.secondary{
+      background: #fff;
+      color: var(--brand);
+      border: 1px solid #bae6fd;
+    }
+    .btn.secondary:hover{background: #f0f9ff;}
+    
+    @media print{
+      .footerbar{display:none}
+      .card{box-shadow:none; border: 1px solid #ddd;}
+      a{text-decoration:none}
+      body{background:#fff;}
+    }
+  </style>
 </head>
 <body>
 
-<div class="topbar">
-<img src="https://impactabusinesssolutions.com/img/logo-main-2025.png" alt="IMPACTA" class="brandlogo">
-<div class="no-print">
-<button class="print-btn" onclick="window.print()">🖨️ Print / Save as PDF</button>
-</div>
-</div>
+  <header class="topbar" id="top">
+    <div class="wrap">
+      <div class="brandlock">
+        <picture>
+          <img 
+            src="https://impactabusinesssolutions.com/img/logo-main-2025.png"
+            alt="IMPACTA Business Solutions"
+            class="brandlogo"
+          />
+        </picture>
 
-<main class="wrap">
-<div class="card" style="border-left: 5px solid var(--brand);">
-<div style="display:flex; justify-content:space-between; align-items:start;">
-<div>
-<h1 style="margin:0; font-size:24px; color:var(--ink);">3-Point Diagnostic</h1>
-<p style="margin:4px 0 0; color:var(--muted); font-size:14px;">Prepared for: <strong>Stonebridge Roofing</strong></p>
-<p style="margin:2px 0 0; color:var(--muted); font-size:12px;">Access Code: <strong>IMFQT</strong></p>
-</div>
-<span class="pill">March 4, 2026</span>
-</div>
-</div>
+        <div class="tagline">
+          Free 3-Point Google Business Profile Diagnostic — Shareable Client Report
+        </div>
+      </div>
+      
+      <div class="meta">
+         <span class="pill">Diagnostic for: Stonebridge Roofing</span>
+         <span class="pill">Access Code: IMFQT</span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="accent-line"></div>
 
-<section class="grid">
-<div class="card">
-<h2>Executive Summary</h2>
-<p style="font-size:14px; color:var(--muted); line-height:1.6;">We audited <strong>Stonebridge Roofing's</strong> digital presence in Jacksonville. Right now, <strong>speed-to-lead gaps</strong> (e.g., Project tracking requires immediate optimization to prevent further pipeline leakage.) are causing you to lose high-intent calls to competitors who respond faster.</p>
-  <div class="kpis">
-    <div class="kpi"><div class="label">Health Score</div><div class="value">5.7 / 10</div><div class="note">Critical leakage.</div></div>
-    <div class="kpi"><div class="label">Primary Leak</div><div class="value">Missed Calls</div><div class="note">No automated response.</div></div>
-    <div class="kpi"><div class="label">Quick Win</div><div class="value">Missed-Call Text-Back</div><div class="note">Recover missed callers.</div></div>
-  </div>
-</div>
-<div class="card">
-  <h3>Business Snapshot</h3>
-  <div class="kv">
-    <div class="k">Name</div><div class="v">Stonebridge Roofing</div>
-    <div class="k">Category</div><div class="v">Roofing</div>
-    <div class="k">Location</div><div class="v">Jacksonville</div>
-    <div class="k">Rating</div><div class="v"><strong>—</strong> (Not Provided)</div>
-    <div class="k">Status</div><div class="v"><span class="badge bad">Critical Leak</span></div>
-  </div>
-</div>
-</section>
+  <main class="wrap">
+    <section class="grid">
+      <div class="card">
+        <h2>Executive Summary</h2>
+        <p class="muted">
+          This report highlights the highest-impact improvement to <strong>Stonebridge Roofing's</strong> intake process to help you
+          <strong>capture more high-ticket roof replacements</strong>, <strong>prevent emergency leads from calling competitors</strong>, and <strong>stop leaking front-end revenue</strong>.
+        </p>
 
-<div class="card">
-<div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-<h3>1. Relevance & Completeness</h3>
-<span class="badge warn">Score: 7/10</span>
-</div>
+        <div class="kpis">
+          <div class="kpi">
+            <div class="label">Diagnostic Score</div>
+            <div class="value">8.5 / 10</div>
+            <div class="note">Outstanding local reputation and visibility, but missing key intake automation.</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Biggest Leak</div>
+            <div class="value">Missed Calls</div>
+            <div class="note">In competitive roofing, a missed call means the prospect dials the next roofer.</div>
+          </div>
+          <div class="kpi">
+            <div class="label">Fastest Win</div>
+            <div class="value">48-Hour Fix</div>
+            <div class="note">Install a Missed-Call Text-Back system to instantly capture lost leads.</div>
+          </div>
+        </div>
+
+        <div class="callout">
+          <strong>Top 3 “Do This First” Actions</strong>
+          <ul>
+            <li><strong>Plug the Missed Call Leak:</strong> Implement an instant text-back for any calls missed during high-volume storm surges or after hours.</li>
+            <li><strong>Automate Review Requests:</strong> Consolidate your strong reputation by automating post-install review generation.</li>
+            <li><strong>Activate Web Chat:</strong> Convert passive website traffic into direct SMS conversations instantly.</li>
+          </ul>
+        </div>
+
+        <div class="divider"></div>
+        <p class="small muted">
+          <strong>Note:</strong> Assessment based on public profile data for your Jacksonville location.
+        </p>
+      </div>
+
+      <aside class="card sidebar">
+        <h3>Business Snapshot</h3>
+        <div class="kv">
+          <div class="k">Business Name</div><div class="v">Stonebridge Roofing, Energy &amp; Exteriors</div>
+          <div class="k">Primary Category</div><div class="v">Roofing Contractor</div>
+          <div class="k">Location</div><div class="v">Jacksonville, FL</div>
+          <div class="k">Phone Number</div><div class="v">904-262-6636</div>
+          <div class="k">Reviews</div><div class="v"><strong>4.5★</strong> (261 Reviews)</div>
+          <div class="k">Hours</div><div class="v">Mon–Fri 8a–5p <span class="badge warn" style="font-size:10px; padding:2px 6px;">Closed Wknds</span></div>
+        </div>
+
+        <div class="divider"></div>
+        <div class="badge warn">Status: Single Tactical Bottleneck</div>
+        <p class="muted small" style="margin-top:10px;">
+          Your local SEO and reputation are top-tier. However, your digital intake is vulnerable. You are likely losing high-ticket emergency/storm repair jobs to competitors when the office misses a call. 
+        </p>
+      </aside>
+    </section>
+
+    <section class="sections">
+      <div class="card">
+        <div class="section-title">
+          <div class="titleleft">
+            <div class="num">1</div>
+            <div>
+              <h3 style="margin:0;">Google Maps Visibility &amp; Ranking</h3>
+              <div class="small muted">Local Pack Presence and Optimization</div>
+            </div>
+          </div>
+          <span class="badge good">Score: 9 / 10</span>
+        </div>
 
         <table>
-        <tr><th width="30%">Check</th><th width="20%">Status</th><th>Finding</th></tr>
-        <tr><td><strong>Categories</strong></td><td><span class="badge warn">Incomplete</span></td><td>&#39;Energy/Exteriors&#39; requires immediate optimization to prevent further pipeline leakage.</td></tr>
-        <tr><td><strong>Menu/Attributes</strong></td><td><span class="badge warn">Needs Work</span></td><td>Secondary attributes and service signals can be expanded to capture more targeted intent.</td></tr>
-        </table>
-    
-<div class="callout"><strong>🚀 Fix:</strong> Expand categories/attributes and add service-specific content to capture more “near me” searches.</div>
-</div>
+          <tbody><tr>
+            <th>Item</th>
+            <th>Status</th>
+            <th>Findings</th>
+          </tr>
+          <tr>
+            <td><strong>Profile Status</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>Active and highly visible for roofing and exterior searches in Jacksonville.</td>
+          </tr>
+          <tr>
+            <td><strong>Local Pack</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>Frequently appearing in the highly coveted "Top 3" map pack.</td>
+          </tr>
+          <tr>
+            <td><strong>Optimization</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>Clear service lists, strong portfolio photos, and proper categorization.</td>
+          </tr>
+        </tbody></table>
 
-<div class="card">
-<div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-<h3>2. Conversion Signals</h3>
-<span class="badge warn">Score: 6/10</span>
-</div>
+        <div class="callout">
+          <strong>Observation</strong>
+          <ul>
+            <li><strong>Solid Foundation:</strong> You have done the heavy lifting to rank well. Now, the goal is maximizing the conversion of the traffic you are already earning.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <div class="titleleft">
+            <div class="num">2</div>
+            <div>
+              <h3 style="margin:0;">Review Momentum &amp; Trust Gap</h3>
+              <div class="small muted">Quantity, quality, and recency of reviews</div>
+            </div>
+          </div>
+          <span class="badge good">Score: 9 / 10</span>
+        </div>
 
         <table>
-        <tr><th width="30%">Check</th><th width="20%">Status</th><th>Finding</th></tr>
-        <tr><td><strong>Photos/Video</strong></td><td><span class="badge warn">Incomplete</span></td><td>Cross-sell? requires immediate optimization to prevent further pipeline leakage.</td></tr>
-        <tr><td><strong>Offers/Posts</strong></td><td><span class="badge warn">Needs Work</span></td><td>Posting cadence and offer visibility should be standardized to drive map-pack conversions.</td></tr>
-        </table>
-    
-<div class="callout"><strong>🚀 Fix:</strong> Launch weekly GBP posts/offers and standardize a 24-hour review response protocol.</div>
-</div>
+          <tbody><tr>
+            <th>Signal</th>
+            <th>Status</th>
+            <th>Findings</th>
+          </tr>
+          <tr>
+            <td><strong>Review Count</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>261+ reviews. This is a massive trust indicator that beats out smaller competitors.</td>
+          </tr>
+          <tr>
+            <td><strong>Trust Factor</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>A 4.5-star rating establishes you as a premium, reliable roofing contractor.</td>
+          </tr>
+          <tr>
+            <td><strong>Recency</strong></td>
+            <td><span class="badge good">STRONG</span></td>
+            <td>Consistent recent reviews show prospects that you are actively completing successful jobs.</td>
+          </tr>
+        </tbody></table>
 
-<div class="card">
-<div style="display:flex; justify-content:space-between; margin-bottom:12px;">
-<h3>3. Lead Capture Systems</h3>
-<span class="badge bad">Score: 4/10</span>
-</div>
+        <div class="callout">
+          <strong>Observation</strong>
+          <ul>
+            <li><strong>You Win on Trust:</strong> When a prospect compares you to another roofer, your review profile usually wins them over. The only way you lose them is if you don't answer the phone.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="section-title">
+          <div class="titleleft">
+            <div class="num">3</div>
+            <div>
+              <h3 style="margin:0;">Lead Response Readiness</h3>
+              <div class="small muted">The "Silent Killer" Evaluation</div>
+            </div>
+          </div>
+          <span class="badge warn">Score: 5 / 10</span>
+        </div>
 
         <table>
-        <tr><th width="30%">Check</th><th width="20%">Status</th><th>Finding</th></tr>
-        <tr><td><strong>Missed Calls</strong></td><td><span class="badge bad">Critical</span></td><td>Project tracking requires immediate optimization to prevent further pipeline leakage.</td></tr>
-        <tr><td><strong>Chat/Msg</strong></td><td><span class="badge bad">Inactive</span></td><td>Adding messaging/text-back options reduces friction and captures after-hours demand.</td></tr>
-        </table>
-    
-<div class="callout"><strong>🚀 Fix:</strong> Implement the <strong>"Missed Call Text Back"</strong> system to recover leads instantly when calls are missed.</div>
-</div>
+          <tbody><tr>
+            <th>System Check</th>
+            <th>Rating</th>
+            <th>Findings</th>
+          </tr>
+          <tr>
+            <td><strong>Speed-to-Lead</strong></td>
+            <td><span class="badge warn">WARNING</span></td>
+            <td>In the roofing industry, missing a call during a storm surge or after hours is an instant lost deal.</td>
+          </tr>
+          <tr>
+            <td><strong>Intake Automation</strong></td>
+            <td><span class="badge warn">WARNING</span></td>
+            <td>No visible instant text-back for missed calls. If they leave a voicemail, they've already called the next roofer on Google.</td>
+          </tr>
+          <tr>
+            <td><strong>Missed Revenue</strong></td>
+            <td><span class="badge warn">WARNING</span></td>
+            <td>Average roofing ticket is $15k+. Missing just 2-3 leads a month costs you **$30,000 to $45,000** in leaked pipeline.</td>
+          </tr>
+        </tbody></table>
 
-<div class="card" style="background:#f0f9ff; border:1px solid #bae6fd;">
-<h2>Recommended Next Step</h2>
-<p style="margin-bottom:16px;">Because the bottleneck is clearly <strong>Lead Capture</strong>, we recommend: <strong>Revenue Leak Diagnostic</strong>.</p>
-<div style="display:flex; gap:20px; align-items:center;">
-  <div style="flex:1;">
-    <h4 style="margin:0; color:var(--brand);">Revenue Leak Diagnostic: Full System Audit</h4>
-    <ul style="font-size:13px; color:var(--muted); padding-left:20px; margin-top:8px;">
-      <li><strong>Missed Call Text-Back Setup:</strong> Capture leads automatically 24/7.</li>
-      <li><strong>Instant Lead Alerts:</strong> Route web/chat leads to the right person.</li>
-      <li><strong>Review Response Clean-up:</strong> Reply to recent reviews to boost activity.</li>
-    </ul>
+        <div class="callout">
+          <strong>Fix Recommendation</strong>
+          <ul>
+            <li><strong>Tactical Bottleneck:</strong> Your only major leak is capturing the leads you already generate. You need instant automated response infrastructure.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card" style="grid-column: 1 / -1;">
+        <div class="section-title">
+          <div class="titleleft">
+            <div class="num">✓</div>
+            <div>
+              <h3 style="margin:0;">Recommended Next Step</h3>
+              <div class="small muted">Action Plan based on findings</div>
+            </div>
+          </div>
+        </div>
+
+        <p>
+          Your business is far from "messy." Because your SEO, visibility, and reviews are already excellent, we **recommend the 48-Hour Fix**. You don't need a massive strategic overhaul; you simply need to plug a single, clear tactical bottleneck to ensure every inbound call gets an instant response.
+        </p>
+
+        <div class="offer-grid">
+
+            <div class="offer-card recommended">
+                <div class="rec-tag">Recommended Step</div>
+                <div>
+                    <h3 style="color:var(--brand); margin-bottom:4px;">48-Hour Fix: Speed-to-Lead</h3>
+                    <p class="small muted">Fix Option 1: Catch high-ticket leads while you work.</p>
+                    <div class="divider"></div>
+                    <ul style="margin:0 0 0 16px; font-size:13.5px;">
+                        <li><strong>Missed-call auto text-back</strong></li>
+                        <li><strong>Instant notification routing for your team</strong></li>
+                        <li><strong>New-lead auto-response</strong></li>
+                        <li><strong>After-hours &amp; weekend response rules</strong></li>
+                        <li><strong>End-to-End System Test</strong></li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="price-lg">$350 <span class="price-sub">/ one-time</span></div>
+                    <a href="#" class="btn" style="width:100%">Activate Fix Option 1</a>
+                    <div class="small muted" style="text-align:center; margin-top:8px;">Fixes your specific bottleneck instantly</div>
+                </div>
+            </div>
+            
+            <div class="offer-card">
+                <div>
+                    <h3 style="margin-bottom:4px;">Revenue Leak Diagnostic</h3>
+                    <p class="small muted">For businesses with messy or missing foundations.</p>
+                    <div class="divider"></div>
+                    <ul style="margin:0 0 0 16px; font-size:13.5px;">
+                        <li><strong>Full Local Presence Blueprint</strong></li>
+                        <li><strong>Review Generation Strategy</strong></li>
+                        <li><strong>End-to-End System Alignment</strong></li>
+                        <li><strong>Strategy Session</strong> (60 mins)</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="price-lg">$350 <span class="price-sub">/ blueprint</span></div>
+                    <a href="#" class="btn secondary" style="width:100%">Book Full Diagnostic</a>
+                    <div class="small muted" style="text-align:center; margin-top:8px;">Not required for your current status</div>
+                </div>
+            </div>
+
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <div class="footerbar">
+    <div class="wrap">
+      <div class="small muted">© 2026 IMPACTA Business Solutions • Free 3-Point GBP Diagnostic (Stonebridge)</div>
+      <div style="display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn secondary" href="#top">Back to Top</a>
+        <button class="btn" onclick="window.print()">Print / Save as PDF</button>
+      </div>
+    </div>
   </div>
-  <div style="text-align:right; min-width: 120px;">
-    <div style="font-size:24px; font-weight:900; color:var(--brand);">$350</div>
-    <div style="font-size:11px; color:var(--muted); margin-bottom: 10px;">One-time Fee</div>
-    <a href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ1PtowFItt8BZqWRqKY4Whg0FrNmYXIDpgBizTpfNejt3d8JIFJR9NhEAUad1RutciKR3Ox4WOy" class="action-btn">Book the Diagnostic →</a>
-  </div>
-</div>
-</div>
-<div style="text-align:center; font-size:11px; color:var(--muted); margin-top:20px;">
-© 2026 IMPACTA Business Solutions • Generated for Stonebridge Roofing • Access Code: IMFQT
-</div>
-</main>
+
 </body>
 </html>
