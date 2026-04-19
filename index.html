@@ -104,37 +104,15 @@
         const IconChevronDown = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m6 9 6 6 6-6"/></svg>;
         const IconPlus = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/><path d="M12 5v14"/></svg>;
         const IconMinus = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="M5 12h14"/></svg>;
+        const IconAlertTriangle = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>;
+        const IconSearch = ({ className }) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>;
 
         // --- DATA ---
         const features = [
-            { 
-                title: "Auto-Capture Missed Calls", 
-                icon: <IconZap className="w-8 h-8 text-blue-600" />, 
-                description: "The 'Speed-to-Lead' Engine. We install an automated SMS text-back system that engages leads instantly when your front desk is busy.", 
-                impact: "Recover 30% of Leads", 
-                price: "$350 One-Time" 
-            },
-            { 
-                title: "Revive Dead Leads", 
-                icon: <IconClock className="w-8 h-8 text-blue-600" />, 
-                description: "The 'Nurture' Engine. We build a 14-day automated sequence (SMS/Email) that chases prospects so your ops team doesn't have to.", 
-                impact: "2-3x Conversion Rate", 
-                price: "$350 One-Time" 
-            },
-            { 
-                title: "Eliminate No-Shows", 
-                icon: <IconCheckCircle className="w-8 h-8 text-blue-600" />, 
-                description: "The 'Show-Up' Engine. We implement automated confirmations, 24h reminders, and reschedule flows to maximize staff utilization.", 
-                impact: "80%+ Show Rates", 
-                price: "$350 One-Time" 
-            },
-            { 
-                title: "Visualize Your Revenue", 
-                icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, 
-                description: "The 'Pipeline' Engine. We establish clear deal stages and tracking dashboards to eliminate data silos and uncover hidden margin.", 
-                impact: "100% Clarity", 
-                price: "$350 One-Time" 
-            }
+            { title: "Manual Mystery Shop Audit", icon: <IconSearch className="w-8 h-8 text-blue-600" />, description: "We submit dummy leads to you AND your top competitor. We document exact response times to prove your competitive operational gap.", impact: "The Labor Illusion", price: "Free Consult" },
+            { title: "Speed-to-Lead Automation", icon: <IconZap className="w-8 h-8 text-blue-600" />, description: "When your competitor answers in 4 minutes and your BDC takes 4 hours, the lead is gone. We install instant auto-text capture.", impact: "Response time < 1 min", price: "$350 One-Time" },
+            { title: "Long-Cycle Nurture", icon: <IconClock className="w-8 h-8 text-blue-600" />, description: "Marketing gets the click, Operations closes the deal. We build 14-day SMS/Email sequences so DMs never drop the ball.", impact: "2-3x Conversion Rate", price: "$350 One-Time" },
+            { title: "Pipeline Visibility", icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, description: "Move away from relying on your agency's vanity metrics. We install clear stages to track actual Sales Qualified Appointments (SQAs).", impact: "100% Truth", price: "$350 One-Time" }
         ];
 
         const industryLinks = [
@@ -160,13 +138,12 @@
         ];
 
         const faqs = [
-            { question: "Do I have to buy the Diagnostic first?", answer: "No. If you know you have a specific operational bottleneck (like missed calls), you can buy the '48-Hour Fix' directly. We simply install the solution." },
-            { question: "What exactly is 'RevOps'?", answer: "Revenue Operations (RevOps) is the strategic alignment of sales, marketing, and customer success into a single engine. Instead of silos, we build one system where data and processes flow to maximize operational velocity and stop leaks." },
-            { question: "Why do you charge $350 for a Diagnostic?", answer: "Free audits are usually just marketing sales pitches. Our $350 Diagnostic is a high-level operational consult. We spend time inside your CRM and workflow to find actual leaks. If we partner on a PPA basis, this fee is 100% credited back." },
-            { question: "What does 'Performance-Based' (PPA) actually mean?", answer: "It means skin in the game. After setup, we don't charge lazy retainers. We get paid based on outcomes—typically per Sales Qualified Appointment (SQA). If we don't fix the leak, you don't pay." },
+            { question: "Why do a 'Mystery Shop' instead of an SEO Audit?", answer: "Because SEO is a commoditized 'Red Ocean'. We focus on the 'Blue Ocean' of operational capture. Your marketing agency is likely doing fine getting clicks. Our mystery shop proves whether your internal team is actually capturing that value, or if you're bleeding ROI to competitors who answer the phone faster." },
+            { question: "What is the 'Agency-Proof' Guarantee?", answer: "We don't compete with your marketing agency; we hold them accountable. If they are sending leads, our RevOps systems ensure your BDC (Business Development Center) or front desk converts them. We fix the bottom of the funnel." },
+            { question: "Why do you charge $350 for the 48-Hour Fix?", answer: "We leverage a 'High-Cost Wedge'. Our audits are manual, human-driven intelligence—not bot-generated PDFs. The $350 covers the exact operational installation of a specific pipeline fix. If we partner on a Pay-Per-Appointment (PPA) basis, this is credited back." },
+            { question: "What does 'Performance-Based' (PPA) mean?", answer: "We align our incentives with your P&L. We get paid based on outcomes—typically per Sales Qualified Appointment (SQA). No bloated retainers for vague 'brand awareness'." },
             { question: "Do I need to buy a specific CRM for this to work?", answer: "We are tool-agnostic. We audit your current tech; if it works, we optimize it. If it's the bottleneck, we'll recommend a migration to a platform built for operational efficiency." },
-            { question: "Is this just for businesses in Ocala, FL?", answer: "While proudly based in Ocala, we serve clients nationwide. Since we specialize in digital RevOps and operational automation, we can map and patch your systems remotely." },
-            { question: "How is this different from a standard marketing agency?", answer: "Agencies focus on 'Top of Funnel' visibility (getting clicks). We focus on 'Internal Velocity' (plugging leaks). We don't just send leads; we build the automation to ensure they actually book and show up." }
+            { question: "Is this just for businesses in Ocala, FL?", answer: "While proudly based in Ocala, we serve clients nationwide. Since we specialize in digital RevOps and operational automation, we can map and patch your systems remotely." }
         ];
 
         // --- COMPONENTS ---
@@ -240,8 +217,8 @@
                             
                             <a href="login.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-slate-800' : 'text-slate-700'}`}>Login</a>
 
-                            <Button variant={scrolled ? 'primary' : 'primary'} className={`py-2 px-4 text-sm`} onClick={() => window.location.href = '48-hour-fix.html'}>
-                                Book My 48-hour Fix
+                            <Button variant={scrolled ? 'primary' : 'primary'} className={`py-2 px-4 text-sm`} onClick={() => window.location.href = 'free-diagnostic.html'}>
+                                Request Mystery Shop
                             </Button>
                         </div>
 
@@ -268,7 +245,7 @@
                             <a href="faqs.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>FAQs</a>
                             <a href="contact-us.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Contact</a>
                             <a href="login.html" className="text-gray-700 font-medium text-lg" onClick={() => setIsOpen(false)}>Login</a>
-                            <Button variant="primary" className="w-full mt-4" onClick={() => window.location.href = '48-hour-fix.html'}>Get My 48-Hour Fix</Button>
+                            <Button variant="primary" className="w-full mt-4" onClick={() => window.location.href = 'free-diagnostic.html'}>Request Mystery Shop</Button>
                         </div>
                     )}
                 </nav>
@@ -277,37 +254,37 @@
         
         const Hero = () => {
             return (
-                <div className="relative bg-slate-50 pt-32 pb-24 md:pt-48 md:pb-40 overflow-hidden">
+                <div className="relative bg-slate-50 pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden">
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#e2e8f0_1px,transparent_1px),linear-gradient(to_bottom,#e2e8f0_1px,transparent_1px)] bg-[size:40px_40px] [mask-image:radial-gradient(ellipse_100%_50%_at_50%_0%,#000_70%,transparent_100%)] opacity-70"></div>
-                    <div className="absolute top-0 inset-x-0 h-[500px] bg-gradient-to-b from-blue-50/80 via-blue-50/20 to-transparent pointer-events-none"></div>
+                    <div className="absolute top-0 inset-x-0 h-[400px] bg-gradient-to-b from-blue-50/80 via-blue-50/20 to-transparent pointer-events-none"></div>
 
-                    <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center">
+                    <div className="relative max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center">
                         <div className="relative z-10">
-                            <div className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-600 font-bold rounded-full px-4 py-1.5 text-sm mb-8 shadow-sm">
+                            <div className="inline-flex items-center gap-2 bg-white border border-slate-200 text-slate-600 font-bold rounded-full px-4 py-1.5 text-sm mb-6 shadow-sm">
                                 <span className="flex h-2 w-2 relative">
                                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#0c62ab] opacity-75"></span>
                                   <span className="relative inline-flex rounded-full h-2 w-2 bg-[#0c62ab]"></span>
                                 </span>
                                 Lead Intake & RevOps
                             </div>
-                            <h1 className="text-5xl md:text-7xl font-extrabold text-slate-900 leading-[1.1] mb-6 tracking-tight">
-                                Stop Losing Leads to <br/>
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0c62ab] to-blue-600">Missed Calls.</span>
+                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-slate-900 leading-[1.15] mb-5 tracking-tight pr-4">
+                                Your Marketing is Making the Phone Ring. <br className="hidden md:block"/>
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0c62ab] to-blue-600">Your Intake System is Leaking the Revenue.</span>
                             </h1>
-                            <p className="text-xl text-slate-600 mb-10 max-w-lg leading-relaxed font-medium">
-                                Stop wasting 20% of your marketing budget on missed calls. We don't do "vague marketing." We audit your intake and install the <a href="solutions.html" className="text-[#0c62ab] underline hover:text-blue-800 font-bold">operational engines</a> that recover lost margin.
+                            <p className="text-lg md:text-xl text-slate-600 mb-8 max-w-lg leading-relaxed font-medium">
+                                We don't sell ads or automated SEO reports. We perform manual, high-fidelity Lead Response Audits to prove exactly where you are leaking revenue to competitors.
                             </p>
                             <div className="flex flex-col sm:flex-row gap-4">
-                                <Button variant="primary" className="text-white bg-[#0c62ab] hover:bg-[#094b85] border-none text-lg px-8 py-4 shadow-xl hover:shadow-2xl hover:-translate-y-1 transition-all duration-300" onClick={() => window.location.href = 'free-diagnostic.html'}>
-                                    Calculate Lost Revenue (Free)
+                                <Button variant="primary" className="text-white bg-[#0c62ab] hover:bg-[#094b85] border-none text-base px-6 py-3 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300" onClick={() => window.location.href = 'free-diagnostic.html'}>
+                                    Audit My Response Time (Free)
                                 </Button>
-                                <Button className="bg-slate-900 text-white hover:bg-slate-800 text-lg px-8 py-4 shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-900" onClick={() => window.location.href = '48-hour-fix.html'}>
-                                    Install The Fix ($350)
+                                <Button className="bg-slate-900 text-white hover:bg-slate-800 text-base px-6 py-3 shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-slate-900" onClick={() => window.location.href = '48-hour-fix.html'}>
+                                    See How We Fix It ($350)
                                 </Button>
                             </div>
-                            <div className="mt-10 flex items-center gap-6 text-sm font-semibold text-slate-500">
-                                <div className="flex items-center gap-2"><div className="bg-green-100 p-1 rounded-full"><IconCheckCircle className="w-4 h-4 text-green-600" /></div><span>Implementation in 48 Hours</span></div>
-                                <div className="flex items-center gap-2"><div className="bg-green-100 p-1 rounded-full"><IconCheckCircle className="w-4 h-4 text-green-600" /></div><span>No Monthly Retainers</span></div>
+                            <div className="mt-8 flex items-center gap-6 text-sm font-semibold text-slate-500">
+                                <div className="flex items-center gap-2"><div className="bg-green-100 p-1 rounded-full"><IconCheckCircle className="w-4 h-4 text-green-600" /></div><span>Human-Verified Audits</span></div>
+                                <div className="flex items-center gap-2"><div className="bg-green-100 p-1 rounded-full"><IconCheckCircle className="w-4 h-4 text-green-600" /></div><span>Blue Ocean Strategy</span></div>
                             </div>
                         </div>
                         
@@ -317,52 +294,46 @@
                                 <div className="absolute top-0 left-0 w-full h-1 bg-[#0c62ab]"></div>
                                 <div className="flex justify-between items-center mb-8 pb-4 border-b border-slate-100">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#0c62ab]"><IconBarChart3 className="w-6 h-6"/></div>
+                                        <div className="w-10 h-10 bg-blue-50 rounded-lg flex items-center justify-center text-[#0c62ab]"><IconSearch className="w-6 h-6"/></div>
                                         <div>
-                                            <div className="font-bold text-slate-900">IMPACTA Engine v2.0</div>
-                                            <div className="text-xs text-green-600 font-mono flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> SYSTEM ACTIVE</div>
+                                            <div className="font-bold text-slate-900">Mystery Shop Audit</div>
+                                            <div className="text-xs text-[#0c62ab] font-mono flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-[#0c62ab] animate-pulse"></span> LIVE TEST</div>
                                         </div>
                                     </div>
-                                    <div className="text-right">
-                                        <div className="text-xs text-slate-400 uppercase font-bold">Total Margin Recovered</div>
-                                        <div className="text-xl font-bold text-slate-900">$14,250</div>
-                                    </div>
                                 </div>
-                                <div className="space-y-4">
+                                <div className="space-y-6">
+                                    <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0"><IconCheckCircle className="w-5 h-5" /></div>
+                                        <div className="flex-1 p-4 bg-green-50 rounded-lg border border-green-100 flex justify-between items-center shadow-sm">
+                                            <div>
+                                                <div className="text-xs font-bold text-green-700 uppercase mb-1">Your Competitor</div>
+                                                <div className="text-sm font-medium text-slate-800">Responded in <span className="font-bold">4 Mins</span></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="h-4 w-px bg-slate-200 ml-5"></div>
                                     <div className="flex items-center gap-4">
                                         <div className="relative">
                                             <div className="absolute inset-0 bg-red-500 rounded-full animate-ping opacity-75"></div>
-                                            <div className="relative w-8 h-8 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0 z-10 border border-red-200"><IconX className="w-4 h-4" /></div>
+                                            <div className="relative w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 shrink-0 z-10 border border-red-200"><IconAlertTriangle className="w-5 h-5" /></div>
                                         </div>
-                                        <div className="flex-1 p-3 bg-red-50 rounded-lg border border-red-200 flex justify-between items-center shadow-sm animate-pulse">
-                                            <span className="text-sm font-bold text-red-900">Incoming Call (Missed)</span>
-                                            <span className="text-xs font-bold text-red-600 bg-white px-2 py-1 rounded border border-red-100">INTAKE LEAK</span>
-                                        </div>
-                                    </div>
-                                    <div className="h-6 w-px bg-slate-200 ml-4"></div>
-                                    <div className="flex items-center gap-4 transform translate-x-4">
-                                        <div className="w-8 h-8 rounded-full bg-[#0c62ab] flex items-center justify-center text-white shrink-0 shadow-lg shadow-blue-200"><IconZap className="w-4 h-4" /></div>
-                                        <div className="flex-1 p-4 bg-white rounded-lg border border-blue-100 shadow-xl shadow-blue-50 flex flex-col relative overflow-hidden">
-                                            <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#0c62ab]"></div>
-                                            <span className="text-xs font-bold text-[#0c62ab] mb-1">AUTO-RESPONSE TRIGGERED</span>
-                                            <span className="text-sm font-medium text-slate-800">"Hey, sorry our team missed you! We're with a client. Are you looking for a quote?"</span>
+                                        <div className="flex-1 p-4 bg-white rounded-lg border border-red-200 flex justify-between items-center shadow-md border-l-4 border-l-red-500">
+                                            <div>
+                                                <div className="text-xs font-bold text-red-700 uppercase mb-1">Your Business</div>
+                                                <div className="text-sm font-medium text-slate-800">Responded in <span className="font-bold text-red-600">4 Hours</span></div>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div className="h-6 w-px bg-slate-200 ml-4"></div>
-                                    <div className="flex items-center gap-4">
-                                        <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center text-green-600 shrink-0"><IconCheckCircle className="w-4 h-4" /></div>
-                                        <div className="flex-1 p-3 bg-green-50 rounded-lg border border-green-100 flex justify-between items-center">
-                                            <span className="text-sm font-medium text-slate-700">Appointment Booked</span>
-                                            <span className="text-xs font-bold text-green-600 bg-white px-2 py-1 rounded shadow-sm">RECOVERED</span>
-                                        </div>
+                                    <div className="text-center pt-6 mt-4 text-slate-500 font-semibold border-t border-slate-100">
+                                        Who do you think closed the deal?
                                     </div>
                                 </div>
                             </div>
                             <div className="absolute bottom-0 right-0 bg-slate-900 text-white p-4 rounded-xl shadow-2xl flex items-center gap-3 animate-bounce" style={{animationDuration: '3s'}}>
-                                <div className="text-2xl">🚀</div>
+                                <div className="text-2xl">🚨</div>
                                 <div>
-                                    <div className="text-xs font-bold text-slate-400 uppercase">Conversion Rate</div>
-                                    <div className="font-bold text-lg">+391%</div>
+                                    <div className="text-xs font-bold text-slate-400 uppercase">Competitive Gap</div>
+                                    <div className="font-bold text-lg">Revenue Leaked</div>
                                 </div>
                             </div>
                         </div>
@@ -375,11 +346,11 @@
             <section className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
                     <div className="max-w-3xl mx-auto text-center mb-16">
-                        <h2 className="text-3xl font-bold text-gray-900 mb-4">The 5-Minute Rule: <br/>How Much is Slow Follow-Up Costing Your P&L?</h2>
-                        <p className="text-gray-600 text-lg">Adding more marketing budget to a leaky bucket amplifies your Customer Acquisition Cost (CAC). We plug the operational holes causing intake friction.</p>
+                        <h2 className="text-3xl font-bold text-gray-900 mb-4">The Blue Ocean of Operational Capture</h2>
+                        <p className="text-gray-600 text-lg">Stop fighting in the blood-red ocean of Demand Generation and SEO. Your real competitive advantage is your internal operation's ability to capture the value you already paid for.</p>
                     </div>
                     <div className="grid md:grid-cols-3 gap-8">
-                        {[{ title: "Team Performance Void", stat: "391%", desc: "Average conversion improvement when your sales team response time is under 1 minute. Wait an hour, and the margin is gone.", color: "text-red-600" }, { title: "Wasted Marketing Spend", stat: "20%+", desc: "Of inbound call conversions are lost to poor after-hours lead handling and voicemail drops.", color: "text-orange-600" }, { title: "The Nurture Void", stat: "90%", desc: "Of leads aren't ready to buy today. Without automated lead intake workflow templates, your CAC skyrockets.", color: "text-amber-600" }].map((item, idx) => (
+                        {[{ title: "The Agency-Proof Reality", stat: "100%", desc: "Your agency's job is inbound traffic. If your BDC takes 4 hours to reply, you are blaming the wrong vendor.", color: "text-red-600" }, { title: "The Speed-to-Lead Void", stat: "391%", desc: "Improvement in conversion when responding within 1 minute. Our mystery shops prove you are losing this battle.", color: "text-impacta" }, { title: "The Nurture Chasm", stat: "90%", desc: "Of leads aren't ready to buy today. Without automated follow-up sequences, your Customer Acquisition Cost skyrockets.", color: "text-amber-600" }].map((item, idx) => (
                             <div key={idx} className="bg-white p-8 rounded-xl shadow-sm border-t-4 border-impacta hover:-translate-y-1 transition-transform">
                                 <h3 className="text-xl font-bold text-gray-900 mb-2">{item.title}</h3>
                                 <div className={`text-4xl font-extrabold ${item.color} mb-4`}>{item.stat}</div>
@@ -394,9 +365,9 @@
         const SolutionsSection = () => (
             <section id="services" className="py-24 bg-white">
                 <div className="max-w-7xl mx-auto px-6">
-                    <SectionHeading subtitle="The Solution" title="We Install These 4 Engines" />
+                    <SectionHeading subtitle="The Tactical Execution" title="Our Proprietary Wedge & Engines" />
                     <p className="text-center text-slate-600 max-w-2xl mx-auto mb-16 text-lg">
-                        We don't do vague "consulting." We identify the operational bottleneck and install a specific, proven system to fix it. Usually within two business days.
+                        We leverage manual intelligence to prove your gap, then deploy high-velocity automation to seal it.
                     </p>
                     <div className="grid md:grid-cols-2 gap-8 mb-12">
                         {features.map((feature, idx) => (
@@ -425,14 +396,14 @@
                     <div className="grid md:grid-cols-2 gap-16 items-center">
                         <div>
                             <div className="mb-12 text-left">
-                                <span className="text-blue-300 font-bold tracking-wider uppercase text-sm mb-2 block">The Strategy</span>
+                                <span className="text-blue-300 font-bold tracking-wider uppercase text-sm mb-2 block">Value Chain Analysis</span>
                                 <h2 className="text-3xl md:text-4xl font-bold text-white">Stop Renting Growth</h2>
                             </div>
                             <div className="space-y-8 text-slate-300">
-                                <p className="text-lg">If your growth stops the moment you turn off your ads, you don't have a business; you have a subscription to Google and Facebook.</p>
-                                <p className="text-lg">IMPACTA builds <strong>Owned Revenue Engines</strong>. We install the systems (CRM, Automation, Playbooks) that allow you to convert leads regardless of the source.</p>
+                                <p className="text-lg">If your growth stops the moment you turn off your ads, you don't have a business; you have a subscription to Google.</p>
+                                <p className="text-lg">Applying Porter’s Value Chain: Your competitors focus on the Inbound node. IMPACTA focuses on the Operations node. We build <strong>Owned Revenue Engines</strong> that increase your Customer Lifetime Value to CAC ratio.</p>
                                 <ul className="space-y-4 mt-8">
-                                    {["Pay for outcomes (SQAs), not just activity.", "Automate the repetitive 80% of sales ops.", "Build assets that increase enterprise value."].map((item, i) => (
+                                    {["Hard data: We mystery shop you vs. competitors.", "Pay for outcomes (SQAs), not retainers.", "Build a defensible operational moat."].map((item, i) => (
                                         <li key={i} className="flex items-center gap-3"><IconCheckCircle className="w-5 h-5 text-blue-400" />{item}</li>
                                     ))}
                                 </ul>
@@ -443,7 +414,7 @@
                             <div className="relative bg-slate-800 border border-slate-700 p-8 rounded-2xl">
                                 <h3 className="text-xl font-bold mb-6 border-b border-slate-700 pb-4">The IMPACTA Roadmap</h3>
                                 <div className="space-y-6">
-                                    {[{ step: "01", title: "Diagnostic Audit", desc: "We identify the #1 operational bottleneck causing revenue leaks." }, { step: "02", title: "The 48-Hour Fix", desc: "We install the tech to plug the hole." }, { step: "03", title: "PPA Performance", desc: "We scale lead flow on a Pay-Per-Appointment (SQA) basis." }, { step: "04", title: "Operational Handoff", desc: "We train your team to run the engine." }].map((step, i) => (
+                                    {[{ step: "01", title: "The Mystery Shop", desc: "Manual lead testing of your business vs. competitors." }, { step: "02", title: "The 48-Hour Fix", desc: "We install tech to plug the immediate bleeding." }, { step: "03", title: "PPA Performance", desc: "Scale pipeline volume on a Pay-Per-Appointment basis." }, { step: "04", title: "Enterprise Moat", desc: "You achieve total operational dominance." }].map((step, i) => (
                                         <div key={i} className="flex gap-4">
                                             <div className="text-2xl font-bold text-blue-500 opacity-50">{step.step}</div>
                                             <div><div className="font-bold text-white">{step.title}</div><div className="text-sm text-slate-400">{step.desc}</div></div>
@@ -473,24 +444,24 @@
         const PricingSection = () => (
             <section id="pricing" className="py-20 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-6">
-                    <SectionHeading subtitle="Fix The Bullwhip Effect" title="Choose Your Operational Fix" />
+                    <SectionHeading subtitle="Strategic Investment" title="Audit Your Pipeline" />
                     <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
                         <Card className="border-gray-200">
-                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">Revenue Recovery Calculator</h3><div className="text-3xl font-bold text-impacta mt-4">Free</div><p className="text-sm text-gray-500 mt-2">See the math of your own leaks</p></div>
-                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Marketing ROI Calculator</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Missed Call Projections</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Intake Friction Report</li></ul>
-                            <Button variant="outline" className="w-full !text-gray-900 !border-gray-300 hover:!bg-gray-50" onClick={() => window.location.href = 'free-diagnostic.html'}>Calculate My Leak</Button>
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">Lead Capture Audit</h3><div className="text-3xl font-bold text-impacta mt-4">Free</div><p className="text-sm text-gray-500 mt-2">The Labor Illusion Wedge</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Manual Lead Submission Test</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Competitor Benchmark Data</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Time-Stamped Evidence</li></ul>
+                            <Button variant="outline" className="w-full !text-gray-900 !border-gray-300 hover:!bg-gray-50" onClick={() => window.location.href = 'free-diagnostic.html'}>Request Audit</Button>
                         </Card>
                         <div className="relative transform md:-translate-y-4">
-                           <div className="absolute top-0 left-0 w-full -mt-4 text-center"><span className="bg-impacta text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Most Popular</span></div>
+                           <div className="absolute top-0 left-0 w-full -mt-4 text-center"><span className="bg-impacta text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-wide">Deep Dive</span></div>
                             <Card className="border-impacta shadow-xl bg-blue-50/50">
-                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">Revenue Leak Diagnostic</h3><div className="text-4xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">Credited back if we partner</p></div>
-                            <ul className="space-y-4 mb-8 text-gray-700 text-sm font-medium"><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Full Pipeline Snapshot</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Custom SQA Definition</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> 60-Second Response Blueprint</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> ROI Projection Model</li></ul>
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">Full Revenue Diagnostic</h3><div className="text-4xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">Credited back if we partner</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-700 text-sm font-medium"><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Full Pipeline & CRM Snapshot</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> Custom SQA Definition</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> 60-Second Response Blueprint</li><li className="flex items-start gap-2"><IconCheckCircle className="text-impacta w-4 h-4 shrink-0 mt-1"/> ROI Projection Model</li></ul>
                             <Button variant="primary" className="w-full shadow-blue-200 hover:!bg-white hover:!text-[#0c62ab]" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Session</Button>
                           </Card>
                         </div>
                         <Card className="border-gray-200">
-                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">48-Hour Fix</h3><div className="text-3xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">One specific bottleneck removal</p></div>
-                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Select ONE Menu Item</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Implementation in 2 Days</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Access to CRM required</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> No Ongoing Retainer</li></ul>
+                            <div className="text-center mb-6"><h3 className="text-xl font-bold text-gray-900">48-Hour Fix</h3><div className="text-3xl font-bold text-impacta mt-4">$350</div><p className="text-sm text-gray-500 mt-2">Immediate Bottleneck Removal</p></div>
+                            <ul className="space-y-4 mb-8 text-gray-600 text-sm"><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Select ONE Specific Engine</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Implementation in 2 Days</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> Access to CRM required</li><li className="flex items-start gap-2"><IconCheckCircle className="text-green-500 w-4 h-4 shrink-0 mt-1"/> No Ongoing Retainer</li></ul>
                             <Button variant="outline" className="w-full !text-gray-900 !border-gray-300 hover:!bg-gray-50" onClick={() => window.location.href = '48-hour-fix.html'}>Select Fix</Button>
                         </Card>
                     </div>
@@ -531,10 +502,10 @@
                 <div className="max-w-4xl mx-auto px-6">
                     <div className="bg-impacta rounded-3xl p-12 text-center text-white shadow-2xl relative overflow-hidden">
                         <div className="relative z-10">
-                            <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Audit Your Intake?</h2>
-                            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">The diagnostic is $350. If we don't find a leak worth at least $3,500 in lost margin, we refund you on the spot.</p>
-                            <Button variant="secondary" className="mx-auto" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Your Intake Audit</Button>
-                            <p className="mt-4 text-sm text-blue-200 opacity-75">No retainers. No long-term contracts.</p>
+                            <h2 className="text-3xl md:text-4xl font-bold mb-6">Dare to Test Your Operations?</h2>
+                            <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">We will mystery shop your business and your top competitor. If you beat their response time, the audit is on us. If you don't, you need our systems.</p>
+                            <Button variant="secondary" className="mx-auto" onClick={() => window.location.href = 'free-diagnostic.html'}>Challenge Your BDC Now</Button>
+                            <p className="mt-4 text-sm text-blue-200 opacity-75">Data-driven reality. No fluff.</p>
                         </div>
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
                         <div className="absolute bottom-0 left-0 w-48 h-48 bg-white opacity-5 rounded-full translate-y-1/2 -translate-x-1/2"></div>
