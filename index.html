@@ -16,7 +16,7 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
-<meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:type" content="website" />
     <meta property="og:title" content="IMPACTA Business Solutions | Stop Losing Leads to Missed Calls" />
     <meta property="og:description" content="Stop wasting your marketing budget on missed calls. IMPACTA audits your intake and installs RevOps engines to recover lost margin." />
@@ -29,7 +29,9 @@
     <meta name="twitter:description" content="We install the operational engines that stop you from losing leads to intake friction and poor response times." />
     <meta name="twitter:image" content="https://impactabusinesssolutions.com/img/og-image.png" />
     <meta name="description" content="Stop wasting marketing budget on missed calls. IMPACTA audits your intake and installs operational engines to recover lost margin. Calculate your revenue leak today.">
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
+    
     <link rel="canonical" href="https://impactabusinesssolutions.com/" />
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -46,47 +48,47 @@
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
     </style>
     <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "IMPACTA Business Solutions",
-  "image": "https://impactabusinesssolutions.com/img/logo-main-2025.png",
-  "@id": "https://impactabusinesssolutions.com",
-  "url": "https://impactabusinesssolutions.com",
-  "telephone": "+13524419448",
-  "priceRange": "$$$",
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "76 Alvarez Rd",
-    "addressLocality": "Dunnellon",
-    "addressRegion": "FL",
-    "postalCode": "34431",
-    "addressCountry": "US"
-  },
-  "geo": {
-    "@type": "GeoCoordinates",
-    "latitude": 29.1872,
-    "longitude": -82.1401
-  },
-  "openingHoursSpecification": {
-    "@type": "OpeningHoursSpecification",
-    "dayOfWeek": [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday"
-    ],
-    "opens": "09:00",
-    "closes": "17:00"
-  },
-  "sameAs": [
-    "https://www.facebook.com/impactabusinesssolutions",
-    "https://www.linkedin.com/alex-m-soto/"
-  ]
-}
-</script>
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "IMPACTA Business Solutions",
+      "image": "https://impactabusinesssolutions.com/img/logo-main-2025.png",
+      "@id": "https://impactabusinesssolutions.com",
+      "url": "https://impactabusinesssolutions.com",
+      "telephone": "+13524419448",
+      "priceRange": "$$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "76 Alvarez Rd",
+        "addressLocality": "Dunnellon",
+        "addressRegion": "FL",
+        "postalCode": "34431",
+        "addressCountry": "US"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 29.1872,
+        "longitude": -82.1401
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday",
+          "Saturday"
+        ],
+        "opens": "09:00",
+        "closes": "17:00"
+      },
+      "sameAs": [
+        "https://www.facebook.com/impactabusinesssolutions",
+        "https://www.linkedin.com/alex-m-soto/"
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="root"></div>
@@ -109,41 +111,11 @@
 
         // --- DATA ---
         const features = [
-            { 
-                title: "Missed-Call Revenue Rescue", 
-                icon: <IconZap className="w-8 h-8 text-blue-600" />, 
-                description: "You miss 30%+ of calls while on the job. We install an automated system that instantly texts missed callers: 'Sorry we missed you! I'm on a job. How can we help?'", 
-                impact: "Stop Competitor Leaks", 
-                price: "$350 Setup" 
-            },
-            { 
-                title: "Speed-to-Lead Web Automator", 
-                icon: <IconClock className="w-8 h-8 text-blue-600" />, 
-                description: "Web forms sitting in your email for 6 hours kill deals. We map your site's form to text you instantly, and auto-reply to the prospect to expect a call in 15 mins.", 
-                impact: "60-Second Engagement", 
-                price: "$350 Setup" 
-            },
-            { 
-                title: "GBP Conversion Overhaul", 
-                icon: <IconMapPin className="w-8 h-8 text-blue-600" />, 
-                description: "Your Google Business Profile is bleeding trust. We add booking links, upload 15 geo-tagged photos, seed 5 strategic Q&As, and deploy a review-request template.", 
-                impact: "Active Booking Engine", 
-                price: "$350 One-Time" 
-            },
-            { 
-                title: "Past-Client Reactivation", 
-                icon: <IconDollarSign className="w-8 h-8 text-blue-600" />, 
-                description: "Hundreds of past clients are sitting dormant. We take your dead list, clean it, and execute a one-time, highly targeted SMS/Email 'win-back' blast.", 
-                impact: "Instant Cash Injection", 
-                price: "$350 Setup" 
-            },
-            { 
-                title: "Revenue Leak Diagnostic", 
-                icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, 
-                description: "Scaling but feeling chaotic? We map your entire Revenue Path in a 60-min deep dive, isolate your #1 operational bottleneck, and hand you the blueprint.", 
-                impact: "Pinpoint ROI Gaps", 
-                price: "$350 Audit" 
-            }
+            { title: "Missed-Call Revenue Rescue", icon: <IconZap className="w-8 h-8 text-blue-600" />, description: "You miss 30%+ of calls while on the job. We install an automated system that instantly texts missed callers: 'Sorry we missed you! I'm on a job. How can we help?'", impact: "Stop Competitor Leaks", price: "$350 Setup" },
+            { title: "Speed-to-Lead Web Automator", icon: <IconClock className="w-8 h-8 text-blue-600" />, description: "Web forms sitting in your email for 6 hours kill deals. We map your site's form to text you instantly, and auto-reply to the prospect to expect a call in 15 mins.", impact: "60-Second Engagement", price: "$350 Setup" },
+            { title: "GBP Conversion Overhaul", icon: <IconMapPin className="w-8 h-8 text-blue-600" />, description: "Your Google Business Profile is bleeding trust. We add booking links, upload 15 geo-tagged photos, seed 5 strategic Q&As, and deploy a review-request template.", impact: "Active Booking Engine", price: "$350 One-Time" },
+            { title: "Past-Client Reactivation", icon: <IconDollarSign className="w-8 h-8 text-blue-600" />, description: "Hundreds of past clients are sitting dormant. We take your dead list, clean it, and execute a one-time, highly targeted SMS/Email 'win-back' blast.", impact: "Instant Cash Injection", price: "$350 Setup" },
+            { title: "Revenue Leak Diagnostic", icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, description: "Scaling but feeling chaotic? We map your entire Revenue Path in a 60-min deep dive, isolate your #1 operational bottleneck, and hand you the blueprint.", impact: "Pinpoint ROI Gaps", price: "$350 Audit" }
         ];
 
         const industryLinks = [
@@ -179,7 +151,6 @@
         ];
 
         // --- COMPONENTS ---
-
         const Button = ({ children, variant = 'primary', className = '', onClick }) => {
             const baseStyle = "px-6 py-3 rounded-md font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer";
             const variants = {
@@ -246,7 +217,6 @@
                             <a href="pricing.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-slate-800' : 'text-slate-700'}`}>Pricing</a>
                             <a href="faqs.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-slate-800' : 'text-slate-700'}`}>FAQs</a>
                             <a href="contact-us.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-slate-800' : 'text-slate-700'}`}>Contact</a>
-                            
                             <a href="login.html" className={`text-sm font-medium hover:text-blue-300 transition-colors ${scrolled ? 'text-slate-800' : 'text-slate-700'}`}>Login</a>
 
                             <Button variant={scrolled ? 'primary' : 'primary'} className={`py-2 px-4 text-sm`} onClick={() => window.location.href = '48-hour-fix.html'}>
@@ -562,7 +532,7 @@
                 <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
                     <div className="text-sm opacity-90">
                         <strong>IMPACTA Business Solutions Inc.</strong><br />
-                        <span class="opacity-75">Owned & Operated in Ocala, FL</span><br />
+                        <span className="opacity-75">Owned &amp; Operated in Ocala, FL</span><br />
                         <a href="tel:+13524419448" className="hover:text-white transition-colors mt-2 inline-block font-semibold">(352) 441-9448</a>
                     </div>
                     <div className="flex gap-6 text-sm font-medium justify-center md:justify-end">
@@ -642,4 +612,3 @@
     </script>
 </body>
 </html>
-
