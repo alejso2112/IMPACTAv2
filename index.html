@@ -13,8 +13,20 @@
     <link rel="apple-touch-icon" href="https://impactabusinesssolutions.com/img/appicon.png">
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
+
+    <script>
+        if (window.Babel) {
+            Babel.registerPreset('my-react-classic', {
+                presets: [
+                    [Babel.availablePresets.react, { runtime: 'classic' }]
+                ]
+            });
+        }
+    </script>
+
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <meta property="og:type" content="website" />
@@ -29,8 +41,6 @@
     <meta name="twitter:description" content="We install the operational engines that stop you from losing leads to intake friction and poor response times." />
     <meta name="twitter:image" content="https://impactabusinesssolutions.com/img/og-image.png" />
     <meta name="description" content="Stop wasting marketing budget on missed calls. IMPACTA audits your intake and installs operational engines to recover lost margin. Calculate your revenue leak today.">
-    
-    <script src="https://unpkg.com/@babel/standalone@7.23.6/babel.min.js"></script>
     
     <link rel="canonical" href="https://impactabusinesssolutions.com/" />
     
@@ -93,7 +103,10 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
+    <script type="text/babel" data-presets="env,my-react-classic">
+        /** @jsx React.createElement */
+        /** @jsxFrag React.Fragment */
+
         const { useState, useEffect } = React;
 
         // --- ICONS ---
@@ -111,11 +124,46 @@
 
         // --- DATA ---
         const features = [
-            { title: "Missed-Call Revenue Rescue", icon: <IconZap className="w-8 h-8 text-blue-600" />, description: "You miss 30%+ of calls while on the job. We install an automated system that instantly texts missed callers: 'Sorry we missed you! I'm on a job. How can we help?'", impact: "Stop Competitor Leaks", price: "$350 Setup" },
-            { title: "Speed-to-Lead Web Automator", icon: <IconClock className="w-8 h-8 text-blue-600" />, description: "Web forms sitting in your email for 6 hours kill deals. We map your site's form to text you instantly, and auto-reply to the prospect to expect a call in 15 mins.", impact: "60-Second Engagement", price: "$350 Setup" },
-            { title: "GBP Conversion Overhaul", icon: <IconMapPin className="w-8 h-8 text-blue-600" />, description: "Your Google Business Profile is bleeding trust. We add booking links, upload 15 geo-tagged photos, seed 5 strategic Q&As, and deploy a review-request template.", impact: "Active Booking Engine", price: "$350 One-Time" },
-            { title: "Past-Client Reactivation", icon: <IconDollarSign className="w-8 h-8 text-blue-600" />, description: "Hundreds of past clients are sitting dormant. We take your dead list, clean it, and execute a one-time, highly targeted SMS/Email 'win-back' blast.", impact: "Instant Cash Injection", price: "$350 Setup" },
-            { title: "Revenue Leak Diagnostic", icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, description: "Scaling but feeling chaotic? We map your entire Revenue Path in a 60-min deep dive, isolate your #1 operational bottleneck, and hand you the blueprint.", impact: "Pinpoint ROI Gaps", price: "$350 Audit" }
+            { 
+                title: "Missed-Call Revenue Rescue", 
+                icon: <IconZap className="w-8 h-8 text-blue-600" />, 
+                description: "You miss 30%+ of calls while on the job. We install an automated system that instantly texts missed callers: 'Sorry we missed you! I'm on a job. How can we help?'", 
+                impact: "Stop Competitor Leaks", 
+                price: "$350 Setup",
+                link: "missed-call-revenue.html"
+            },
+            { 
+                title: "Speed-to-Lead Web Automator", 
+                icon: <IconClock className="w-8 h-8 text-blue-600" />, 
+                description: "Web forms sitting in your email for 6 hours kill deals. We map your site's form to text you instantly, and auto-reply to the prospect to expect a call in 15 mins.", 
+                impact: "60-Second Engagement", 
+                price: "$350 Setup",
+                link: "speed-to-lead-automator.html"
+            },
+            { 
+                title: "GBP Conversion Overhaul", 
+                icon: <IconMapPin className="w-8 h-8 text-blue-600" />, 
+                description: "Your Google Business Profile is bleeding trust. We add booking links, upload 15 geo-tagged photos, seed 5 strategic Q&As, and deploy a review-request template.", 
+                impact: "Active Booking Engine", 
+                price: "$350 One-Time",
+                link: "gbp-conversion-overhaul.html"
+            },
+            { 
+                title: "Past-Client Reactivation", 
+                icon: <IconDollarSign className="w-8 h-8 text-blue-600" />, 
+                description: "Hundreds of past clients are sitting dormant. We take your dead list, clean it, and execute a one-time, highly targeted SMS/Email 'win-back' blast.", 
+                impact: "Instant Cash Injection", 
+                price: "$350 Setup",
+                link: "past-client-reactivation.html"
+            },
+            { 
+                title: "Revenue Leak Diagnostic", 
+                icon: <IconBarChart3 className="w-8 h-8 text-blue-600" />, 
+                description: "Scaling but feeling chaotic? We map your entire Revenue Path in a 60-min deep dive, isolate your #1 operational bottleneck, and hand you the blueprint.", 
+                impact: "Pinpoint ROI Gaps", 
+                price: "$350 Audit",
+                link: "revenue-diagnostic.html"
+            }
         ];
 
         const industryLinks = [
@@ -379,21 +427,21 @@
                     </p>
                     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12">
                         {features.map((feature, idx) => (
-                            <div key={idx} className={`flex flex-col p-6 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors group ${idx === 3 ? 'md:col-span-1 lg:col-span-1' : ''} ${idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}>
+                            <a key={idx} href={feature.link} className={`flex flex-col p-6 rounded-xl border border-gray-100 hover:border-blue-300 hover:bg-blue-50/50 hover:-translate-y-1 hover:shadow-xl transition-all duration-300 group cursor-pointer ${idx === 3 ? 'md:col-span-1 lg:col-span-1' : ''} ${idx === 4 ? 'md:col-span-2 lg:col-span-1' : ''}`}>
                                 <div className="flex gap-4 items-start mb-4">
                                     <div className="bg-blue-50 p-4 rounded-full h-fit group-hover:bg-white group-hover:shadow-md transition-all">{feature.icon}</div>
-                                    <h3 className="text-xl font-bold text-gray-900 mt-2">{feature.title}</h3>
+                                    <h3 className="text-xl font-bold text-gray-900 mt-2 group-hover:text-[#0c62ab] transition-colors">{feature.title}</h3>
                                 </div>
                                 <p className="text-gray-600 mb-4 flex-grow">{feature.description}</p>
                                 <div className="flex items-center justify-between text-sm font-semibold mt-auto pt-4 border-t border-gray-100">
                                     <span className="text-impacta bg-blue-100 px-3 py-1 rounded-full">{feature.impact}</span>
-                                    <span className="text-gray-900 font-bold bg-gray-100 px-3 py-1 rounded-md">{feature.price}</span>
+                                    <span className="text-gray-900 font-bold bg-gray-100 px-3 py-1 rounded-md group-hover:bg-[#0c62ab] group-hover:text-white transition-colors">{feature.price}</span>
                                 </div>
-                            </div>
+                            </a>
                         ))}
                     </div>
                     <div className="text-center">
-                         <Button variant="primary" className="mx-auto" onClick={() => window.location.href = 'free-diagnostic.html'}>
+                         <Button variant="primary" className="mx-auto" onClick={() => window.location.href = '48-hour-fix.html'}>
                             See How We Install This
                         </Button>
                     </div>
@@ -517,7 +565,7 @@
                         <div className="relative z-10">
                             <h2 className="text-3xl md:text-4xl font-bold mb-6">Ready to Audit Your Intake?</h2>
                             <p className="text-blue-100 text-lg mb-8 max-w-2xl mx-auto">The diagnostic is $350. If we don't find a leak worth at least $3,500 in lost margin, we refund you on the spot.</p>
-                            <Button variant="secondary" className="mx-auto" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Your Intake Audit</Button>
+                            <Button variant="secondary" className="mx-auto hover:bg-blue-50 hover:scale-105 transition-transform" onClick={() => window.location.href = 'revenue-diagnostic.html'}>Book Your Intake Audit</Button>
                             <p className="mt-4 text-sm text-blue-200 opacity-75">No retainers. No long-term contracts.</p>
                         </div>
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white opacity-5 rounded-full -translate-y-1/2 translate-x-1/2"></div>
