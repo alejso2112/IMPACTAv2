@@ -155,8 +155,8 @@
             </div>
         );
 
-        const EngineCard = ({ icon, title, description, stat, price }) => (
-            <div className="flex flex-col md:flex-row gap-6 p-6 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors group">
+        const EngineCard = ({ icon, title, description, stat, price, link }) => (
+            <a href={link} className="flex flex-col md:flex-row gap-6 p-6 rounded-xl border border-gray-100 hover:border-blue-100 hover:bg-blue-50/30 transition-colors group">
                 <div className="bg-blue-50 p-4 rounded-full h-fit group-hover:bg-white group-hover:shadow-md transition-all text-impacta flex-shrink-0">
                     {icon}
                 </div>
@@ -168,7 +168,7 @@
                         <span className="text-gray-500">{price}</span>
                     </div>
                 </div>
-            </div>
+            </a>
         );
 
         const FixesSection = () => (
@@ -188,6 +188,7 @@
                             description="You miss 30%+ of calls while on the job. We install an automated system that instantly texts missed callers: 'Sorry we missed you! I'm on a job. How can we help?'"
                             stat="Stop Competitor Leaks"
                             price="$350 Setup"
+                            link="https://impactabusinesssolutions.com/missed-call-revenue.html"
                         />
                         <EngineCard 
                             icon={<IconZap className="w-8 h-8" />}
@@ -195,6 +196,7 @@
                             description="Web forms sitting in your email for 6 hours kill deals. We map your site's form to text you instantly, and auto-reply to the prospect to expect a call in 15 mins."
                             stat="60-Second Engagement"
                             price="$350 Setup"
+                            link="https://impactabusinesssolutions.com/speed-to-lead-automator.html"
                         />
                         <EngineCard 
                             icon={<IconStore className="w-8 h-8" />}
@@ -202,6 +204,7 @@
                             description="Your Google Business Profile is bleeding trust. We add booking links, upload 15 geo-tagged photos, seed 5 strategic Q&As, and deploy a review-request template."
                             stat="Active Booking Engine"
                             price="$350 One-Time"
+                            link="https://impactabusinesssolutions.com/gbp-conversion-overhaul.html"
                         />
                         <EngineCard 
                             icon={<IconRefresh className="w-8 h-8" />}
@@ -209,6 +212,7 @@
                             description="Hundreds of past clients are sitting dormant. We take your dead list, clean it, and execute a one-time, highly targeted SMS/Email 'win-back' blast."
                             stat="Instant Cash Injection"
                             price="$350 Setup"
+                            link="https://impactabusinesssolutions.com/past-client-reactivation.html"
                         />
                         <div className="md:col-span-2 max-w-3xl mx-auto w-full">
                             <EngineCard 
@@ -217,11 +221,12 @@
                                 description="Scaling but feeling chaotic? We map your entire Revenue Path in a 60-min deep dive, isolate your #1 operational bottleneck, and hand you the blueprint."
                                 stat="Pinpoint ROI Gaps"
                                 price="$350 Audit"
+                                link="https://impactabusinesssolutions.com/revenue-diagnostic.html"
                             />
                         </div>
                     </div>
                     <div className="mt-12 text-center">
-                        <a href="https://impactabusinesssolutions.com/48-hour-fix.html" className="px-6 py-3 rounded-md font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer bg-impacta text-white hover-bg-impacta shadow-lg hover:shadow-xl mx-auto inline-flex">
+                        <a href="contact-us.html" className="px-6 py-3 rounded-md font-semibold transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer bg-impacta text-white hover-bg-impacta shadow-lg hover:shadow-xl mx-auto inline-flex">
                             Choose Your 48-Hour Fix
                         </a>
                     </div>
