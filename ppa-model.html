@@ -25,10 +25,22 @@
     <link rel="apple-touch-icon" href="https://impactabusinesssolutions.com/img/appicon.png">
     
     <script src="https://cdn.tailwindcss.com"></script>
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <!-- Switched to development builds for better error visibility -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     
+    <!-- MAGIC FIX: Force Babel to use the Classic JSX Transform to stop it from generating 'imports' -->
+    <script>
+        if (window.Babel) {
+            Babel.registerPreset('my-react-classic', {
+                presets: [
+                    [Babel.availablePresets.react, { runtime: 'classic' }]
+                ]
+            });
+        }
+    </script>
+
     <meta property="og:site_name" content="IMPACTA Business Solutions" />
     <meta property="og:title" content="Stop Renting Growth: The IMPACTA PPA Roadmap" />
     <meta property="og:description" content="We build your revenue engine and coach your team to run it. 100% performance-aligned pricing for Sales Qualified Appointments (SQAs)." />
@@ -58,7 +70,11 @@
 <body class="bg-slate-50 text-gray-900 flex flex-col min-h-screen">
     <div id="root" class="flex-grow flex flex-col"></div>
 
-    <script type="text/babel">
+    <!-- Apply our custom 'my-react-classic' preset to stop the import error -->
+    <script type="text/babel" data-presets="env,my-react-classic">
+        /** @jsx React.createElement */
+        /** @jsxFrag React.Fragment */
+
         const { useState, useEffect } = React;
 
         // --- ICONS ---
