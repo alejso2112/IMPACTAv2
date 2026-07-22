@@ -48,13 +48,14 @@
     }
 
     .page-shell {
-      width: min(1120px, calc(100% - 32px));
-      min-height: min(760px, calc(100vh - 32px));
+      font-size: 80%;
+      width: min(896px, calc(100% - 26px));
+      min-height: min(608px, calc(100vh - 26px));
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(300px, 0.85fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(240px, 0.85fr);
       overflow: hidden;
       border: 1px solid rgba(12, 98, 171, 0.13);
-      border-radius: 28px;
+      border-radius: 22px;
       background: rgba(255, 255, 255, 0.96);
       box-shadow: var(--shadow);
       isolation: isolate;
@@ -63,14 +64,14 @@
     .content {
       position: relative;
       z-index: 2;
-      padding: clamp(38px, 6vw, 82px);
+      padding: clamp(30px, 6vw, 66px);
       display: flex;
       flex-direction: column;
       justify-content: center;
     }
 
     .eyebrow {
-      margin: 0 0 28px;
+      margin: 0 0 22px;
       color: #334b68;
       font-size: clamp(0.75rem, 1.2vw, 0.92rem);
       font-weight: 800;
@@ -79,17 +80,17 @@
     }
 
     .logo {
-      width: min(100%, 580px);
+      width: min(100%, 464px);
       height: auto;
       display: block;
-      margin-bottom: clamp(34px, 5vw, 58px);
+      margin-bottom: clamp(27px, 5vw, 46px);
     }
 
     .announcement {
       display: flex;
       align-items: center;
-      gap: 12px;
-      margin-bottom: 18px;
+      gap: 10px;
+      margin-bottom: 14px;
       color: var(--rce-blue);
       font-size: 0.86rem;
       font-weight: 800;
@@ -97,19 +98,18 @@
       text-transform: uppercase;
     }
 
-    
     .announcement::before {
       content: "";
-      width: 6px;
-      height: 34px;
-      border-radius: 10px;
+      width: 5px;
+      height: 27px;
+      border-radius: 8px;
       background: var(--rce-gold);
       flex: 0 0 auto;
     }
 
     h1 {
       margin: 0;
-      max-width: 760px;
+      max-width: 608px;
       font-size: clamp(2.45rem, 5.4vw, 5.3rem);
       line-height: 0.98;
       letter-spacing: -0.055em;
@@ -123,8 +123,8 @@
     }
 
     .supporting-copy {
-      max-width: 690px;
-      margin: 28px 0 0;
+      max-width: 552px;
+      margin: 22px 0 0;
       color: var(--muted);
       font-size: clamp(1rem, 1.8vw, 1.2rem);
       line-height: 1.7;
@@ -138,7 +138,7 @@
       position: relative;
       z-index: 1;
       min-height: 100%;
-      padding: clamp(36px, 5vw, 68px);
+      padding: clamp(29px, 5vw, 54px);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -157,24 +157,24 @@
     }
 
     .status-panel::before {
-      width: 520px;
-      height: 520px;
-      right: -310px;
-      bottom: -210px;
+      width: 416px;
+      height: 416px;
+      right: -248px;
+      bottom: -168px;
     }
 
     .status-panel::after {
-      width: 340px;
-      height: 340px;
-      right: -215px;
-      bottom: -120px;
+      width: 272px;
+      height: 272px;
+      right: -172px;
+      bottom: -96px;
     }
 
     .status-inner {
       position: relative;
       z-index: 2;
       width: 100%;
-      max-width: 390px;
+      max-width: 312px;
       margin-inline: auto;
     }
 
@@ -195,7 +195,7 @@
     }
 
     .status-text {
-      margin: 14px 0 28px;
+      margin: 11px 0 22px;
       color: var(--muted);
       line-height: 1.65;
     }
@@ -203,14 +203,14 @@
     .countdown-wrap {
       display: flex;
       align-items: center;
-      gap: 24px;
-      margin-bottom: 28px;
+      gap: 19px;
+      margin-bottom: 22px;
     }
 
     .countdown-ring {
       --progress: 360deg;
       position: relative;
-      width: 116px;
+      width: 93px;
       aspect-ratio: 1;
       flex: 0 0 auto;
       display: grid;
@@ -224,7 +224,7 @@
     .countdown-ring::before {
       content: "";
       position: absolute;
-      inset: 8px;
+      inset: 6px;
       border-radius: inherit;
       background: var(--white);
     }
@@ -261,14 +261,14 @@
 
     .continue-link {
       width: 100%;
-      margin-top: 24px;
-      padding: 15px 20px;
+      margin-top: 19px;
+      padding: 12px 16px;
       display: inline-flex;
       justify-content: center;
       align-items: center;
       gap: 10px;
       border: 0;
-      border-radius: 10px;
+      border-radius: 8px;
       color: var(--white);
       background: var(--rce-blue);
       box-shadow: 0 12px 28px rgba(12, 98, 171, 0.22);
@@ -291,7 +291,7 @@
     }
 
     .continuity {
-      margin: 24px 0 0;
+      margin: 19px 0 0;
       color: #4f657a;
       font-size: 0.82rem;
       line-height: 1.55;
@@ -304,53 +304,53 @@
 
     noscript {
       display: block;
-      margin-top: 18px;
+      margin-top: 14px;
       color: var(--muted);
       font-size: 0.88rem;
       line-height: 1.5;
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 656px) {
       body {
         display: block;
-        padding: 16px 0;
+        padding: 13px 0;
       }
 
       .page-shell {
-        min-height: calc(100vh - 32px);
+        min-height: calc(100vh - 26px);
         grid-template-columns: 1fr;
         margin-inline: auto;
-        border-radius: 22px;
+        border-radius: 14px;
       }
 
       .content {
-        padding-bottom: 42px;
+        padding-bottom: 34px;
       }
 
       .logo {
-        margin-bottom: 38px;
+        margin-bottom: 30px;
       }
 
       .status-panel {
-        min-height: 440px;
+        min-height: 352px;
         border-left: 0;
         border-top: 1px solid rgba(12, 98, 171, 0.12);
       }
     }
 
-    @media (max-width: 480px) {
+    @media (max-width: 384px) {
       .page-shell {
-        width: min(100% - 20px, 1120px);
-        border-radius: 18px;
+        width: min(100% - 16px, 896px);
+        border-radius: 14px;
       }
 
       .content,
       .status-panel {
-        padding: 30px 24px;
+        padding: 24px 19px;
       }
 
       .eyebrow {
-        margin-bottom: 22px;
+        margin-bottom: 18px;
         font-size: 0.68rem;
       }
 
@@ -359,11 +359,11 @@
       }
 
       .countdown-wrap {
-        gap: 18px;
+        gap: 14px;
       }
 
       .countdown-ring {
-        width: 98px;
+        width: 78px;
       }
 
       .countdown-number {
@@ -400,7 +400,7 @@
 
       <img
         class="logo"
-        src="img/logo-main-2026.png"
+        src="assets/revenue-capture-experts-logo.png"
         alt="Revenue Capture Experts"
         width="625"
         height="145"
